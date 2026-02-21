@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regulator AI Global — Enforceable Human Oversight</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #060606;
+  --off-black: #0d0d0d;
+  --dim: #141414;
+  --border: #1e1e1e;
+  --border-mid: #2a2a2a;
+  --muted: #444;
+  --mid: #777;
+  --white: #ede9e3;
+  --white-dim: #a09c96;
+  --accent: #c8f135;
+  --accent-dim: rgba(200, 241, 53, 0.12);
+  --accent-glow: rgba(200, 241, 53, 0.06);
+  --red: #ff4444;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Mono', monospace;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* ── GRAIN ──────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── NAV ────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(6,6,6,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  color: var(--white);
+}
+.nav-brand span { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+.nav-cta {
+  border: 1px solid var(--accent);
+  padding: 8px 20px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-cta:hover { background: var(--accent); color: var(--black); }
+
+/* ── HERO ───────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 80px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.4;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent);
+}
+
+.hero-bg-glow {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background: radial-gradient(ellipse, rgba(200,241,53,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s ease both 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(64px, 10vw, 140px);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  animation: fadeUp 0.9s ease both 0.3s;
+  max-width: 900px;
+}
+.hero-headline em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+  font-size: 0.82em;
+}
+
+.hero-sub {
+  margin-top: 40px;
+  max-width: 520px;
+  color: var(--white-dim);
+  font-size: 13px;
+  line-height: 1.9;
+  animation: fadeUp 0.9s ease both 0.45s;
+}
+
+.hero-meta {
+  margin-top: 48px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  animation: fadeUp 0.9s ease both 0.6s;
+}
+
+.hero-stat {
+  border-left: 2px solid var(--border-mid);
+  padding-left: 20px;
+}
+.hero-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  right: 48px;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  writing-mode: vertical-rl;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: fadeIn 1s ease both 1s;
+}
+.hero-scroll::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: var(--muted);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(0.5); }
+}
+
+/* ── TICKER ─────────────────────────────── */
+.ticker {
+  background: var(--accent);
+  color: var(--black);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 11px 0;
+}
+.ticker-inner {
+  display: inline-block;
+  animation: tick 35s linear infinite;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+}
+.ticker-inner span { opacity: 0.35; padding: 0 32px; }
+
+@keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── SECTION BASE ───────────────────────── */
+section {
+  padding: 100px 48px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.section-label {
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 56px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin-bottom: 40px;
+}
+
+/* ── OVERVIEW / CTP LOOP ────────────────── */
+#overview .two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+#overview p {
+  color: var(--white-dim);
+  line-height: 1.9;
+  font-size: 13.5px;
+}
+
+.ctp-diagram {
+  border: 1px solid var(--border-mid);
+  background: var(--dim);
+  padding: 40px;
+  position: relative;
+}
+
+.ctp-diagram-title {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.loop-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.loop-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.loop-step:last-child { border-bottom: none; }
+
+.loop-icon {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  color: var(--accent);
+  flex-shrink: 0;
+  background: var(--black);
+}
+
+.loop-step-title {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.loop-step-desc {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.connector {
+  position: absolute;
+  left: 17px;
+  top: 54px;
+  width: 1px;
+  height: calc(100% - 18px);
+  background: linear-gradient(var(--accent-dim), transparent);
+}
+
+/* ── RISK SECTION ───────────────────────── */
+#risk .risk-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 0;
+}
+
+.risk-card {
+  background: var(--off-black);
+  padding: 40px 36px;
+  position: relative;
+  transition: background 0.3s;
+  overflow: hidden;
+}
+.risk-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.risk-card:hover { background: var(--dim); }
+.risk-card:hover::before { transform: scaleX(1); }
+
+.risk-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px;
+  color: var(--border-mid);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.risk-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+.risk-desc {
+  font-size: 12px;
+  color: var(--white-dim);
+  line-height: 1.8;
+}
+
+/* ── ARCH SECTION ───────────────────────── */
+#architecture {
+  background: var(--off-black);
+}
+
+.arch-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-bottom: 80px;
+}
+
+.arch-intro p {
+  color: var(--white-dim);
+  font-size: 13.5px;
+  line-height: 1.9;
+}
+
+.arch-callout {
+  border: 1px solid var(--border-mid);
+  border-left: 3px solid var(--accent);
+  padding: 28px 32px;
+  background: var(--black);
+}
+.arch-callout p {
+  font-size: 13px;
+  color: var(--white);
+  line-height: 1.8;
+}
+.arch-callout-label {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+/* ── LAYER CARDS ───────────────────────── */
+.layers-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.layer-card {
+  border: 1px solid var(--border);
+  background: var(--black);
+  cursor: pointer;
+  transition: border-color 0.3s;
+  overflow: hidden;
+}
+.layer-card:hover { border-color: var(--border-mid); }
+.layer-card.active { border-color: var(--accent); }
+
+.layer-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 32px;
+}
+
+.layer-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: var(--border-mid);
+  line-height: 1;
+  min-width: 52px;
+  transition: color 0.3s;
+}
+.layer-card.active .layer-num,
+.layer-card:hover .layer-num { color: var(--accent); }
+
+.layer-title-block { flex: 1; }
+.layer-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  line-height: 1;
+}
+.layer-tagline {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+}
+
+.layer-toggle {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 18px;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+.layer-card.active .layer-toggle {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: rotate(45deg);
+}
+
+.layer-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.layer-card.active .layer-body { max-height: 600px; }
+
+.layer-content {
+  padding: 0 32px 32px 32px;
+  padding-left: calc(32px + 52px + 24px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+  margin-left: 32px;
+}
+
+.layer-content-section h4 {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.layer-content-section p,
+.layer-content-section li {
+  font-size: 12px;
+  color: var(--white-dim);
+  line-height: 1.8;
+}
+.layer-content-section ul {
+  list-style: none;
+  padding: 0;
+}
+.layer-content-section li::before {
+  content: '— ';
+  color: var(--muted);
+}
+
+/* ── SPEC SECTION ───────────────────────── */
+#spec {
+  background: var(--black);
+}
+
+.spec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 60px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.spec-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+.spec-badge {
+  border: 1px solid var(--border-mid);
+  padding: 5px 14px;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.spec-badge.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--border);
+}
+
+.spec-item {
+  background: var(--off-black);
+  padding: 36px;
+}
+
+.spec-num {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.spec-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+.spec-body {
+  font-size: 12px;
+  color: var(--white-dim);
+  line-height: 1.85;
+}
+
+.spec-equation {
+  background: var(--black);
+  border: 1px solid var(--border-mid);
+  border-left: 3px solid var(--accent);
+  padding: 20px 24px;
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.spec-full {
+  grid-column: 1 / -1;
+  background: var(--off-black);
+  padding: 40px;
+}
+
+.spec-compliance-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+.compliance-item {
+  border: 1px solid var(--border);
+  padding: 20px;
+  background: var(--black);
+}
+.compliance-item h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.compliance-item p {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── DISTRESS SCHEMATIC ─────────────────── */
+#schematic {
+  background: var(--dim);
+}
+
+.schematic-intro {
+  max-width: 680px;
+  color: var(--white-dim);
+  font-size: 13.5px;
+  line-height: 1.9;
+  margin-bottom: 60px;
+}
+
+.distress-flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  margin-bottom: 40px;
+}
+
+.distress-col {
+  background: var(--black);
+  padding: 40px 32px;
+}
+.distress-col-label {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+.distress-signals {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.distress-signal {
+  border: 1px solid var(--border-mid);
+  padding: 16px;
+  background: var(--dim);
+}
+.distress-signal-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.distress-signal-desc {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.distress-signal-bar {
+  height: 2px;
+  background: var(--border-mid);
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.distress-signal-bar::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  background: var(--accent);
+  animation: barPulse 3s ease-in-out infinite;
+}
+.bar-load::after { width: 70%; animation-delay: 0s; }
+.bar-error::after { width: 45%; animation-delay: 0.5s; }
+.bar-precision::after { width: 85%; animation-delay: 1s; }
+
+@keyframes barPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.guarantees-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  background: var(--border);
+}
+.guarantee {
+  background: var(--off-black);
+  padding: 28px 24px;
+  text-align: center;
+}
+.guarantee-icon {
+  font-size: 24px;
+  margin-bottom: 12px;
+  display: block;
+}
+.guarantee-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.guarantee-desc {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── PUBLICATIONS ───────────────────────── */
+#publications {
+  background: var(--black);
+}
+
+.pub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+}
+.pub-item {
+  background: var(--off-black);
+  padding: 36px;
+  position: relative;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+.pub-item:hover { background: var(--dim); }
+.pub-tag {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pub-tag::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.pub-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 14px;
+}
+.pub-desc {
+  font-size: 11px;
+  color: var(--white-dim);
+  line-height: 1.8;
+}
+.pub-arrow {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  font-size: 18px;
+  color: var(--muted);
+  transition: color 0.3s, transform 0.3s;
+}
+.pub-item:hover .pub-arrow {
+  color: var(--accent);
+  transform: translate(4px, -4px);
+}
+.pub-github {
+  border: 1px solid var(--border-mid);
+  padding: 8px 14px;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-block;
+  margin-top: 16px;
+}
+.pub-item:hover .pub-github { border-color: var(--accent); color: var(--accent); }
+
+/* ── CONTACT ────────────────────────────── */
+#contact {
+  background: var(--dim);
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: start;
+}
+
+.contact-left p {
+  color: var(--white-dim);
+  font-size: 13.5px;
+  line-height: 1.9;
+  margin-bottom: 40px;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.contact-line {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.contact-line-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  min-width: 80px;
+}
+.contact-line-value {
+  color: var(--white);
+  font-size: 12px;
+}
+.contact-line-value a {
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-line-value a:hover { color: var(--accent); }
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.form-input,
+.form-textarea {
+  background: var(--black);
+  border: 1px solid var(--border-mid);
+  color: var(--white);
+  font-family: 'DM Mono', monospace;
+  font-weight: 300;
+  font-size: 13px;
+  padding: 14px 18px;
+  outline: none;
+  transition: border-color 0.3s;
+  resize: none;
+  cursor: crosshair;
+}
+.form-input:focus,
+.form-textarea:focus { border-color: var(--accent); }
+.form-textarea { min-height: 120px; }
+
+.btn-submit {
+  background: var(--accent);
+  color: var(--black);
+  border: none;
+  padding: 16px 40px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+.btn-submit:hover { opacity: 0.88; }
+
+/* ── FOOTER ─────────────────────────────── */
+footer {
+  padding: 40px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+}
+.footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.footer-brand strong { color: var(--accent); }
+.footer-copy {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-align: right;
+  line-height: 2;
+}
+
+/* ── ANIMATIONS ─────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ─────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  nav .nav-links { display: none; }
+  section, #hero { padding: 80px 24px; }
+  #hero { padding-bottom: 80px; }
+  .hero-meta { flex-wrap: wrap; gap: 24px; }
+  #overview .two-col,
+  .arch-intro,
+  .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+  #risk .risk-grid { grid-template-columns: 1fr; }
+  .distress-flow { grid-template-columns: 1fr; }
+  .guarantees-grid { grid-template-columns: repeat(2, 1fr); }
+  .pub-grid { grid-template-columns: 1fr; }
+  .spec-grid { grid-template-columns: 1fr; }
+  .spec-compliance-grid { grid-template-columns: repeat(2, 1fr); }
+  footer { flex-direction: column; gap: 20px; text-align: center; }
+  .footer-copy { text-align: center; }
+  .layer-content { grid-template-columns: 1fr; padding-left: 32px; }
+  .hero-scroll { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────── -->
+<nav>
+  <div class="nav-brand">Regulator <span>AI</span></div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#spec">Protocol</a></li>
+    <li><a href="#schematic">Schematic</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- ── HERO ─────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-bg-glow"></div>
+  <div class="hero-eyebrow">Regulator AI Global, Inc.</div>
+  <h1 class="hero-headline">Enforceable<br><em>Human Oversight</em><br>for Scalable AI</h1>
+  <p class="hero-sub">Powered by the Cognitive Transport Protocol™ and the Resilient Loop — a deterministic runtime control layer that maintains stable human oversight as AI systems scale.</p>
+  <div class="hero-meta">
+    <div class="hero-stat">
+      <div class="hero-stat-num">7</div>
+      <div class="hero-stat-label">Layer Architecture</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">v3.0</div>
+      <div class="hero-stat-label">Regulator Core</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">CTP™</div>
+      <div class="hero-stat-label">Protocol v1.0</div>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ── TICKER ────────────────────────────── -->
+<div class="ticker">
+  <div class="ticker-inner">
+    SUPERVISORY CONTAINMENT <span>·</span> HUMAN-IN-THE-LOOP <span>·</span> RUNTIME ENFORCEMENT <span>·</span> COGNITIVE BANDWIDTH <span>·</span> DISTRESS REGULATION <span>·</span> AUDIT TRAIL <span>·</span> RESILIENT LOOP <span>·</span> COMPLIANCE ARTIFACTS <span>·</span> DETERMINISTIC FSM &nbsp;&nbsp;&nbsp;&nbsp;
+    SUPERVISORY CONTAINMENT <span>·</span> HUMAN-IN-THE-LOOP <span>·</span> RUNTIME ENFORCEMENT <span>·</span> COGNITIVE BANDWIDTH <span>·</span> DISTRESS REGULATION <span>·</span> AUDIT TRAIL <span>·</span> RESILIENT LOOP <span>·</span> COMPLIANCE ARTIFACTS <span>·</span> DETERMINISTIC FSM &nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+</div>
+
+<!-- ── OVERVIEW ──────────────────────────── -->
+<section id="overview">
+  <div class="section-label">Overview</div>
+  <div class="two-col">
+    <div class="reveal">
+      <h2 class="section-title">CTP Control<br>Loop</h2>
+      <p>CTP enforces bounded cognitive load through continuous sensing, thresholding, and actuation.</p>
+      <br>
+      <p>As AI output accelerates, human review capacity becomes the limiting factor. Without regulation, multi-agent AI systems can become unstable and economically unsafe at scale. Regulator v3.0 provides human-in-the-loop control to maintain stability and safety.</p>
+      <br>
+      <p>The system monitors oversight load and automatically slows or pauses AI progression when defined limits are reached — preserving recoverability and generating a continuous, verifiable audit trail.</p>
+    </div>
+    <div class="reveal">
+      <div class="ctp-diagram">
+        <div class="ctp-diagram-title">// Control loop — runtime execution</div>
+        <div class="loop-steps">
+          <div class="loop-step">
+            <div class="loop-icon">S</div>
+            <div>
+              <div class="loop-step-title">Sense</div>
+              <div class="loop-step-desc">Monitor cognitive load, error rate, and precision across all active agents</div>
+            </div>
+          </div>
+          <div class="loop-step">
+            <div class="loop-icon">T</div>
+            <div>
+              <div class="loop-step-title">Threshold</div>
+              <div class="loop-step-desc">Evaluate distress signal against defined supervisory limits</div>
+            </div>
+          </div>
+          <div class="loop-step">
+            <div class="loop-icon">A</div>
+            <div>
+              <div class="loop-step-title">Actuate</div>
+              <div class="loop-step-desc">Slow, pause, or reroute AI throughput to restore human oversight capacity</div>
+            </div>
+          </div>
+          <div class="loop-step">
+            <div class="loop-icon">R</div>
+            <div>
+              <div class="loop-step-title">Record</div>
+              <div class="loop-step-desc">Generate verifiable compliance artifacts for every supervisory decision</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RISK ──────────────────────────────── -->
+<section id="risk" style="padding-top: 0; border-top: none; background: var(--dim);">
+  <div class="section-label">Risk Mitigation</div>
+  <h2 class="section-title reveal">What CTP Prevents</h2>
+  <div class="risk-grid">
+    <div class="risk-card reveal">
+      <div class="risk-num">01</div>
+      <div class="risk-title">Coordination Failure</div>
+      <div class="risk-desc">As AI agent systems scale, coordination failures become systemic risks. Without regulation, multi-agent AI can become unstable and economically unsafe at scale.</div>
+    </div>
+    <div class="risk-card reveal">
+      <div class="risk-num">02</div>
+      <div class="risk-title">Oversight Collapse</div>
+      <div class="risk-desc">Human review capacity becomes the binding constraint on AI throughput. When unmanaged, overload leads to missed decisions, compliance exposure, and operational instability.</div>
+    </div>
+    <div class="risk-card reveal">
+      <div class="risk-num">03</div>
+      <div class="risk-title">Governance Gap</div>
+      <div class="risk-desc">Policy without enforcement is aspiration. CTP converts oversight policy into enforceable technical control — reducing operational and compliance risk at the system level.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARCHITECTURE ──────────────────────── -->
+<section id="architecture">
+  <div class="section-label">Architecture</div>
+  <div class="arch-intro reveal">
+    <div>
+      <h2 class="section-title">Regulator v3.0<br>Seven Layer<br>Architecture</h2>
+      <p>The Cognitive Transport Protocol defines a canonical cognitive architecture for human–AI systems under load. Regulator v3.0 enforces this architecture at runtime by measuring load, allocating bandwidth, and ensuring predictable operation and recovery at scale.</p>
+    </div>
+    <div>
+      <div class="arch-callout">
+        <div class="arch-callout-label">// Design Intent</div>
+        <p>This model cleanly spans from raw signals to coordinated swarms, integrating advanced AI solutions and human solutions seamlessly — from cognitive physics at Layer 0 to ecosystem governance at Layer 6.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="layers-container" id="layerContainer">
+    <!-- Layers populated via JS -->
+  </div>
+</section>
+
+<!-- ── SPEC ──────────────────────────────── -->
+<section id="spec">
+  <div class="section-label">Protocol Specification</div>
+  <div class="spec-header reveal">
+    <div>
+      <h2 class="section-title">Cognitive Transport<br>Protocol™</h2>
+      <div style="font-size: 12px; color: var(--muted); margin-top: 8px;">Standards-Grade · Frozen v1.0 · Public Reference Specification</div>
+    </div>
+    <div class="spec-badges">
+      <div class="spec-badge active">Status: Frozen v1.0</div>
+      <div class="spec-badge">Author: Regulator AI Global</div>
+      <div class="spec-badge">January 2026</div>
+      <div class="spec-badge">Standards-Track Spec</div>
+    </div>
+  </div>
+
+  <div class="spec-grid">
+    <div class="spec-item reveal">
+      <div class="spec-num">§ 1.0</div>
+      <div class="spec-title">Purpose & Scope</div>
+      <div class="spec-body">CTP defines a formal control layer for regulating information flow between computational systems and human users. It addresses a structural mismatch in modern human–computer interaction: machine output scales faster than human cognitive recovery capacity. This mismatch produces cognitive congestion, resulting in avoidance, abandonment, degraded decision quality, and systemic risk in high-stakes environments.</div>
+    </div>
+    <div class="spec-item reveal">
+      <div class="spec-num">§ 3.0</div>
+      <div class="spec-title">Control Variables</div>
+      <div class="spec-body">
+        <strong style="color: var(--white); font-weight: 400;">B — Bandwidth.</strong> Usable cognitive processing throughput at time t. State-dependent, distinct from intelligence or skill.<br><br>
+        <strong style="color: var(--white); font-weight: 400;">E — Prediction Error Energy.</strong> Accumulated mismatch between expected and actual cognitive state. Integrates over time if unmitigated.<br><br>
+        <strong style="color: var(--white); font-weight: 400;">Π — Precision.</strong> Interpretative weight assigned to information. Elevated precision slows recovery.
+      </div>
+    </div>
+    <div class="spec-item reveal">
+      <div class="spec-num">§ 4.0</div>
+      <div class="spec-title">Governing Equations</div>
+      <div class="spec-body">CTP evaluates system impact using the Distress Objective. Distress accumulates as a function of precision weighting and prediction error over time — enabling mathematically grounded intervention thresholds.</div>
+      <div class="spec-equation">D += Π × E × dt</div>
+    </div>
+    <div class="spec-item reveal">
+      <div class="spec-num">§ 5.0</div>
+      <div class="spec-title">Control Obligations</div>
+      <div class="spec-body">Interfaces must prioritize reduction of uncertainty and system stabilization before presenting high-precision information. High-precision output during elevated error states constitutes non-compliance. Systems must scale complexity relative to effective bandwidth — failure to do so produces predictable abandonment.</div>
+    </div>
+    <div class="spec-full reveal">
+      <div class="spec-num">§ 6.0</div>
+      <div class="spec-title">Diagnostic Framework</div>
+      <div class="spec-body" style="margin-bottom: 24px;">CTP compliance is evaluated across four diagnostic dimensions.</div>
+      <div class="spec-compliance-grid">
+        <div class="compliance-item">
+          <h4>Precision Load</h4>
+          <p>Is interpretative demand appropriate to current cognitive state?</p>
+        </div>
+        <div class="compliance-item">
+          <h4>Bandwidth Assumptions</h4>
+          <p>Does the system assume static or unlimited human capacity?</p>
+        </div>
+        <div class="compliance-item">
+          <h4>Error Accumulation</h4>
+          <p>Does the system allow unbounded integration of error energy?</p>
+        </div>
+        <div class="compliance-item">
+          <h4>Truncation Availability</h4>
+          <p>Are safe exits provided to arrest overload before it propagates?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SCHEMATIC ─────────────────────────── -->
+<section id="schematic">
+  <div class="section-label">Distress Schematic</div>
+  <h2 class="section-title reveal">Regulator v3.0<br>Distress Measurement</h2>
+  <p class="schematic-intro reveal">Each agent exposes three observable channels. These form the distress vector, aggregated across N agents into a global signal used to trigger supervisory intervention.</p>
+
+  <div class="distress-flow reveal">
+    <div class="distress-col">
+      <div class="distress-col-label">// Inputs — Per-Agent Channels</div>
+      <div class="distress-signals">
+        <div class="distress-signal">
+          <div class="distress-signal-name">Load</div>
+          <div class="distress-signal-desc">Current cognitive bandwidth consumption. Derived from task complexity, concurrency, and queue pressure. Normalized 0–1.</div>
+          <div class="distress-signal-bar bar-load"></div>
+        </div>
+        <div class="distress-signal">
+          <div class="distress-signal-name">Error</div>
+          <div class="distress-signal-desc">Prediction error or mismatch between expected and actual outcomes. Captures uncertainty and instability. Normalized 0–1.</div>
+          <div class="distress-signal-bar bar-error"></div>
+        </div>
+        <div class="distress-signal">
+          <div class="distress-signal-name">Precision</div>
+          <div class="distress-signal-desc">Agent confidence in internal state. Low precision = high volatility. Normalized 0–1.</div>
+          <div class="distress-signal-bar bar-precision"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="distress-col">
+      <div class="distress-col-label">// Aggregation — Multi-Agent</div>
+      <div class="distress-signals">
+        <div class="distress-signal">
+          <div class="distress-signal-name">Sensitivity</div>
+          <div class="distress-signal-desc">Sensitive to both individual spikes and distributed load. No single agent can dominate unless distress is extreme.</div>
+        </div>
+        <div class="distress-signal">
+          <div class="distress-signal-name">Nonlinearity</div>
+          <div class="distress-signal-desc">Aggregation must be nonlinear to capture compounding effects and support emergent behavior detection.</div>
+        </div>
+        <div class="distress-signal">
+          <div class="distress-signal-name">Stability</div>
+          <div class="distress-signal-desc">Small fluctuations in individual agents must not destabilize the global signal. Ensures smooth regulation across swarms.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="distress-col">
+      <div class="distress-col-label">// Outputs — System Signals</div>
+      <div class="distress-signals">
+        <div class="distress-signal">
+          <div class="distress-signal-name">Global Distress</div>
+          <div class="distress-signal-desc">A scalar representing the swarm's overall cognitive strain. Monotonic, bounded, composable from 1 to 10,000 agents.</div>
+        </div>
+        <div class="distress-signal">
+          <div class="distress-signal-name">Gradient</div>
+          <div class="distress-signal-desc">A vector showing which agents contribute most to global distress — enabling load redistribution and targeted intervention.</div>
+        </div>
+        <div class="distress-signal" style="border-color: var(--border-mid); background: rgba(200,241,53,0.05);">
+          <div class="distress-signal-name" style="color: var(--accent);">Actuation</div>
+          <div class="distress-signal-desc">Adaptive throttling and emergent behavior detection trigger supervisory pause and recovery protocols.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="guarantees-grid reveal">
+    <div class="guarantee">
+      <span class="guarantee-icon">⊕</span>
+      <div class="guarantee-title">Monotonic</div>
+      <div class="guarantee-desc">More distress always produces a higher signal</div>
+    </div>
+    <div class="guarantee">
+      <span class="guarantee-icon">◈</span>
+      <div class="guarantee-title">Bounded</div>
+      <div class="guarantee-desc">Outputs remain within a stable, predictable range</div>
+    </div>
+    <div class="guarantee">
+      <span class="guarantee-icon">⬡</span>
+      <div class="guarantee-title">Composable</div>
+      <div class="guarantee-desc">Works identically for 1 agent or 10,000</div>
+    </div>
+    <div class="guarantee">
+      <span class="guarantee-icon">◎</span>
+      <div class="guarantee-title">Interpretable</div>
+      <div class="guarantee-desc">Every component is explainable to regulators</div>
+    </div>
+    <div class="guarantee">
+      <span class="guarantee-icon">△</span>
+      <div class="guarantee-title">Open Impl.</div>
+      <div class="guarantee-desc">Any formula satisfying constraints is valid</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PUBLICATIONS ──────────────────────── -->
+<section id="publications">
+  <div class="section-label">Publications</div>
+  <h2 class="section-title reveal">CTP Public<br>Document Set</h2>
+  <div class="pub-grid">
+    <div class="pub-item reveal">
+      <div class="pub-tag">White Paper</div>
+      <div class="pub-title">CTP v1.0 — Complete Specification Corpus</div>
+      <div class="pub-desc">Full white papers suite including the canonical specification, addenda, calibration guide, and failure mode library.</div>
+      <div class="pub-github">github.com/zmichaelakins/ctp-spec</div>
+      <div class="pub-arrow">↗</div>
+    </div>
+    <div class="pub-item reveal">
+      <div class="pub-tag">Technical Standard</div>
+      <div class="pub-title">Resilient Loop — RLCL v2.1</div>
+      <div class="pub-desc">Deterministic FSM for human-AI oversight. EU AI Act Art 14 compliance, dual-gate recovery, re-engagement reset, and compliance artifacts.</div>
+      <div class="pub-arrow">↗</div>
+    </div>
+    <div class="pub-item reveal">
+      <div class="pub-tag">Reference Architecture</div>
+      <div class="pub-title">Universal 1.0 — Five-Layer Supervisory Containment</div>
+      <div class="pub-desc">Comprehensive technical standards document covering the five-layer supervisory containment stack for enterprise AI deployment.</div>
+      <div class="pub-arrow">↗</div>
+    </div>
+  </div>
+  <div style="margin-top: 32px; font-size: 11px; color: var(--muted); line-height: 2;">
+    Educational use is permitted without restriction. Commercial use is subject to separate licensing.<br>
+    © 2026 Regulator AI Global, Inc. All rights reserved.
+  </div>
+</section>
+
+<!-- ── CONTACT ───────────────────────────── -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <div class="contact-layout">
+    <div class="contact-left reveal">
+      <h2 class="section-title">Get<br>in Touch</h2>
+      <p>If you are responsible for organizational control, risk exposure, or decision-making systems at scale — reach out to explore licensing, partnership, or technical collaboration.</p>
+      <div class="contact-info">
+        <div class="contact-line">
+          <div class="contact-line-label">Founder</div>
+          <div class="contact-line-value">Z. Michael Akins</div>
+        </div>
+        <div class="contact-line">
+          <div class="contact-line-label">Role</div>
+          <div class="contact-line-value">CEO, Regulator AI Global, Inc.</div>
+        </div>
+        <div class="contact-line">
+          <div class="contact-line-label">Email</div>
+          <div class="contact-line-value"><a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a></div>
+        </div>
+        <div class="contact-line">
+          <div class="contact-line-label">GitHub</div>
+          <div class="contact-line-value"><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">zmichaelakins/ctp-spec</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right reveal">
+      <div class="contact-form">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Organization</label>
+          <input type="text" class="form-input" placeholder="Company / institution">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="you@org.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Licensing inquiry, partnership, technical collaboration..."></textarea>
+        </div>
+        <button class="btn-submit">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────── -->
+<footer>
+  <div class="footer-brand">Regulator <strong>AI</strong> Global</div>
+  <div class="footer-copy">
+    CTP™ — Control-Theoretic Protocol<br>
+    © 2026 Regulator AI Global, Inc. · All Rights Reserved
+  </div>
+</footer>
+
+<!-- ── JS ────────────────────────────────── -->
+<script>
+// Layer data
+const layers = [
+  {
+    num: '00',
+    name: 'Cognitive Physics',
+    tagline: 'The foundational constraint model',
+    what: 'The foundational model of bandwidth, prediction error, and precision.',
+    role: 'Defines the constraints every cognitive system must obey.',
+    output: 'A stable substrate for all higher-order regulation.',
+    failure: []
+  },
+  {
+    num: '01',
+    name: 'Interface Layer',
+    tagline: 'Signal normalization & translation boundary',
+    what: 'The translation boundary between raw cognitive signals and structured regulatory inputs.',
+    role: 'Normalizes observations, actions, and metadata into a unified format.',
+    output: 'A clean, typed stream of cognitive state.',
+    failure: []
+  },
+  {
+    num: '02',
+    name: 'Local Regulation',
+    tagline: 'Individual agent stabilization',
+    what: 'The first active regulatory layer.',
+    role: 'Stabilizes an individual agent\'s cognitive loop by modulating load, error, and precision.',
+    output: 'A predictable, self-regulated agent.',
+    failure: ['Sends stabilized agent state to Layer 3', 'Calibrated precision and bounded load', 'Predictable behavior as atomic input']
+  },
+  {
+    num: '03',
+    name: 'Dyadic Coordination',
+    tagline: 'Human ↔ agent pairwise stability',
+    what: 'Regulation between two agents — human ↔ agent, or agent ↔ agent.',
+    role: 'Ensures pairwise interactions remain stable, low-load, and high-bandwidth.',
+    output: 'Predictable, low-friction dyads — the atomic unit swarms are built from.',
+    failure: ['Ping-ponging', 'Dead air', 'Over-talking', 'Precision mismatch', 'Context drift', 'Load asymmetry']
+  },
+  {
+    num: '04',
+    name: 'Group Regulation',
+    tagline: 'Coordination across 3–12 agents',
+    what: 'Regulation across small groups of 3–12 agents.',
+    role: 'Manages shared context, turn-taking, load balancing, and conflict avoidance.',
+    output: 'Stable micro-swarms ready for composition into larger structures.',
+    failure: ['Shared context collapse', 'Turn-taking deadlock', 'Load imbalance cascade']
+  },
+  {
+    num: '05',
+    name: 'Swarm Regulation',
+    tagline: 'Large heterogeneous agent swarms',
+    what: 'Regulation across large, heterogeneous agent swarms.',
+    role: 'Maintains global coherence, prevents overload cascades, and enforces cognitive safety.',
+    output: 'Scalable, resilient swarms — the transition from demos to infrastructure.',
+    failure: ['Overload cascade', 'Coherence collapse', 'Emergent instability']
+  },
+  {
+    num: '06',
+    name: 'Ecosystem Governance',
+    tagline: 'Rules, standards & economic policy',
+    what: 'The highest layer — rules, standards, and policies governing multi-swarm ecosystems.',
+    role: 'Defines interoperability, safety guarantees, and economic incentives.',
+    output: 'A regulated cognitive ecosystem with enforceable compliance.',
+    failure: []
+  }
+];
+
+const container = document.getElementById('layerContainer');
+
+layers.forEach((l, i) => {
+  const card = document.createElement('div');
+  card.className = 'layer-card reveal';
+  card.innerHTML = `
+    <div class="layer-header">
+      <div class="layer-num">${l.num}</div>
+      <div class="layer-title-block">
+        <div class="layer-name">${l.name}</div>
+        <div class="layer-tagline">${l.tagline}</div>
+      </div>
+      <div class="layer-toggle">+</div>
+    </div>
+    <div class="layer-body">
+      <div class="layer-content">
+        <div class="layer-content-section">
+          <h4>What It Is</h4>
+          <p>${l.what}</p>
+          <br>
+          <h4>Role</h4>
+          <p>${l.role}</p>
+          <br>
+          <h4>Output</h4>
+          <p>${l.output}</p>
+        </div>
+        <div class="layer-content-section">
+          ${l.failure.length ? `
+          <h4>${i === 2 ? 'Layer Outputs' : (i === 0 || i === 1 || i === 6) ? 'Design Intent' : 'Failure Modes Prevented'}</h4>
+          <ul>${l.failure.map(f => `<li>${f}</li>`).join('')}</ul>
+          ` : `
+          <h4>Design Intent</h4>
+          <p>Layer ${l.num} operates as a foundational constraint — its guarantees must hold for all higher layers to function correctly. No active regulation occurs here; this layer defines the physics that regulation obeys.</p>
+          `}
+        </div>
+      </div>
+    </div>
+  `;
+
+  card.querySelector('.layer-header').addEventListener('click', () => {
+    const isActive = card.classList.contains('active');
+    document.querySelectorAll('.layer-card').forEach(c => c.classList.remove('active'));
+    if (!isActive) card.classList.add('active');
+  });
+
+  container.appendChild(card);
+});
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
