@@ -3,1161 +3,751 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Regulator AI Global — Enforceable Human Oversight</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,600&display=swap" rel="stylesheet">
+<title>The Integration Airlock for AI Mergers & Acquisitions</title>
+<meta name="description" content="CTP creates an Integration Airlock for AI acquisitions—containing successor liability, enforcing deterministic oversight, and protecting deal value during post-close system convergence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --black: #060b12;
-  --off-black: #1e2e48;
-  --dim: #1c2a42;
-  --dim2: #1c2a42;
-  --border: #253a5a;
-  --border-mid: #2f4870;
-  --muted: #7a9abf;
-  --mid: #8aa0bc;
-  --white: #ddeaf8;
-  --white-dim: #90a8c4;
-  --accent: #00d4e8;
-  --accent-dim: rgba(0, 212, 232, 0.12);
-  --accent-glow: rgba(0, 212, 232, 0.06);
-  --accent2: #7b8cff;
-  --red: #ff4460;
+  --bg:         #040810;
+  --navy:       #060c18;
+  --ink:        #0a1628;
+  --panel:      #0e1a2e;
+  --panel-hi:   #101c30;
+  --border:     #152033;
+  --border-hi:  #1e2f47;
+  --blue:       #4a8fb5;
+  --blue-bright:#6ab0d4;
+  --blue-dim:   #0d2640;
+  --blue-glow:  rgba(74,143,181,0.1);
+  --blue-mid:   #2d6a93;
+  --blue-mid-dim:#0a1f35;
+  --red:        #c0392b;
+  --amber:      #d4a017;
+  --amber-dim:  #3a2800;
+  --text:       #e8f2f8;
+  --text-dim:   #9db8cc;
+  --text-faint: #4a6880;
+  --white:      #edf3f8;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#040810;color:#e8f2f8;font-family:'Syne',sans-serif;line-height:1.6;overflow-x:hidden}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+body::after{content:'';position:fixed;inset:0;z-index:-1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;opacity:0.4;background-size:cover;}
 
-body {
-  background: var(--black);
-  color: var(--white);
-  font-family: 'DM Mono', monospace;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 1.7;
-  overflow-x: hidden;
-  cursor: crosshair;
-}
+/* TOP NAV */
+nav.top-nav{position:fixed;top:0;left:0;right:0;z-index:300;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem 0 calc(220px + 2rem);background:rgba(4,8,16,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue-bright);text-decoration:none}
+.top-nav-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap;justify-content:center;}
+.top-nav-links a{font-size:0.66rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s}
+.top-nav-links a:hover{color:var(--white)}
+.nav-cta{font-family:'DM Mono',monospace;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue-bright);border:1px solid var(--blue-dim);padding:0.42rem 1rem;text-decoration:none;transition:all 0.2s;white-space:nowrap}
+.nav-cta:hover{background:var(--blue-mid);color:var(--white)}
 
-/* GRAIN */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-}
+/* SIDE NAV */
+nav.side-nav{position:fixed;top:0;left:0;bottom:0;z-index:299;width:220px;background:var(--navy);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:80px 0 2rem}
+.side-nav-logo{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue-bright);padding:0 1.5rem 1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem}
+.side-nav-section{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-faint);padding:0 1.5rem 0.6rem}
+.side-nav-links{list-style:none;flex:1}
+.side-nav-links li a{display:flex;align-items:center;gap:0.6rem;padding:0.6rem 1.5rem;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;color:var(--text-dim);text-decoration:none;transition:all 0.15s;border-left:2px solid transparent}
+.side-nav-links li a:hover{color:var(--white);background:var(--panel);border-left-color:var(--blue)}
+.side-nav-links li a.active{color:var(--blue-bright);background:rgba(74,143,181,0.07);border-left-color:var(--blue)}
+.side-nav-num{font-family:'DM Mono',monospace;font-size:0.56rem;color:var(--text-faint);min-width:1.2rem}
+.side-nav-footer{padding:1.5rem;border-top:1px solid var(--border)}
+.side-nav-footer a{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s}
+.side-nav-footer a:hover{color:var(--blue-bright)}
 
-/* NAV */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  background: rgba(5,5,7,0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 48px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.nav-brand {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px;
-  letter-spacing: 0.12em;
-  color: var(--white);
-}
-.nav-brand span { color: var(--accent); }
-
-.nav-links { display: flex; gap: 36px; list-style: none; }
-.nav-links a {
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--accent); }
-
-.nav-cta {
-  border: 1px solid var(--accent);
-  padding: 8px 20px;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
-}
-.nav-cta:hover { background: var(--accent); color: var(--black); }
+/* MAIN CONTENT OFFSET */
+.page-body{margin-left:220px;padding-top:60px;position:relative;z-index:1}
 
 /* HERO */
-#hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 48px 80px;
-  position: relative;
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
-}
-.hero-bg-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.5;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent);
-}
-.hero-bg-glow {
-  position: absolute;
-  top: -200px; left: 50%;
-  transform: translateX(-50%);
-  width: 900px; height: 700px;
-  background: radial-gradient(ellipse, rgba(0,212,232,0.07) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-bg-glow2 {
-  position: absolute;
-  bottom: -100px; right: -200px;
-  width: 600px; height: 600px;
-  background: radial-gradient(ellipse, rgba(123,140,255,0.05) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-eyebrow {
-  font-size: 10px;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 28px;
-  animation: fadeUp 0.8s ease both 0.2s;
-  display: flex; align-items: center; gap: 14px;
-}
-.hero-eyebrow::before {
-  content: '';
-  display: block; width: 32px; height: 1px;
-  background: var(--accent);
-}
-
-.hero-headline {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(64px, 10vw, 140px);
-  line-height: 0.88;
-  letter-spacing: -0.01em;
-  animation: fadeUp 0.9s ease both 0.3s;
-  max-width: 900px;
-}
-.hero-headline em {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--accent);
-  font-size: 0.82em;
-}
-
-.hero-sub {
-  margin-top: 40px;
-  max-width: 520px;
-  color: var(--white-dim);
-  font-size: 13px;
-  line-height: 1.9;
-  animation: fadeUp 0.9s ease both 0.45s;
-}
-
-.hero-meta {
-  margin-top: 48px;
-  display: flex; gap: 40px; align-items: center;
-  animation: fadeUp 0.9s ease both 0.6s;
-}
-.hero-stat { border-left: 2px solid var(--border-mid); padding-left: 20px; }
-.hero-stat-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 36px; letter-spacing: 0.05em;
-  color: var(--accent); line-height: 1;
-}
-.hero-stat-label {
-  font-size: 9px; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--muted); margin-top: 4px;
-}
-
-.hero-scroll {
-  position: absolute; bottom: 40px; right: 48px;
-  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--muted); writing-mode: vertical-rl;
-  display: flex; align-items: center; gap: 12px;
-  animation: fadeIn 1s ease both 1s;
-}
-.hero-scroll::after {
-  content: ''; display: block; width: 1px; height: 48px;
-  background: var(--muted);
-  animation: scrollLine 2s ease-in-out infinite;
-}
-@keyframes scrollLine {
-  0%, 100% { opacity: 0.3; transform: scaleY(1); }
-  50% { opacity: 1; transform: scaleY(0.5); }
-}
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 3rem 4rem;overflow:hidden}
+.hero-overlay{position:absolute;inset:0;z-index:1;background:rgba(4,8,16,0.96)}
+.hero-grid{position:absolute;inset:0;z-index:2;background-image:linear-gradient(rgba(74,143,181,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(74,143,181,0.04) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 70% 60% at 30% 50%,black,transparent)}
+.hero-content{position:relative;z-index:3;max-width:760px}
+.hero-tag{font-family:'DM Mono',monospace;font-size:0.67rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-bright);display:flex;align-items:center;gap:0.7rem;margin-bottom:2rem}
+.hero-tag::before{content:'';width:28px;height:1px;background:var(--blue)}
+.pulse{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--blue-bright);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.25}}
+.hero-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6.5vw,6rem);line-height:0.96;letter-spacing:0.01em;color:var(--white);margin-bottom:1.75rem}
+.hero-headline em{color:var(--blue-bright);font-style:normal}
+.hero-sub{font-size:1rem;color:var(--text-dim);max-width:540px;line-height:1.75;font-weight:400}
+.hero-actions{display:flex;gap:0.85rem;flex-wrap:wrap;margin-top:2rem}
+.btn-primary{display:inline-flex;align-items:center;background:var(--blue-mid);color:var(--white);font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.8rem 1.8rem;text-decoration:none;transition:all 0.2s;border:1px solid var(--blue)}
+.btn-primary:hover{background:var(--blue);transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.8rem 1.5rem;border:1px solid var(--border-hi);text-decoration:none;transition:all 0.2s}
+.btn-ghost:hover{color:var(--white);border-color:var(--blue-dim)}
+.hero-stats{display:flex;gap:2.5rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(--border);flex-wrap:wrap}
+.stat-val{font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:500;color:var(--blue-bright);display:block}
+.stat-label{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint);margin-top:0.15rem}
 
 /* TICKER */
-.ticker {
-  overflow: hidden; white-space: nowrap; padding: 11px 0;
-  background: var(--accent);
-}
-.ticker-inner {
-  display: inline-block;
-  animation: tick 35s linear infinite;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px; letter-spacing: 0.15em;
-  color: var(--black);
-}
-.ticker-inner span { opacity: 0.3; padding: 0 32px; }
-@keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ticker-wrap{background:var(--navy);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.55rem 0;overflow:hidden;position:relative;z-index:10}
+.ticker-track{display:flex;animation:ticker 34s linear infinite;white-space:nowrap}
+.t-item{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-faint);padding:0 2.5rem;display:flex;align-items:center;gap:0.5rem}
+.t-dot{width:3px;height:3px;border-radius:50%;background:var(--blue-dim);flex-shrink:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* SECTION BASE */
-section {
-  padding: 100px 48px;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-  background: #060b12;
-}
+.section{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:5.5rem 3rem}
+.section-full{position:relative;z-index:10;width:100%;padding:5.5rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.section-full .inner{max-width:1100px;margin:0 auto;padding:0 3rem}
+hr.div{border:none;border-top:1px solid var(--border);position:relative;z-index:10}
+.s-label{font-family:'DM Mono',monospace;font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:0.6rem;margin-bottom:1.25rem}
+.s-label::before{content:'';width:18px;height:1px;background:var(--blue-dim)}
+h2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;letter-spacing:-0.02em;line-height:1.15;color:var(--white);margin-bottom:1.25rem}
+.lead{font-size:0.98rem;color:var(--text-dim);max-width:620px;line-height:1.8;margin-bottom:2rem}
 
-/* Alternating section backgrounds for clear visual separation */
-#overview   { background: #0a1220; }
-#risk       { background: #162540 !important; }
-#architecture { background: #0a1220; }
-#spec       { background: #162540 !important; }
-#schematic  { background: #0a1220; }
-#faq        { background: #162540 !important; }
-#publications { background: #0a1220; }
-#contact    { background: #162540 !important; }
-.section-label {
-  font-size: 9px; letter-spacing: 0.35em;
-  text-transform: uppercase; color: var(--accent);
-  margin-bottom: 56px;
-  display: flex; align-items: center; gap: 14px;
-}
-.section-label::before {
-  content: ''; display: block;
-  width: 24px; height: 1px; background: var(--accent);
-}
-.section-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(36px, 5vw, 64px);
-  line-height: 1; letter-spacing: 0.02em; margin-bottom: 40px;
-}
+/* DFA STATE DIAGRAM */
+.dfa-states{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:2.5rem}
+.dfa-state{padding:1.75rem;position:relative;overflow:hidden;transition:background 0.2s}
+.dfa-state.state-active{background:#0a1e10}
+.dfa-state.state-active::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#2a7a3f,transparent)}
+.dfa-state.state-restricted{background:#1a1000}
+.dfa-state.state-restricted::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent)}
+.dfa-state.state-halted{background:#1a0808}
+.dfa-state.state-halted::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
+.dfa-state:hover{filter:brightness(1.08)}
+.state-badge{display:inline-flex;align-items:center;gap:0.4rem;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.9rem;padding:0.25rem 0.6rem;border:1px solid;border-radius:2px}
+.badge-active{color:#4ade80;border-color:#1a4d2a;background:rgba(74,222,128,0.07)}
+.badge-restricted{color:var(--amber);border-color:var(--amber-dim);background:rgba(212,160,23,0.07)}
+.badge-halted{color:#f87171;border-color:#3a1010;background:rgba(248,113,113,0.07)}
+.state-dot{width:5px;height:5px;border-radius:50%}
+.dot-active{background:#4ade80;animation:pulse 2s infinite}
+.dot-restricted{background:var(--amber);animation:pulse 1.4s infinite}
+.dot-halted{background:#f87171}
+.state-title{font-size:0.92rem;font-weight:700;color:var(--white);margin-bottom:0.5rem}
+.state-desc{font-size:0.77rem;color:var(--text-dim);line-height:1.65;margin-bottom:0.85rem}
+.state-triggers{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--text-faint);line-height:1.7;border-top:1px solid var(--border);padding-top:0.7rem}
+.state-triggers span{display:block;color:var(--text-faint)}
+.state-triggers span::before{content:'→ ';color:var(--blue-dim)}
 
-/* EXEC SUMMARY / OVERVIEW */
-#overview .two-col {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: start;
-}
-#overview p { color: var(--white-dim); line-height: 1.9; font-size: 13.5px; }
+/* RISK GRID */
+.risk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:2.5rem}
+.risk-card{background:#0d1b2e;padding:1.75rem;position:relative;overflow:hidden;transition:background 0.2s}
+.risk-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
+.risk-card:hover{background:var(--panel)}
+.rk-num{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;color:#5a7e9a;margin-bottom:0.85rem;text-transform:uppercase}
+.rk-title{font-size:0.88rem;font-weight:700;color:#edf3f8;margin-bottom:0.6rem}
+.rk-desc{font-size:0.78rem;color:#9db8cc;line-height:1.65}
+.urgency-bar{display:grid;grid-template-columns:repeat(4,1fr);margin-top:2.5rem;border:1px solid var(--border-hi);position:relative}
+.urgency-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--blue-dim),var(--blue-mid),var(--blue-dim))}
+.u-item{padding:1.5rem 1.6rem;border-right:1px solid var(--border)}
+.u-item:last-child{border-right:none}
+.u-head{font-size:0.8rem;font-weight:700;color:#edf3f8;margin-bottom:0.4rem}
+.u-body{font-size:0.74rem;color:#9db8cc;line-height:1.6}
+.u-tag{font-family:'DM Mono',monospace;font-size:0.57rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:0.5rem}
 
-.ctp-diagram {
-  border: 1px solid var(--border-mid);
-  background: var(--dim); padding: 40px; position: relative;
-}
-.ctp-diagram::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-}
-.ctp-diagram-title {
-  font-size: 9px; letter-spacing: 0.25em;
-  text-transform: uppercase; color: var(--muted); margin-bottom: 32px;
-}
-.loop-steps { display: flex; flex-direction: column; gap: 0; }
-.loop-step {
-  display: flex; align-items: flex-start; gap: 20px;
-  padding: 18px 0; border-bottom: 1px solid var(--border); position: relative;
-}
-.loop-step:last-child { border-bottom: none; }
-.loop-icon {
-  width: 36px; height: 36px; border: 1px solid var(--border-mid);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Bebas Neue', sans-serif; font-size: 14px;
-  color: var(--accent); flex-shrink: 0; background: var(--black);
-}
-.loop-step-title {
-  font-size: 11px; letter-spacing: 0.15em;
-  text-transform: uppercase; color: var(--white); margin-bottom: 4px;
-}
-.loop-step-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+/* AIRLOCK LAYOUT */
+.airlock-layout{display:grid;grid-template-columns:repeat(2,1fr);gap:4rem;align-items:start}
+.benefit-list{display:flex;flex-direction:column;gap:1px;margin-top:2rem;background:var(--border)}
+.b-row{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 1.2rem;background:var(--ink);border-left:2px solid var(--blue-dim);transition:border-color 0.2s,background 0.2s}
+.b-row:hover{border-left-color:var(--blue);background:var(--panel)}
+.b-icon{width:28px;height:28px;background:var(--blue-glow);border:1px solid var(--blue-dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.75rem;color:var(--blue-bright)}
+.b-title{font-size:0.8rem;font-weight:700;color:#edf3f8;margin-bottom:0.25rem}
+.b-desc{font-size:0.75rem;color:#9db8cc;line-height:1.6}
+.ctp-note{margin-top:1.75rem;padding:1.1rem 1.4rem;background:rgba(74,143,181,0.05);border:1px solid var(--blue-dim);font-size:0.78rem;color:var(--text-dim);line-height:1.65}
+.ctp-note strong{color:var(--white)}
 
-/* CTP SUMMARY CALLOUT */
-.ctp-summary {
-  background: var(--dim);
-  border: 1px solid var(--border-mid);
-  border-left: 3px solid var(--accent);
-  padding: 36px 40px;
-  margin-top: 60px;
-  position: relative;
-}
-.ctp-summary::before {
-  content: '// CORE THESIS';
-  position: absolute; top: 16px; right: 20px;
-  font-size: 9px; letter-spacing: 0.2em; color: var(--muted);
-}
-.ctp-summary-text {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(22px, 3.5vw, 38px);
-  line-height: 1.15; color: var(--white);
-}
-.ctp-summary-text em {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic; color: var(--accent); font-size: 0.9em;
-}
+/* ARCH DIAGRAM */
+.arch-box{background:var(--panel);border:1px solid var(--border-hi);padding:1.6rem}
+.arch-eyebrow{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1.4rem;text-align:center}
+.arch-layers{display:flex;flex-direction:column;gap:2px}
+.a-layer{display:grid;grid-template-columns:2.2rem 1fr auto;align-items:center;gap:0.6rem;padding:0.62rem 0.75rem;background:var(--ink);border:1px solid var(--border);transition:background 0.2s}
+.a-layer:hover{background:rgba(74,143,181,0.04)}
+.a-layer.hi{background:rgba(74,143,181,0.06);border-color:var(--blue-dim)}
+.a-num{font-family:'DM Mono',monospace;font-size:0.57rem;color:var(--text-faint);text-align:right}
+.a-name{font-size:0.72rem;font-weight:600;color:var(--text)}
+.a-tag{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.08em;padding:0.17rem 0.42rem;border:1px solid}
+.tag-t{color:var(--blue-bright);border-color:var(--blue-dim);background:rgba(74,143,181,0.07)}
+.tag-g{color:var(--blue);border-color:var(--blue-mid-dim);background:rgba(45,106,147,0.07)}
+.tag-d{color:var(--text-faint);border-color:var(--text-faint)}
+.tag-a{color:#4ade80;border-color:#1a4d2a;background:rgba(74,222,128,0.07)}
+.tag-r{color:var(--amber);border-color:var(--amber-dim);background:rgba(212,160,23,0.07)}
+.tag-h{color:#f87171;border-color:#3a1010;background:rgba(248,113,113,0.07)}
+.arch-inv{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--text-faint);text-align:center;margin-top:0.8rem;font-style:italic}
 
-/* RISK */
-#risk { background: #1a2640; }
-#risk .risk-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background: var(--border);
-}
-.risk-card {
-  background: var(--off-black); padding: 40px 36px;
-  position: relative; transition: background 0.3s; overflow: hidden;
-}
-.risk-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: var(--accent);
-  transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
-}
-.risk-card:hover { background: var(--dim); }
-.risk-card:hover::before { transform: scaleX(1); }
-.risk-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 56px; color: var(--border-mid); line-height: 1; margin-bottom: 20px;
-}
-.risk-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px; letter-spacing: 0.05em;
-  color: var(--white); margin-bottom: 14px;
-}
-.risk-desc { font-size: 12px; color: var(--white-dim); line-height: 1.85; }
+/* SCENARIO */
+.scenario{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--blue-dim);padding:1.6rem 1.9rem;margin-top:1rem}
+.sc-eye{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:0.85rem}
+.sc-body{font-size:0.84rem;color:var(--text-dim);line-height:1.75}
+.sc-body strong{color:var(--white)}
 
-/* PILLARS */
-.pillars-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1px; background: var(--border); margin-top: 60px;
-}
-.pillar {
-  background: var(--off-black); padding: 32px 26px;
-  position: relative; transition: background 0.3s;
-}
-.pillar:hover { background: var(--dim); }
-.pillar-icon { font-size: 20px; margin-bottom: 16px; }
-.pillar-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px; letter-spacing: 0.05em;
-  color: var(--white); margin-bottom: 10px;
-}
-.pillar-desc { font-size: 11px; line-height: 1.7; color: var(--muted); }
-.pillar::after {
-  content: ''; position: absolute; bottom: 0; left: 24px;
-  width: 0; height: 2px; background: var(--accent); transition: width 0.4s ease;
-}
-.pillar:hover::after { width: calc(100% - 48px); }
+/* SUCCESSOR LIABILITY CALLOUT */
+.successor-callout{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-top:2.5rem}
+.sc-block{padding:1.5rem;border:1px solid var(--border-hi);background:var(--ink);position:relative}
+.sc-block::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--blue-dim),var(--blue-mid),var(--blue-dim))}
+.sc-block-eye{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:0.75rem}
+.sc-block-head{font-size:0.85rem;font-weight:700;color:var(--white);margin-bottom:0.5rem}
+.sc-block-body{font-size:0.76rem;color:var(--text-dim);line-height:1.65}
 
-/* ARCHITECTURE */
-.arch-intro {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
-  margin-bottom: 60px;
-}
-.arch-intro p { color: var(--white-dim); line-height: 1.9; font-size: 13.5px; }
-.arch-callout {
-  background: var(--dim); border: 1px solid var(--border-mid);
-  border-left: 3px solid var(--accent2); padding: 32px;
-}
-.arch-callout-label {
-  font-size: 9px; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 14px;
-}
-.arch-callout p { color: var(--white-dim); font-size: 12px; line-height: 1.9; }
-.layers-container { display: flex; flex-direction: column; gap: 1px; }
-.layer-card {
-  background: var(--off-black); border: 1px solid var(--border);
-  overflow: hidden; transition: border-color 0.3s;
-}
-.layer-card:hover, .layer-card.active { border-color: var(--border-mid); }
-.layer-header {
-  display: flex; align-items: center; gap: 28px;
-  padding: 24px 32px; cursor: pointer; transition: background 0.2s;
-}
-.layer-header:hover { background: var(--dim); }
-.layer-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 40px; color: var(--border-mid); line-height: 1;
-  min-width: 52px; transition: color 0.2s;
-}
-.layer-card:hover .layer-num, .layer-card.active .layer-num { color: var(--accent); }
-.layer-title-block { flex: 1; }
-.layer-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px; letter-spacing: 0.05em;
-  color: var(--white); margin-bottom: 3px;
-}
-.layer-tagline { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
-.layer-toggle {
-  font-family: 'DM Mono', monospace; font-size: 20px;
-  color: var(--muted); transition: color 0.2s, transform 0.3s;
-  min-width: 20px; text-align: center;
-}
-.layer-card.active .layer-toggle { color: var(--accent); transform: rotate(45deg); }
-.layer-body { display: none; }
-.layer-card.active .layer-body { display: block; }
-.layer-content {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 40px; padding: 0 32px 32px 112px;
-}
-.layer-content h4 {
-  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 8px;
-}
-.layer-content p, .layer-content ul { font-size: 12px; color: var(--white-dim); line-height: 1.8; }
-.layer-content ul { padding-left: 16px; }
-.layer-content ul li { margin-bottom: 4px; }
+/* AUDIENCE GRID */
+.aud-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:2.5rem}
+.aud-card{background:var(--ink);padding:1.6rem 1.4rem;display:flex;flex-direction:column;transition:background 0.2s;overflow:hidden;position:relative}
+.aud-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue-dim),transparent);opacity:0;transition:opacity 0.3s}
+.aud-card:hover{background:var(--panel)}.aud-card:hover::after{opacity:1}
+.aud-type{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue-bright);margin-bottom:0.8rem}
+.aud-head{font-size:0.84rem;font-weight:700;color:var(--white);line-height:1.4;margin-bottom:0.55rem}
+.aud-body{font-size:0.74rem;color:var(--text-dim);line-height:1.65;flex:1;margin-bottom:1.2rem}
+.aud-cta{font-family:'DM Mono',monospace;font-size:0.63rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue-bright);text-decoration:none;border-top:1px solid var(--border);padding-top:0.85rem;display:flex;align-items:center;gap:0.4rem;transition:color 0.2s}
+.aud-cta:hover{color:var(--white)}.aud-cta::after{content:'→'}
 
-/* SPEC */
-.spec-header {
-  display: flex; justify-content: space-between;
-  align-items: flex-start; margin-bottom: 60px; gap: 40px;
-}
-.spec-badges { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
-.spec-badge {
-  border: 1px solid var(--border-mid); padding: 6px 14px;
-  font-size: 9px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--muted);
-}
-.spec-badge.active { border-color: var(--accent); color: var(--accent); }
-.spec-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1px; background: var(--border);
-}
-.spec-item {
-  background: var(--off-black); padding: 36px; position: relative;
-}
-.spec-full {
-  background: var(--off-black); padding: 36px;
-  grid-column: 1 / -1;
-}
-.spec-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 16px; color: var(--accent);
-  letter-spacing: 0.1em; margin-bottom: 10px;
-}
-.spec-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px; letter-spacing: 0.05em;
-  color: var(--white); margin-bottom: 18px;
-}
-.spec-body { font-size: 12px; color: var(--white-dim); line-height: 1.9; }
-.spec-equation {
-  margin-top: 20px; background: var(--dim);
-  border-left: 3px solid var(--accent);
-  padding: 16px 24px; font-size: 16px;
-  letter-spacing: 0.15em; color: var(--accent);
-  font-family: 'DM Mono', monospace;
-}
-.spec-compliance-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-  background: var(--border); margin-top: 20px;
-}
-.compliance-item {
-  background: var(--dim); padding: 24px 20px;
-}
-.compliance-item h4 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 16px; color: var(--white); margin-bottom: 8px;
-}
-.compliance-item p { font-size: 11px; color: var(--muted); line-height: 1.7; }
-
-/* SCHEMATIC */
-.schematic-intro {
-  max-width: 600px; color: var(--white-dim);
-  font-size: 13px; line-height: 1.9; margin-bottom: 60px;
-}
-.distress-flow {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-  background: var(--border);
-}
-.distress-col { background: var(--off-black); padding: 40px; }
-.distress-col-label {
-  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 28px;
-}
-.distress-signals { display: flex; flex-direction: column; gap: 12px; }
-.distress-signal {
-  border: 1px solid var(--border-mid); padding: 18px 20px;
-  background: var(--dim); transition: border-color 0.2s;
-}
-.distress-signal:hover { border-color: var(--accent); }
-.distress-signal-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px; letter-spacing: 0.05em;
-  color: var(--white); margin-bottom: 4px;
-}
-.distress-signal-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
-.distress-signal-bar {
-  height: 2px; background: var(--border-mid); margin-top: 12px;
-  position: relative; overflow: hidden;
-}
-.distress-signal-bar::after {
-  content: ''; position: absolute; left: 0; top: 0; height: 100%;
-  background: var(--accent); animation: barPulse 3s ease-in-out infinite;
-}
-.bar-load::after { width: 70%; animation-delay: 0s; }
-.bar-error::after { width: 45%; animation-delay: 0.5s; }
-.bar-precision::after { width: 85%; animation-delay: 1s; }
-@keyframes barPulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
-.guarantees-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr);
-  gap: 2px; background: var(--border); margin-top: 60px;
-}
-.guarantee { background: var(--off-black); padding: 28px 24px; text-align: center; }
-.guarantee-icon { font-size: 24px; margin-bottom: 12px; display: block; }
-.guarantee-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 16px; color: var(--white); margin-bottom: 6px;
-}
-.guarantee-desc { font-size: 10px; color: var(--muted); line-height: 1.6; }
-
-/* FAQ */
-#faq { background: var(--black); }
-.faq-section-header {
-  display: flex; align-items: center; gap: 14px;
-  margin: 56px 0 20px;
-}
-.faq-section-header:first-child { margin-top: 0; }
-.faq-section-num {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: 0.18em; color: var(--accent);
-  background: var(--accent-dim); border: 1px solid rgba(0,212,232,0.2);
-  padding: 4px 12px; flex-shrink: 0;
-}
-.faq-section-title {
-  font-size: 10px; font-family: 'DM Mono', monospace;
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
-}
-.faq-section-line {
-  flex: 1; height: 1px;
-  background: linear-gradient(to right, var(--border), transparent);
-}
-.faq-group { display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px; }
-.faq-item {
-  border: 1px solid var(--border); background: var(--dim);
-  position: relative; overflow: hidden; transition: border-color 0.2s;
-}
-.faq-item::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-  width: 2px; background: var(--accent); opacity: 0; transition: opacity 0.2s;
-}
-.faq-item.open::before, .faq-item:hover::before { opacity: 1; }
-.faq-item.open, .faq-item:hover { border-color: rgba(0,212,232,0.25); }
-.faq-question {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 28px; cursor: pointer; gap: 20px;
-}
-.faq-question-text {
-  font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 400;
-  color: var(--white); line-height: 1.5; letter-spacing: 0.01em;
-}
-.faq-icon {
-  font-size: 18px; color: var(--muted); flex-shrink: 0;
-  transition: color 0.2s, transform 0.3s; font-family: 'DM Mono', monospace;
-}
-.faq-item.open .faq-icon { color: var(--accent); transform: rotate(45deg); }
-.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
-.faq-item.open .faq-answer { max-height: 600px; }
-.faq-answer-inner { padding: 0 28px 24px; }
-.faq-answer-inner p {
-  font-size: 13px; color: var(--white-dim); line-height: 1.9;
-  font-family: 'DM Mono', monospace; font-weight: 300;
-}
-.faq-answer-inner strong { color: var(--white); font-weight: 400; }
-
-/* PUBLICATIONS */
-#publications { background: var(--black); }
-.pub-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 2px; background: var(--border);
-}
-.pub-item {
-  background: var(--off-black); padding: 36px;
-  position: relative; transition: background 0.3s; cursor: pointer;
-}
-.pub-item:hover { background: var(--dim); }
-.pub-tag {
-  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 20px;
-  display: flex; align-items: center; gap: 10px;
-}
-.pub-tag::before {
-  content: ''; display: inline-block; width: 6px; height: 6px;
-  background: var(--accent); border-radius: 50%;
-}
-.pub-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-style: italic; color: var(--white);
-  line-height: 1.3; margin-bottom: 14px;
-}
-.pub-desc { font-size: 11px; color: var(--white-dim); line-height: 1.8; }
-.pub-arrow {
-  position: absolute; bottom: 28px; right: 28px;
-  font-size: 18px; color: var(--muted); transition: color 0.3s, transform 0.3s;
-}
-.pub-item:hover .pub-arrow { color: var(--accent); transform: translate(4px, -4px); }
-.pub-github {
-  border: 1px solid var(--border-mid); padding: 8px 14px;
-  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--muted); display: inline-block; margin-top: 16px;
-}
-.pub-item:hover .pub-github { border-color: var(--accent); color: var(--accent); }
-
-/* CTA BLOCK */
-.cta-block {
-  background: var(--dim); border: 1px solid var(--border-mid);
-  border-left: 3px solid var(--accent); padding: 48px 52px;
-  margin-top: 80px; position: relative; overflow: hidden;
-}
-.cta-block::after {
-  content: '';
-  position: absolute; top: 0; right: 0; bottom: 0; width: 300px;
-  background: radial-gradient(ellipse at right, rgba(0,212,232,0.05), transparent 70%);
-  pointer-events: none;
-}
-.cta-block h3 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 36px; letter-spacing: 0.05em; color: var(--white); margin-bottom: 12px;
-}
-.cta-block p {
-  color: var(--white-dim); font-size: 13px; line-height: 1.8; margin-bottom: 32px;
-  max-width: 480px;
-}
-.cta-options { display: flex; gap: 12px; flex-wrap: wrap; }
-.cta-pill {
-  border: 1px solid var(--border-mid); padding: 12px 24px;
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--white-dim); text-decoration: none; transition: all 0.2s;
-}
-.cta-pill:hover { border-color: var(--accent); color: var(--accent); }
+/* RESOURCES */
+.res-layout{display:grid;grid-template-columns:repeat(2,1fr);gap:4rem}
+.res-list{list-style:none;display:flex;flex-direction:column;gap:2px;margin-top:1.5rem}
+.res-list li a{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem;background:var(--panel);border:1px solid var(--border);text-decoration:none;transition:all 0.2s}
+.res-list li a:hover{border-color:var(--border-hi);background:rgba(74,143,181,0.04)}
+.res-name{font-size:0.79rem;font-weight:600;color:var(--white)}
+.res-meta{font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--text-faint)}
+.faq-list{display:flex;flex-direction:column;gap:2px;margin-top:1.5rem}
+.faq-item{padding:1.05rem 1.2rem;background:var(--panel);border:1px solid var(--border)}
+.faq-q{font-size:0.78rem;font-weight:700;color:#edf3f8;margin-bottom:0.4rem}
+.faq-a{font-size:0.74rem;color:#9db8cc;line-height:1.65}
 
 /* CONTACT */
-#contact { background: var(--dim); }
-.contact-layout {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 100px; align-items: start;
-}
-.contact-left p {
-  color: var(--white-dim); font-size: 13.5px; line-height: 1.9; margin-bottom: 40px;
-}
-.contact-info { display: flex; flex-direction: column; gap: 0; }
-.contact-line {
-  display: flex; align-items: center; gap: 16px;
-  padding: 16px 0; border-bottom: 1px solid var(--border);
-}
-.contact-line-label {
-  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--muted); min-width: 80px;
-}
-.contact-line-value { color: var(--white); font-size: 12px; }
-.contact-line-value a { color: var(--white); text-decoration: none; transition: color 0.2s; }
-.contact-line-value a:hover { color: var(--accent); }
-.contact-form { display: flex; flex-direction: column; gap: 16px; }
-.form-group { display: flex; flex-direction: column; gap: 8px; }
-.form-label {
-  font-size: 9px; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--muted);
-}
-.form-input, .form-textarea {
-  background: var(--black); border: 1px solid var(--border-mid);
-  color: var(--white); font-family: 'DM Mono', monospace;
-  font-weight: 300; font-size: 13px; padding: 14px 18px;
-  outline: none; transition: border-color 0.3s; resize: none; cursor: crosshair;
-}
-.form-input:focus, .form-textarea:focus { border-color: var(--accent); }
-.form-textarea { min-height: 120px; }
-.btn-submit {
-  background: var(--accent); color: var(--black); border: none;
-  padding: 16px 40px; font-family: 'Bebas Neue', sans-serif;
-  font-size: 16px; letter-spacing: 0.15em; cursor: pointer;
-  transition: opacity 0.2s; text-transform: uppercase; align-self: flex-start;
-}
-.btn-submit:hover { opacity: 0.85; }
+.engage-wrap{text-align:center;padding:5.5rem 3rem;position:relative;z-index:10;max-width:1100px;margin:0 auto}
+.engage-wrap::before{content:'';position:absolute;top:3rem;left:50%;transform:translateX(-50%);width:360px;height:1px;background:linear-gradient(90deg,transparent,var(--blue-dim),transparent)}
+.eng-head{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.5vw,3rem);letter-spacing:0.02em;color:var(--white);margin-bottom:0.75rem}
+.eng-sub{font-size:0.92rem;color:var(--text-dim);max-width:460px;margin:0 auto 1.75rem;line-height:1.7}
+.eng-email{font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:0.06em;color:var(--blue-bright);margin:0.5rem 0 1.5rem}
+.eng-email a{color:var(--blue-bright);text-decoration:none;border-bottom:1px solid var(--blue-dim);padding-bottom:1px;transition:color 0.2s}
+.eng-email a:hover{color:var(--white)}
+.eng-contact{font-family:'DM Mono',monospace;font-size:0.67rem;letter-spacing:0.08em;color:var(--text-faint)}
+.eng-contact a{color:var(--text-dim);text-decoration:none}.eng-contact a:hover{color:var(--blue-bright)}
 
 /* FOOTER */
-footer {
-  padding: 40px 48px;
-  display: flex; justify-content: space-between; align-items: center;
-  border-top: 1px solid var(--border);
-}
-.footer-brand {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px; letter-spacing: 0.1em; color: var(--muted);
-}
-.footer-brand strong { color: var(--accent); }
-.footer-copy {
-  font-size: 10px; color: var(--muted);
-  letter-spacing: 0.1em; text-align: right; line-height: 2;
-}
+footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:10;flex-wrap:wrap;gap:1rem;text-align:center;}
+.ft-left{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.07em;color:var(--text-faint);line-height:1.65}
+.ft-left span{color:var(--blue-dim)}
+.ft-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap;justify-content:center;}
+.ft-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint);text-decoration:none;transition:color 0.2s}
+.ft-links a:hover{color:var(--text)}
 
-/* ANIMATIONS */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-.reveal {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
-/* Fallback: if JS fails, show content */
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; }
-}
+.reveal{opacity:1;transform:none}
 
 /* RESPONSIVE */
-@media (max-width: 900px) {
-  nav { padding: 0 24px; }
-  nav .nav-links { display: none; }
-  section, #hero { padding: 80px 24px; }
-  #hero { padding-bottom: 80px; }
-  .hero-meta { flex-wrap: wrap; gap: 24px; }
-  #overview .two-col, .arch-intro, .contact-layout { grid-template-columns: 1fr; gap: 40px; }
-  #risk .risk-grid, .distress-flow { grid-template-columns: 1fr; }
-  .guarantees-grid { grid-template-columns: repeat(2, 1fr); }
-  .pillars-grid { grid-template-columns: 1fr 1fr; }
-  .pub-grid, .spec-grid { grid-template-columns: 1fr; }
-  .spec-compliance-grid { grid-template-columns: repeat(2, 1fr); }
-  footer { flex-direction: column; gap: 20px; text-align: center; }
-  .footer-copy { text-align: center; }
-  .layer-content { grid-template-columns: 1fr; padding-left: 32px; }
-  .hero-scroll { display: none; }
-  .cta-options { flex-direction: column; }
-  .spec-header { flex-direction: column; gap: 20px; }
+@media(max-width:1024px){
+  nav.top-nav{padding:0 1.5rem 0 1.5rem;flex-direction:row;flex-wrap:wrap;height:auto;gap:1rem;justify-content:center;}
+  nav.top-nav .top-nav-links{gap:1rem;}
+  nav.side-nav{display:none}
+  .page-body{margin-left:0;padding-top:120px;}
+  #hero{padding:6rem 2rem 4rem;}
+  .section{padding:5.5rem 2rem;}
+  .section-full .inner{padding:0 2rem;}
+  footer{padding:1.6rem 2rem;}
+}
+@media(max-width:800px){
+  .risk-grid{grid-template-columns:1fr;}
+  .urgency-bar{grid-template-columns:repeat(2,1fr);}
+  .airlock-layout{grid-template-columns:1fr;}
+  .dfa-states{grid-template-columns:1fr;}
+  .successor-callout{grid-template-columns:1fr;}
+  .aud-grid{grid-template-columns:repeat(2,1fr);}
+  .res-layout{grid-template-columns:1fr;}
+  .hero-content{max-width:100%;}
+  .hero-sub{max-width:100%;}
+  .hero-headline{font-size:clamp(2.5rem,6vw,4rem);}
+  #hero{padding:4rem 1.5rem 3rem;}
+  .section{padding:4rem 1.5rem;}
+  .section-full .inner{padding:0 1.5rem;}
+  .ticker-wrap{padding:0.4rem 0;}
+  .t-item{padding:0 1.5rem;}
+  footer{padding:1.4rem 1.5rem;}
+  .top-nav-links a{font-size:0.7rem;}
+  .nav-cta{font-size:0.7rem;padding:0.4rem 0.8rem;}
+  .nav-logo{font-size:0.8rem;}
+}
+@media(max-width:480px){
+  .section{padding:3rem 1rem;}
+  .urgency-bar{grid-template-columns:1fr;}
+  .aud-grid{grid-template-columns:1fr;}
+  .hero-stats{flex-direction:column;gap:1.25rem;}
+  #hero{padding:3rem 1rem 2rem;min-height:80vh;}
+  .hero-headline{font-size:clamp(2rem,8vw,3rem);line-height:1;}
+  .hero-sub{font-size:0.9rem;line-height:1.6;}
+  .hero-tag{font-size:0.6rem;gap:0.5rem;}
+  .hero-tag::before{width:20px;}
+  .hero-actions{gap:0.6rem;justify-content:center;}
+  .btn-primary, .btn-ghost{padding:0.7rem 1.2rem;font-size:0.7rem;}
+  .hero-stats{gap:1rem;margin-top:2.5rem;padding-top:2rem;}
+  .stat-val{font-size:1rem;}
+  .stat-label{font-size:0.6rem;}
+  .ticker-track{animation:ticker 50s linear infinite;}
+  .t-item{font-size:0.55rem;padding:0 1rem;gap:0.3rem;}
+  .t-dot{width:2.5px;height:2.5px;}
+  .s-label{font-size:0.6rem;gap:0.4rem;}
+  .s-label::before{width:15px;}
+  h2{font-size:clamp(1.5rem,5vw,2rem);}
+  .lead{font-size:0.9rem;line-height:1.7;max-width:100%;}
+  .dfa-state{padding:1.5rem;}
+  .state-title{font-size:0.85rem;}
+  .state-desc{font-size:0.72rem;line-height:1.6;}
+  .state-triggers{font-size:0.55rem;line-height:1.6;padding-top:0.6rem;}
+  .risk-card{padding:1.5rem;}
+  .rk-num{font-size:0.55rem;}
+  .rk-title{font-size:0.82rem;}
+  .rk-desc{font-size:0.72rem;line-height:1.6;}
+  .u-item{padding:1.2rem 1.3rem;}
+  .u-head{font-size:0.75rem;}
+  .u-body{font-size:0.7rem;line-height:1.5;}
+  .u-tag{font-size:0.55rem;}
+  .b-row{padding:1rem 1rem;gap:0.8rem;}
+  .b-icon{width:24px;height:24px;font-size:0.7rem;}
+  .b-title{font-size:0.75rem;}
+  .b-desc{font-size:0.7rem;line-height:1.5;}
+  .ctp-note{padding:1rem 1.2rem;font-size:0.72rem;line-height:1.6;margin-top:1.5rem;}
+  .arch-box{padding:1.4rem;}
+  .arch-eyebrow{font-size:0.55rem;}
+  .a-layer{padding:0.55rem 0.65rem;}
+  .a-name{font-size:0.68rem;}
+  .a-tag{font-size:0.52rem;padding:0.15rem 0.35rem;}
+  .arch-inv{font-size:0.55rem;}
+  .scenario{padding:1.4rem 1.6rem;}
+  .sc-eye{font-size:0.55rem;}
+  .sc-body{font-size:0.78rem;line-height:1.6;}
+  .successor-callout{gap:1.5rem;}
+  .sc-block{padding:1.3rem;}
+  .sc-block-eye{font-size:0.55rem;}
+  .sc-block-head{font-size:0.8rem;}
+  .sc-block-body{font-size:0.72rem;line-height:1.6;}
+  .aud-card{padding:1.4rem 1.2rem;}
+  .aud-type{font-size:0.55rem;}
+  .aud-head{font-size:0.78rem;}
+  .aud-body{font-size:0.7rem;line-height:1.6;}
+  .aud-cta{font-size:0.6rem;padding-top:0.75rem;}
+  .res-list li a{padding:0.75rem 0.9rem;}
+  .res-name{font-size:0.75rem;}
+  .res-meta{font-size:0.55rem;}
+  .faq-item{padding:0.95rem 1rem;}
+  .faq-q{font-size:0.72rem;}
+  .faq-a{font-size:0.7rem;line-height:1.6;}
+  .engage-wrap{padding:4rem 1rem;}
+  .engage-wrap::before{width:280px;}
+  .eng-head{font-size:clamp(1.8rem,6vw,2.5rem);}
+  .eng-sub{font-size:0.85rem;line-height:1.6;max-width:100%;}
+  .eng-email{font-size:0.95rem;}
+  .eng-contact{font-size:0.62rem;}
+  footer{padding:1.4rem 1rem;gap:1rem;}
+  .ft-left{font-size:0.55rem;}
+  .ft-links{gap:1.25rem;}
+  .ft-links a{font-size:0.55rem;}
+  .top-nav-links{gap:0.75rem;}
+  .top-nav-links a{font-size:0.62rem;}
+  .nav-cta{font-size:0.62rem;padding:0.35rem 0.8rem;}
+  .nav-logo{font-size:0.68rem;}
+  nav.top-nav{padding:1rem;justify-content:center;gap:1rem;height:auto;}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-brand">Regulator <span>AI</span></div>
-  <ul class="nav-links">
-    <li><a href="#overview">Overview</a></li>
-    <li><a href="#architecture">Architecture</a></li>
-    <li><a href="#spec">Protocol</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#publications">Publications</a></li>
-    <li><a href="#contact">Contact</a></li>
+<nav class="top-nav">
+  <a class="nav-logo" href="#hero">Regulator AI Global</a>
+  <ul class="top-nav-links">
+    <li><a href="#problem">Risk</a></li>
+    <li><a href="#airlock">Airlock</a></li>
+    <li><a href="#regulatory">Compliance</a></li>
+    <li><a href="#deployment">Timeline</a></li>
+    <li><a href="#publications">Resources</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Get in Touch</a>
+  <a class="nav-cta" href="#contact">Contact</a>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg-grid"></div>
-  <div class="hero-bg-glow"></div>
-  <div class="hero-bg-glow2"></div>
-  <div class="hero-eyebrow">Regulator AI Global, Inc.</div>
-  <h1 class="hero-headline">Enforceable<br><em>Human Oversight</em><br>for Scalable AI</h1>
-  <p class="hero-sub">Powered by the Cognitive Transport Protocol™ and the Resilient Loop — a deterministic runtime control layer that maintains stable human oversight as AI systems scale.</p>
-  <div class="hero-meta">
-    <div class="hero-stat"><div class="hero-stat-num">7</div><div class="hero-stat-label">Layer Architecture</div></div>
-    <div class="hero-stat"><div class="hero-stat-num">v3.0</div><div class="hero-stat-label">Regulator Core</div></div>
-    <div class="hero-stat"><div class="hero-stat-num">CTP™</div><div class="hero-stat-label">Protocol v1.0</div></div>
+<nav class="side-nav">
+  <div class="side-nav-logo">CTP™ Protocol</div>
+  <div class="side-nav-section">Navigation</div>
+  <ul class="side-nav-links">
+    <li><a href="#problem"><span class="side-nav-num">01</span> Acquisition Risk</a></li>
+    <li><a href="#airlock"><span class="side-nav-num">02</span> Integration Airlock</a></li>
+    <li><a href="#regulatory"><span class="side-nav-num">03</span> Regulatory Alignment</a></li>
+    <li><a href="#deployment"><span class="side-nav-num">04</span> Deal Timeline</a></li>
+    <li><a href="#publications"><span class="side-nav-num">05</span> Resources</a></li>
+    <li><a href="#contact"><span class="side-nav-num">06</span> Contact</a></li>
+  </ul>
+  <div class="side-nav-footer">
+    <a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">GitHub ↗</a>
   </div>
-  <div class="hero-scroll">Scroll</div>
+</nav>
+
+<div class="page-body">
+
+<section id="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag"><span class="pulse"></span> Successor Liability Containment · AI Acquisition Infrastructure</div>
+    <h1 class="hero-headline">
+      The <em>Integration Airlock</em><br>for AI Mergers & Acquisitions
+    </h1>
+    <p class="hero-sub">When you acquire an AI company, you inherit its liability surface. The Cognitive Transport Protocol™ establishes a deterministic supervisory boundary — containing successor liability exposure, enforcing oversight continuity, and protecting deal value from close through full convergence.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#airlock">See the Architecture</a>
+      <a class="btn-ghost" href="#contact">Licensing Inquiry</a>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-val">EU AI Act</span><span class="stat-label">Article 14 Aligned</span></div>
+      <div><span class="stat-val">3-State DFA</span><span class="stat-label">Deterministic Supervision</span></div>
+      <div><span class="stat-val">Patent Pending</span><span class="stat-label">U.S. Provisional Filed</span></div>
+      <div><span class="stat-val">Day-One</span><span class="stat-label">Audit Record Active</span></div>
+    </div>
+  </div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">
-    SUPERVISORY CONTAINMENT <span>·</span> HUMAN-IN-THE-LOOP <span>·</span> RUNTIME ENFORCEMENT <span>·</span> COGNITIVE BANDWIDTH <span>·</span> DISTRESS REGULATION <span>·</span> AUDIT TRAIL <span>·</span> RESILIENT LOOP <span>·</span> COMPLIANCE ARTIFACTS <span>·</span> DETERMINISTIC FSM &nbsp;&nbsp;&nbsp;&nbsp;
-    SUPERVISORY CONTAINMENT <span>·</span> HUMAN-IN-THE-LOOP <span>·</span> RUNTIME ENFORCEMENT <span>·</span> COGNITIVE BANDWIDTH <span>·</span> DISTRESS REGULATION <span>·</span> AUDIT TRAIL <span>·</span> RESILIENT LOOP <span>·</span> COMPLIANCE ARTIFACTS <span>·</span> DETERMINISTIC FSM &nbsp;&nbsp;&nbsp;&nbsp;
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="t-item"><span class="t-dot"></span>Successor Liability Containment</span>
+    <span class="t-item"><span class="t-dot"></span>Integration Airlock</span>
+    <span class="t-item"><span class="t-dot"></span>Deterministic Supervisory Architecture</span>
+    <span class="t-item"><span class="t-dot"></span>EU AI Act Article 14</span>
+    <span class="t-item"><span class="t-dot"></span>Three-State DFA Control Logic</span>
+    <span class="t-item"><span class="t-dot"></span>Immutable Audit Chain</span>
+    <span class="t-item"><span class="t-dot"></span>Kessler Cascade Prevention</span>
+    <span class="t-item"><span class="t-dot"></span>Universal Protocol</span>
+    <span class="t-item"><span class="t-dot"></span>Cognitive Transport Protocol™</span>
+    <span class="t-item"><span class="t-dot"></span>Regulator AI Global, Inc.</span>
+    <span class="t-item"><span class="t-dot"></span>Successor Liability Containment</span>
+    <span class="t-item"><span class="t-dot"></span>Integration Airlock</span>
+    <span class="t-item"><span class="t-dot"></span>Deterministic Supervisory Architecture</span>
+    <span class="t-item"><span class="t-dot"></span>EU AI Act Article 14</span>
+    <span class="t-item"><span class="t-dot"></span>Three-State DFA Control Logic</span>
+    <span class="t-item"><span class="t-dot"></span>Immutable Audit Chain</span>
+    <span class="t-item"><span class="t-dot"></span>Kessler Cascade Prevention</span>
+    <span class="t-item"><span class="t-dot"></span>Universal Protocol</span>
+    <span class="t-item"><span class="t-dot"></span>Cognitive Transport Protocol™</span>
+    <span class="t-item"><span class="t-dot"></span>Regulator AI Global, Inc.</span>
   </div>
 </div>
 
-<!-- OVERVIEW -->
-<section id="overview">
-  <div class="section-label">Overview</div>
-  <div class="two-col">
-    <div class="reveal">
-      <h2 class="section-title">CTP Control<br>Loop</h2>
-      <p>CTP enforces bounded cognitive load through continuous sensing, thresholding, and actuation.</p>
-      <br>
-      <p>As AI output accelerates, human review capacity becomes the limiting factor. Without regulation, multi-agent AI systems can become unstable and economically unsafe at scale. Regulator v3.0 provides human-in-the-loop control to maintain stability and safety.</p>
-      <br>
-      <p>The system monitors oversight load and automatically slows or pauses AI progression when defined limits are reached — preserving recoverability and generating a continuous, verifiable audit trail.</p>
+<div class="section" id="problem">
+  <div class="s-label">Acquisition Risk</div>
+  <h2>What Acquirers Inherit</h2>
+  <p class="lead">Every AI acquisition transfers liability that was not visible during diligence. The moment systems are connected, new interaction pathways emerge — carrying oversight gaps, compliance exposure, and successor liability that standard reps and warranties do not address.</p>
+
+  <div class="successor-callout">
+    <div class="sc-block">
+      <div class="sc-block-eye">// Successor Liability</div>
+      <div class="sc-block-head">You Acquire the Liability Surface — Not Just the Asset</div>
+      <p class="sc-block-body">When an AI system is acquired, the acquirer assumes responsibility for its behavior from the date of close. Regulatory exposure, oversight failures, and compliance gaps that existed in the target become the acquirer's liability — regardless of what was disclosed in diligence. The Integration Airlock establishes a documented supervisory boundary from day one, creating defensible evidence that oversight was active before liability transfer was complete.</p>
     </div>
-    <div class="reveal">
-      <div class="ctp-diagram">
-        <div class="ctp-diagram-title">// Control loop — runtime execution</div>
-        <div class="loop-steps">
-          <div class="loop-step"><div class="loop-icon">S</div><div><div class="loop-step-title">Sense</div><div class="loop-step-desc">Monitor cognitive load, error rate, and precision across all active agents</div></div></div>
-          <div class="loop-step"><div class="loop-icon">T</div><div><div class="loop-step-title">Threshold</div><div class="loop-step-desc">Evaluate distress signal against defined supervisory limits</div></div></div>
-          <div class="loop-step"><div class="loop-icon">A</div><div><div class="loop-step-title">Actuate</div><div class="loop-step-desc">Slow, pause, or reroute AI throughput to restore human oversight capacity</div></div></div>
-          <div class="loop-step"><div class="loop-icon">R</div><div><div class="loop-step-title">Record</div><div class="loop-step-desc">Generate verifiable compliance artifacts for every supervisory decision</div></div></div>
+    <div class="sc-block">
+      <div class="sc-block-eye">// Kessler Cascade Risk</div>
+      <div class="sc-block-head">Unchecked Interaction Growth Degrades the Entire Stack</div>
+      <p class="sc-block-body">The Kessler Cascade describes the failure mode where uncontrolled AI system interactions compound — each unmonitored connection spawning further interaction pathways, until supervisory control becomes structurally impossible. In enterprise AI acquisitions, this cascade can propagate across portfolio infrastructure within weeks of close. CTP's Universal Protocol applies deterministic containment at every interaction edge, preventing cascade growth before it becomes irreversible.</p>
+    </div>
+  </div>
+
+  <div class="risk-grid" >
+    <div class="risk-card reveal">
+      <div class="rk-num">Risk Surface 01</div>
+      <div class="rk-title">Ghost Asset Exposure</div>
+      <p class="rk-desc">AI systems disclosed during diligence represent only the visible surface. Interaction pathways between acquired systems and host infrastructure emerge post-close — creating behavior and liability that no representation or warranty covers. These undisclosed pathways are the Ghost Asset: real, transferable, and uncontained without a supervisory mediation layer.</p>
+    </div>
+    <div class="risk-card reveal">
+      <div class="rk-num">Risk Surface 02</div>
+      <div class="rk-title">Oversight Continuity Gap</div>
+      <p class="rk-desc">Standard integration processes do not preserve supervisory control across the convergence boundary. When acquired AI systems connect to production infrastructure, the oversight mechanisms that applied pre-close are not automatically carried forward. The result is a compliance gap at the moment of maximum liability transfer — the Integration Airlock closes this gap deterministically.</p>
+    </div>
+    <div class="risk-card reveal">
+      <div class="rk-num">Risk Surface 03</div>
+      <div class="rk-title">Regulatory Audit Exposure</div>
+      <p class="rk-desc">The Airlock provides an immutable, day-one audit record of human-centric oversight, satisfying Article 14 requirements for high-risk AI systems during the convergence phase.</p>
+    </div>
+    <div class="risk-card reveal">
+      <div class="rk-num">Risk Surface 04</div>
+      <div class="rk-title">Indemnification Failure</div>
+      <p class="rk-desc">R&W insurance and seller indemnification do not cover AI interaction pathways that emerge post-close. Once systems are connected, the behavior that produces liability is new — generated by the integration itself, not by either party's prior operation. This exposure is uninsured under standard deal structures and requires an architectural containment solution, not a contractual one.</p>
+    </div>
+  </div>
+
+  <div class="urgency-bar reveal" >
+    <div class="u-item">
+      <span class="u-tag">Liability Transfer</span>
+      <div class="u-head">Begins at Close</div>
+      <p class="u-body">Successor liability attaches from the moment of transaction close — not after integration is complete. Oversight infrastructure must be active before systems connect.</p>
+    </div>
+    <div class="u-item">
+      <span class="u-tag">Cascade Onset</span>
+      <div class="u-head">Days to Weeks</div>
+      <p class="u-body">Uncontrolled interaction growth between AI systems can produce a Kessler Cascade within weeks of first connection — compounding faster than manual remediation allows.</p>
+    </div>
+    <div class="u-item">
+      <span class="u-tag">Regulatory Window</span>
+      <div class="u-head">EU AI Act Active</div>
+      <p class="u-body">Article 14 enforcement is live. Acquirers of high-risk AI systems must demonstrate continuous oversight documentation to regulators and insurers on demand.</p>
+    </div>
+    <div class="u-item" style="border-right:none">
+      <span class="u-tag">CTP Response</span>
+      <div class="u-head">Architectural Containment</div>
+      <p class="u-body">The Integration Airlock is activated before systems connect — establishing the supervisory boundary, audit record, and intervention capability that successor liability requires.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<div class="section" id="ghost">
+  <div class="s-label">Supervisory Architecture</div>
+  <h2>Three-State Deterministic Finite Automaton</h2>
+  <p class="lead">CTP's supervisory layer operates as a formally specified Three-State DFA — Active, Restricted, and Halted. Each state carries defined transition conditions, intervention rights, and audit obligations. The architecture is deterministic: given any system input, the supervisory response is computable, reproducible, and auditable. This is not a policy layer — it is a control-theoretic enforcement mechanism designed to satisfy EU AI Act Article 14's requirement for effective, traceable human oversight.</p>
+
+  <div class="dfa-states">
+    <div class="dfa-state state-active">
+      <div class="state-badge badge-active"><span class="state-dot dot-active"></span>Active State</div>
+      <div class="state-title">Normal Operational Parameters</div>
+      <p class="state-desc">All AI system interactions are within defined stability thresholds. The supervisory layer observes, logs, and validates each interaction edge in real time. Oversight records are continuously generated. Human operators retain full intervention authority at all times.</p>
+      <div class="state-triggers">
+        <span>→ Baseline Parameter Alignment</span>
+        <span>→ Audit Integrity Maintained</span>
+        <span>→ Supervisory Continuity Verified</span>
+      </div>
+    </div>
+    <div class="dfa-state state-restricted">
+      <div class="state-badge badge-restricted"><span class="state-dot dot-restricted"></span>Restricted State</div>
+      <div class="state-title">Triggered Intervention &amp; Mitigation</div>
+      <p class="state-desc">A supervisory threshold has been crossed. The DFA transitions to Restricted state, automatically throttling interaction throughput and routing flagged pathways for human review before proceeding. No flagged interaction completes without an authorized supervisory decision. The Airlock enforces a mandatory review gate — compliant with Article 14's requirement that human oversight be active, not retrospective.</p>
+      <div class="state-triggers">
+        <span>→ Boundary Variance Detected</span>
+        <span>→ Interaction Variance Flagged</span>
+        <span>→ Supervisory Review Gate</span>
+      </div>
+    </div>
+    <div class="dfa-state state-halted">
+      <div class="state-badge badge-halted"><span class="state-dot dot-halted"></span>Halted State</div>
+      <div class="state-title">Absolute Containment — System Stop</div>
+      <p class="state-desc">Critical threshold reached. The DFA transitions to Halted state, invoking the cryptographic actuation deadlock gate. All cross-system interactions through the Integration Airlock are suspended until authorized personnel complete a verified re-engagement sequence. The Halted state cannot be exited by system action alone — it requires a deliberate human override, creating an irrefutable audit event documenting supervisory control at the moment of maximum risk.</p>
+      <div class="state-triggers">
+        <span>→ Critical Protocol Violation</span>
+        <span>→ Supervisory Feedback Loop Terminated</span>
+        <span>→ Containment Lock Activated</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario reveal" style="margin-top:2rem">
+    <div class="sc-eye">// Universal Protocol — Kessler Cascade Containment</div>
+    <p class="sc-body">The Universal Protocol applies the same Three-State DFA logic across every interaction edge in the integration graph. When a Kessler Cascade begins — uncontrolled interaction growth compounding across AI system boundaries — the Universal Protocol detects the cascade propagation pattern, transitions affected edges to Restricted state, and initiates containment before the cascade reaches the Halted threshold. Each cascade event is fully documented: the DFA state at onset, the intervention applied, the supervisory decision taken, and the recovery sequence executed. <strong>This record is available to regulators, carriers, and legal counsel as continuous evidence that oversight was operative throughout the cascade event.</strong></p>
+  </div>
+</div>
+
+<hr class="div">
+
+<div class="section-full" id="airlock">
+  <div class="inner">
+    <div class="s-label">Control Architecture</div>
+    <div class="airlock-layout">
+      <div>
+        <h2>The Integration Airlock</h2>
+        <p class="lead">CTP introduces a controlled mediation boundary between acquired AI systems and the host enterprise. The Airlock enforces the Three-State DFA at every interaction edge — ensuring deterministic supervisory control is active from the first day of combined operations, and that successor liability exposure is documented and contained before systems fully converge.</p>
+        <div class="benefit-list">
+          <div class="b-row reveal"><div class="b-icon">⊕</div><div>
+            <div class="b-title">Interaction Pathways Are Observed Before They Produce Liability</div>
+            <p class="b-desc">Before systems are permitted to operate together, CTP maps and monitors interaction patterns. This creates a documented baseline that establishes supervisory control prior to liability transfer — and provides the evidentiary record that regulators and insurers require.</p>
+          </div></div>
+          <div class="b-row reveal"><div class="b-icon">▣</div><div>
+            <div class="b-title">Every Cross-System Decision Is Regulated by the DFA</div>
+            <p class="b-desc">All cross-system interactions pass through the Integration Airlock during convergence. Interactions that exceed defined parameters trigger a Restricted state transition — holding the interaction for human review before it proceeds. No threshold-crossing interaction completes without a documented supervisory decision.</p>
+          </div></div>
+          <div class="b-row reveal"><div class="b-icon">◎</div><div>
+            <div class="b-title">Human Intervention Is Enforceable, Not Aspirational</div>
+            <p class="b-desc">At any point during integration, authorized personnel can invoke override capability to pause, redirect, or halt system interactions. This capability is preserved by the DFA architecture — it cannot be removed by configuration change, vendor access limitation, or system update.</p>
+          </div></div>
+          <div class="b-row reveal"><div class="b-icon">⬡</div><div>
+            <div class="b-title">Audit Record Active From Day One</div>
+            <p class="b-desc">Every interaction through the Airlock is recorded in an immutable, hash-chained audit log — available to regulators, insurers, and legal counsel as continuous documentation that oversight was operational from the moment of first system connection.</p>
+          </div></div>
+        </div>
+        <div class="ctp-note">Only after stability is verified across the Three-State DFA are systems permitted to fully converge. This prevents uncontrolled Kessler Cascade growth during the most liability-sensitive phase of an acquisition. <strong>CTP is protected by a U.S. provisional patent. Licensing: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="593a76776d787a6d596b7c7e6c75786d766b347870377a7674">[email&#160;protected]</a></strong></div>
+      </div>
+      <div>
+        <div class="arch-box">
+          <div class="arch-eyebrow">// CTP — Integration Airlock Architecture (Three-State DFA)</div>
+          <div class="arch-layers">
+            <div class="a-layer hi"><span class="a-num">L5</span><span class="a-name">Successor Liability Boundary</span><span class="a-tag tag-g">Deal Edge</span></div>
+            <div class="a-layer hi"><span class="a-num">L4</span><span class="a-name">Integration Airlock Checkpoint</span><span class="a-tag tag-g">Acquisition</span></div>
+            <div class="a-layer"><span class="a-num">L3a</span><span class="a-name">Active State — Normal Operations</span><span class="a-tag tag-a">Active</span></div>
+            <div class="a-layer"><span class="a-num">L3b</span><span class="a-name">Restricted State — Intervention Gate</span><span class="a-tag tag-r">Restricted</span></div>
+            <div class="a-layer"><span class="a-num">L3c</span><span class="a-name">Halted State — Deadlock Containment</span><span class="a-tag tag-h">Halted</span></div>
+            <div class="a-layer hi"><span class="a-num">L2</span><span class="a-name">Deterministic Oversight Logic (DFA)</span><span class="a-tag tag-g">EU Art.14</span></div>
+            <div class="a-layer"><span class="a-num">L1</span><span class="a-name">System Interaction Substrate</span><span class="a-tag tag-d">Substrate</span></div>
+            <div class="a-layer"><span class="a-num">L0</span><span class="a-name">Immutable Hash-Chained Audit Log</span><span class="a-tag tag-t">Deterministic</span></div>
+          </div>
+          <div class="arch-inv">Supervisory oversight is a non-optional invariant of system state.</div>
+        </div>
+        <div class="scenario reveal" style="margin-top:1.5rem">
+          <div class="sc-eye">// Successor Liability Scenario</div>
+          <p class="sc-body">A fund closes on an <strong>AI-native workflow company</strong>. Post-close, acquired systems begin interacting with portfolio infrastructure. The Integration Airlock observes interaction growth exceeding defined thresholds and transitions to <strong>Restricted state</strong> — flagging three cross-system pathways for human review before they complete. An authorized operator reviews and clears two; the third is escalated, triggering a <strong>Halted state</strong> and cryptographic deadlock until legal counsel confirms the interaction is permissible. Every decision is recorded. When regulators request the oversight record six months later, the entire event is replayed deterministically from the audit log. <strong>Successor liability exposure is documented, contained, and defensible.</strong></p>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="ctp-summary reveal">
-    <div class="ctp-summary-text">
-      CTP is a runtime control layer that maintains <em>stable human oversight</em> as AI systems scale — converting policy into <em>enforceable technical control.</em>
+<div class="section" id="deployment">
+  <div class="s-label">Deal Timeline</div>
+  <h2>AI Acquisition Timeline</h2>
+  <p class="lead">CTP maps directly to the phases of an AI acquisition. Each phase carries distinct liability exposure. The Integration Airlock — enforced by the Three-State DFA — addresses each phase in sequence, ensuring that supervisory continuity is never interrupted.</p>
+  <div class="risk-grid timeline-grid">
+    <div class="risk-card reveal">
+      <div class="rk-num" style="color:var(--blue-bright)">Pre-Close</div>
+      <div class="rk-title">Baseline Observation</div>
+      <p class="rk-desc">The DFA observation layer is activated to document how each system currently behaves — before any cross-system connection is established.</p>
+      <p class="rk-desc" style="margin-top:0.75rem">Interaction patterns are mapped and logged before convergence begins. This baseline is what makes post-close oversight meaningful — and establishes that supervisory control was operative before successor liability attached.</p>
+    </div>
+    <div class="risk-card reveal">
+      <div class="rk-num" style="color:var(--blue)">Integration Phase</div>
+      <div class="rk-title">Airlock Gateway — DFA Active</div>
+      <p class="rk-desc">All cross-system interactions pass through the Integration Airlock with the Three-State DFA enforcing supervisory control at every edge.</p>
+      <p class="rk-desc" style="margin-top:0.75rem">Restricted state transitions are automatically triggered when thresholds are crossed. Human override capability is enforced throughout. Every supervisory decision is recorded in the immutable audit log.</p>
+    </div>
+    <div class="risk-card reveal">
+      <div class="rk-num" style="color:var(--text-faint)">Stable Operation</div>
+      <div class="rk-title">Verified Convergence</div>
+      <p class="rk-desc">Once the DFA verifies stability across all interaction edges, systems operate normally under continuous deterministic oversight.</p>
+      <p class="rk-desc" style="margin-top:0.75rem">The oversight record accumulated during integration is available to regulators, insurers, and future acquirers as continuous documentation that supervisory control was maintained — and successor liability was contained — from the first day of combined operations.</p>
     </div>
   </div>
+</div>
 
-  <div class="pillars-grid" style="margin-top:60px;">
-    <div class="pillar reveal"><div class="pillar-icon">⬡</div><div class="pillar-title">Risk Reduction</div><div class="pillar-desc">Operational and compliance risk managed at the system level.</div></div>
-    <div class="pillar reveal"><div class="pillar-icon">◈</div><div class="pillar-title">Governance</div><div class="pillar-desc">Oversight policy made technically enforceable, not aspirational.</div></div>
-    <div class="pillar reveal"><div class="pillar-icon">◎</div><div class="pillar-title">Audit Trail</div><div class="pillar-desc">Continuous, verifiable record of every supervisory decision.</div></div>
-    <div class="pillar reveal"><div class="pillar-icon">⊕</div><div class="pillar-title">Safe Scaling</div><div class="pillar-desc">AI expansion within defined and defended safety boundaries.</div></div>
-  </div>
-</section>
+<hr class="div">
 
-<!-- RISK -->
-<section id="risk">
-  <div class="section-label">Risk Mitigation</div>
-  <h2 class="section-title reveal">What CTP Prevents</h2>
+<div class="section" id="regulatory">
+  <div class="s-label">Regulatory Alignment</div>
+  <h2>EU AI Act Compliance by Architecture</h2>
+  <p class="lead">CTP aligns with EU AI Act Article 14 requirements at the architectural level. Compliance is enforced by the Three-State DFA — not added as a reporting layer after the fact. The result is oversight documentation that holds under regulatory scrutiny because it was generated by the system, not reconstructed by counsel.</p>
   <div class="risk-grid">
-    <div class="risk-card reveal"><div class="risk-num">01</div><div class="risk-title">Coordination Failure</div><div class="risk-desc">As AI agent systems scale, coordination failures become systemic risks. Without regulation, multi-agent AI can become unstable and economically unsafe at scale.</div></div>
-    <div class="risk-card reveal"><div class="risk-num">02</div><div class="risk-title">Oversight Collapse</div><div class="risk-desc">Human review capacity becomes the binding constraint on AI throughput. When unmanaged, overload leads to missed decisions, compliance exposure, and operational instability.</div></div>
-    <div class="risk-card reveal"><div class="risk-num">03</div><div class="risk-title">Governance Gap</div><div class="risk-desc">Policy without enforcement is aspiration. CTP converts oversight policy into enforceable technical control — reducing operational and compliance risk at the system level.</div></div>
-  </div>
-</section>
-
-<!-- ARCHITECTURE -->
-<section id="architecture">
-  <div class="section-label">Architecture</div>
-  <div class="arch-intro reveal">
-    <div>
-      <h2 class="section-title">Regulator v3.0<br>Seven Layer<br>Architecture</h2>
-      <p>The Cognitive Transport Protocol defines a canonical cognitive architecture for human–AI systems under load. Regulator v3.0 enforces this architecture at runtime by measuring load, allocating bandwidth, and ensuring predictable operation and recovery at scale.</p>
+    <div class="risk-card reveal">
+      <div class="rk-num">EU AI Act — Article 14</div>
+      <div class="rk-title">Effective Human Oversight → Deterministic DFA Enforcement</div>
+      <p class="rk-desc">Article 14 requires effective human oversight over high-risk AI systems. CTP's Three-State DFA provides deterministic transition points — Active, Restricted, and Halted — that ensure AI interactions are evaluated before they produce outcomes. Oversight is active and computable, satisfying the requirement that it be operative, not aspirational.</p>
     </div>
-    <div>
-      <div class="arch-callout">
-        <div class="arch-callout-label">// Design Intent</div>
-        <p>This model cleanly spans from raw signals to coordinated swarms, integrating advanced AI solutions and human solutions seamlessly — from cognitive physics at Layer 0 to ecosystem governance at Layer 6.</p>
+    <div class="risk-card reveal">
+      <div class="rk-num">EU AI Act — Article 14</div>
+      <div class="rk-title">Human Intervention Capability → Override Architecture</div>
+      <p class="rk-desc">Article 14 requires that authorized personnel retain the ability to intervene, pause, or halt AI system operation. CTP enforces this through the Restricted and Halted state transition architecture — intervention capability cannot be removed by configuration change. Every override action is a recorded supervisory event in the audit log.</p>
+    </div>
+    <div class="risk-card reveal" style="grid-column:1/-1">
+      <div class="rk-num">EU AI Act — Article 14</div>
+      <div class="rk-title">Traceable Accountability → Immutable Hash-Chained Audit Record</div>
+      <p class="rk-desc">CTP generates an immutable, hash-chained audit record of every AI interaction through the Integration Airlock — including the DFA state at the time of each interaction, the supervisory decision applied, and the human operator who authorized any override or clearance. This record supports deterministic replay: any interaction can be reconstructed in its original supervisory context. It cannot be altered after the fact. It is available to regulators, insurers, legal counsel, and risk committees as evidence that oversight was operational — and successor liability was contained — from the first day of combined operations.</p>
+    </div>
+  </div>
+  <div class="urgency-bar reveal" >
+    <div class="u-item">
+      <span class="u-tag">Acquirer Exposure</span>
+      <div class="u-head">Non-Compliant Integrations Are Becoming Deal-Breakers</div>
+      <p class="u-body">As EU AI Act enforcement takes effect, acquirers who cannot demonstrate oversight continuity from the date of close face direct regulatory exposure. Compliance documentation is no longer a post-close task — it is a condition of the transaction and a component of successor liability management.</p>
+    </div>
+    <div class="u-item" style="border-right:none">
+      <span class="u-tag">Structural Advantage</span>
+      <div class="u-head">Architectural Compliance Holds Under Pressure</div>
+      <p class="u-body">Process-based compliance depends on human adherence and degrades when integration accelerates. The Three-State DFA enforces oversight deterministically — regardless of integration velocity, team turnover, or system complexity. Compliance is architectural, not procedural.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<div class="section-full" id="publications" style="background:var(--navy)">
+  <div class="inner">
+    <div class="s-label">Public Materials</div>
+    <div class="res-layout">
+      <div>
+        <h2>Protocol and Architecture Resources</h2>
+        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.75;margin-bottom:1rem">Public documentation for the Cognitive Transport Protocol™. Available for review by diligence teams, integration leaders, legal counsel, and technical architects evaluating the Integration Airlock and Three-State DFA supervisory architecture.</p>
+        <ul class="res-list">
+          <li><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank"><span class="res-name">CTP Protocol Specification</span><span class="res-meta">github.com/zmichaelakins/ctp-spec ↗</span></a></li>
+          <li><a href="#contact"><span class="res-name">CTP v1.0 White Paper — Three-State DFA Architecture</span><span class="res-meta">Available on request</span></a></li>
+          <li><a href="#contact"><span class="res-name">Integration Airlock Architecture Overview</span><span class="res-meta">Available on request</span></a></li>
+          <li><a href="#contact"><span class="res-name">EU AI Act Article 14 — CTP Alignment Reference</span><span class="res-meta">Available on request</span></a></li>
+          <li><a href="#contact"><span class="res-name">Successor Liability Containment — Deal Counsel Brief</span><span class="res-meta">Available on request</span></a></li>
+          <li><a href="#contact"><span class="res-name">Universal Protocol — Kessler Cascade Containment Technical Summary</span><span class="res-meta">Available on request</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 style="font-size:1.3rem">Key Questions</h2>
+        <p style="font-size:0.82rem;color:var(--text-dim);line-height:1.7;margin-bottom:1rem">Questions frequently raised by diligence teams, advisory firms, and legal counsel evaluating Integration Airlock deployment.</p>
+        <div class="faq-list">
+          <div class="faq-item reveal">
+            <p class="faq-q">What is successor liability exposure in an AI acquisition?</p>
+            <p class="faq-a">When an AI company is acquired, the acquirer assumes liability for the target's AI systems from the date of close — including oversight gaps, compliance failures, and interaction pathways that were not visible during diligence. Standard reps and warranties do not cover behavior that emerges from the integration itself. The Integration Airlock establishes a documented supervisory boundary before systems connect, creating a documented record that oversight was active before liability transferred.</p>
+          </div>
+          <div class="faq-item reveal">
+            <p class="faq-q">What is a Kessler Cascade in the context of enterprise AI?</p>
+            <p class="faq-a">A Kessler Cascade describes the failure mode where uncontrolled AI interaction growth compounds across system boundaries — each unmonitored connection generating further interaction pathways until supervisory control is structurally impossible. In AI acquisitions, this cascade can propagate across portfolio infrastructure within weeks of close. CTP's Universal Protocol applies the Three-State DFA at every interaction edge, containing cascade growth before it becomes irreversible.</p>
+          </div>
+          <div class="faq-item reveal">
+            <p class="faq-q">How does the Three-State DFA satisfy EU AI Act Article 14?</p>
+            <p class="faq-a">Article 14 requires effective human oversight, traceable supervisory actions, and documented intervention capability. CTP's Three-State DFA — Active, Restricted, and Halted — provides deterministic transition logic that enforces oversight at the architectural level. Every state transition, human override, and audit event is recorded in an immutable hash-chained log. Oversight is computable and reproducible, satisfying the Article 14 requirement that it be operative, not aspirational.</p>
+          </div>
+          <div class="faq-item reveal">
+            <p class="faq-q">When in the deal timeline should the Integration Airlock be activated?</p>
+            <p class="faq-a">Before systems are connected. Pre-close activation creates the baseline that makes post-close oversight defensible — and establishes that supervisory control was operative before successor liability attached. Activating the Airlock after systems have already converged is significantly more costly and produces a less complete oversight record for regulatory and legal purposes.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="layers-container" id="layerContainer"></div>
-</section>
+</div>
 
-<!-- SPEC -->
-<section id="spec">
-  <div class="section-label">Protocol Specification</div>
-  <div class="spec-header reveal">
-    <div>
-      <h2 class="section-title">Cognitive Transport<br>Protocol™</h2>
-      <div style="font-size: 12px; color: var(--muted); margin-top: 8px;">Standards-Grade · Frozen v1.0 · Public Reference Specification</div>
-    </div>
-    <div class="spec-badges">
-      <div class="spec-badge active">Status: Frozen v1.0</div>
-      <div class="spec-badge">Author: Regulator AI Global</div>
-      <div class="spec-badge">January 2026</div>
-      <div class="spec-badge">Standards-Track Spec</div>
-    </div>
-  </div>
-  <div class="spec-grid">
-    <div class="spec-item reveal">
-      <div class="spec-num">§ 1.0</div>
-      <div class="spec-title">Purpose & Scope</div>
-      <div class="spec-body">CTP defines a formal control layer for regulating information flow between computational systems and human users. It addresses a structural mismatch in modern human–computer interaction: machine output scales faster than human cognitive recovery capacity. This mismatch produces cognitive congestion, resulting in avoidance, abandonment, degraded decision quality, and systemic risk in high-stakes environments.</div>
-    </div>
-    <div class="spec-item reveal">
-      <div class="spec-num">§ 3.0</div>
-      <div class="spec-title">Control Variables</div>
-      <div class="spec-body">
-        <strong style="color: var(--white); font-weight: 400;">B — Bandwidth.</strong> Usable cognitive processing throughput at time t. State-dependent, distinct from intelligence or skill.<br><br>
-        <strong style="color: var(--white); font-weight: 400;">E — Prediction Error Energy.</strong> Accumulated mismatch between expected and actual cognitive state. Integrates over time if unmitigated.<br><br>
-        <strong style="color: var(--white); font-weight: 400;">Π — Precision.</strong> Interpretative weight assigned to information. Elevated precision slows recovery.
-      </div>
-    </div>
-    <div class="spec-item reveal">
-      <div class="spec-num">§ 4.0</div>
-      <div class="spec-title">Governing Equations</div>
-      <div class="spec-body">CTP evaluates system impact using the Distress Objective. Distress accumulates as a function of precision weighting and prediction error over time — enabling mathematically grounded intervention thresholds.</div>
-      <div class="spec-equation">D += Π × E × dt</div>
-    </div>
-    <div class="spec-item reveal">
-      <div class="spec-num">§ 5.0</div>
-      <div class="spec-title">Control Obligations</div>
-      <div class="spec-body">Interfaces must prioritize reduction of uncertainty and system stabilization before presenting high-precision information. High-precision output during elevated error states constitutes non-compliance. Systems must scale complexity relative to effective bandwidth — failure to do so produces predictable abandonment.</div>
-    </div>
-    <div class="spec-full reveal">
-      <div class="spec-num">§ 6.0</div>
-      <div class="spec-title">Diagnostic Framework</div>
-      <div class="spec-body" style="margin-bottom: 24px;">CTP compliance is evaluated across four diagnostic dimensions.</div>
-      <div class="spec-compliance-grid">
-        <div class="compliance-item"><h4>Precision Load</h4><p>Is interpretative demand appropriate to current cognitive state?</p></div>
-        <div class="compliance-item"><h4>Bandwidth Assumptions</h4><p>Does the system assume static or unlimited human capacity?</p></div>
-        <div class="compliance-item"><h4>Error Accumulation</h4><p>Does the system allow unbounded integration of error energy?</p></div>
-        <div class="compliance-item"><h4>Truncation Availability</h4><p>Are safe exits provided to arrest overload before it propagates?</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+<div id="contact" class="engage-wrap">
+  <div class="s-label" style="justify-content:center">Contact</div>
+  <h2 class="eng-head">Licensing &amp; Transaction Inquiries</h2>
+  <p class="eng-sub">For Integration Airlock deployment, protocol licensing, architectural documentation, or AI acquisition transaction inquiries.</p>
+  <p class="eng-email"><a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a></p>
+  <p class="eng-contact">
+    Protocol specification: <a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">github.com/zmichaelakins/ctp-spec</a>
+    &nbsp;·&nbsp;
+    <a href="https://www.regulator-ai.com" target="_blank">regulator-ai.com</a>
+  </p>
+</div>
 
-<!-- SCHEMATIC -->
-<section id="schematic">
-  <div class="section-label">Distress Schematic</div>
-  <h2 class="section-title reveal">Regulator v3.0<br>Distress Measurement</h2>
-  <p class="schematic-intro reveal">Each agent exposes three observable channels. These form the distress vector, aggregated across N agents into a global signal used to trigger supervisory intervention.</p>
-  <div class="distress-flow">
-    <div class="distress-col reveal">
-      <div class="distress-col-label">// Inputs — Per-Agent Channels</div>
-      <div class="distress-signals">
-        <div class="distress-signal"><div class="distress-signal-name">Load</div><div class="distress-signal-desc">Current cognitive bandwidth consumption. Derived from task complexity, concurrency, and queue pressure. Normalized 0–1.</div><div class="distress-signal-bar bar-load"></div></div>
-        <div class="distress-signal"><div class="distress-signal-name">Error</div><div class="distress-signal-desc">Prediction error or mismatch between expected and actual outcomes. Captures uncertainty and instability. Normalized 0–1.</div><div class="distress-signal-bar bar-error"></div></div>
-        <div class="distress-signal"><div class="distress-signal-name">Precision</div><div class="distress-signal-desc">Agent confidence in internal state. Low precision = high volatility. Normalized 0–1.</div><div class="distress-signal-bar bar-precision"></div></div>
-      </div>
-    </div>
-    <div class="distress-col reveal">
-      <div class="distress-col-label">// Aggregation — Multi-Agent</div>
-      <div class="distress-signals">
-        <div class="distress-signal"><div class="distress-signal-name">Sensitivity</div><div class="distress-signal-desc">Sensitive to both individual spikes and distributed load. No single agent can dominate unless distress is extreme.</div></div>
-        <div class="distress-signal"><div class="distress-signal-name">Nonlinearity</div><div class="distress-signal-desc">Aggregation must be nonlinear to capture compounding effects and support emergent behavior detection.</div></div>
-        <div class="distress-signal"><div class="distress-signal-name">Stability</div><div class="distress-signal-desc">Small fluctuations in individual agents must not destabilize the global signal. Ensures smooth regulation across swarms.</div></div>
-      </div>
-    </div>
-  </div>
-  <div class="guarantees-grid reveal">
-    <div class="guarantee"><span class="guarantee-icon">◈</span><div class="guarantee-title">Bounded</div><div class="guarantee-desc">Global distress never exceeds defined threshold without triggering intervention.</div></div>
-    <div class="guarantee"><span class="guarantee-icon">⬡</span><div class="guarantee-title">Recoverable</div><div class="guarantee-desc">System always returns to stable supervision state after intervention.</div></div>
-    <div class="guarantee"><span class="guarantee-icon">◎</span><div class="guarantee-title">Auditable</div><div class="guarantee-desc">Every intervention is timestamped and recorded in compliance artifact.</div></div>
-    <div class="guarantee"><span class="guarantee-icon">⊕</span><div class="guarantee-title">Scalable</div><div class="guarantee-desc">Architecture maintains stability guarantees as agent count grows.</div></div>
-    <div class="guarantee"><span class="guarantee-icon">⊞</span><div class="guarantee-title">Deterministic</div><div class="guarantee-desc">Threshold logic is fully deterministic — no probabilistic failure modes.</div></div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="section-label">Strategic FAQ</div>
-  <h2 class="section-title reveal">Runtime Containment.<br>Every Question Answered.</h2>
-
-  <div class="faq-section-header reveal">
-    <span class="faq-section-num">01</span>
-    <span class="faq-section-title">About Regulator AI Global</span>
-    <div class="faq-section-line"></div>
-  </div>
-  <div class="faq-group">
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is Regulator AI Global?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>Regulator AI Global is a strategic infrastructure company focused on <strong>runtime containment architectures for the AI-native enterprise.</strong> We provide the intellectual property, control protocols, and governance frameworks required to keep human oversight recoverable as autonomous systems scale — so AI integration never outruns an organization's structural capacity to stay in control.</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What structural problem does the company address?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>We address the widening gap between the <strong>exponential scaling of agentic AI throughput</strong> and the fixed cognitive bandwidth of human supervisors. As enterprises deploy increasingly autonomous systems, legacy oversight models collapse under real-time cognitive load. Regulator AI Global supplies the control layer that synchronizes machine cadence with human capacity — preventing supervisory drift from "in control" to "along for the ride."</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What category does the company define?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>Regulator AI Global defines the category of <strong>Runtime Containment.</strong> Where the market concentrates on model alignment and after-the-fact governance, Runtime Containment focuses on active regulation of the human-AI interface during live operation. We treat human oversight as a finite, measurable infrastructure resource and make containment a first-class property of production systems — not a policy document on the shelf.</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What are Regulator AI Global's IP portfolio highlights?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>Our portfolio includes <strong>patent-pending methods</strong> for adaptive thresholding, telemetry-native integration, and distress modeling architectures tuned for agentic AI workloads. Category and product trademarks protect the Cognitive Transport Protocol™ and the Runtime Containment branding.</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How does the company engage with enterprises and partners?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>We engage through a mix of <strong>core licensing, strategic partnerships, and deep integration programs</strong> for safety-critical and high-stakes environments. Depending on context, we operate as a foundational control layer inside existing platforms or as a strategic partner helping boards, CISOs, and CTOs architect next-generation AI governance infrastructure.</p></div></div></div>
-  </div>
-
-  <div class="faq-section-header reveal">
-    <span class="faq-section-num">02</span>
-    <span class="faq-section-title">About Cognitive Transport Protocol™</span>
-    <div class="faq-section-line"></div>
-  </div>
-  <div class="faq-group">
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is CTP in one sentence?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>The Cognitive Transport Protocol™ (CTP) is a runtime containment protocol that <strong>dynamically regulates AI system throughput</strong> so that human oversight remains meaningful, recoverable, and structurally sound under sustained operational load.</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Why is Runtime Containment necessary?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>Human supervisors rarely perceive the exact moment they shift from active decision-makers to passive observers. <strong>Unregulated AI cadence can swamp human judgment,</strong> turning "human in the loop" into a box-checking exercise. CTP functions as a circuit breaker on cognitive load — enforcing a stable control loop so intervention stays effective even when agent activity spikes.</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How does CTP differ from monitoring or GRC?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>Traditional monitoring and GRC platforms are <strong>descriptive and retrospective</strong> — they tell you what happened. CTP is prescriptive and operational, acting as an active control plane that modulates system behavior in real time. It moves organizations from recording failures to constraining the conditions that cause them, making containment a runtime property rather than a purely administrative obligation.</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How does CTP coexist with modern AI integration ecosystems?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>CTP is <strong>transport-agnostic</strong> and designed to sit alongside contemporary AI integration and orchestration layers. While those stacks route data, tools, and agents between models and users, CTP governs the velocity and bandwidth of those interactions — letting organizations adopt cutting-edge AI capabilities while maintaining an enforceable containment layer.</p></div></div></div>
-  </div>
-
-  <div class="faq-section-header reveal">
-    <span class="faq-section-num">03</span>
-    <span class="faq-section-title">Enterprise &amp; Regulatory Context</span>
-    <div class="faq-section-line"></div>
-  </div>
-  <div class="faq-group">
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Why does effective oversight now matter at the board level?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>Effective oversight has become a board-level concern because agentic AI now <strong>directly touches core revenue, safety, and compliance workflows.</strong> As autonomy increases, the risk of systemic failure — and associated fiduciary, regulatory, and reputational exposure — exceeds what traditional governance can credibly absorb.</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How does CTP support demonstrable oversight under emerging regulatory regimes?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>Emerging frameworks, including the <strong>EU AI Act</strong> and global AI governance standards, require human oversight to be effective, continuous, and auditable at runtime. CTP produces objective telemetry — covering precision, distress, and bandwidth metrics — that can evidence meaningful oversight in operation. By shifting the evidentiary basis from narrative policy to technical runtime signals, CTP supports regulator, auditor, and insurer review.</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What changes organizationally when containment becomes explicit?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>Explicit runtime containment moves an organization from ad-hoc oversight to a <strong>disciplined, telemetry-driven control architecture.</strong> This enables more aggressive AI deployment because risk is bounded by supervisory control rather than informal norms. Legal, risk, and technical stakeholders gain a clear, auditable blueprint for how autonomous systems are governed.</p></div></div></div>
-  </div>
-
-  <div class="faq-section-header reveal">
-    <span class="faq-section-num">04</span>
-    <span class="faq-section-title">Strategic Engagement</span>
-    <div class="faq-section-line"></div>
-  </div>
-  <div class="faq-group">
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Is CTP licensed, partnered, or integrated?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>We support multiple engagement modes: <strong>direct licensing</strong> of CTP for internal build-outs, <strong>strategic partnerships</strong> for platform and infrastructure providers, and <strong>tight integration programs</strong> for safety-critical or regulated environments. The goal is consistent: make CTP the standard control layer for runtime containment, independent of the surrounding commercial stack.</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Who should initiate a discussion?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>Engagement is most effective when sponsored by <strong>leadership responsible for AI strategy, risk, and core infrastructure.</strong> Typical initiators include CTOs and heads of AI platforms focused on scaling agentic workloads, CISOs owning runtime controls, and General Counsel or Chief Risk Officers seeking to unlock stalled AI initiatives without compromising governance.</p></div></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What does engagement look like at a high level?</span><span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-inner"><p>Initial engagement usually starts with a <strong>strategic review</strong> of current agentic workflows against containment criteria and board-level risk posture. This often progresses to a <strong>pilot focused on telemetry instrumentation and adaptive controls,</strong> with optional third-party or regulatory-adjacent assurance where appropriate.</p></div></div></div>
-  </div>
-
-  <div class="cta-block reveal">
-    <h3>Strategic Engagement Opportunities</h3>
-    <p>Start a conversation about runtime containment as a first-class property of your AI infrastructure.</p>
-    <div class="cta-options">
-      <a class="cta-pill" href="#contact">→ Request Executive Briefing</a>
-      <a class="cta-pill" href="#contact">→ Explore Partnership Models</a>
-      <a class="cta-pill" href="#contact">→ Evaluate Containment Posture</a>
-    </div>
-  </div>
-</section>
-
-<!-- PUBLICATIONS -->
-<section id="publications">
-  <div class="section-label">Publications</div>
-  <h2 class="section-title reveal">Technical Documentation<br>&amp; Reference Specs</h2>
-  <div class="pub-grid">
-    <div class="pub-item reveal">
-      <div class="pub-tag">White Paper</div>
-      <div class="pub-title">Cognitive Transport Protocol™ — Technical Specification v1.0</div>
-      <div class="pub-desc">Frozen reference specification defining the CTP control architecture, governing equations, and compliance framework. Standards-track document.</div>
-      <div class="pub-github">zmichaelakins/ctp-spec</div>
-      <div class="pub-arrow">↗</div>
-    </div>
-    <div class="pub-item reveal">
-      <div class="pub-tag">White Paper</div>
-      <div class="pub-title">Resilient Loop Control Logic — RLCL v2.1</div>
-      <div class="pub-desc">Deterministic FSM for human-AI oversight with EU AI Act Article 14 compliance, dual-gate recovery, and re-engagement reset.</div>
-      <div class="pub-arrow">↗</div>
-    </div>
-    <div class="pub-item reveal">
-      <div class="pub-tag">Reference Guide</div>
-      <div class="pub-title">CTP Calibration Guide & Failure Mode Library</div>
-      <div class="pub-desc">Operational reference for CTP deployment, threshold calibration, distress signal tuning, and failure mode identification across agent topologies.</div>
-      <div class="pub-arrow">↗</div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-label">Contact</div>
-  <div class="contact-layout">
-    <div class="reveal">
-      <h2 class="section-title">Work With<br>Regulator AI</h2>
-      <p>We work with enterprises, platform providers, and research partners building the next generation of AI governance infrastructure. Whether you're exploring CTP licensing, partnership, or a strategic conversation — reach out.</p>
-      <div class="contact-info">
-        <div class="contact-line"><div class="contact-line-label">Web</div><div class="contact-line-value"><a href="https://www.regulator-ai.com" target="_blank">regulator-ai.com</a></div></div>
-        <div class="contact-line"><div class="contact-line-label">Email</div><div class="contact-line-value"><a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a></div></div>
-        <div class="contact-line"><div class="contact-line-label">GitHub</div><div class="contact-line-value"><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">zmichaelakins/ctp-spec</a></div></div>
-      </div>
-    </div>
-    <div class="reveal">
-      <div class="contact-form">
-        <div class="form-group"><label class="form-label">Name</label><input type="text" class="form-input" placeholder="Your name"></div>
-        <div class="form-group"><label class="form-label">Organization</label><input type="text" class="form-input" placeholder="Company / institution"></div>
-        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="you@org.com"></div>
-        <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Licensing inquiry, partnership, technical collaboration..."></textarea></div>
-        <button class="btn-submit">Send Message</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <div class="footer-brand">Regulator <strong>AI</strong> Global</div>
-  <div class="footer-copy">
-    CTP™ — Control-Theoretic Protocol · Education-only License · Commercial Rights Reserved<br>
-    © 2026 Regulator AI Global, Inc. · All Rights Reserved
+  <div class="ft-left">
+    <span>Regulator AI Global, Inc.</span> — Cognitive Transport Protocol™ is a trademark of Regulator AI Global, Inc.<br>
+    Education-only license. Commercial rights reserved. Patent pending.
   </div>
+  <ul class="ft-links">
+    <li><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">GitHub</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </footer>
 
-<script>
-// Layers data
-const layers = [
-  { num: '00', name: 'Cognitive Physics', tagline: 'The foundational constraint model', what: 'The foundational model of bandwidth, prediction error, and precision.', role: 'Defines the constraints every cognitive system must obey.', output: 'A stable substrate for all higher-order regulation.', failure: [] },
-  { num: '01', name: 'Interface Layer', tagline: 'Signal normalization & translation boundary', what: 'The translation boundary between raw cognitive signals and structured regulatory inputs.', role: 'Normalizes observations, actions, and metadata into a unified format.', output: 'A clean, typed stream of cognitive state.', failure: [] },
-  { num: '02', name: 'Local Regulation', tagline: 'Individual agent stabilization', what: 'The first active regulatory layer.', role: 'Stabilizes an individual agent\'s cognitive loop by modulating load, error, and precision.', output: 'A predictable, self-regulated agent.', failure: ['Sends stabilized agent state to Layer 3', 'Calibrated precision and bounded load', 'Predictable behavior as atomic input'] },
-  { num: '03', name: 'Dyadic Coordination', tagline: 'Human ↔ agent pairwise stability', what: 'Regulation between two agents — human ↔ agent, or agent ↔ agent.', role: 'Ensures pairwise interactions remain stable, low-load, and high-bandwidth.', output: 'Predictable, low-friction dyads — the atomic unit swarms are built from.', failure: ['Ping-ponging', 'Dead air', 'Over-talking', 'Precision mismatch', 'Context drift', 'Load asymmetry'] },
-  { num: '04', name: 'Group Regulation', tagline: 'Coordination across 3–12 agents', what: 'Regulation across small groups of 3–12 agents.', role: 'Manages shared context, turn-taking, load balancing, and conflict avoidance.', output: 'Stable micro-swarms ready for composition into larger structures.', failure: ['Shared context collapse', 'Turn-taking deadlock', 'Load imbalance cascade'] },
-  { num: '05', name: 'Swarm Regulation', tagline: 'Large heterogeneous agent swarms', what: 'Regulation across large, heterogeneous agent swarms.', role: 'Maintains global coherence, prevents overload cascades, and enforces cognitive safety.', output: 'Scalable, resilient swarms — the transition from demos to infrastructure.', failure: ['Overload cascade', 'Coherence collapse', 'Emergent instability'] },
-  { num: '06', name: 'Ecosystem Governance', tagline: 'Rules, standards & economic policy', what: 'The highest layer — rules, standards, and policies governing multi-swarm ecosystems.', role: 'Defines interoperability, safety guarantees, and economic incentives.', output: 'A regulated cognitive ecosystem with enforceable compliance.', failure: [] }
-];
+</div>
 
-const container = document.getElementById('layerContainer');
-layers.forEach((l, i) => {
-  const card = document.createElement('div');
-  card.className = 'layer-card reveal';
-  card.innerHTML = `
-    <div class="layer-header">
-      <div class="layer-num">${l.num}</div>
-      <div class="layer-title-block">
-        <div class="layer-name">${l.name}</div>
-        <div class="layer-tagline">${l.tagline}</div>
-      </div>
-      <div class="layer-toggle">+</div>
-    </div>
-    <div class="layer-body">
-      <div class="layer-content">
-        <div>
-          <h4>What It Is</h4><p>${l.what}</p><br>
-          <h4>Role</h4><p>${l.role}</p><br>
-          <h4>Output</h4><p>${l.output}</p>
-        </div>
-        <div>
-          ${l.failure.length
-            ? `<h4>${i === 2 ? 'Layer Outputs' : 'Failure Modes Prevented'}</h4><ul>${l.failure.map(f => `<li>${f}</li>`).join('')}</ul>`
-            : `<h4>Design Intent</h4><p>Layer ${l.num} operates as a foundational constraint — its guarantees must hold for all higher layers to function correctly. This layer defines the physics that regulation obeys.</p>`
-          }
-        </div>
-      </div>
-    </div>
-  `;
-  card.querySelector('.layer-header').addEventListener('click', () => {
-    const isActive = card.classList.contains('active');
-    document.querySelectorAll('.layer-card').forEach(c => c.classList.remove('active'));
-    if (!isActive) card.classList.add('active');
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const sectionIds = ['problem', 'ghost', 'airlock', 'regulatory', 'deployment', 'publications', 'contact'];
+const sideLinks = document.querySelectorAll('.side-nav-links a');
+const topLinks = document.querySelectorAll('.top-nav-links a');
+document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+window.addEventListener('scroll', () => {
+  let current = '';
+  for (const id of sectionIds) {
+    const section = document.getElementById(id);
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 100 && rect.bottom >= 100) {
+        current = id;
+        break;
+      }
+    }
+  }
+  sideLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${current}`) {
+      link.classList.add('active');
+    }
   });
-  container.appendChild(card);
+  topLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${current}`) {
+      link.classList.add('active');
+    }
+  });
 });
-
-// FAQ toggle
-function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
-}
-
-// Scroll reveal — mobile-safe
-(function() {
-  var els = document.querySelectorAll('.reveal');
-
-  function show(el) { el.classList.add('visible'); }
-
-  // Show anything already in viewport immediately
-  function checkAll() {
-    els.forEach(function(el) {
-      var rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight + 100) show(el);
-    });
-  }
-
-  // Use IntersectionObserver where available
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.05 });
-    els.forEach(function(el) { io.observe(el); });
-  }
-
-  // Always run checkAll — catches above-fold and mobile edge cases
-  checkAll();
-  window.addEventListener('scroll', checkAll, { passive: true });
-  window.addEventListener('load', checkAll);
-
-  // Hard fallback: show everything after 1.5s no matter what
-  setTimeout(function() { els.forEach(show); }, 1500);
-})();
 </script>
+
 </body>
-  </html>
+</html>  
+        
