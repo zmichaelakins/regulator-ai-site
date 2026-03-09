@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Integration Airlock for AI Mergers & Acquisitions</title>
-<meta name="description" content="CTP creates an Integration Airlock for AI acquisitions—containing successor liability, enforcing deterministic oversight, and protecting deal value during post-close system convergence.">
+<title>The Integration Airlock for AI Mergers & Acquisitions — v4.0</title>
+<meta name="description" content="CTP creates an Integration Airlock for AI acquisitions—containing successor liability, enforcing deterministic oversight, and protecting deal value during post-close system convergence. Deterministic Supervisory Containment v4.0.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -99,7 +99,7 @@ hr.div{border:none;border-top:1px solid var(--border);position:relative;z-index:
 h2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;letter-spacing:-0.02em;line-height:1.15;color:var(--white);margin-bottom:1.25rem}
 .lead{font-size:0.98rem;color:var(--text-dim);max-width:620px;line-height:1.8;margin-bottom:2rem}
 
-/* DFA STATE DIAGRAM */
+/* FSM STATE DIAGRAM (legacy styles retained for compatibility) */
 .dfa-states{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:2.5rem}
 .dfa-state{padding:1.75rem;position:relative;overflow:hidden;transition:background 0.2s}
 .dfa-state.state-active{background:#0a1e10}
@@ -150,7 +150,40 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3vw,2.5rem);font-weight
 .ctp-note{margin-top:1.75rem;padding:1.1rem 1.4rem;background:rgba(74,143,181,0.05);border:1px solid var(--blue-dim);font-size:0.78rem;color:var(--text-dim);line-height:1.65}
 .ctp-note strong{color:var(--white)}
 
-/* ARCH DIAGRAM */
+/* DSC 5-LAYER STACK */
+.dsc-stack{display:flex;flex-direction:column;gap:0;margin-top:2.5rem;border:1px solid var(--border)}
+.dsc-layer{display:grid;grid-template-columns:2.8rem 1fr auto;align-items:start;gap:1rem;padding:1.25rem 1.4rem;background:var(--ink);border-bottom:1px solid var(--border);position:relative;transition:background 0.2s;min-height:72px}
+.dsc-layer:last-child{border-bottom:none}
+.dsc-layer::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px}
+.dsc-layer.l1::before{background:var(--blue-bright)}
+.dsc-layer.l2::before{background:#4ade80}
+.dsc-layer.l3::before{background:var(--amber)}
+.dsc-layer.l4::before{background:#a78bfa}
+.dsc-layer.l5::before{background:var(--blue)}
+.dsc-layer:hover{background:var(--panel)}
+.dsc-num{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--text-faint);text-align:right;padding-top:0.15rem;min-width:2rem}
+.dsc-content{display:flex;flex-direction:column;gap:0.35rem}
+.dsc-name{font-size:0.82rem;font-weight:700;color:var(--white);line-height:1.3}
+.dsc-desc{font-size:0.74rem;color:var(--text-dim);line-height:1.6;margin-top:0.1rem}
+.dsc-badge{font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.09em;padding:0.2rem 0.5rem;border:1px solid;border-radius:2px;white-space:nowrap;align-self:flex-start;margin-top:0.15rem}
+.badge-ctp{color:var(--blue-bright);border-color:var(--blue-dim);background:rgba(74,143,181,0.08)}
+.badge-fsm{color:#4ade80;border-color:#1a4d2a;background:rgba(74,222,128,0.07)}
+.badge-ebs{color:var(--amber);border-color:var(--amber-dim);background:rgba(212,160,23,0.07)}
+.badge-tlss{color:#a78bfa;border-color:#2d1a5e;background:rgba(167,139,250,0.07)}
+.badge-cccs{color:var(--blue);border-color:var(--blue-mid-dim);background:rgba(45,106,147,0.07)}
+
+/* SECTION 4 INTERVENTION LOGIC */
+.intervention-block{margin-top:2.5rem;border:1px solid var(--border-hi);background:var(--ink);padding:0}
+.intervention-block .ib-header{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);padding:0.85rem 1.4rem;border-bottom:1px solid var(--border);background:rgba(74,143,181,0.04)}
+.ib-body{display:flex;flex-direction:column;gap:0}
+.ib-item{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);transition:background 0.2s}
+.ib-item:last-child{border-bottom:none}
+.ib-item:hover{background:rgba(74,143,181,0.03)}
+.ib-icon{width:24px;height:24px;border:1px solid var(--blue-dim);background:var(--blue-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.65rem;color:var(--blue-bright);margin-top:0.1rem}
+.ib-title{font-size:0.8rem;font-weight:700;color:var(--white);margin-bottom:0.3rem}
+.ib-desc{font-size:0.76rem;color:var(--text-dim);line-height:1.65}
+
+
 .arch-box{background:var(--panel);border:1px solid var(--border-hi);padding:1.6rem}
 .arch-eyebrow{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1.4rem;text-align:center}
 .arch-layers{display:flex;flex-direction:column;gap:2px}
@@ -276,10 +309,22 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
   .ticker-track{animation:ticker 50s linear infinite;}
   .t-item{font-size:0.55rem;padding:0 1rem;gap:0.3rem;}
   .t-dot{width:2.5px;height:2.5px;}
+  .dsc-layer{grid-template-columns:1fr;gap:0.5rem;padding:1.1rem 1rem;}
+  .dsc-num{text-align:left;font-size:0.6rem;}
+  .dsc-name{font-size:0.8rem;}
+  .dsc-desc{font-size:0.74rem;line-height:1.6;}
+  .ib-item{flex-direction:column;gap:0.6rem;padding:1rem;}
   .s-label{font-size:0.6rem;gap:0.4rem;}
   .s-label::before{width:15px;}
   h2{font-size:clamp(1.5rem,5vw,2rem);}
   .lead{font-size:0.9rem;line-height:1.7;max-width:100%;}
+  .dsc-layer{grid-template-columns:2.2rem 1fr auto;padding:1.1rem 1.2rem;min-height:auto;gap:0.75rem}
+  .dsc-name{font-size:0.78rem;}
+  .dsc-desc{font-size:0.72rem;line-height:1.55;}
+  .dsc-badge{font-size:0.52rem;}
+  .ib-item{padding:1rem 1.2rem;gap:0.8rem;}
+  .ib-title{font-size:0.75rem;}
+  .ib-desc{font-size:0.72rem;line-height:1.55;}
   .dfa-state{padding:1.5rem;}
   .state-title{font-size:0.85rem;}
   .state-desc{font-size:0.72rem;line-height:1.6;}
@@ -387,7 +432,7 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
     </div>
     <div class="hero-stats">
       <div><span class="stat-val">EU AI Act</span><span class="stat-label">Article 14 Aligned</span></div>
-      <div><span class="stat-val">3-State DFA</span><span class="stat-label">Deterministic Supervision</span></div>
+      <div><span class="stat-val">5-Layer DSC</span><span class="stat-label">Deterministic Supervision</span></div>
       <div><span class="stat-val">Patent Pending</span><span class="stat-label">U.S. Provisional Filed</span></div>
       <div><span class="stat-val">Day-One</span><span class="stat-label">Audit Record Active</span></div>
     </div>
@@ -398,9 +443,9 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
   <div class="ticker-track">
     <span class="t-item"><span class="t-dot"></span>Successor Liability Containment</span>
     <span class="t-item"><span class="t-dot"></span>Integration Airlock</span>
-    <span class="t-item"><span class="t-dot"></span>Deterministic Supervisory Architecture</span>
+    <span class="t-item"><span class="t-dot"></span>Deterministic Supervisory Containment</span>
     <span class="t-item"><span class="t-dot"></span>EU AI Act Article 14</span>
-    <span class="t-item"><span class="t-dot"></span>Three-State DFA Control Logic</span>
+    <span class="t-item"><span class="t-dot"></span>Finite State Machine Control Logic</span>
     <span class="t-item"><span class="t-dot"></span>Immutable Audit Chain</span>
     <span class="t-item"><span class="t-dot"></span>Kessler Cascade Prevention</span>
     <span class="t-item"><span class="t-dot"></span>Universal Protocol</span>
@@ -408,9 +453,9 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
     <span class="t-item"><span class="t-dot"></span>Regulator AI Global, Inc.</span>
     <span class="t-item"><span class="t-dot"></span>Successor Liability Containment</span>
     <span class="t-item"><span class="t-dot"></span>Integration Airlock</span>
-    <span class="t-item"><span class="t-dot"></span>Deterministic Supervisory Architecture</span>
+    <span class="t-item"><span class="t-dot"></span>Deterministic Supervisory Containment</span>
     <span class="t-item"><span class="t-dot"></span>EU AI Act Article 14</span>
-    <span class="t-item"><span class="t-dot"></span>Three-State DFA Control Logic</span>
+    <span class="t-item"><span class="t-dot"></span>Finite State Machine Control Logic</span>
     <span class="t-item"><span class="t-dot"></span>Immutable Audit Chain</span>
     <span class="t-item"><span class="t-dot"></span>Kessler Cascade Prevention</span>
     <span class="t-item"><span class="t-dot"></span>Universal Protocol</span>
@@ -488,45 +533,89 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
 
 <div class="section" id="ghost">
   <div class="s-label">Supervisory Architecture</div>
-  <h2>Three-State Deterministic Finite Automaton</h2>
-  <p class="lead">CTP's supervisory layer operates as a formally specified Three-State DFA — Active, Restricted, and Halted. Each state carries defined transition conditions, intervention rights, and audit obligations. The architecture is deterministic: given any system input, the supervisory response is computable, reproducible, and auditable. This is not a policy layer — it is a control-theoretic enforcement mechanism designed to satisfy EU AI Act Article 14's requirement for effective, traceable human oversight.</p>
+  <h2>Five-Layer Deterministic Supervisory Containment</h2>
+  <p class="lead">CTP's supervisory infrastructure is organized as a formally specified Five-Layer DSC stack. Each layer has defined responsibilities, enforcement boundaries, and audit obligations. The architecture is deterministic: given any system input, the supervisory response is computable, reproducible, and auditable — satisfying EU AI Act Article 14's requirement for effective, traceable human oversight through a Finite State Machine (FSM) enforcement mechanism.</p>
 
-  <div class="dfa-states">
-    <div class="dfa-state state-active">
-      <div class="state-badge badge-active"><span class="state-dot dot-active"></span>Active State</div>
-      <div class="state-title">Normal Operational Parameters</div>
-      <p class="state-desc">All AI system interactions are within defined stability thresholds. The supervisory layer observes, logs, and validates each interaction edge in real time. Oversight records are continuously generated. Human operators retain full intervention authority at all times.</p>
-      <div class="state-triggers">
-        <span>→ Baseline Parameter Alignment</span>
-        <span>→ Audit Integrity Maintained</span>
-        <span>→ Supervisory Continuity Verified</span>
+  <div class="dsc-stack">
+    <div class="dsc-layer l1">
+      <span class="dsc-num">L1</span>
+      <div class="dsc-content">
+        <div class="dsc-name">Cognitive Transport Protocol™ (CTP)</div>
+        <p class="dsc-desc">The communication standard for intent and load exchange. CTP defines how supervisory intent, operational state, and load signals are formatted, routed, and authenticated across all system boundaries — establishing the canonical channel through which every other layer operates.</p>
       </div>
+      <span class="dsc-badge badge-ctp">Transport</span>
     </div>
-    <div class="dfa-state state-restricted">
-      <div class="state-badge badge-restricted"><span class="state-dot dot-restricted"></span>Restricted State</div>
-      <div class="state-title">Triggered Intervention &amp; Mitigation</div>
-      <p class="state-desc">A supervisory threshold has been crossed. The DFA transitions to Restricted state, automatically throttling interaction throughput and routing flagged pathways for human review before proceeding. No flagged interaction completes without an authorized supervisory decision. The Airlock enforces a mandatory review gate — compliant with Article 14's requirement that human oversight be active, not retrospective.</p>
-      <div class="state-triggers">
-        <span>→ Boundary Variance Detected</span>
-        <span>→ Interaction Variance Flagged</span>
-        <span>→ Supervisory Review Gate</span>
+    <div class="dsc-layer l2">
+      <span class="dsc-num">L2</span>
+      <div class="dsc-content">
+        <div class="dsc-name">Resilient Loop Control Logic (RLCL)</div>
+        <p class="dsc-desc">The Deterministic Finite State Machine (FSM) governing state transitions and escalation logic. RLCL enforces the Active → Restricted → Halted transition sequence with dual-gate recovery and hysteresis thresholds — ensuring that no state change occurs without a computable, auditable supervisory trigger.</p>
       </div>
+      <span class="dsc-badge badge-fsm">FSM</span>
     </div>
-    <div class="dfa-state state-halted">
-      <div class="state-badge badge-halted"><span class="state-dot dot-halted"></span>Halted State</div>
-      <div class="state-title">Absolute Containment — System Stop</div>
-      <p class="state-desc">Critical threshold reached. The DFA transitions to Halted state, invoking the cryptographic actuation deadlock gate. All cross-system interactions through the Integration Airlock are suspended until authorized personnel complete a verified re-engagement sequence. The Halted state cannot be exited by system action alone — it requires a deliberate human override, creating an irrefutable audit event documenting supervisory control at the moment of maximum risk.</p>
-      <div class="state-triggers">
-        <span>→ Critical Protocol Violation</span>
-        <span>→ Supervisory Feedback Loop Terminated</span>
-        <span>→ Containment Lock Activated</span>
+    <div class="dsc-layer l3">
+      <span class="dsc-num">L3</span>
+      <div class="dsc-content">
+        <div class="dsc-name">Enforcement Boundary System (EBS)</div>
+        <p class="dsc-desc">The Integration Airlock that modulates or arrests AI throughput. EBS is the physical and logical enforcement surface — the boundary through which all cross-system interactions must pass. When the FSM signals a state transition, EBS executes the corresponding throttle, gate, or cryptographic deadlock.</p>
+      </div>
+      <span class="dsc-badge badge-ebs">Airlock</span>
+    </div>
+    <div class="dsc-layer l4">
+      <span class="dsc-num">L4</span>
+      <div class="dsc-content">
+        <div class="dsc-name">Telemetry Load Signaling System (TLSS)</div>
+        <p class="dsc-desc">The sensing layer that normalizes multi-agent distress signals. TLSS aggregates precision-weighted load indicators across all monitored agents, normalizes them into a unified distress metric, and surfaces threshold breach events to RLCL for FSM evaluation — ensuring no compounding instability is missed at the edge.</p>
+      </div>
+      <span class="dsc-badge badge-tlss">Telemetry</span>
+    </div>
+    <div class="dsc-layer l5">
+      <span class="dsc-num">L5</span>
+      <div class="dsc-content">
+        <div class="dsc-name">Conformance &amp; Containment Criteria Structure (CCCS)</div>
+        <p class="dsc-desc">The audit layer generating Article 14 compliance artifacts. CCCS produces immutable, hash-chained records of every FSM state transition, supervisory decision, and human override — formatted for deterministic replay by regulators, insurers, and legal counsel. Compliance is generated, not reconstructed.</p>
+      </div>
+      <span class="dsc-badge badge-cccs">EU Art.14</span>
+    </div>
+  </div>
+
+  <div class="intervention-block" style="margin-top:2.5rem">
+    <div class="ib-header">§ 4.0 — Deterministic Intervention Logic</div>
+    <div class="ib-body">
+      <div class="ib-item">
+        <div class="ib-icon">⊕</div>
+        <div>
+          <div class="ib-title">Proprietary Distress Objective</div>
+          <p class="ib-desc">The Cognitive Transport Protocol™ evaluates system stability through a proprietary Distress Objective function. This process quantifies the compounding mismatch between machine-driven cadence and human supervisory bandwidth.</p>
+        </div>
+      </div>
+      <div class="ib-item">
+        <div class="ib-icon">◎</div>
+        <div>
+          <div class="ib-title">Adaptive Thresholding</div>
+          <p class="ib-desc">CTP monitors for risk accumulation by integrating precision-weighted signals over time. As distress compounds across interaction edges, the TLSS layer normalizes incoming telemetry and surfaces threshold proximity to the RLCL Finite State Machine (FSM) for pre-emptive evaluation.</p>
+        </div>
+      </div>
+      <div class="ib-item">
+        <div class="ib-icon">▣</div>
+        <div>
+          <div class="ib-title">Intervention Triggers</div>
+          <p class="ib-desc">When distress exceeds the Critical Supervisory Limit, the protocol executes a deterministic state transition within the Resilient Loop. The FSM transitions to Restricted or Halted state, invoking the Enforcement Boundary System to gate or arrest throughput pending authorized human review.</p>
+        </div>
+      </div>
+      <div class="ib-item">
+        <div class="ib-icon">⬡</div>
+        <div>
+          <div class="ib-title">System Stabilization</div>
+          <p class="ib-desc">AI output is automatically modulated or paused during instability to ensure human-led recovery. No FSM state transition is reversible by system action alone — re-engagement requires a deliberate, recorded human override, creating an irrefutable audit event at the moment of maximum supervisory demand.</p>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="scenario reveal" style="margin-top:2rem">
     <div class="sc-eye">// Universal Protocol — Kessler Cascade Containment</div>
-    <p class="sc-body">The Universal Protocol applies the same Three-State DFA logic across every interaction edge in the integration graph. When a Kessler Cascade begins — uncontrolled interaction growth compounding across AI system boundaries — the Universal Protocol detects the cascade propagation pattern, transitions affected edges to Restricted state, and initiates containment before the cascade reaches the Halted threshold. Each cascade event is fully documented: the DFA state at onset, the intervention applied, the supervisory decision taken, and the recovery sequence executed. <strong>This record is available to regulators, carriers, and legal counsel as continuous evidence that oversight was operative throughout the cascade event.</strong></p>
+    <p class="sc-body">The Universal Protocol applies the same FSM logic across every interaction edge in the integration graph. When a Kessler Cascade begins — uncontrolled interaction growth compounding across AI system boundaries — the Universal Protocol detects the cascade propagation pattern, transitions affected edges to Restricted state, and initiates containment before the cascade reaches the Halted threshold. Each cascade event is fully documented by the CCCS audit layer: the FSM state at onset, the intervention applied, the supervisory decision taken, and the recovery sequence executed. <strong>This record is available to regulators, carriers, and legal counsel as continuous evidence that oversight was operative throughout the cascade event.</strong></p>
   </div>
 </div>
 
@@ -538,45 +627,42 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
     <div class="airlock-layout">
       <div>
         <h2>The Integration Airlock</h2>
-        <p class="lead">CTP introduces a controlled mediation boundary between acquired AI systems and the host enterprise. The Airlock enforces the Three-State DFA at every interaction edge — ensuring deterministic supervisory control is active from the first day of combined operations, and that successor liability exposure is documented and contained before systems fully converge.</p>
+        <p class="lead">CTP introduces a controlled mediation boundary between acquired AI systems and the host enterprise. The Integration Airlock enforces the Finite State Machine (FSM) at every interaction edge — ensuring deterministic supervisory control is active from the first day of combined operations, and that Successor Liability Containment is documented before systems fully converge.</p>
         <div class="benefit-list">
           <div class="b-row reveal"><div class="b-icon">⊕</div><div>
             <div class="b-title">Interaction Pathways Are Observed Before They Produce Liability</div>
             <p class="b-desc">Before systems are permitted to operate together, CTP maps and monitors interaction patterns. This creates a documented baseline that establishes supervisory control prior to liability transfer — and provides the evidentiary record that regulators and insurers require.</p>
           </div></div>
           <div class="b-row reveal"><div class="b-icon">▣</div><div>
-            <div class="b-title">Every Cross-System Decision Is Regulated by the DFA</div>
+            <div class="b-title">Every Cross-System Decision Is Regulated by the FSM</div>
             <p class="b-desc">All cross-system interactions pass through the Integration Airlock during convergence. Interactions that exceed defined parameters trigger a Restricted state transition — holding the interaction for human review before it proceeds. No threshold-crossing interaction completes without a documented supervisory decision.</p>
           </div></div>
           <div class="b-row reveal"><div class="b-icon">◎</div><div>
             <div class="b-title">Human Intervention Is Enforceable, Not Aspirational</div>
-            <p class="b-desc">At any point during integration, authorized personnel can invoke override capability to pause, redirect, or halt system interactions. This capability is preserved by the DFA architecture — it cannot be removed by configuration change, vendor access limitation, or system update.</p>
+            <p class="b-desc">At any point during integration, authorized personnel can invoke override capability to pause, redirect, or halt system interactions. This capability is preserved by the FSM architecture — it cannot be removed by configuration change, vendor access limitation, or system update.</p>
           </div></div>
           <div class="b-row reveal"><div class="b-icon">⬡</div><div>
             <div class="b-title">Audit Record Active From Day One</div>
             <p class="b-desc">Every interaction through the Airlock is recorded in an immutable, hash-chained audit log — available to regulators, insurers, and legal counsel as continuous documentation that oversight was operational from the moment of first system connection.</p>
           </div></div>
         </div>
-        <div class="ctp-note">Only after stability is verified across the Three-State DFA are systems permitted to fully converge. This prevents uncontrolled Kessler Cascade growth during the most liability-sensitive phase of an acquisition. <strong>CTP is protected by a U.S. provisional patent. Licensing: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="593a76776d787a6d596b7c7e6c75786d766b347870377a7674">[email&#160;protected]</a></strong></div>
+        <div class="ctp-note">Only after stability is verified across all Finite State Machine (FSM) enforcement layers are systems permitted to fully converge. This prevents uncontrolled Kessler Cascade growth during the most liability-sensitive phase of an acquisition, with Successor Liability Containment documented at every stage. <strong>CTP is protected by a U.S. provisional patent. Licensing: <a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a></strong></div>
       </div>
       <div>
         <div class="arch-box">
-          <div class="arch-eyebrow">// CTP — Integration Airlock Architecture (Three-State DFA)</div>
+          <div class="arch-eyebrow">// CTP — Integration Airlock Architecture (5-Layer DSC / FSM)</div>
           <div class="arch-layers">
-            <div class="a-layer hi"><span class="a-num">L5</span><span class="a-name">Successor Liability Boundary</span><span class="a-tag tag-g">Deal Edge</span></div>
-            <div class="a-layer hi"><span class="a-num">L4</span><span class="a-name">Integration Airlock Checkpoint</span><span class="a-tag tag-g">Acquisition</span></div>
-            <div class="a-layer"><span class="a-num">L3a</span><span class="a-name">Active State — Normal Operations</span><span class="a-tag tag-a">Active</span></div>
-            <div class="a-layer"><span class="a-num">L3b</span><span class="a-name">Restricted State — Intervention Gate</span><span class="a-tag tag-r">Restricted</span></div>
-            <div class="a-layer"><span class="a-num">L3c</span><span class="a-name">Halted State — Deadlock Containment</span><span class="a-tag tag-h">Halted</span></div>
-            <div class="a-layer hi"><span class="a-num">L2</span><span class="a-name">Deterministic Oversight Logic (DFA)</span><span class="a-tag tag-g">EU Art.14</span></div>
-            <div class="a-layer"><span class="a-num">L1</span><span class="a-name">System Interaction Substrate</span><span class="a-tag tag-d">Substrate</span></div>
-            <div class="a-layer"><span class="a-num">L0</span><span class="a-name">Immutable Hash-Chained Audit Log</span><span class="a-tag tag-t">Deterministic</span></div>
+            <div class="a-layer hi"><span class="a-num">L5</span><span class="a-name">Conformance &amp; Containment Criteria Structure (CCCS)</span><span class="a-tag tag-g">EU Art.14</span></div>
+            <div class="a-layer hi"><span class="a-num">L4</span><span class="a-name">Telemetry Load Signaling System (TLSS)</span><span class="a-tag tag-r">Telemetry</span></div>
+            <div class="a-layer"><span class="a-num">L3</span><span class="a-name">Enforcement Boundary System (EBS) — Integration Airlock</span><span class="a-tag tag-t">Airlock</span></div>
+            <div class="a-layer hi"><span class="a-num">L2</span><span class="a-name">Resilient Loop Control Logic (RLCL) — FSM</span><span class="a-tag tag-a">FSM</span></div>
+            <div class="a-layer hi"><span class="a-num">L1</span><span class="a-name">Cognitive Transport Protocol™ (CTP)</span><span class="a-tag tag-g">Transport</span></div>
           </div>
           <div class="arch-inv">Supervisory oversight is a non-optional invariant of system state.</div>
         </div>
         <div class="scenario reveal" style="margin-top:1.5rem">
-          <div class="sc-eye">// Successor Liability Scenario</div>
-          <p class="sc-body">A fund closes on an <strong>AI-native workflow company</strong>. Post-close, acquired systems begin interacting with portfolio infrastructure. The Integration Airlock observes interaction growth exceeding defined thresholds and transitions to <strong>Restricted state</strong> — flagging three cross-system pathways for human review before they complete. An authorized operator reviews and clears two; the third is escalated, triggering a <strong>Halted state</strong> and cryptographic deadlock until legal counsel confirms the interaction is permissible. Every decision is recorded. When regulators request the oversight record six months later, the entire event is replayed deterministically from the audit log. <strong>Successor liability exposure is documented, contained, and defensible.</strong></p>
+          <div class="sc-eye">// Successor Liability Containment Scenario</div>
+          <p class="sc-body">A fund closes on an <strong>AI-native workflow company</strong>. Post-close, acquired systems begin interacting with portfolio infrastructure. The Integration Airlock's Enforcement Boundary System observes interaction growth exceeding defined thresholds and the FSM transitions to <strong>Restricted state</strong> — flagging three cross-system pathways for human review before they complete. An authorized operator reviews and clears two; the third is escalated, triggering a <strong>Halted state</strong> and cryptographic deadlock until legal counsel confirms the interaction is permissible. Every decision is recorded by the CCCS audit layer. When regulators request the oversight record six months later, the entire event is replayed deterministically from the immutable log. <strong>Successor Liability Containment is documented, contained, and defensible.</strong></p>
         </div>
       </div>
     </div>
@@ -586,25 +672,25 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
 <div class="section" id="deployment">
   <div class="s-label">Deal Timeline</div>
   <h2>AI Acquisition Timeline</h2>
-  <p class="lead">CTP maps directly to the phases of an AI acquisition. Each phase carries distinct liability exposure. The Integration Airlock — enforced by the Three-State DFA — addresses each phase in sequence, ensuring that supervisory continuity is never interrupted.</p>
+  <p class="lead">CTP maps directly to the phases of an AI acquisition. Each phase carries distinct liability exposure. The Integration Airlock — enforced by the Resilient Loop Control Logic (RLCL) Finite State Machine (FSM) — addresses each phase in sequence, ensuring that supervisory continuity is never interrupted.</p>
   <div class="risk-grid timeline-grid">
     <div class="risk-card reveal">
       <div class="rk-num" style="color:var(--blue-bright)">Pre-Close</div>
       <div class="rk-title">Baseline Observation</div>
-      <p class="rk-desc">The DFA observation layer is activated to document how each system currently behaves — before any cross-system connection is established.</p>
-      <p class="rk-desc" style="margin-top:0.75rem">Interaction patterns are mapped and logged before convergence begins. This baseline is what makes post-close oversight meaningful — and establishes that supervisory control was operative before successor liability attached.</p>
+      <p class="rk-desc">The TLSS sensing layer is activated to document how each system currently behaves — before any cross-system connection is established.</p>
+      <p class="rk-desc" style="margin-top:0.75rem">Interaction patterns are mapped and logged before convergence begins. This baseline is what makes post-close oversight meaningful — and establishes that supervisory control was operative before Successor Liability Containment attached.</p>
     </div>
     <div class="risk-card reveal">
       <div class="rk-num" style="color:var(--blue)">Integration Phase</div>
-      <div class="rk-title">Airlock Gateway — DFA Active</div>
-      <p class="rk-desc">All cross-system interactions pass through the Integration Airlock with the Three-State DFA enforcing supervisory control at every edge.</p>
-      <p class="rk-desc" style="margin-top:0.75rem">Restricted state transitions are automatically triggered when thresholds are crossed. Human override capability is enforced throughout. Every supervisory decision is recorded in the immutable audit log.</p>
+      <div class="rk-title">Airlock Gateway — FSM Active</div>
+      <p class="rk-desc">All cross-system interactions pass through the Integration Airlock with the RLCL Finite State Machine (FSM) enforcing supervisory control at every edge.</p>
+      <p class="rk-desc" style="margin-top:0.75rem">Restricted state transitions are automatically triggered when thresholds are crossed. Human override capability is enforced throughout. Every supervisory decision is recorded in the CCCS immutable audit layer.</p>
     </div>
     <div class="risk-card reveal">
       <div class="rk-num" style="color:var(--text-faint)">Stable Operation</div>
       <div class="rk-title">Verified Convergence</div>
-      <p class="rk-desc">Once the DFA verifies stability across all interaction edges, systems operate normally under continuous deterministic oversight.</p>
-      <p class="rk-desc" style="margin-top:0.75rem">The oversight record accumulated during integration is available to regulators, insurers, and future acquirers as continuous documentation that supervisory control was maintained — and successor liability was contained — from the first day of combined operations.</p>
+      <p class="rk-desc">Once the FSM verifies stability across all interaction edges, systems operate normally under continuous deterministic oversight.</p>
+      <p class="rk-desc" style="margin-top:0.75rem">The oversight record accumulated during integration is available to regulators, insurers, and future acquirers as continuous documentation that supervisory control was maintained — and Successor Liability Containment was active — from the first day of combined operations.</p>
     </div>
   </div>
 </div>
@@ -614,22 +700,22 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
 <div class="section" id="regulatory">
   <div class="s-label">Regulatory Alignment</div>
   <h2>EU AI Act Compliance by Architecture</h2>
-  <p class="lead">CTP aligns with EU AI Act Article 14 requirements at the architectural level. Compliance is enforced by the Three-State DFA — not added as a reporting layer after the fact. The result is oversight documentation that holds under regulatory scrutiny because it was generated by the system, not reconstructed by counsel.</p>
+  <p class="lead">CTP aligns with EU AI Act Article 14 requirements at the architectural level. Compliance is enforced by the RLCL Finite State Machine (FSM) — not added as a reporting layer after the fact. The result is oversight documentation that holds under regulatory scrutiny because it was generated by the system, not reconstructed by counsel.</p>
   <div class="risk-grid">
     <div class="risk-card reveal">
       <div class="rk-num">EU AI Act — Article 14</div>
-      <div class="rk-title">Effective Human Oversight → Deterministic DFA Enforcement</div>
-      <p class="rk-desc">Article 14 requires effective human oversight over high-risk AI systems. CTP's Three-State DFA provides deterministic transition points — Active, Restricted, and Halted — that ensure AI interactions are evaluated before they produce outcomes. Oversight is active and computable, satisfying the requirement that it be operative, not aspirational.</p>
+      <div class="rk-title">Effective Human Oversight → Deterministic FSM Enforcement</div>
+      <p class="rk-desc">Article 14 requires effective human oversight over high-risk AI systems. CTP's Resilient Loop Control Logic (RLCL) Finite State Machine (FSM) provides deterministic transition points — Active, Restricted, and Halted — that ensure AI interactions are evaluated before they produce outcomes. Oversight is active and computable, satisfying the requirement that it be operative, not aspirational.</p>
     </div>
     <div class="risk-card reveal">
       <div class="rk-num">EU AI Act — Article 14</div>
       <div class="rk-title">Human Intervention Capability → Override Architecture</div>
-      <p class="rk-desc">Article 14 requires that authorized personnel retain the ability to intervene, pause, or halt AI system operation. CTP enforces this through the Restricted and Halted state transition architecture — intervention capability cannot be removed by configuration change. Every override action is a recorded supervisory event in the audit log.</p>
+      <p class="rk-desc">Article 14 requires that authorized personnel retain the ability to intervene, pause, or halt AI system operation. CTP enforces this through the Restricted and Halted state transition architecture within the FSM — intervention capability cannot be removed by configuration change. Every override action is a recorded supervisory event in the CCCS audit layer.</p>
     </div>
     <div class="risk-card reveal" style="grid-column:1/-1">
       <div class="rk-num">EU AI Act — Article 14</div>
-      <div class="rk-title">Traceable Accountability → Immutable Hash-Chained Audit Record</div>
-      <p class="rk-desc">CTP generates an immutable, hash-chained audit record of every AI interaction through the Integration Airlock — including the DFA state at the time of each interaction, the supervisory decision applied, and the human operator who authorized any override or clearance. This record supports deterministic replay: any interaction can be reconstructed in its original supervisory context. It cannot be altered after the fact. It is available to regulators, insurers, legal counsel, and risk committees as evidence that oversight was operational — and successor liability was contained — from the first day of combined operations.</p>
+      <div class="rk-title">Traceable Accountability → Immutable Hash-Chained Audit Record (CCCS)</div>
+      <p class="rk-desc">CTP generates an immutable, hash-chained audit record of every AI interaction through the Integration Airlock — including the FSM state at the time of each interaction, the supervisory decision applied, and the human operator who authorized any override or clearance. This record supports deterministic replay: any interaction can be reconstructed in its original supervisory context. It cannot be altered after the fact. It is available to regulators, insurers, legal counsel, and risk committees as evidence that oversight was operational — and Successor Liability Containment was active — from the first day of combined operations.</p>
     </div>
   </div>
   <div class="urgency-bar reveal" >
@@ -641,7 +727,7 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
     <div class="u-item" style="border-right:none">
       <span class="u-tag">Structural Advantage</span>
       <div class="u-head">Architectural Compliance Holds Under Pressure</div>
-      <p class="u-body">Process-based compliance depends on human adherence and degrades when integration accelerates. The Three-State DFA enforces oversight deterministically — regardless of integration velocity, team turnover, or system complexity. Compliance is architectural, not procedural.</p>
+      <p class="u-body">Process-based compliance depends on human adherence and degrades when integration accelerates. The FSM enforces oversight deterministically — regardless of integration velocity, team turnover, or system complexity. Compliance is architectural, not procedural.</p>
     </div>
   </div>
 </div>
@@ -654,10 +740,10 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
     <div class="res-layout">
       <div>
         <h2>Protocol and Architecture Resources</h2>
-        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.75;margin-bottom:1rem">Public documentation for the Cognitive Transport Protocol™. Available for review by diligence teams, integration leaders, legal counsel, and technical architects evaluating the Integration Airlock and Three-State DFA supervisory architecture.</p>
+        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.75;margin-bottom:1rem">Public documentation for the Cognitive Transport Protocol™. Available for review by diligence teams, integration leaders, legal counsel, and technical architects evaluating the Integration Airlock and the Five-Layer Deterministic Supervisory Containment (DSC) architecture.</p>
         <ul class="res-list">
           <li><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank"><span class="res-name">CTP Protocol Specification</span><span class="res-meta">github.com/zmichaelakins/ctp-spec ↗</span></a></li>
-          <li><a href="#contact"><span class="res-name">CTP v1.0 White Paper — Three-State DFA Architecture</span><span class="res-meta">Available on request</span></a></li>
+          <li><a href="#contact"><span class="res-name">CTP v1.0 White Paper — Five-Layer DSC Architecture</span><span class="res-meta">Available on request</span></a></li>
           <li><a href="#contact"><span class="res-name">Integration Airlock Architecture Overview</span><span class="res-meta">Available on request</span></a></li>
           <li><a href="#contact"><span class="res-name">EU AI Act Article 14 — CTP Alignment Reference</span><span class="res-meta">Available on request</span></a></li>
           <li><a href="#contact"><span class="res-name">Successor Liability Containment — Deal Counsel Brief</span><span class="res-meta">Available on request</span></a></li>
@@ -670,19 +756,19 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
         <div class="faq-list">
           <div class="faq-item reveal">
             <p class="faq-q">What is successor liability exposure in an AI acquisition?</p>
-            <p class="faq-a">When an AI company is acquired, the acquirer assumes liability for the target's AI systems from the date of close — including oversight gaps, compliance failures, and interaction pathways that were not visible during diligence. Standard reps and warranties do not cover behavior that emerges from the integration itself. The Integration Airlock establishes a documented supervisory boundary before systems connect, creating a documented record that oversight was active before liability transferred.</p>
+            <p class="faq-a">When an AI company is acquired, the acquirer assumes liability for the target's AI systems from the date of close — including oversight gaps, compliance failures, and interaction pathways that were not visible during diligence. Standard reps and warranties do not cover behavior that emerges from the integration itself. The Integration Airlock establishes a documented supervisory boundary before systems connect, creating a documented record that oversight was active before liability transferred. Successor Liability Containment is a core deliverable of the CTP architecture.</p>
           </div>
           <div class="faq-item reveal">
             <p class="faq-q">What is a Kessler Cascade in the context of enterprise AI?</p>
-            <p class="faq-a">A Kessler Cascade describes the failure mode where uncontrolled AI interaction growth compounds across system boundaries — each unmonitored connection generating further interaction pathways until supervisory control is structurally impossible. In AI acquisitions, this cascade can propagate across portfolio infrastructure within weeks of close. CTP's Universal Protocol applies the Three-State DFA at every interaction edge, containing cascade growth before it becomes irreversible.</p>
+            <p class="faq-a">A Kessler Cascade describes the failure mode where uncontrolled AI interaction growth compounds across system boundaries — each unmonitored connection generating further interaction pathways until supervisory control is structurally impossible. In AI acquisitions, this cascade can propagate across portfolio infrastructure within weeks of close. CTP's Universal Protocol applies the FSM at every interaction edge, with the Enforcement Boundary System (EBS) containing cascade growth before it becomes irreversible.</p>
           </div>
           <div class="faq-item reveal">
-            <p class="faq-q">How does the Three-State DFA satisfy EU AI Act Article 14?</p>
-            <p class="faq-a">Article 14 requires effective human oversight, traceable supervisory actions, and documented intervention capability. CTP's Three-State DFA — Active, Restricted, and Halted — provides deterministic transition logic that enforces oversight at the architectural level. Every state transition, human override, and audit event is recorded in an immutable hash-chained log. Oversight is computable and reproducible, satisfying the Article 14 requirement that it be operative, not aspirational.</p>
+            <p class="faq-q">How does the FSM satisfy EU AI Act Article 14?</p>
+            <p class="faq-a">Article 14 requires effective human oversight, traceable supervisory actions, and documented intervention capability. CTP's Resilient Loop Control Logic (RLCL) Finite State Machine (FSM) — operating across Active, Restricted, and Halted states — provides deterministic transition logic that enforces oversight at the architectural level. Every state transition, human override, and audit event is recorded by the CCCS layer in an immutable hash-chained log. Oversight is computable and reproducible, satisfying the Article 14 requirement that it be operative, not aspirational.</p>
           </div>
           <div class="faq-item reveal">
             <p class="faq-q">When in the deal timeline should the Integration Airlock be activated?</p>
-            <p class="faq-a">Before systems are connected. Pre-close activation creates the baseline that makes post-close oversight defensible — and establishes that supervisory control was operative before successor liability attached. Activating the Airlock after systems have already converged is significantly more costly and produces a less complete oversight record for regulatory and legal purposes.</p>
+            <p class="faq-a">Before systems are connected. Pre-close activation creates the baseline that makes post-close oversight defensible — and establishes that Successor Liability Containment was operative before successor liability attached. Activating the Integration Airlock after systems have already converged is significantly more costly and produces a less complete oversight record for regulatory and legal purposes.</p>
           </div>
         </div>
       </div>
@@ -705,7 +791,7 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
 <footer>
   <div class="ft-left">
     <span>Regulator AI Global, Inc.</span> — Cognitive Transport Protocol™ is a trademark of Regulator AI Global, Inc.<br>
-    Education-only license. Commercial rights reserved. Patent pending.
+    Education-only license. Commercial rights reserved. Patent pending (U.S. Provisional filed March 6, 2026). DSC v4.0.
   </div>
   <ul class="ft-links">
     <li><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">GitHub</a></li>
@@ -716,7 +802,7 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const sectionIds = ['problem', 'ghost', 'airlock', 'regulatory', 'deployment', 'publications', 'contact'];
 const sideLinks = document.querySelectorAll('.side-nav-links a');
 const topLinks = document.querySelectorAll('.top-nav-links a');
@@ -736,16 +822,8 @@ window.addEventListener('scroll', () => {
   sideLinks.forEach(link => {
     link.classList.remove('active');
     if (link.getAttribute('href') === `#${current}`) {
-      link.classList.add('active');
-    }
-  });
-  topLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${current}`) {
-      link.classList.add('active');
-    }
-  });
-});
+      lin
 </script>
 
-<
+</body>
+        </html>
