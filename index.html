@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Integration Airlock for AI Mergers & Acquisitions — v4.0</title>
-<meta name="description" content="CTP creates an Integration Airlock for AI acquisitions—containing successor liability, enforcing deterministic oversight, and protecting deal value during post-close system convergence. Deterministic Supervisory Containment v4.0.">
+<title>Regulator AI Global — Predictive System Evaluation for AI Acquisitions</title>
+<meta name="description" content="Regulator AI Global offers a forward-looking framework for evaluating how AI systems may behave when scaled, automated, interconnected, or integrated through acquisition. Supported by multiple U.S. provisional patent filings, March 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -33,7 +33,6 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:#040810;color:#e8f2f8;font-family:'Syne',sans-serif;line-height:1.6;overflow-x:hidden}
-
 body::after{content:'';position:fixed;inset:0;z-index:-1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;opacity:0.4;background-size:cover;}
 
 /* TOP NAV */
@@ -84,10 +83,17 @@ nav.side-nav{position:fixed;top:0;left:0;bottom:0;z-index:299;width:220px;backgr
 
 /* TICKER */
 .ticker-wrap{background:var(--navy);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.55rem 0;overflow:hidden;position:relative;z-index:10}
-.ticker-track{display:flex;animation:ticker 34s linear infinite;white-space:nowrap}
+.ticker-track{display:flex;animation:ticker 38s linear infinite;white-space:nowrap}
 .t-item{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-faint);padding:0 2.5rem;display:flex;align-items:center;gap:0.5rem}
 .t-dot{width:3px;height:3px;border-radius:50%;background:var(--blue-dim);flex-shrink:0}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* WHY THIS EXISTS BANNER */
+.why-banner{position:relative;z-index:10;background:var(--navy);border-bottom:1px solid var(--border)}
+.why-inner{max-width:1100px;margin:0 auto;padding:3rem 3rem;display:grid;grid-template-columns:1fr 2fr;gap:3rem;align-items:center}
+.why-label{font-family:'DM Mono',monospace;font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-bright)}
+.why-body{font-size:0.92rem;color:var(--text-dim);line-height:1.85}
+.why-body strong{color:var(--white)}
 
 /* SECTION BASE */
 .section{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:5.5rem 3rem}
@@ -98,30 +104,6 @@ hr.div{border:none;border-top:1px solid var(--border);position:relative;z-index:
 .s-label::before{content:'';width:18px;height:1px;background:var(--blue-dim)}
 h2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;letter-spacing:-0.02em;line-height:1.15;color:var(--white);margin-bottom:1.25rem}
 .lead{font-size:0.98rem;color:var(--text-dim);max-width:620px;line-height:1.8;margin-bottom:2rem}
-
-/* FSM STATE DIAGRAM (legacy styles retained for compatibility) */
-.dfa-states{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:2.5rem}
-.dfa-state{padding:1.75rem;position:relative;overflow:hidden;transition:background 0.2s}
-.dfa-state.state-active{background:#0a1e10}
-.dfa-state.state-active::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#2a7a3f,transparent)}
-.dfa-state.state-restricted{background:#1a1000}
-.dfa-state.state-restricted::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent)}
-.dfa-state.state-halted{background:#1a0808}
-.dfa-state.state-halted::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
-.dfa-state:hover{filter:brightness(1.08)}
-.state-badge{display:inline-flex;align-items:center;gap:0.4rem;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.9rem;padding:0.25rem 0.6rem;border:1px solid;border-radius:2px}
-.badge-active{color:#4ade80;border-color:#1a4d2a;background:rgba(74,222,128,0.07)}
-.badge-restricted{color:var(--amber);border-color:var(--amber-dim);background:rgba(212,160,23,0.07)}
-.badge-halted{color:#f87171;border-color:#3a1010;background:rgba(248,113,113,0.07)}
-.state-dot{width:5px;height:5px;border-radius:50%}
-.dot-active{background:#4ade80;animation:pulse 2s infinite}
-.dot-restricted{background:var(--amber);animation:pulse 1.4s infinite}
-.dot-halted{background:#f87171}
-.state-title{font-size:0.92rem;font-weight:700;color:var(--white);margin-bottom:0.5rem}
-.state-desc{font-size:0.77rem;color:var(--text-dim);line-height:1.65;margin-bottom:0.85rem}
-.state-triggers{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--text-faint);line-height:1.7;border-top:1px solid var(--border);padding-top:0.7rem}
-.state-triggers span{display:block;color:var(--text-faint)}
-.state-triggers span::before{content:'→ ';color:var(--blue-dim)}
 
 /* RISK GRID */
 .risk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:2.5rem}
@@ -139,8 +121,8 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3vw,2.5rem);font-weight
 .u-body{font-size:0.74rem;color:#9db8cc;line-height:1.6}
 .u-tag{font-family:'DM Mono',monospace;font-size:0.57rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:0.5rem}
 
-/* AIRLOCK LAYOUT */
-.airlock-layout{display:grid;grid-template-columns:repeat(2,1fr);gap:4rem;align-items:start}
+/* FRAMEWORK LAYOUT */
+.fw-layout{display:grid;grid-template-columns:repeat(2,1fr);gap:4rem;align-items:start}
 .benefit-list{display:flex;flex-direction:column;gap:1px;margin-top:2rem;background:var(--border)}
 .b-row{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 1.2rem;background:var(--ink);border-left:2px solid var(--blue-dim);transition:border-color 0.2s,background 0.2s}
 .b-row:hover{border-left-color:var(--blue);background:var(--panel)}
@@ -150,56 +132,27 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3vw,2.5rem);font-weight
 .ctp-note{margin-top:1.75rem;padding:1.1rem 1.4rem;background:rgba(74,143,181,0.05);border:1px solid var(--blue-dim);font-size:0.78rem;color:var(--text-dim);line-height:1.65}
 .ctp-note strong{color:var(--white)}
 
-/* DSC 5-LAYER STACK */
-.dsc-stack{display:flex;flex-direction:column;gap:0;margin-top:2.5rem;border:1px solid var(--border)}
-.dsc-layer{display:grid;grid-template-columns:2.8rem 1fr auto;align-items:start;gap:1rem;padding:1.25rem 1.4rem;background:var(--ink);border-bottom:1px solid var(--border);position:relative;transition:background 0.2s;min-height:72px}
-.dsc-layer:last-child{border-bottom:none}
-.dsc-layer::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px}
-.dsc-layer.l1::before{background:var(--blue-bright)}
-.dsc-layer.l2::before{background:#4ade80}
-.dsc-layer.l3::before{background:var(--amber)}
-.dsc-layer.l4::before{background:#a78bfa}
-.dsc-layer.l5::before{background:var(--blue)}
-.dsc-layer:hover{background:var(--panel)}
-.dsc-num{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--text-faint);text-align:right;padding-top:0.15rem;min-width:2rem}
-.dsc-content{display:flex;flex-direction:column;gap:0.35rem}
-.dsc-name{font-size:0.82rem;font-weight:700;color:var(--white);line-height:1.3}
-.dsc-desc{font-size:0.74rem;color:var(--text-dim);line-height:1.6;margin-top:0.1rem}
-.dsc-badge{font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.09em;padding:0.2rem 0.5rem;border:1px solid;border-radius:2px;white-space:nowrap;align-self:flex-start;margin-top:0.15rem}
-.badge-ctp{color:var(--blue-bright);border-color:var(--blue-dim);background:rgba(74,143,181,0.08)}
-.badge-fsm{color:#4ade80;border-color:#1a4d2a;background:rgba(74,222,128,0.07)}
-.badge-ebs{color:var(--amber);border-color:var(--amber-dim);background:rgba(212,160,23,0.07)}
-.badge-tlss{color:#a78bfa;border-color:#2d1a5e;background:rgba(167,139,250,0.07)}
-.badge-cccs{color:var(--blue);border-color:var(--blue-mid-dim);background:rgba(45,106,147,0.07)}
-
-/* SECTION 4 INTERVENTION LOGIC */
-.intervention-block{margin-top:2.5rem;border:1px solid var(--border-hi);background:var(--ink);padding:0}
-.intervention-block .ib-header{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);padding:0.85rem 1.4rem;border-bottom:1px solid var(--border);background:rgba(74,143,181,0.04)}
-.ib-body{display:flex;flex-direction:column;gap:0}
-.ib-item{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);transition:background 0.2s}
-.ib-item:last-child{border-bottom:none}
-.ib-item:hover{background:rgba(74,143,181,0.03)}
-.ib-icon{width:24px;height:24px;border:1px solid var(--blue-dim);background:var(--blue-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.65rem;color:var(--blue-bright);margin-top:0.1rem}
-.ib-title{font-size:0.8rem;font-weight:700;color:var(--white);margin-bottom:0.3rem}
-.ib-desc{font-size:0.76rem;color:var(--text-dim);line-height:1.65}
-
-
-.arch-box{background:var(--panel);border:1px solid var(--border-hi);padding:1.6rem}
-.arch-eyebrow{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1.4rem;text-align:center}
-.arch-layers{display:flex;flex-direction:column;gap:2px}
-.a-layer{display:grid;grid-template-columns:2.2rem 1fr auto;align-items:center;gap:0.6rem;padding:0.62rem 0.75rem;background:var(--ink);border:1px solid var(--border);transition:background 0.2s}
-.a-layer:hover{background:rgba(74,143,181,0.04)}
-.a-layer.hi{background:rgba(74,143,181,0.06);border-color:var(--blue-dim)}
-.a-num{font-family:'DM Mono',monospace;font-size:0.57rem;color:var(--text-faint);text-align:right}
-.a-name{font-size:0.72rem;font-weight:600;color:var(--text)}
-.a-tag{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.08em;padding:0.17rem 0.42rem;border:1px solid}
-.tag-t{color:var(--blue-bright);border-color:var(--blue-dim);background:rgba(74,143,181,0.07)}
-.tag-g{color:var(--blue);border-color:var(--blue-mid-dim);background:rgba(45,106,147,0.07)}
-.tag-d{color:var(--text-faint);border-color:var(--text-faint)}
-.tag-a{color:#4ade80;border-color:#1a4d2a;background:rgba(74,222,128,0.07)}
-.tag-r{color:var(--amber);border-color:var(--amber-dim);background:rgba(212,160,23,0.07)}
-.tag-h{color:#f87171;border-color:#3a1010;background:rgba(248,113,113,0.07)}
-.arch-inv{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--text-faint);text-align:center;margin-top:0.8rem;font-style:italic}
+/* CAPABILITY STACK */
+.cap-stack{display:flex;flex-direction:column;gap:0;margin-top:2.5rem;border:1px solid var(--border)}
+.cap-layer{display:grid;grid-template-columns:2.8rem 1fr auto;align-items:start;gap:1rem;padding:1.4rem 1.6rem;background:var(--ink);border-bottom:1px solid var(--border);position:relative;transition:background 0.2s;min-height:72px}
+.cap-layer:last-child{border-bottom:none}
+.cap-layer::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px}
+.cap-layer.l1::before{background:var(--blue-bright)}
+.cap-layer.l2::before{background:#4ade80}
+.cap-layer.l3::before{background:var(--amber)}
+.cap-layer.l4::before{background:#a78bfa}
+.cap-layer.l5::before{background:var(--blue)}
+.cap-layer:hover{background:var(--panel)}
+.cap-num{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--text-faint);text-align:right;padding-top:0.15rem;min-width:2rem}
+.cap-content{display:flex;flex-direction:column;gap:0.35rem}
+.cap-name{font-size:0.85rem;font-weight:700;color:var(--white);line-height:1.3}
+.cap-desc{font-size:0.76rem;color:var(--text-dim);line-height:1.65;margin-top:0.15rem}
+.cap-badge{font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.09em;padding:0.2rem 0.5rem;border:1px solid;border-radius:2px;white-space:nowrap;align-self:flex-start;margin-top:0.15rem}
+.badge-b1{color:var(--blue-bright);border-color:var(--blue-dim);background:rgba(74,143,181,0.08)}
+.badge-b2{color:#4ade80;border-color:#1a4d2a;background:rgba(74,222,128,0.07)}
+.badge-b3{color:var(--amber);border-color:var(--amber-dim);background:rgba(212,160,23,0.07)}
+.badge-b4{color:#a78bfa;border-color:#2d1a5e;background:rgba(167,139,250,0.07)}
+.badge-b5{color:var(--blue);border-color:var(--blue-mid-dim);background:rgba(45,106,147,0.07)}
 
 /* SCENARIO */
 .scenario{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--blue-dim);padding:1.6rem 1.9rem;margin-top:1rem}
@@ -207,24 +160,13 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3vw,2.5rem);font-weight
 .sc-body{font-size:0.84rem;color:var(--text-dim);line-height:1.75}
 .sc-body strong{color:var(--white)}
 
-/* SUCCESSOR LIABILITY CALLOUT */
-.successor-callout{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-top:2.5rem}
-.sc-block{padding:1.5rem;border:1px solid var(--border-hi);background:var(--ink);position:relative}
-.sc-block::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--blue-dim),var(--blue-mid),var(--blue-dim))}
-.sc-block-eye{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:0.75rem}
-.sc-block-head{font-size:0.85rem;font-weight:700;color:var(--white);margin-bottom:0.5rem}
-.sc-block-body{font-size:0.76rem;color:var(--text-dim);line-height:1.65}
-
-/* AUDIENCE GRID */
-.aud-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:2.5rem}
-.aud-card{background:var(--ink);padding:1.6rem 1.4rem;display:flex;flex-direction:column;transition:background 0.2s;overflow:hidden;position:relative}
-.aud-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue-dim),transparent);opacity:0;transition:opacity 0.3s}
-.aud-card:hover{background:var(--panel)}.aud-card:hover::after{opacity:1}
-.aud-type{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue-bright);margin-bottom:0.8rem}
-.aud-head{font-size:0.84rem;font-weight:700;color:var(--white);line-height:1.4;margin-bottom:0.55rem}
-.aud-body{font-size:0.74rem;color:var(--text-dim);line-height:1.65;flex:1;margin-bottom:1.2rem}
-.aud-cta{font-family:'DM Mono',monospace;font-size:0.63rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue-bright);text-decoration:none;border-top:1px solid var(--border);padding-top:0.85rem;display:flex;align-items:center;gap:0.4rem;transition:color 0.2s}
-.aud-cta:hover{color:var(--white)}.aud-cta::after{content:'→'}
+/* CALLOUT PAIR */
+.callout-pair{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-top:2.5rem}
+.co-block{padding:1.5rem;border:1px solid var(--border-hi);background:var(--ink);position:relative}
+.co-block::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--blue-dim),var(--blue-mid),var(--blue-dim))}
+.co-eye{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:0.75rem}
+.co-head{font-size:0.85rem;font-weight:700;color:var(--white);margin-bottom:0.5rem}
+.co-body{font-size:0.76rem;color:var(--text-dim);line-height:1.65}
 
 /* RESOURCES */
 .res-layout{display:grid;grid-template-columns:repeat(2,1fr);gap:4rem}
@@ -250,10 +192,10 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3vw,2.5rem);font-weight
 .eng-contact a{color:var(--text-dim);text-decoration:none}.eng-contact a:hover{color:var(--blue-bright)}
 
 /* FOOTER */
-footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:10;flex-wrap:wrap;gap:1rem;text-align:center;}
+footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:10;flex-wrap:wrap;gap:1rem;text-align:center}
 .ft-left{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.07em;color:var(--text-faint);line-height:1.65}
 .ft-left span{color:var(--blue-dim)}
-.ft-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap;justify-content:center;}
+.ft-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap;justify-content:center}
 .ft-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint);text-decoration:none;transition:color 0.2s}
 .ft-links a:hover{color:var(--text)}
 
@@ -261,22 +203,21 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
 
 /* RESPONSIVE */
 @media(max-width:1024px){
-  nav.top-nav{padding:0 1.5rem 0 1.5rem;flex-direction:row;flex-wrap:wrap;height:auto;gap:1rem;justify-content:center;}
-  nav.top-nav .top-nav-links{gap:1rem;}
-  nav.side-nav{display:none}
-  .page-body{margin-left:0;padding-top:120px;}
+  nav.side-nav{display:none;}
+  nav.top-nav{padding:0 1.5rem;height:60px;justify-content:space-between;flex-wrap:nowrap;overflow:hidden;}
+  .top-nav-links{gap:1rem;flex-wrap:nowrap;}
+  .page-body{margin-left:0;padding-top:60px;}
   #hero{padding:6rem 2rem 4rem;}
   .section{padding:5.5rem 2rem;}
   .section-full .inner{padding:0 2rem;}
   footer{padding:1.6rem 2rem;}
+  .why-inner{padding:3rem 2rem;grid-template-columns:1fr;}
 }
 @media(max-width:800px){
   .risk-grid{grid-template-columns:1fr;}
   .urgency-bar{grid-template-columns:repeat(2,1fr);}
-  .airlock-layout{grid-template-columns:1fr;}
-  .dfa-states{grid-template-columns:1fr;}
-  .successor-callout{grid-template-columns:1fr;}
-  .aud-grid{grid-template-columns:repeat(2,1fr);}
+  .fw-layout{grid-template-columns:1fr;}
+  .callout-pair{grid-template-columns:1fr;}
   .res-layout{grid-template-columns:1fr;}
   .hero-content{max-width:100%;}
   .hero-sub{max-width:100%;}
@@ -284,104 +225,37 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
   #hero{padding:4rem 1.5rem 3rem;}
   .section{padding:4rem 1.5rem;}
   .section-full .inner{padding:0 1.5rem;}
-  .ticker-wrap{padding:0.4rem 0;}
-  .t-item{padding:0 1.5rem;}
   footer{padding:1.4rem 1.5rem;}
-  .top-nav-links a{font-size:0.7rem;}
-  .nav-cta{font-size:0.7rem;padding:0.4rem 0.8rem;}
-  .nav-logo{font-size:0.8rem;}
+}
+@media(max-width:640px){
+  /* Collapse nav to logo + CTA only on small screens */
+  .top-nav-links{display:none;}
+  nav.top-nav{height:52px;padding:0 1.25rem;justify-content:space-between;}
+  .page-body{padding-top:52px;}
+  #hero{padding:4rem 1.25rem 3rem;min-height:calc(100vh - 52px);}
 }
 @media(max-width:480px){
   .section{padding:3rem 1rem;}
   .urgency-bar{grid-template-columns:1fr;}
-  .aud-grid{grid-template-columns:1fr;}
   .hero-stats{flex-direction:column;gap:1.25rem;}
-  #hero{padding:3rem 1rem 2rem;min-height:80vh;}
-  .hero-headline{font-size:clamp(2rem,8vw,3rem);line-height:1;}
-  .hero-sub{font-size:0.9rem;line-height:1.6;}
-  .hero-tag{font-size:0.6rem;gap:0.5rem;}
-  .hero-tag::before{width:20px;}
-  .hero-actions{gap:0.6rem;justify-content:center;}
-  .btn-primary, .btn-ghost{padding:0.7rem 1.2rem;font-size:0.7rem;}
-  .hero-stats{gap:1rem;margin-top:2.5rem;padding-top:2rem;}
-  .stat-val{font-size:1rem;}
-  .stat-label{font-size:0.6rem;}
-  .ticker-track{animation:ticker 50s linear infinite;}
-  .t-item{font-size:0.55rem;padding:0 1rem;gap:0.3rem;}
-  .t-dot{width:2.5px;height:2.5px;}
-  .dsc-layer{grid-template-columns:1fr;gap:0.5rem;padding:1.1rem 1rem;}
-  .dsc-num{text-align:left;font-size:0.6rem;}
-  .dsc-name{font-size:0.8rem;}
-  .dsc-desc{font-size:0.74rem;line-height:1.6;}
-  .ib-item{flex-direction:column;gap:0.6rem;padding:1rem;}
-  .s-label{font-size:0.6rem;gap:0.4rem;}
-  .s-label::before{width:15px;}
+  .hero-headline{font-size:clamp(2rem,8vw,3rem);line-height:1.05;}
+  .hero-sub{font-size:0.9rem;}
+  .hero-actions{gap:0.6rem;}
+  .btn-primary,.btn-ghost{padding:0.7rem 1.2rem;font-size:0.7rem;}
+  .hero-stats{gap:1rem;margin-top:2rem;padding-top:1.75rem;}
+  .why-inner{padding:2rem 1rem;gap:1.5rem;}
+  .why-body{font-size:0.85rem;}
+  .cap-layer{grid-template-columns:1fr;gap:0.5rem;padding:1.1rem 1rem;}
+  .cap-num{text-align:left;}
   h2{font-size:clamp(1.5rem,5vw,2rem);}
-  .lead{font-size:0.9rem;line-height:1.7;max-width:100%;}
-  .dsc-layer{grid-template-columns:2.2rem 1fr auto;padding:1.1rem 1.2rem;min-height:auto;gap:0.75rem}
-  .dsc-name{font-size:0.78rem;}
-  .dsc-desc{font-size:0.72rem;line-height:1.55;}
-  .dsc-badge{font-size:0.52rem;}
-  .ib-item{padding:1rem 1.2rem;gap:0.8rem;}
-  .ib-title{font-size:0.75rem;}
-  .ib-desc{font-size:0.72rem;line-height:1.55;}
-  .dfa-state{padding:1.5rem;}
-  .state-title{font-size:0.85rem;}
-  .state-desc{font-size:0.72rem;line-height:1.6;}
-  .state-triggers{font-size:0.55rem;line-height:1.6;padding-top:0.6rem;}
+  .lead{font-size:0.9rem;max-width:100%;}
   .risk-card{padding:1.5rem;}
-  .rk-num{font-size:0.55rem;}
-  .rk-title{font-size:0.82rem;}
-  .rk-desc{font-size:0.72rem;line-height:1.6;}
   .u-item{padding:1.2rem 1.3rem;}
-  .u-head{font-size:0.75rem;}
-  .u-body{font-size:0.7rem;line-height:1.5;}
-  .u-tag{font-size:0.55rem;}
-  .b-row{padding:1rem 1rem;gap:0.8rem;}
-  .b-icon{width:24px;height:24px;font-size:0.7rem;}
-  .b-title{font-size:0.75rem;}
-  .b-desc{font-size:0.7rem;line-height:1.5;}
-  .ctp-note{padding:1rem 1.2rem;font-size:0.72rem;line-height:1.6;margin-top:1.5rem;}
-  .arch-box{padding:1.4rem;}
-  .arch-eyebrow{font-size:0.55rem;}
-  .a-layer{padding:0.55rem 0.65rem;}
-  .a-name{font-size:0.68rem;}
-  .a-tag{font-size:0.52rem;padding:0.15rem 0.35rem;}
-  .arch-inv{font-size:0.55rem;}
+  .b-row{padding:1rem;gap:0.8rem;}
   .scenario{padding:1.4rem 1.6rem;}
-  .sc-eye{font-size:0.55rem;}
-  .sc-body{font-size:0.78rem;line-height:1.6;}
-  .successor-callout{gap:1.5rem;}
-  .sc-block{padding:1.3rem;}
-  .sc-block-eye{font-size:0.55rem;}
-  .sc-block-head{font-size:0.8rem;}
-  .sc-block-body{font-size:0.72rem;line-height:1.6;}
-  .aud-card{padding:1.4rem 1.2rem;}
-  .aud-type{font-size:0.55rem;}
-  .aud-head{font-size:0.78rem;}
-  .aud-body{font-size:0.7rem;line-height:1.6;}
-  .aud-cta{font-size:0.6rem;padding-top:0.75rem;}
-  .res-list li a{padding:0.75rem 0.9rem;}
-  .res-name{font-size:0.75rem;}
-  .res-meta{font-size:0.55rem;}
-  .faq-item{padding:0.95rem 1rem;}
-  .faq-q{font-size:0.72rem;}
-  .faq-a{font-size:0.7rem;line-height:1.6;}
   .engage-wrap{padding:4rem 1rem;}
   .engage-wrap::before{width:280px;}
-  .eng-head{font-size:clamp(1.8rem,6vw,2.5rem);}
-  .eng-sub{font-size:0.85rem;line-height:1.6;max-width:100%;}
-  .eng-email{font-size:0.95rem;}
-  .eng-contact{font-size:0.62rem;}
-  footer{padding:1.4rem 1rem;gap:1rem;}
-  .ft-left{font-size:0.55rem;}
-  .ft-links{gap:1.25rem;}
-  .ft-links a{font-size:0.55rem;}
-  .top-nav-links{gap:0.75rem;}
-  .top-nav-links a{font-size:0.62rem;}
-  .nav-cta{font-size:0.62rem;padding:0.35rem 0.8rem;}
-  .nav-logo{font-size:0.68rem;}
-  nav.top-nav{padding:1rem;justify-content:center;gap:1rem;height:auto;}
+  footer{padding:1.4rem 1rem;}
 }
 </style>
 </head>
@@ -391,24 +265,25 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
   <a class="nav-logo" href="#hero">Regulator AI Global</a>
   <ul class="top-nav-links">
     <li><a href="#problem">Risk</a></li>
-    <li><a href="#airlock">Airlock</a></li>
-    <li><a href="#regulatory">Compliance</a></li>
-    <li><a href="#deployment">Timeline</a></li>
+    <li><a href="#framework">Framework</a></li>
+    <li><a href="#capability">Capabilities</a></li>
+    <li><a href="#timeline">Timeline</a></li>
     <li><a href="#publications">Resources</a></li>
   </ul>
   <a class="nav-cta" href="#contact">Contact</a>
 </nav>
 
 <nav class="side-nav">
-  <div class="side-nav-logo">CTP™ Protocol</div>
+  <div class="side-nav-logo">Regulator AI™</div>
   <div class="side-nav-section">Navigation</div>
   <ul class="side-nav-links">
     <li><a href="#problem"><span class="side-nav-num">01</span> Acquisition Risk</a></li>
-    <li><a href="#airlock"><span class="side-nav-num">02</span> Integration Airlock</a></li>
-    <li><a href="#regulatory"><span class="side-nav-num">03</span> Regulatory Alignment</a></li>
-    <li><a href="#deployment"><span class="side-nav-num">04</span> Deal Timeline</a></li>
-    <li><a href="#publications"><span class="side-nav-num">05</span> Resources</a></li>
-    <li><a href="#contact"><span class="side-nav-num">06</span> Contact</a></li>
+    <li><a href="#framework"><span class="side-nav-num">02</span> The Framework</a></li>
+    <li><a href="#capability"><span class="side-nav-num">03</span> Capabilities</a></li>
+    <li><a href="#timeline"><span class="side-nav-num">04</span> Deal Timeline</a></li>
+    <li><a href="#regulatory"><span class="side-nav-num">05</span> Regulatory</a></li>
+    <li><a href="#publications"><span class="side-nav-num">06</span> Resources</a></li>
+    <li><a href="#contact"><span class="side-nav-num">07</span> Contact</a></li>
   </ul>
   <div class="side-nav-footer">
     <a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">GitHub ↗</a>
@@ -417,104 +292,119 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
 
 <div class="page-body">
 
+<!-- ── HERO ─────────────────────────────────────────────────── -->
 <section id="hero">
   <div class="hero-overlay"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
-    <div class="hero-tag"><span class="pulse"></span> Successor Liability Containment · AI Acquisition Infrastructure</div>
+    <div class="hero-tag"><span class="pulse"></span> Predictive System Evaluation · AI Acquisition Infrastructure</div>
     <h1 class="hero-headline">
-      The <em>Integration Airlock</em><br>for AI Mergers & Acquisitions
+      <em>Forward-Looking</em><br>AI System Evaluation
     </h1>
-    <p class="hero-sub">When you acquire an AI company, you inherit its liability surface. The Cognitive Transport Protocol™ establishes a deterministic supervisory boundary — containing successor liability exposure, enforcing oversight continuity, and protecting deal value from close through full convergence.</p>
+    <p class="hero-sub">Complex AI systems behave differently when they are scaled, automated, or integrated through acquisition. Regulator AI provides a framework for evaluating how those systems may behave — before integration begins, before liability transfers, and before outcomes become difficult to reverse.</p>
     <div class="hero-actions">
-      <a class="btn-primary" href="#airlock">See the Architecture</a>
+      <a class="btn-primary" href="#framework">Explore the Framework</a>
       <a class="btn-ghost" href="#contact">Licensing Inquiry</a>
     </div>
     <div class="hero-stats">
       <div><span class="stat-val">EU AI Act</span><span class="stat-label">Article 14 Aligned</span></div>
-      <div><span class="stat-val">5-Layer DSC</span><span class="stat-label">Deterministic Supervision</span></div>
-      <div><span class="stat-val">Patent Pending</span><span class="stat-label">U.S. Provisional Filed</span></div>
-      <div><span class="stat-val">Day-One</span><span class="stat-label">Audit Record Active</span></div>
+      <div><span class="stat-val">Predictive</span><span class="stat-label">Pre-Integration Evaluation</span></div>
+      <div><span class="stat-val">Patent Pending</span><span class="stat-label">Multiple U.S. Provisionals Filed</span></div>
+      <div><span class="stat-val">Forward-Looking</span><span class="stat-label">Anticipatory Decision Support</span></div>
     </div>
   </div>
 </section>
 
+<!-- ── TICKER ─────────────────────────────────────────────────── -->
 <div class="ticker-wrap">
   <div class="ticker-track">
-    <span class="t-item"><span class="t-dot"></span>Successor Liability Containment</span>
-    <span class="t-item"><span class="t-dot"></span>Integration Airlock</span>
-    <span class="t-item"><span class="t-dot"></span>Deterministic Supervisory Containment</span>
+    <span class="t-item"><span class="t-dot"></span>Predictive System Evaluation</span>
+    <span class="t-item"><span class="t-dot"></span>Anticipatory Analysis</span>
+    <span class="t-item"><span class="t-dot"></span>Pre-Integration Decision Support</span>
     <span class="t-item"><span class="t-dot"></span>EU AI Act Article 14</span>
-    <span class="t-item"><span class="t-dot"></span>Finite State Machine Control Logic</span>
-    <span class="t-item"><span class="t-dot"></span>Immutable Audit Chain</span>
-    <span class="t-item"><span class="t-dot"></span>Kessler Cascade Prevention</span>
-    <span class="t-item"><span class="t-dot"></span>Universal Protocol</span>
+    <span class="t-item"><span class="t-dot"></span>Systemic Interaction Risk</span>
+    <span class="t-item"><span class="t-dot"></span>AI Governance Readiness</span>
+    <span class="t-item"><span class="t-dot"></span>Complex System Behavior Under Scale</span>
     <span class="t-item"><span class="t-dot"></span>Cognitive Transport Protocol™</span>
     <span class="t-item"><span class="t-dot"></span>Regulator AI Global, Inc.</span>
-    <span class="t-item"><span class="t-dot"></span>Successor Liability Containment</span>
-    <span class="t-item"><span class="t-dot"></span>Integration Airlock</span>
-    <span class="t-item"><span class="t-dot"></span>Deterministic Supervisory Containment</span>
+    <span class="t-item"><span class="t-dot"></span>Post-Merger Integration Planning</span>
+    <span class="t-item"><span class="t-dot"></span>Predictive System Evaluation</span>
+    <span class="t-item"><span class="t-dot"></span>Anticipatory Analysis</span>
+    <span class="t-item"><span class="t-dot"></span>Pre-Integration Decision Support</span>
     <span class="t-item"><span class="t-dot"></span>EU AI Act Article 14</span>
-    <span class="t-item"><span class="t-dot"></span>Finite State Machine Control Logic</span>
-    <span class="t-item"><span class="t-dot"></span>Immutable Audit Chain</span>
-    <span class="t-item"><span class="t-dot"></span>Kessler Cascade Prevention</span>
-    <span class="t-item"><span class="t-dot"></span>Universal Protocol</span>
+    <span class="t-item"><span class="t-dot"></span>Systemic Interaction Risk</span>
+    <span class="t-item"><span class="t-dot"></span>AI Governance Readiness</span>
+    <span class="t-item"><span class="t-dot"></span>Complex System Behavior Under Scale</span>
     <span class="t-item"><span class="t-dot"></span>Cognitive Transport Protocol™</span>
     <span class="t-item"><span class="t-dot"></span>Regulator AI Global, Inc.</span>
+    <span class="t-item"><span class="t-dot"></span>Post-Merger Integration Planning</span>
   </div>
 </div>
 
+<!-- ── WHY THIS EXISTS ─────────────────────────────────────────── -->
+<div class="why-banner">
+  <div class="why-inner">
+    <div class="why-label">Why This Exists</div>
+    <p class="why-body">
+      Modern AI-enabled systems often behave differently once they are integrated, scaled, or automated.
+      <strong>Traditional diligence methods cannot easily evaluate how those systems will interact after acquisition or platform expansion.</strong>
+      Regulator AI explores a forward-looking approach to evaluating systemic interaction risk before those integrations occur, allowing organizations to anticipate potential instability rather than discovering it after deployment.
+    </p>
+  </div>
+</div>
+
+<!-- ── PROBLEM ─────────────────────────────────────────────────── -->
 <div class="section" id="problem">
   <div class="s-label">Acquisition Risk</div>
-  <h2>What Acquirers Inherit</h2>
-  <p class="lead">Every AI acquisition transfers liability that was not visible during diligence. The moment systems are connected, new interaction pathways emerge — carrying oversight gaps, compliance exposure, and successor liability that standard reps and warranties do not address.</p>
+  <h2>What Acquirers Cannot See</h2>
+  <p class="lead">Standard diligence evaluates AI systems as they currently operate — not as they will behave once they are scaled, automated, or connected to new infrastructure. The gap between those two states is where acquisition risk concentrates.</p>
 
-  <div class="successor-callout">
-    <div class="sc-block">
-      <div class="sc-block-eye">// Successor Liability</div>
-      <div class="sc-block-head">You Acquire the Liability Surface — Not Just the Asset</div>
-      <p class="sc-block-body">When an AI system is acquired, the acquirer assumes responsibility for its behavior from the date of close. Regulatory exposure, oversight failures, and compliance gaps that existed in the target become the acquirer's liability — regardless of what was disclosed in diligence. The Integration Airlock establishes a documented supervisory boundary from day one, creating defensible evidence that oversight was active before liability transfer was complete.</p>
+  <div class="callout-pair">
+    <div class="co-block">
+      <div class="co-eye">// The Visibility Problem</div>
+      <div class="co-head">AI Systems Behave Differently in Combination</div>
+      <p class="co-body">When acquired AI systems are introduced into an existing technology environment, new interaction patterns emerge that were not present — and could not have been evaluated — before integration. These emergent behaviors carry regulatory exposure and successor liability that standard representations and warranties do not address. Evaluating how systems may interact before those connections are established is the foundational challenge the Regulator AI framework is designed to support.</p>
     </div>
-    <div class="sc-block">
-      <div class="sc-block-eye">// Kessler Cascade Risk</div>
-      <div class="sc-block-head">Unchecked Interaction Growth Degrades the Entire Stack</div>
-      <p class="sc-block-body">The Kessler Cascade describes the failure mode where uncontrolled AI system interactions compound — each unmonitored connection spawning further interaction pathways, until supervisory control becomes structurally impossible. In enterprise AI acquisitions, this cascade can propagate across portfolio infrastructure within weeks of close. CTP's Universal Protocol applies deterministic containment at every interaction edge, preventing cascade growth before it becomes irreversible.</p>
+    <div class="co-block">
+      <div class="co-eye">// Complexity at Scale</div>
+      <div class="co-head">Interaction Risk Compounds Faster Than Manual Review Allows</div>
+      <p class="co-body">As AI systems scale, automate, and interconnect, the range of potential interaction outcomes grows faster than any organization can assess reactively. Without a forward-looking evaluation capability, organizations are left assessing risk after it has already materialized. The Regulator AI framework enables anticipatory analysis — helping organizations understand potential system behavior before integration, not after the fact.</p>
     </div>
   </div>
 
-  <div class="risk-grid" >
+  <div class="risk-grid">
     <div class="risk-card reveal">
-      <div class="rk-num">Risk Surface 01</div>
-      <div class="rk-title">Ghost Asset Exposure</div>
-      <p class="rk-desc">AI systems disclosed during diligence represent only the visible surface. Interaction pathways between acquired systems and host infrastructure emerge post-close — creating behavior and liability that no representation or warranty covers. These undisclosed pathways are the Ghost Asset: real, transferable, and uncontained without a supervisory mediation layer.</p>
+      <div class="rk-num">Risk Dimension 01</div>
+      <div class="rk-title">Undisclosed Interaction Pathways</div>
+      <p class="rk-desc">AI systems disclosed during diligence reflect only their current operating context. Once introduced to a new environment, interaction patterns emerge that neither party could observe pre-close. These patterns produce behavior — and liability — that no prior disclosure covers.</p>
     </div>
     <div class="risk-card reveal">
-      <div class="rk-num">Risk Surface 02</div>
-      <div class="rk-title">Oversight Continuity Gap</div>
-      <p class="rk-desc">Standard integration processes do not preserve supervisory control across the convergence boundary. When acquired AI systems connect to production infrastructure, the oversight mechanisms that applied pre-close are not automatically carried forward. The result is a compliance gap at the moment of maximum liability transfer — the Integration Airlock closes this gap deterministically.</p>
+      <div class="rk-num">Risk Dimension 02</div>
+      <div class="rk-title">Oversight Continuity Across the Integration Boundary</div>
+      <p class="rk-desc">Standard integration processes do not carry forward the supervisory context that governed acquired systems pre-close. The result is a structural oversight gap at the moment when liability is highest. Establishing a forward-looking evaluation baseline before systems connect is what makes post-close oversight defensible.</p>
     </div>
     <div class="risk-card reveal">
-      <div class="rk-num">Risk Surface 03</div>
-      <div class="rk-title">Regulatory Audit Exposure</div>
-      <p class="rk-desc">The Airlock provides an immutable, day-one audit record of human-centric oversight, satisfying Article 14 requirements for high-risk AI systems during the convergence phase.</p>
+      <div class="rk-num">Risk Dimension 03</div>
+      <div class="rk-title">Regulatory Documentation Requirements</div>
+      <p class="rk-desc">EU AI Act Article 14 enforcement is active. Acquirers of high-risk AI systems must demonstrate continuous human oversight documentation from the date of close. Generating that record proactively — before integration — is the only approach that holds under regulatory scrutiny.</p>
     </div>
     <div class="risk-card reveal">
-      <div class="rk-num">Risk Surface 04</div>
-      <div class="rk-title">Indemnification Failure</div>
-      <p class="rk-desc">R&W insurance and seller indemnification do not cover AI interaction pathways that emerge post-close. Once systems are connected, the behavior that produces liability is new — generated by the integration itself, not by either party's prior operation. This exposure is uninsured under standard deal structures and requires an architectural containment solution, not a contractual one.</p>
+      <div class="rk-num">Risk Dimension 04</div>
+      <div class="rk-title">Indemnification Structure Gaps</div>
+      <p class="rk-desc">Representations and warranties do not cover behavior that emerges from the integration itself. Interaction patterns generated post-close are not covered by seller indemnification or R&W insurance under standard deal structures. This exposure requires an anticipatory evaluation approach, not a contractual one.</p>
     </div>
   </div>
 
-  <div class="urgency-bar reveal" >
+  <div class="urgency-bar reveal">
     <div class="u-item">
       <span class="u-tag">Liability Transfer</span>
       <div class="u-head">Begins at Close</div>
-      <p class="u-body">Successor liability attaches from the moment of transaction close — not after integration is complete. Oversight infrastructure must be active before systems connect.</p>
+      <p class="u-body">Successor liability attaches from the moment of transaction close — not after integration is complete. Predictive evaluation must begin before systems connect.</p>
     </div>
     <div class="u-item">
-      <span class="u-tag">Cascade Onset</span>
+      <span class="u-tag">Complexity Onset</span>
       <div class="u-head">Days to Weeks</div>
-      <p class="u-body">Uncontrolled interaction growth between AI systems can produce a Kessler Cascade within weeks of first connection — compounding faster than manual remediation allows.</p>
+      <p class="u-body">Interaction risk between AI systems can compound within weeks of first connection — faster than reactive review allows.</p>
     </div>
     <div class="u-item">
       <span class="u-tag">Regulatory Window</span>
@@ -522,253 +412,228 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
       <p class="u-body">Article 14 enforcement is live. Acquirers of high-risk AI systems must demonstrate continuous oversight documentation to regulators and insurers on demand.</p>
     </div>
     <div class="u-item" style="border-right:none">
-      <span class="u-tag">CTP Response</span>
-      <div class="u-head">Architectural Containment</div>
-      <p class="u-body">The Integration Airlock is activated before systems connect — establishing the supervisory boundary, audit record, and intervention capability that successor liability requires.</p>
+      <span class="u-tag">Framework Response</span>
+      <div class="u-head">Anticipatory Evaluation</div>
+      <p class="u-body">The Regulator AI framework is activated before systems connect — establishing the supervisory baseline and oversight record that successor liability management requires.</p>
     </div>
   </div>
 </div>
 
 <hr class="div">
 
-<div class="section" id="ghost">
-  <div class="s-label">Supervisory Architecture</div>
-  <h2>Five-Layer Deterministic Supervisory Containment</h2>
-  <p class="lead">CTP's supervisory infrastructure is organized as a formally specified Five-Layer DSC stack. Each layer has defined responsibilities, enforcement boundaries, and audit obligations. The architecture is deterministic: given any system input, the supervisory response is computable, reproducible, and auditable — satisfying EU AI Act Article 14's requirement for effective, traceable human oversight through a Finite State Machine (FSM) enforcement mechanism.</p>
-
-  <div class="dsc-stack">
-    <div class="dsc-layer l1">
-      <span class="dsc-num">L1</span>
-      <div class="dsc-content">
-        <div class="dsc-name">Cognitive Transport Protocol™ (CTP)</div>
-        <p class="dsc-desc">The communication standard for intent and load exchange. CTP defines how supervisory intent, operational state, and load signals are formatted, routed, and authenticated across all system boundaries — establishing the canonical channel through which every other layer operates.</p>
-      </div>
-      <span class="dsc-badge badge-ctp">Transport</span>
-    </div>
-    <div class="dsc-layer l2">
-      <span class="dsc-num">L2</span>
-      <div class="dsc-content">
-        <div class="dsc-name">Resilient Loop Control Logic (RLCL)</div>
-        <p class="dsc-desc">The Deterministic Finite State Machine (FSM) governing state transitions and escalation logic. RLCL enforces the Active → Restricted → Halted transition sequence with dual-gate recovery and hysteresis thresholds — ensuring that no state change occurs without a computable, auditable supervisory trigger.</p>
-      </div>
-      <span class="dsc-badge badge-fsm">FSM</span>
-    </div>
-    <div class="dsc-layer l3">
-      <span class="dsc-num">L3</span>
-      <div class="dsc-content">
-        <div class="dsc-name">Enforcement Boundary System (EBS)</div>
-        <p class="dsc-desc">The Integration Airlock that modulates or arrests AI throughput. EBS is the physical and logical enforcement surface — the boundary through which all cross-system interactions must pass. When the FSM signals a state transition, EBS executes the corresponding throttle, gate, or cryptographic deadlock.</p>
-      </div>
-      <span class="dsc-badge badge-ebs">Airlock</span>
-    </div>
-    <div class="dsc-layer l4">
-      <span class="dsc-num">L4</span>
-      <div class="dsc-content">
-        <div class="dsc-name">Telemetry Load Signaling System (TLSS)</div>
-        <p class="dsc-desc">The sensing layer that normalizes multi-agent distress signals. TLSS aggregates precision-weighted load indicators across all monitored agents, normalizes them into a unified distress metric, and surfaces threshold breach events to RLCL for FSM evaluation — ensuring no compounding instability is missed at the edge.</p>
-      </div>
-      <span class="dsc-badge badge-tlss">Telemetry</span>
-    </div>
-    <div class="dsc-layer l5">
-      <span class="dsc-num">L5</span>
-      <div class="dsc-content">
-        <div class="dsc-name">Conformance &amp; Containment Criteria Structure (CCCS)</div>
-        <p class="dsc-desc">The audit layer generating Article 14 compliance artifacts. CCCS produces immutable, hash-chained records of every FSM state transition, supervisory decision, and human override — formatted for deterministic replay by regulators, insurers, and legal counsel. Compliance is generated, not reconstructed.</p>
-      </div>
-      <span class="dsc-badge badge-cccs">EU Art.14</span>
-    </div>
-  </div>
-
-  <div class="intervention-block" style="margin-top:2.5rem">
-    <div class="ib-header">§ 4.0 — Deterministic Intervention Logic</div>
-    <div class="ib-body">
-      <div class="ib-item">
-        <div class="ib-icon">⊕</div>
-        <div>
-          <div class="ib-title">Proprietary Distress Objective</div>
-          <p class="ib-desc">The Cognitive Transport Protocol™ evaluates system stability through a proprietary Distress Objective function. This process quantifies the compounding mismatch between machine-driven cadence and human supervisory bandwidth.</p>
-        </div>
-      </div>
-      <div class="ib-item">
-        <div class="ib-icon">◎</div>
-        <div>
-          <div class="ib-title">Adaptive Thresholding</div>
-          <p class="ib-desc">CTP monitors for risk accumulation by integrating precision-weighted signals over time. As distress compounds across interaction edges, the TLSS layer normalizes incoming telemetry and surfaces threshold proximity to the RLCL Finite State Machine (FSM) for pre-emptive evaluation.</p>
-        </div>
-      </div>
-      <div class="ib-item">
-        <div class="ib-icon">▣</div>
-        <div>
-          <div class="ib-title">Intervention Triggers</div>
-          <p class="ib-desc">When distress exceeds the Critical Supervisory Limit, the protocol executes a deterministic state transition within the Resilient Loop. The FSM transitions to Restricted or Halted state, invoking the Enforcement Boundary System to gate or arrest throughput pending authorized human review.</p>
-        </div>
-      </div>
-      <div class="ib-item">
-        <div class="ib-icon">⬡</div>
-        <div>
-          <div class="ib-title">System Stabilization</div>
-          <p class="ib-desc">AI output is automatically modulated or paused during instability to ensure human-led recovery. No FSM state transition is reversible by system action alone — re-engagement requires a deliberate, recorded human override, creating an irrefutable audit event at the moment of maximum supervisory demand.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="scenario reveal" style="margin-top:2rem">
-    <div class="sc-eye">// Universal Protocol — Kessler Cascade Containment</div>
-    <p class="sc-body">The Universal Protocol applies the same FSM logic across every interaction edge in the integration graph. When a Kessler Cascade begins — uncontrolled interaction growth compounding across AI system boundaries — the Universal Protocol detects the cascade propagation pattern, transitions affected edges to Restricted state, and initiates containment before the cascade reaches the Halted threshold. Each cascade event is fully documented by the CCCS audit layer: the FSM state at onset, the intervention applied, the supervisory decision taken, and the recovery sequence executed. <strong>This record is available to regulators, carriers, and legal counsel as continuous evidence that oversight was operative throughout the cascade event.</strong></p>
-  </div>
-</div>
-
-<hr class="div">
-
-<div class="section-full" id="airlock">
+<!-- ── FRAMEWORK ─────────────────────────────────────────────── -->
+<div class="section-full" id="framework">
   <div class="inner">
-    <div class="s-label">Control Architecture</div>
-    <div class="airlock-layout">
+    <div class="s-label">The Framework</div>
+    <div class="fw-layout">
       <div>
-        <h2>The Integration Airlock</h2>
-        <p class="lead">CTP introduces a controlled mediation boundary between acquired AI systems and the host enterprise. The Integration Airlock enforces the Finite State Machine (FSM) at every interaction edge — ensuring deterministic supervisory control is active from the first day of combined operations, and that Successor Liability Containment is documented before systems fully converge.</p>
+        <h2>Predictive Evaluation Before Integration</h2>
+        <p class="lead">The Regulator AI framework introduces a structured evaluation approach that enables organizations to model potential system behavior, assess interaction risk, and establish supervisory continuity — before integration begins and before liability has transferred.</p>
         <div class="benefit-list">
           <div class="b-row reveal"><div class="b-icon">⊕</div><div>
-            <div class="b-title">Interaction Pathways Are Observed Before They Produce Liability</div>
-            <p class="b-desc">Before systems are permitted to operate together, CTP maps and monitors interaction patterns. This creates a documented baseline that establishes supervisory control prior to liability transfer — and provides the evidentiary record that regulators and insurers require.</p>
+            <div class="b-title">System Behavior Is Evaluated Before Connections Are Established</div>
+            <p class="b-desc">Before acquired systems are introduced to production infrastructure, the framework maps and evaluates potential interaction patterns. This creates a documented behavioral baseline that supports supervisory continuity prior to liability transfer — and produces the evidentiary record that regulators and insurers require.</p>
           </div></div>
           <div class="b-row reveal"><div class="b-icon">▣</div><div>
-            <div class="b-title">Every Cross-System Decision Is Regulated by the FSM</div>
-            <p class="b-desc">All cross-system interactions pass through the Integration Airlock during convergence. Interactions that exceed defined parameters trigger a Restricted state transition — holding the interaction for human review before it proceeds. No threshold-crossing interaction completes without a documented supervisory decision.</p>
+            <div class="b-title">Complex Interactions Are Surfaced Anticipatorily</div>
+            <p class="b-desc">The framework continuously evaluates how AI systems may interact as integration progresses — surfacing potential risk areas before they produce outcomes. This forward-looking capability enables human reviewers to assess high-risk interaction scenarios before they complete, rather than after the fact.</p>
           </div></div>
           <div class="b-row reveal"><div class="b-icon">◎</div><div>
-            <div class="b-title">Human Intervention Is Enforceable, Not Aspirational</div>
-            <p class="b-desc">At any point during integration, authorized personnel can invoke override capability to pause, redirect, or halt system interactions. This capability is preserved by the FSM architecture — it cannot be removed by configuration change, vendor access limitation, or system update.</p>
+            <div class="b-title">Human Oversight Is Structural, Not Procedural</div>
+            <p class="b-desc">At any point during integration, authorized personnel retain the ability to pause, redirect, or halt system interaction pathways. This capability is a design property of the framework — not a procedural step that depends on human adherence or organizational continuity.</p>
           </div></div>
           <div class="b-row reveal"><div class="b-icon">⬡</div><div>
-            <div class="b-title">Audit Record Active From Day One</div>
-            <p class="b-desc">Every interaction through the Airlock is recorded in an immutable, hash-chained audit log — available to regulators, insurers, and legal counsel as continuous documentation that oversight was operational from the moment of first system connection.</p>
+            <div class="b-title">Oversight Documentation Begins on Day One</div>
+            <p class="b-desc">All interactions passing through the framework during the integration period are captured in a continuous, verified oversight record — available to regulators, insurers, and legal counsel as documentation that supervisory evaluation was operational from the moment of first system connection.</p>
           </div></div>
         </div>
-        <div class="ctp-note">Only after stability is verified across all Finite State Machine (FSM) enforcement layers are systems permitted to fully converge. This prevents uncontrolled Kessler Cascade growth during the most liability-sensitive phase of an acquisition, with Successor Liability Containment documented at every stage. <strong>CTP is protected by a U.S. provisional patent. Licensing: <a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a></strong></div>
+        <div class="ctp-note">The research direction behind Regulator AI is supported by multiple U.S. provisional patent filings made in March 2026, including the original filing on March 6, 2026. These filings relate to systemic interaction risk, predictive system evaluation, and integration analysis. <strong>Licensing inquiries: <a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a></strong></div>
       </div>
       <div>
-        <div class="arch-box">
-          <div class="arch-eyebrow">// CTP — Integration Airlock Architecture (5-Layer DSC / FSM)</div>
-          <div class="arch-layers">
-            <div class="a-layer hi"><span class="a-num">L5</span><span class="a-name">Conformance &amp; Containment Criteria Structure (CCCS)</span><span class="a-tag tag-g">EU Art.14</span></div>
-            <div class="a-layer hi"><span class="a-num">L4</span><span class="a-name">Telemetry Load Signaling System (TLSS)</span><span class="a-tag tag-r">Telemetry</span></div>
-            <div class="a-layer"><span class="a-num">L3</span><span class="a-name">Enforcement Boundary System (EBS) — Integration Airlock</span><span class="a-tag tag-t">Airlock</span></div>
-            <div class="a-layer hi"><span class="a-num">L2</span><span class="a-name">Resilient Loop Control Logic (RLCL) — FSM</span><span class="a-tag tag-a">FSM</span></div>
-            <div class="a-layer hi"><span class="a-num">L1</span><span class="a-name">Cognitive Transport Protocol™ (CTP)</span><span class="a-tag tag-g">Transport</span></div>
-          </div>
-          <div class="arch-inv">Supervisory oversight is a non-optional invariant of system state.</div>
+        <div class="scenario reveal" style="margin-top:0">
+          <div class="sc-eye">// Illustrative Scenario — Pre-Integration Evaluation</div>
+          <p class="sc-body">A fund closes on an <strong>AI-native workflow company</strong>. Before acquired systems connect to portfolio infrastructure, the Regulator AI framework is activated to model how those systems may behave once introduced to the existing environment. The evaluation surface identifies three potential interaction pathways with elevated risk profiles. An authorized reviewer assesses each: two are cleared; the third is held for legal review of the underlying data-sharing pathway. Every evaluation decision is recorded in the continuous oversight log. When regulators request the oversight record six months later, the entire evaluation sequence is available for review. <strong>Supervisory continuity is documented from day one.</strong></p>
         </div>
         <div class="scenario reveal" style="margin-top:1.5rem">
-          <div class="sc-eye">// Successor Liability Containment Scenario</div>
-          <p class="sc-body">A fund closes on an <strong>AI-native workflow company</strong>. Post-close, acquired systems begin interacting with portfolio infrastructure. The Integration Airlock's Enforcement Boundary System observes interaction growth exceeding defined thresholds and the FSM transitions to <strong>Restricted state</strong> — flagging three cross-system pathways for human review before they complete. An authorized operator reviews and clears two; the third is escalated, triggering a <strong>Halted state</strong> and cryptographic deadlock until legal counsel confirms the interaction is permissible. Every decision is recorded by the CCCS audit layer. When regulators request the oversight record six months later, the entire event is replayed deterministically from the immutable log. <strong>Successor Liability Containment is documented, contained, and defensible.</strong></p>
+          <div class="sc-eye">// Illustrative Scenario — Scale and Automation Risk</div>
+          <p class="sc-body">A large enterprise expands an <strong>AI-assisted operations platform</strong> across business units. As automation scope increases, the framework evaluates how system behavior may evolve under increased load, expanded decision scope, and cross-unit interaction — before each expansion phase is authorized. <strong>Forward-looking evaluation replaces reactive monitoring at every stage of scale.</strong></p>
+        </div>
+        <div class="scenario reveal" style="margin-top:1.5rem">
+          <div class="sc-eye">// Illustrative Scenario — Post-Merger Integration Planning</div>
+          <p class="sc-body">Two AI-enabled platforms are being merged following a strategic acquisition. Integration planning teams use the Regulator AI framework to evaluate how the combined system may behave under shared infrastructure — identifying governance readiness gaps, documenting oversight continuity, and producing the compliance record that Article 14 requires before the merged system enters production. <strong>Integration risk is evaluated before it becomes integration liability.</strong></p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="section" id="deployment">
+<hr class="div">
+
+<!-- ── CAPABILITIES ─────────────────────────────────────────── -->
+<div class="section" id="capability">
+  <div class="s-label">Capabilities</div>
+  <h2>What the Framework Enables</h2>
+  <p class="lead">The Regulator AI framework addresses five connected capability areas. Each is designed to support forward-looking decision making in environments where AI systems operate at scale, under automation, or in the context of technology acquisition and integration.</p>
+
+  <div class="cap-stack">
+    <div class="cap-layer l1">
+      <span class="cap-num">01</span>
+      <div class="cap-content">
+        <div class="cap-name">Predictive System Evaluation</div>
+        <p class="cap-desc">Enables organizations to evaluate how AI systems may behave before integration connections are established. Supports anticipatory decision making for acquisitions and platform expansions where target systems will be introduced to new environments — helping deal teams and integration planners move from reactive discovery to forward-looking assessment.</p>
+      </div>
+      <span class="cap-badge badge-b1">Predictive</span>
+    </div>
+    <div class="cap-layer l2">
+      <span class="cap-num">02</span>
+      <div class="cap-content">
+        <div class="cap-name">Oversight Readiness Assessment</div>
+        <p class="cap-desc">Evaluates whether an organization's supervisory posture is adequate for the AI integration it is planning — before that integration begins. Identifies governance gaps, documents the supervisory baseline, and produces the readiness record that regulators and insurers expect to see from the date of close forward.</p>
+      </div>
+      <span class="cap-badge badge-b2">Governance</span>
+    </div>
+    <div class="cap-layer l3">
+      <span class="cap-num">03</span>
+      <div class="cap-content">
+        <div class="cap-name">Integration Risk Evaluation</div>
+        <p class="cap-desc">Assesses the systemic risk profile of a proposed integration across the full range of conditions under which the combined system may eventually operate — including scale, automation depth, and cross-system interconnection. Designed to surface integration risk before it becomes integration liability.</p>
+      </div>
+      <span class="cap-badge badge-b3">Risk</span>
+    </div>
+    <div class="cap-layer l4">
+      <span class="cap-num">04</span>
+      <div class="cap-content">
+        <div class="cap-name">Systemic Risk Indicators</div>
+        <p class="cap-desc">Surfaces leading indicators of systemic interaction risk across the integration environment — enabling human reviewers to evaluate potential risk trajectories before they develop into material outcomes. Designed for complex, multi-system environments where risk patterns are distributed and not easily visible through conventional review processes.</p>
+      </div>
+      <span class="cap-badge badge-b4">Indicators</span>
+    </div>
+    <div class="cap-layer l5">
+      <span class="cap-num">05</span>
+      <div class="cap-content">
+        <div class="cap-name">Verified Oversight Records</div>
+        <p class="cap-desc">Produces a continuous, verified record of every supervisory evaluation and human decision across the integration lifecycle. Supports EU AI Act Article 14 compliance, insurance requirements, and legal defensibility — generated as an inherent output of the evaluation process, not assembled retroactively.</p>
+      </div>
+      <span class="cap-badge badge-b5">Documentation</span>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ── DEAL TIMELINE ─────────────────────────────────────────── -->
+<div class="section" id="timeline">
   <div class="s-label">Deal Timeline</div>
-  <h2>AI Acquisition Timeline</h2>
-  <p class="lead">CTP maps directly to the phases of an AI acquisition. Each phase carries distinct liability exposure. The Integration Airlock — enforced by the Resilient Loop Control Logic (RLCL) Finite State Machine (FSM) — addresses each phase in sequence, ensuring that supervisory continuity is never interrupted.</p>
-  <div class="risk-grid timeline-grid">
+  <h2>AI Acquisition Evaluation Timeline</h2>
+  <p class="lead">The Regulator AI framework maps to the phases of an AI acquisition. Each phase carries distinct liability and governance exposure. Forward-looking evaluation addresses each phase in sequence — ensuring supervisory continuity is never interrupted from pre-close baseline through verified convergence.</p>
+  <div class="risk-grid">
     <div class="risk-card reveal">
       <div class="rk-num" style="color:var(--blue-bright)">Pre-Close</div>
-      <div class="rk-title">Baseline Observation</div>
-      <p class="rk-desc">The TLSS sensing layer is activated to document how each system currently behaves — before any cross-system connection is established.</p>
-      <p class="rk-desc" style="margin-top:0.75rem">Interaction patterns are mapped and logged before convergence begins. This baseline is what makes post-close oversight meaningful — and establishes that supervisory control was operative before Successor Liability Containment attached.</p>
+      <div class="rk-title">Baseline Behavioral Evaluation</div>
+      <p class="rk-desc">The framework is activated to document how each system currently behaves — before any cross-system connection is established. Interaction patterns are mapped and logged before convergence begins.</p>
+      <p class="rk-desc" style="margin-top:0.75rem">This baseline is what makes post-close oversight meaningful — and establishes that supervisory evaluation was operative before successor liability attached.</p>
     </div>
     <div class="risk-card reveal">
       <div class="rk-num" style="color:var(--blue)">Integration Phase</div>
-      <div class="rk-title">Airlock Gateway — FSM Active</div>
-      <p class="rk-desc">All cross-system interactions pass through the Integration Airlock with the RLCL Finite State Machine (FSM) enforcing supervisory control at every edge.</p>
-      <p class="rk-desc" style="margin-top:0.75rem">Restricted state transitions are automatically triggered when thresholds are crossed. Human override capability is enforced throughout. Every supervisory decision is recorded in the CCCS immutable audit layer.</p>
+      <div class="rk-title">Anticipatory Evaluation Active</div>
+      <p class="rk-desc">As systems begin to interact, the framework evaluates potential behavior and surfaces high-risk interaction scenarios for human review before they complete.</p>
+      <p class="rk-desc" style="margin-top:0.75rem">Human oversight capability is enforced throughout. Every supervisory decision is captured in the continuous documentation record — available to regulators, insurers, and legal counsel as the integration progresses.</p>
     </div>
     <div class="risk-card reveal">
       <div class="rk-num" style="color:var(--text-faint)">Stable Operation</div>
       <div class="rk-title">Verified Convergence</div>
-      <p class="rk-desc">Once the FSM verifies stability across all interaction edges, systems operate normally under continuous deterministic oversight.</p>
-      <p class="rk-desc" style="margin-top:0.75rem">The oversight record accumulated during integration is available to regulators, insurers, and future acquirers as continuous documentation that supervisory control was maintained — and Successor Liability Containment was active — from the first day of combined operations.</p>
+      <p class="rk-desc">Once the framework confirms stability across the interaction environment, systems operate under continuous forward-looking oversight.</p>
+      <p class="rk-desc" style="margin-top:0.75rem">The oversight record accumulated during integration is available as continuous documentation that supervisory evaluation was maintained — from the first day of combined operations forward.</p>
     </div>
   </div>
 </div>
 
 <hr class="div">
 
+<!-- ── REGULATORY ALIGNMENT ──────────────────────────────────── -->
 <div class="section" id="regulatory">
   <div class="s-label">Regulatory Alignment</div>
-  <h2>EU AI Act Compliance by Architecture</h2>
-  <p class="lead">CTP aligns with EU AI Act Article 14 requirements at the architectural level. Compliance is enforced by the RLCL Finite State Machine (FSM) — not added as a reporting layer after the fact. The result is oversight documentation that holds under regulatory scrutiny because it was generated by the system, not reconstructed by counsel.</p>
+  <h2>EU AI Act Alignment by Design</h2>
+  <p class="lead">The Regulator AI framework aligns with EU AI Act Article 14 requirements at the design level. Compliance documentation is generated by the framework as an inherent output of the evaluation process — not assembled after the fact, and not reconstructed by counsel after a regulatory inquiry arrives.</p>
   <div class="risk-grid">
     <div class="risk-card reveal">
       <div class="rk-num">EU AI Act — Article 14</div>
-      <div class="rk-title">Effective Human Oversight → Deterministic FSM Enforcement</div>
-      <p class="rk-desc">Article 14 requires effective human oversight over high-risk AI systems. CTP's Resilient Loop Control Logic (RLCL) Finite State Machine (FSM) provides deterministic transition points — Active, Restricted, and Halted — that ensure AI interactions are evaluated before they produce outcomes. Oversight is active and computable, satisfying the requirement that it be operative, not aspirational.</p>
+      <div class="rk-title">Effective Human Oversight</div>
+      <p class="rk-desc">Article 14 requires effective human oversight of high-risk AI systems. The Regulator AI framework provides structured evaluation points that ensure AI interactions are assessed before they produce outcomes — making oversight active, forward-looking, and computable rather than aspirational.</p>
     </div>
     <div class="risk-card reveal">
       <div class="rk-num">EU AI Act — Article 14</div>
-      <div class="rk-title">Human Intervention Capability → Override Architecture</div>
-      <p class="rk-desc">Article 14 requires that authorized personnel retain the ability to intervene, pause, or halt AI system operation. CTP enforces this through the Restricted and Halted state transition architecture within the FSM — intervention capability cannot be removed by configuration change. Every override action is a recorded supervisory event in the CCCS audit layer.</p>
+      <div class="rk-title">Human Intervention Capability</div>
+      <p class="rk-desc">Article 14 requires that authorized personnel retain the ability to intervene, pause, or halt AI system operation. The Regulator AI framework enforces this capability as a design property — not a procedure. Every intervention is a recorded supervisory event in the continuous documentation record.</p>
     </div>
     <div class="risk-card reveal" style="grid-column:1/-1">
       <div class="rk-num">EU AI Act — Article 14</div>
-      <div class="rk-title">Traceable Accountability → Immutable Hash-Chained Audit Record (CCCS)</div>
-      <p class="rk-desc">CTP generates an immutable, hash-chained audit record of every AI interaction through the Integration Airlock — including the FSM state at the time of each interaction, the supervisory decision applied, and the human operator who authorized any override or clearance. This record supports deterministic replay: any interaction can be reconstructed in its original supervisory context. It cannot be altered after the fact. It is available to regulators, insurers, legal counsel, and risk committees as evidence that oversight was operational — and Successor Liability Containment was active — from the first day of combined operations.</p>
+      <div class="rk-title">Traceable Accountability</div>
+      <p class="rk-desc">The framework produces a continuous, verified record of every evaluation decision, supervisory condition, and human authorization across the integration lifecycle. This record supports full auditability: any decision can be examined in its original supervisory context. It cannot be altered after the fact. It is available to regulators, insurers, legal counsel, and risk committees as evidence that oversight was operational from the first day of combined operations — and remains so throughout.</p>
     </div>
   </div>
-  <div class="urgency-bar reveal" >
+  <div class="urgency-bar reveal">
+    <div class="u-item">
+      <span class="u-tag">Compliance Posture</span>
+      <div class="u-head">Proactive, Not Reactive</div>
+      <p class="u-body">Documentation generated prospectively by the framework is more defensible than documentation assembled after a regulatory inquiry.</p>
+    </div>
+    <div class="u-item">
+      <span class="u-tag">Oversight Continuity</span>
+      <div class="u-head">No Gap at Close</div>
+      <p class="u-body">Supervisory evaluation is active from the moment of first system connection — ensuring oversight continuity at the boundary where liability is highest.</p>
+    </div>
     <div class="u-item">
       <span class="u-tag">Acquirer Exposure</span>
       <div class="u-head">Non-Compliant Integrations Are Becoming Deal-Breakers</div>
-      <p class="u-body">As EU AI Act enforcement takes effect, acquirers who cannot demonstrate oversight continuity from the date of close face direct regulatory exposure. Compliance documentation is no longer a post-close task — it is a condition of the transaction and a component of successor liability management.</p>
+      <p class="u-body">As EU AI Act enforcement takes effect, acquirers who cannot demonstrate oversight continuity from the date of close face direct regulatory exposure. Compliance documentation is a condition of the transaction.</p>
     </div>
     <div class="u-item" style="border-right:none">
       <span class="u-tag">Structural Advantage</span>
-      <div class="u-head">Architectural Compliance Holds Under Pressure</div>
-      <p class="u-body">Process-based compliance depends on human adherence and degrades when integration accelerates. The FSM enforces oversight deterministically — regardless of integration velocity, team turnover, or system complexity. Compliance is architectural, not procedural.</p>
+      <div class="u-head">Compliance Is Architectural</div>
+      <p class="u-body">Process-based compliance depends on human adherence and degrades when integration accelerates. The Regulator AI framework enforces oversight at the design level — regardless of integration velocity, team turnover, or system complexity.</p>
     </div>
   </div>
 </div>
 
 <hr class="div">
 
+<!-- ── PUBLICATIONS ─────────────────────────────────────────── -->
 <div class="section-full" id="publications" style="background:var(--navy)">
   <div class="inner">
-    <div class="s-label">Public Materials</div>
+    <div class="s-label">Resources</div>
     <div class="res-layout">
       <div>
-        <h2>Protocol and Architecture Resources</h2>
-        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.75;margin-bottom:1rem">Public documentation for the Cognitive Transport Protocol™. Available for review by diligence teams, integration leaders, legal counsel, and technical architects evaluating the Integration Airlock and the Five-Layer Deterministic Supervisory Containment (DSC) architecture.</p>
+        <h2>Framework Documentation</h2>
+        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.75;margin-bottom:1rem">Public documentation for the Cognitive Transport Protocol™ and the Regulator AI framework. Available for review by diligence teams, integration leaders, legal counsel, and advisors evaluating AI governance readiness in acquisition contexts.</p>
         <ul class="res-list">
           <li><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank"><span class="res-name">CTP Protocol Specification</span><span class="res-meta">github.com/zmichaelakins/ctp-spec ↗</span></a></li>
-          <li><a href="#contact"><span class="res-name">CTP v1.0 White Paper — Five-Layer DSC Architecture</span><span class="res-meta">Available on request</span></a></li>
-          <li><a href="#contact"><span class="res-name">Integration Airlock Architecture Overview</span><span class="res-meta">Available on request</span></a></li>
-          <li><a href="#contact"><span class="res-name">EU AI Act Article 14 — CTP Alignment Reference</span><span class="res-meta">Available on request</span></a></li>
-          <li><a href="#contact"><span class="res-name">Successor Liability Containment — Deal Counsel Brief</span><span class="res-meta">Available on request</span></a></li>
-          <li><a href="#contact"><span class="res-name">Universal Protocol — Kessler Cascade Containment Technical Summary</span><span class="res-meta">Available on request</span></a></li>
+          <li><a href="#contact"><span class="res-name">Framework White Paper — Predictive System Evaluation</span><span class="res-meta">Available on request</span></a></li>
+          <li><a href="#contact"><span class="res-name">Integration Evaluation Overview</span><span class="res-meta">Available on request</span></a></li>
+          <li><a href="#contact"><span class="res-name">EU AI Act Article 14 — Framework Alignment Reference</span><span class="res-meta">Available on request</span></a></li>
+          <li><a href="#contact"><span class="res-name">Successor Liability Evaluation — Deal Counsel Brief</span><span class="res-meta">Available on request</span></a></li>
+          <li><a href="#contact"><span class="res-name">Systemic Interaction Risk — Acquisition Evaluation Summary</span><span class="res-meta">Available on request</span></a></li>
         </ul>
       </div>
       <div>
         <h2 style="font-size:1.3rem">Key Questions</h2>
-        <p style="font-size:0.82rem;color:var(--text-dim);line-height:1.7;margin-bottom:1rem">Questions frequently raised by diligence teams, advisory firms, and legal counsel evaluating Integration Airlock deployment.</p>
+        <p style="font-size:0.82rem;color:var(--text-dim);line-height:1.7;margin-bottom:1rem">Questions frequently raised by diligence teams, advisory firms, and legal counsel evaluating forward-looking AI system evaluation capabilities.</p>
         <div class="faq-list">
           <div class="faq-item reveal">
             <p class="faq-q">What is successor liability exposure in an AI acquisition?</p>
-            <p class="faq-a">When an AI company is acquired, the acquirer assumes liability for the target's AI systems from the date of close — including oversight gaps, compliance failures, and interaction pathways that were not visible during diligence. Standard reps and warranties do not cover behavior that emerges from the integration itself. The Integration Airlock establishes a documented supervisory boundary before systems connect, creating a documented record that oversight was active before liability transferred. Successor Liability Containment is a core deliverable of the CTP architecture.</p>
+            <p class="faq-a">When an AI company is acquired, the acquirer assumes liability for the target's AI systems from the date of close — including oversight gaps, compliance failures, and interaction patterns that were not visible during diligence. Standard representations and warranties do not cover behavior that emerges from the integration itself. The Regulator AI framework establishes a documented supervisory baseline before systems connect, creating a record that oversight evaluation was active before liability transferred.</p>
           </div>
           <div class="faq-item reveal">
-            <p class="faq-q">What is a Kessler Cascade in the context of enterprise AI?</p>
-            <p class="faq-a">A Kessler Cascade describes the failure mode where uncontrolled AI interaction growth compounds across system boundaries — each unmonitored connection generating further interaction pathways until supervisory control is structurally impossible. In AI acquisitions, this cascade can propagate across portfolio infrastructure within weeks of close. CTP's Universal Protocol applies the FSM at every interaction edge, with the Enforcement Boundary System (EBS) containing cascade growth before it becomes irreversible.</p>
+            <p class="faq-q">What is systemic interaction risk in the context of enterprise AI?</p>
+            <p class="faq-a">Systemic interaction risk describes the condition where AI system interaction growth compounds across boundaries — each unmonitored connection generating further interaction pathways, until supervisory control becomes structurally difficult. In AI acquisitions, this compounding can propagate across portfolio infrastructure within weeks of close. The Regulator AI framework applies forward-looking evaluation at every interaction boundary, enabling anticipatory assessment before risk reaches a level that is difficult to contain.</p>
           </div>
           <div class="faq-item reveal">
-            <p class="faq-q">How does the FSM satisfy EU AI Act Article 14?</p>
-            <p class="faq-a">Article 14 requires effective human oversight, traceable supervisory actions, and documented intervention capability. CTP's Resilient Loop Control Logic (RLCL) Finite State Machine (FSM) — operating across Active, Restricted, and Halted states — provides deterministic transition logic that enforces oversight at the architectural level. Every state transition, human override, and audit event is recorded by the CCCS layer in an immutable hash-chained log. Oversight is computable and reproducible, satisfying the Article 14 requirement that it be operative, not aspirational.</p>
+            <p class="faq-q">How does the framework support EU AI Act Article 14 compliance?</p>
+            <p class="faq-a">Article 14 requires effective human oversight, traceable supervisory actions, and documented intervention capability. The Regulator AI framework provides structured evaluation points and continuous documentation that enforce oversight at the design level. Every supervisory decision, human intervention, and evaluation event is recorded in a continuous, immutable log. Oversight is computable and reproducible — satisfying the requirement that it be operative, not aspirational.</p>
           </div>
           <div class="faq-item reveal">
-            <p class="faq-q">When in the deal timeline should the Integration Airlock be activated?</p>
-            <p class="faq-a">Before systems are connected. Pre-close activation creates the baseline that makes post-close oversight defensible — and establishes that Successor Liability Containment was operative before successor liability attached. Activating the Integration Airlock after systems have already converged is significantly more costly and produces a less complete oversight record for regulatory and legal purposes.</p>
+            <p class="faq-q">When in the deal timeline should evaluation begin?</p>
+            <p class="faq-a">Before systems are connected. Pre-close activation creates the behavioral baseline that makes post-close oversight defensible — and establishes that supervisory evaluation was operative before successor liability attached. Activating the evaluation framework after systems have already converged is more costly and produces a less complete oversight record for regulatory and legal purposes.</p>
           </div>
         </div>
       </div>
@@ -776,11 +641,16 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
   </div>
 </div>
 
+<!-- ── CONTACT ─────────────────────────────────────────────── -->
 <div id="contact" class="engage-wrap">
   <div class="s-label" style="justify-content:center">Contact</div>
   <h2 class="eng-head">Licensing &amp; Transaction Inquiries</h2>
-  <p class="eng-sub">For Integration Airlock deployment, protocol licensing, architectural documentation, or AI acquisition transaction inquiries.</p>
-  <p class="eng-email"><a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a></p>
+  <p class="eng-sub">For framework licensing, integration evaluation inquiries, architectural documentation, or AI acquisition transaction support.</p>
+  <p class="eng-email" style="font-size:0.82rem;line-height:2;letter-spacing:0.04em">
+    Zachary Michael Akins<br>
+    <span style="color:var(--text-faint);font-size:0.72rem">CEO, Regulator AI Global, Inc.</span><br>
+    <a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a>
+  </p>
   <p class="eng-contact">
     Protocol specification: <a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">github.com/zmichaelakins/ctp-spec</a>
     &nbsp;·&nbsp;
@@ -791,39 +661,18 @@ footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align
 <footer>
   <div class="ft-left">
     <span>Regulator AI Global, Inc.</span> — Cognitive Transport Protocol™ is a trademark of Regulator AI Global, Inc.<br>
-    Education-only license. Commercial rights reserved. Patent pending (U.S. Provisional filed March 6, 2026). DSC v4.0.
+    Education-only license. Commercial rights reserved. Supported by multiple U.S. provisional patent filings (March 2026, including original filing March 6, 2026).
   </div>
   <ul class="ft-links">
     <li><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">GitHub</a></li>
-    <li><a href="#publications">Publications</a></li>
+    <li><a href="#publications">Resources</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </footer>
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const sectionIds = ['problem', 'ghost', 'airlock', 'regulatory', 'deployment', 'publications', 'contact'];
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const sectionIds = ['problem','framework','capability','timeline','regulatory','publications','contact'];
 const sideLinks = document.querySelectorAll('.side-nav-links a');
-const topLinks = document.querySelectorAll('.top-nav-links a');
-document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-window.addEventListener('scroll', () => {
-  let current = '';
-  for (const id of sectionIds) {
-    const section = document.getElementById(id);
-    if (section) {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= 100 && rect.bottom >= 100) {
-        current = id;
-        break;
-      }
-    }
-  }
-  sideLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${current}`) {
-      lin
-</script>
-
-</body>
-        </html>
+document.querySelectorAll('.reveal'
