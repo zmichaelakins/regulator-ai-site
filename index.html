@@ -3,676 +3,1116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Regulator AI Global — Predictive System Evaluation for AI Acquisitions</title>
-<meta name="description" content="Regulator AI Global offers a forward-looking framework for evaluating how AI systems may behave when scaled, automated, interconnected, or integrated through acquisition. Supported by multiple U.S. provisional patent filings, March 2026.">
+<title>Regulator AI Global — AI Acquisition & Integration Risk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:         #040810;
-  --navy:       #060c18;
-  --ink:        #0a1628;
-  --panel:      #0e1a2e;
-  --panel-hi:   #101c30;
-  --border:     #152033;
-  --border-hi:  #1e2f47;
-  --blue:       #4a8fb5;
-  --blue-bright:#6ab0d4;
-  --blue-dim:   #0d2640;
-  --blue-glow:  rgba(74,143,181,0.1);
-  --blue-mid:   #2d6a93;
-  --blue-mid-dim:#0a1f35;
-  --red:        #c0392b;
-  --amber:      #d4a017;
-  --amber-dim:  #3a2800;
-  --text:       #e8f2f8;
-  --text-dim:   #9db8cc;
-  --text-faint: #4a6880;
-  --white:      #edf3f8;
+  --bg: #07090f;
+  --surface: #0d1119;
+  --surface2: #131923;
+  --border: #1c2535;
+  --border2: #253045;
+  --text: #e8ecf2;
+  --text-secondary: #7a8fa8;
+  --text-muted: #3d5068;
+  --accent: #c9973a;
+  --accent-dim: rgba(201,151,58,0.12);
+  --accent-border: rgba(201,151,58,0.3);
+  --teal: #2bbfad;
+  --teal-dim: rgba(43,191,173,0.1);
+  --red: #e05555;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:#040810;color:#e8f2f8;font-family:'Syne',sans-serif;line-height:1.6;overflow-x:hidden}
-body::after{content:'';position:fixed;inset:0;z-index:-1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;opacity:0.4;background-size:cover;}
 
-/* TOP NAV */
-nav.top-nav{position:fixed;top:0;left:0;right:0;z-index:300;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem 0 calc(220px + 2rem);background:rgba(4,8,16,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-logo{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue-bright);text-decoration:none}
-.top-nav-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap;justify-content:center;}
-.top-nav-links a{font-size:0.66rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s}
-.top-nav-links a:hover{color:var(--white)}
-.nav-cta{font-family:'DM Mono',monospace;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue-bright);border:1px solid var(--blue-dim);padding:0.42rem 1rem;text-decoration:none;transition:all 0.2s;white-space:nowrap}
-.nav-cta:hover{background:var(--blue-mid);color:var(--white)}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* SIDE NAV */
-nav.side-nav{position:fixed;top:0;left:0;bottom:0;z-index:299;width:220px;background:var(--navy);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:80px 0 2rem}
-.side-nav-logo{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue-bright);padding:0 1.5rem 1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem}
-.side-nav-section{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-faint);padding:0 1.5rem 0.6rem}
-.side-nav-links{list-style:none;flex:1}
-.side-nav-links li a{display:flex;align-items:center;gap:0.6rem;padding:0.6rem 1.5rem;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;color:var(--text-dim);text-decoration:none;transition:all 0.15s;border-left:2px solid transparent}
-.side-nav-links li a:hover{color:var(--white);background:var(--panel);border-left-color:var(--blue)}
-.side-nav-links li a.active{color:var(--blue-bright);background:rgba(74,143,181,0.07);border-left-color:var(--blue)}
-.side-nav-num{font-family:'DM Mono',monospace;font-size:0.56rem;color:var(--text-faint);min-width:1.2rem}
-.side-nav-footer{padding:1.5rem;border-top:1px solid var(--border)}
-.side-nav-footer a{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s}
-.side-nav-footer a:hover{color:var(--blue-bright)}
+html { scroll-behavior: smooth; }
 
-/* MAIN CONTENT OFFSET */
-.page-body{margin-left:220px;padding-top:60px;position:relative;z-index:1}
-
-/* HERO */
-#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 3rem 4rem;overflow:hidden}
-.hero-overlay{position:absolute;inset:0;z-index:1;background:rgba(4,8,16,0.96)}
-.hero-grid{position:absolute;inset:0;z-index:2;background-image:linear-gradient(rgba(74,143,181,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(74,143,181,0.04) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 70% 60% at 30% 50%,black,transparent)}
-.hero-content{position:relative;z-index:3;max-width:760px}
-.hero-tag{font-family:'DM Mono',monospace;font-size:0.67rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-bright);display:flex;align-items:center;gap:0.7rem;margin-bottom:2rem}
-.hero-tag::before{content:'';width:28px;height:1px;background:var(--blue)}
-.pulse{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--blue-bright);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.25}}
-.hero-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6.5vw,6rem);line-height:0.96;letter-spacing:0.01em;color:var(--white);margin-bottom:1.75rem}
-.hero-headline em{color:var(--blue-bright);font-style:normal}
-.hero-sub{font-size:1rem;color:var(--text-dim);max-width:540px;line-height:1.75;font-weight:400}
-.hero-actions{display:flex;gap:0.85rem;flex-wrap:wrap;margin-top:2rem}
-.btn-primary{display:inline-flex;align-items:center;background:var(--blue-mid);color:var(--white);font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.8rem 1.8rem;text-decoration:none;transition:all 0.2s;border:1px solid var(--blue)}
-.btn-primary:hover{background:var(--blue);transform:translateY(-1px)}
-.btn-ghost{display:inline-flex;align-items:center;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.8rem 1.5rem;border:1px solid var(--border-hi);text-decoration:none;transition:all 0.2s}
-.btn-ghost:hover{color:var(--white);border-color:var(--blue-dim)}
-.hero-stats{display:flex;gap:2.5rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(--border);flex-wrap:wrap}
-.stat-val{font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:500;color:var(--blue-bright);display:block}
-.stat-label{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint);margin-top:0.15rem}
-
-/* TICKER */
-.ticker-wrap{background:var(--navy);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.55rem 0;overflow:hidden;position:relative;z-index:10}
-.ticker-track{display:flex;animation:ticker 38s linear infinite;white-space:nowrap}
-.t-item{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-faint);padding:0 2.5rem;display:flex;align-items:center;gap:0.5rem}
-.t-dot{width:3px;height:3px;border-radius:50%;background:var(--blue-dim);flex-shrink:0}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* WHY THIS EXISTS BANNER */
-.why-banner{position:relative;z-index:10;background:var(--navy);border-bottom:1px solid var(--border)}
-.why-inner{max-width:1100px;margin:0 auto;padding:3rem 3rem;display:grid;grid-template-columns:1fr 2fr;gap:3rem;align-items:center}
-.why-label{font-family:'DM Mono',monospace;font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-bright)}
-.why-body{font-size:0.92rem;color:var(--text-dim);line-height:1.85}
-.why-body strong{color:var(--white)}
-
-/* SECTION BASE */
-.section{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:5.5rem 3rem}
-.section-full{position:relative;z-index:10;width:100%;padding:5.5rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.section-full .inner{max-width:1100px;margin:0 auto;padding:0 3rem}
-hr.div{border:none;border-top:1px solid var(--border);position:relative;z-index:10}
-.s-label{font-family:'DM Mono',monospace;font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:0.6rem;margin-bottom:1.25rem}
-.s-label::before{content:'';width:18px;height:1px;background:var(--blue-dim)}
-h2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;letter-spacing:-0.02em;line-height:1.15;color:var(--white);margin-bottom:1.25rem}
-.lead{font-size:0.98rem;color:var(--text-dim);max-width:620px;line-height:1.8;margin-bottom:2rem}
-
-/* RISK GRID */
-.risk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:2.5rem}
-.risk-card{background:#0d1b2e;padding:1.75rem;position:relative;overflow:hidden;transition:background 0.2s}
-.risk-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
-.risk-card:hover{background:var(--panel)}
-.rk-num{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;color:#5a7e9a;margin-bottom:0.85rem;text-transform:uppercase}
-.rk-title{font-size:0.88rem;font-weight:700;color:#edf3f8;margin-bottom:0.6rem}
-.rk-desc{font-size:0.78rem;color:#9db8cc;line-height:1.65}
-.urgency-bar{display:grid;grid-template-columns:repeat(4,1fr);margin-top:2.5rem;border:1px solid var(--border-hi);position:relative}
-.urgency-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--blue-dim),var(--blue-mid),var(--blue-dim))}
-.u-item{padding:1.5rem 1.6rem;border-right:1px solid var(--border)}
-.u-item:last-child{border-right:none}
-.u-head{font-size:0.8rem;font-weight:700;color:#edf3f8;margin-bottom:0.4rem}
-.u-body{font-size:0.74rem;color:#9db8cc;line-height:1.6}
-.u-tag{font-family:'DM Mono',monospace;font-size:0.57rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:0.5rem}
-
-/* FRAMEWORK LAYOUT */
-.fw-layout{display:grid;grid-template-columns:repeat(2,1fr);gap:4rem;align-items:start}
-.benefit-list{display:flex;flex-direction:column;gap:1px;margin-top:2rem;background:var(--border)}
-.b-row{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 1.2rem;background:var(--ink);border-left:2px solid var(--blue-dim);transition:border-color 0.2s,background 0.2s}
-.b-row:hover{border-left-color:var(--blue);background:var(--panel)}
-.b-icon{width:28px;height:28px;background:var(--blue-glow);border:1px solid var(--blue-dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.75rem;color:var(--blue-bright)}
-.b-title{font-size:0.8rem;font-weight:700;color:#edf3f8;margin-bottom:0.25rem}
-.b-desc{font-size:0.75rem;color:#9db8cc;line-height:1.6}
-.ctp-note{margin-top:1.75rem;padding:1.1rem 1.4rem;background:rgba(74,143,181,0.05);border:1px solid var(--blue-dim);font-size:0.78rem;color:var(--text-dim);line-height:1.65}
-.ctp-note strong{color:var(--white)}
-
-/* CAPABILITY STACK */
-.cap-stack{display:flex;flex-direction:column;gap:0;margin-top:2.5rem;border:1px solid var(--border)}
-.cap-layer{display:grid;grid-template-columns:2.8rem 1fr auto;align-items:start;gap:1rem;padding:1.4rem 1.6rem;background:var(--ink);border-bottom:1px solid var(--border);position:relative;transition:background 0.2s;min-height:72px}
-.cap-layer:last-child{border-bottom:none}
-.cap-layer::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px}
-.cap-layer.l1::before{background:var(--blue-bright)}
-.cap-layer.l2::before{background:#4ade80}
-.cap-layer.l3::before{background:var(--amber)}
-.cap-layer.l4::before{background:#a78bfa}
-.cap-layer.l5::before{background:var(--blue)}
-.cap-layer:hover{background:var(--panel)}
-.cap-num{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--text-faint);text-align:right;padding-top:0.15rem;min-width:2rem}
-.cap-content{display:flex;flex-direction:column;gap:0.35rem}
-.cap-name{font-size:0.85rem;font-weight:700;color:var(--white);line-height:1.3}
-.cap-desc{font-size:0.76rem;color:var(--text-dim);line-height:1.65;margin-top:0.15rem}
-.cap-badge{font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.09em;padding:0.2rem 0.5rem;border:1px solid;border-radius:2px;white-space:nowrap;align-self:flex-start;margin-top:0.15rem}
-.badge-b1{color:var(--blue-bright);border-color:var(--blue-dim);background:rgba(74,143,181,0.08)}
-.badge-b2{color:#4ade80;border-color:#1a4d2a;background:rgba(74,222,128,0.07)}
-.badge-b3{color:var(--amber);border-color:var(--amber-dim);background:rgba(212,160,23,0.07)}
-.badge-b4{color:#a78bfa;border-color:#2d1a5e;background:rgba(167,139,250,0.07)}
-.badge-b5{color:var(--blue);border-color:var(--blue-mid-dim);background:rgba(45,106,147,0.07)}
-
-/* SCENARIO */
-.scenario{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--blue-dim);padding:1.6rem 1.9rem;margin-top:1rem}
-.sc-eye{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:0.85rem}
-.sc-body{font-size:0.84rem;color:var(--text-dim);line-height:1.75}
-.sc-body strong{color:var(--white)}
-
-/* CALLOUT PAIR */
-.callout-pair{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-top:2.5rem}
-.co-block{padding:1.5rem;border:1px solid var(--border-hi);background:var(--ink);position:relative}
-.co-block::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--blue-dim),var(--blue-mid),var(--blue-dim))}
-.co-eye{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:0.75rem}
-.co-head{font-size:0.85rem;font-weight:700;color:var(--white);margin-bottom:0.5rem}
-.co-body{font-size:0.76rem;color:var(--text-dim);line-height:1.65}
-
-/* RESOURCES */
-.res-layout{display:grid;grid-template-columns:repeat(2,1fr);gap:4rem}
-.res-list{list-style:none;display:flex;flex-direction:column;gap:2px;margin-top:1.5rem}
-.res-list li a{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem;background:var(--panel);border:1px solid var(--border);text-decoration:none;transition:all 0.2s}
-.res-list li a:hover{border-color:var(--border-hi);background:rgba(74,143,181,0.04)}
-.res-name{font-size:0.79rem;font-weight:600;color:var(--white)}
-.res-meta{font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--text-faint)}
-.faq-list{display:flex;flex-direction:column;gap:2px;margin-top:1.5rem}
-.faq-item{padding:1.05rem 1.2rem;background:var(--panel);border:1px solid var(--border)}
-.faq-q{font-size:0.78rem;font-weight:700;color:#edf3f8;margin-bottom:0.4rem}
-.faq-a{font-size:0.74rem;color:#9db8cc;line-height:1.65}
-
-/* CONTACT */
-.engage-wrap{text-align:center;padding:5.5rem 3rem;position:relative;z-index:10;max-width:1100px;margin:0 auto}
-.engage-wrap::before{content:'';position:absolute;top:3rem;left:50%;transform:translateX(-50%);width:360px;height:1px;background:linear-gradient(90deg,transparent,var(--blue-dim),transparent)}
-.eng-head{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.5vw,3rem);letter-spacing:0.02em;color:var(--white);margin-bottom:0.75rem}
-.eng-sub{font-size:0.92rem;color:var(--text-dim);max-width:460px;margin:0 auto 1.75rem;line-height:1.7}
-.eng-email{font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:0.06em;color:var(--blue-bright);margin:0.5rem 0 1.5rem}
-.eng-email a{color:var(--blue-bright);text-decoration:none;border-bottom:1px solid var(--blue-dim);padding-bottom:1px;transition:color 0.2s}
-.eng-email a:hover{color:var(--white)}
-.eng-contact{font-family:'DM Mono',monospace;font-size:0.67rem;letter-spacing:0.08em;color:var(--text-faint)}
-.eng-contact a{color:var(--text-dim);text-decoration:none}.eng-contact a:hover{color:var(--blue-bright)}
-
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:10;flex-wrap:wrap;gap:1rem;text-align:center}
-.ft-left{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.07em;color:var(--text-faint);line-height:1.65}
-.ft-left span{color:var(--blue-dim)}
-.ft-links{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap;justify-content:center}
-.ft-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint);text-decoration:none;transition:color 0.2s}
-.ft-links a:hover{color:var(--text)}
-
-.reveal{opacity:1;transform:none}
-
-/* RESPONSIVE */
-@media(max-width:1024px){
-  nav.side-nav{display:none;}
-  nav.top-nav{padding:0 1.5rem;height:60px;justify-content:space-between;flex-wrap:nowrap;overflow:hidden;}
-  .top-nav-links{gap:1rem;flex-wrap:nowrap;}
-  .page-body{margin-left:0;padding-top:60px;}
-  #hero{padding:6rem 2rem 4rem;}
-  .section{padding:5.5rem 2rem;}
-  .section-full .inner{padding:0 2rem;}
-  footer{padding:1.6rem 2rem;}
-  .why-inner{padding:3rem 2rem;grid-template-columns:1fr;}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
 }
-@media(max-width:800px){
-  .risk-grid{grid-template-columns:1fr;}
-  .urgency-bar{grid-template-columns:repeat(2,1fr);}
-  .fw-layout{grid-template-columns:1fr;}
-  .callout-pair{grid-template-columns:1fr;}
-  .res-layout{grid-template-columns:1fr;}
-  .hero-content{max-width:100%;}
-  .hero-sub{max-width:100%;}
-  .hero-headline{font-size:clamp(2.5rem,6vw,4rem);}
-  #hero{padding:4rem 1.5rem 3rem;}
-  .section{padding:4rem 1.5rem;}
-  .section-full .inner{padding:0 1.5rem;}
-  footer{padding:1.4rem 1.5rem;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 64px;
+  background: rgba(7,9,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
 }
-@media(max-width:640px){
-  /* Collapse nav to logo + CTA only on small screens */
-  .top-nav-links{display:none;}
-  nav.top-nav{height:52px;padding:0 1.25rem;justify-content:space-between;}
-  .page-body{padding-top:52px;}
-  #hero{padding:4rem 1.25rem 3rem;min-height:calc(100vh - 52px);}
+
+.nav-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
 }
-@media(max-width:480px){
-  .section{padding:3rem 1rem;}
-  .urgency-bar{grid-template-columns:1fr;}
-  .hero-stats{flex-direction:column;gap:1.25rem;}
-  .hero-headline{font-size:clamp(2rem,8vw,3rem);line-height:1.05;}
-  .hero-sub{font-size:0.9rem;}
-  .hero-actions{gap:0.6rem;}
-  .btn-primary,.btn-ghost{padding:0.7rem 1.2rem;font-size:0.7rem;}
-  .hero-stats{gap:1rem;margin-top:2rem;padding-top:1.75rem;}
-  .why-inner{padding:2rem 1rem;gap:1.5rem;}
-  .why-body{font-size:0.85rem;}
-  .cap-layer{grid-template-columns:1fr;gap:0.5rem;padding:1.1rem 1rem;}
-  .cap-num{text-align:left;}
-  h2{font-size:clamp(1.5rem,5vw,2rem);}
-  .lead{font-size:0.9rem;max-width:100%;}
-  .risk-card{padding:1.5rem;}
-  .u-item{padding:1.2rem 1.3rem;}
-  .b-row{padding:1rem;gap:0.8rem;}
-  .scenario{padding:1.4rem 1.6rem;}
-  .engage-wrap{padding:4rem 1rem;}
-  .engage-wrap::before{width:280px;}
-  footer{padding:1.4rem 1rem;}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.nav-cta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--accent-border);
+  padding: 8px 18px;
+  transition: all 0.2s;
+}
+
+.nav-cta:hover {
+  background: var(--accent-dim);
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 55%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(0deg, transparent, transparent 59px, var(--border) 59px, var(--border) 60px),
+    repeating-linear-gradient(90deg, transparent, transparent 59px, var(--border) 59px, var(--border) 60px);
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -200px; right: -100px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(201,151,58,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-kicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-kicker::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(40px, 5.5vw, 76px);
+  font-weight: 700;
+  line-height: 1.1;
+  max-width: 840px;
+  margin-bottom: 32px;
+  letter-spacing: -0.02em;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin-bottom: 52px;
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #07090f;
+  padding: 14px 32px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: #e0a93e;
+}
+
+.btn-secondary {
+  border: 1px solid var(--border2);
+  color: var(--text-secondary);
+  padding: 14px 32px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-secondary);
+  color: var(--text);
+}
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 72px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.stat-item {}
+
+.stat-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ── SECTIONS ── */
+section {
+  padding: 100px 48px;
+  position: relative;
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  max-width: 680px;
+  margin-bottom: 20px;
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.section-intro {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin-bottom: 64px;
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+/* ── PROBLEM ── */
+#problem {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 64px;
+}
+
+.problem-card {
+  background: var(--surface);
+  padding: 40px 36px;
+  position: relative;
+}
+
+.problem-card::before {
+  content: attr(data-num);
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+.problem-tag {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--red);
+  background: rgba(224,85,85,0.08);
+  border: 1px solid rgba(224,85,85,0.2);
+  padding: 4px 10px;
+  margin-bottom: 20px;
+}
+
+.problem-card h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+
+.problem-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ── VERTICALS ── */
+#verticals {
+  background: var(--bg);
+}
+
+.verticals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.vertical-card {
+  background: var(--bg);
+  padding: 36px 28px;
+  transition: background 0.2s;
+  cursor: default;
+}
+
+.vertical-card:hover {
+  background: var(--surface);
+}
+
+.vertical-icon {
+  font-size: 22px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.vertical-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.vertical-problem {
+  font-size: 13px;
+  color: var(--red);
+  margin-bottom: 12px;
+  font-weight: 500;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.03em;
+}
+
+.vertical-problem::before {
+  content: '↳ ';
+}
+
+.vertical-solution {
+  font-size: 13px;
+  color: var(--teal);
+  margin-bottom: 14px;
+  font-weight: 500;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.vertical-solution::before {
+  content: '✓ ';
+}
+
+.vertical-body {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ── HOW IT WORKS ── */
+#how {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border2);
+  margin-top: 64px;
+}
+
+.timeline-step {
+  background: var(--surface);
+  padding: 44px 36px;
+  position: relative;
+}
+
+.step-phase {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step-phase::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--accent-border);
+}
+
+.step-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 42px;
+  font-weight: 500;
+  color: var(--border2);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.timeline-step h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.timeline-step p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.step-deliverable {
+  margin-top: 24px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-left: 2px solid var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ── OUTCOMES ── */
+#outcomes {
+  background: var(--bg);
+}
+
+.outcomes-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-top: 64px;
+  align-items: start;
+}
+
+.outcomes-left {}
+
+.outcome-row {
+  display: flex;
+  gap: 20px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.outcome-row:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.outcome-check {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--teal);
+}
+
+.outcome-content h4 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.outcome-content p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.outcomes-right {
+  padding: 36px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.outcomes-right h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.outcomes-right .sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.compliance-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+
+.compliance-item:last-child { border-bottom: none; }
+
+.ci-left {}
+
+.ci-reg {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.ci-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.ci-status {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: var(--teal-dim);
+  border: 1px solid rgba(43,191,173,0.2);
+  padding: 4px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── CONTACT ── */
+#contact {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-top: 64px;
+}
+
+.contact-left h2 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.contact-left p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+
+.contact-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cd-row {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.cd-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.cd-value {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.cd-value a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.cd-value a:hover {
+  text-decoration: underline;
+}
+
+.contact-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inquiry-card {
+  padding: 24px 28px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition: border-color 0.2s;
+}
+
+.inquiry-card:hover {
+  border-color: var(--border2);
+}
+
+.ic-type {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.ic-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.ic-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 32px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-left {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.footer-right {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-right a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-right a:hover { color: var(--text-secondary); }
+
+/* ── DIVIDER ── */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-kicker { animation: fadeUp 0.6s ease both; }
+.hero h1 { animation: fadeUp 0.7s 0.1s ease both; }
+.hero-sub { animation: fadeUp 0.7s 0.2s ease both; }
+.hero-actions { animation: fadeUp 0.7s 0.3s ease both; }
+.hero-stats { animation: fadeUp 0.7s 0.45s ease both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .verticals-grid { grid-template-columns: repeat(2, 1fr); }
+  .timeline { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 800px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  section { padding: 72px 24px; }
+  .hero { padding: 100px 24px 60px; }
+  .hero-stats { gap: 28px; flex-wrap: wrap; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .verticals-grid { grid-template-columns: 1fr; }
+  .outcomes-layout { grid-template-columns: 1fr; gap: 40px; }
+  .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+  footer { padding: 24px; }
 }
 </style>
 </head>
 <body>
 
-<nav class="top-nav">
-  <a class="nav-logo" href="#hero">Regulator AI Global</a>
-  <ul class="top-nav-links">
-    <li><a href="#problem">Risk</a></li>
-    <li><a href="#framework">Framework</a></li>
-    <li><a href="#capability">Capabilities</a></li>
-    <li><a href="#timeline">Timeline</a></li>
-    <li><a href="#publications">Resources</a></li>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Regulator AI Global</a>
+  <ul class="nav-links">
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#verticals">Verticals</a></li>
+    <li><a href="#how">Process</a></li>
+    <li><a href="#outcomes">Outcomes</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
-  <a class="nav-cta" href="#contact">Contact</a>
+  <a href="#contact" class="nav-cta">Inquire</a>
 </nav>
 
-<nav class="side-nav">
-  <div class="side-nav-logo">Regulator AI™</div>
-  <div class="side-nav-section">Navigation</div>
-  <ul class="side-nav-links">
-    <li><a href="#problem"><span class="side-nav-num">01</span> Acquisition Risk</a></li>
-    <li><a href="#framework"><span class="side-nav-num">02</span> The Framework</a></li>
-    <li><a href="#capability"><span class="side-nav-num">03</span> Capabilities</a></li>
-    <li><a href="#timeline"><span class="side-nav-num">04</span> Deal Timeline</a></li>
-    <li><a href="#regulatory"><span class="side-nav-num">05</span> Regulatory</a></li>
-    <li><a href="#publications"><span class="side-nav-num">06</span> Resources</a></li>
-    <li><a href="#contact"><span class="side-nav-num">07</span> Contact</a></li>
-  </ul>
-  <div class="side-nav-footer">
-    <a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">GitHub ↗</a>
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-kicker">Regulator AI Global, Inc. &nbsp;·&nbsp; 17 Patents Filed &amp; Assigned to Corp</div>
+  <h1>AI systems behave differently<br>after acquisition.<br><em>We evaluate them before.</em></h1>
+  <p class="hero-sub">
+    Standard due diligence reviews AI systems as they exist today — not as they will perform once scaled, automated, or integrated into new infrastructure. That gap is where liability concentrates. Regulator AI closes it before close.
+  </p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Request a Briefing</a>
+    <a href="#problem" class="btn-secondary">See the Problem</a>
   </div>
-</nav>
-
-<div class="page-body">
-
-<!-- ── HERO ─────────────────────────────────────────────────── -->
-<section id="hero">
-  <div class="hero-overlay"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <div class="hero-tag"><span class="pulse"></span> Predictive System Evaluation · AI Acquisition Infrastructure</div>
-    <h1 class="hero-headline">
-      <em>Forward-Looking</em><br>AI System Evaluation
-    </h1>
-    <p class="hero-sub">Complex AI systems behave differently when they are scaled, automated, or integrated through acquisition. Regulator AI provides a framework for evaluating how those systems may behave — before integration begins, before liability transfers, and before outcomes become difficult to reverse.</p>
-    <div class="hero-actions">
-      <a class="btn-primary" href="#framework">Explore the Framework</a>
-      <a class="btn-ghost" href="#contact">Licensing Inquiry</a>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">Day&nbsp;1</div>
+      <div class="stat-label">When liability transfers</div>
     </div>
-    <div class="hero-stats">
-      <div><span class="stat-val">EU AI Act</span><span class="stat-label">Article 14 Aligned</span></div>
-      <div><span class="stat-val">Predictive</span><span class="stat-label">Pre-Integration Evaluation</span></div>
-      <div><span class="stat-val">Patent Pending</span><span class="stat-label">Multiple U.S. Provisionals Filed</span></div>
-      <div><span class="stat-val">Forward-Looking</span><span class="stat-label">Anticipatory Decision Support</span></div>
+    <div class="stat-item">
+      <div class="stat-num">Wks 1–3</div>
+      <div class="stat-label">When interaction risk compounds</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Art. 14</div>
+      <div class="stat-label">EU AI Act — active enforcement</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Pre-Close</div>
+      <div class="stat-label">When evaluation must begin</div>
     </div>
   </div>
 </section>
 
-<!-- ── TICKER ─────────────────────────────────────────────────── -->
-<div class="ticker-wrap">
-  <div class="ticker-track">
-    <span class="t-item"><span class="t-dot"></span>Predictive System Evaluation</span>
-    <span class="t-item"><span class="t-dot"></span>Anticipatory Analysis</span>
-    <span class="t-item"><span class="t-dot"></span>Pre-Integration Decision Support</span>
-    <span class="t-item"><span class="t-dot"></span>EU AI Act Article 14</span>
-    <span class="t-item"><span class="t-dot"></span>Systemic Interaction Risk</span>
-    <span class="t-item"><span class="t-dot"></span>AI Governance Readiness</span>
-    <span class="t-item"><span class="t-dot"></span>Complex System Behavior Under Scale</span>
-    <span class="t-item"><span class="t-dot"></span>Cognitive Transport Protocol™</span>
-    <span class="t-item"><span class="t-dot"></span>Regulator AI Global, Inc.</span>
-    <span class="t-item"><span class="t-dot"></span>Post-Merger Integration Planning</span>
-    <span class="t-item"><span class="t-dot"></span>Predictive System Evaluation</span>
-    <span class="t-item"><span class="t-dot"></span>Anticipatory Analysis</span>
-    <span class="t-item"><span class="t-dot"></span>Pre-Integration Decision Support</span>
-    <span class="t-item"><span class="t-dot"></span>EU AI Act Article 14</span>
-    <span class="t-item"><span class="t-dot"></span>Systemic Interaction Risk</span>
-    <span class="t-item"><span class="t-dot"></span>AI Governance Readiness</span>
-    <span class="t-item"><span class="t-dot"></span>Complex System Behavior Under Scale</span>
-    <span class="t-item"><span class="t-dot"></span>Cognitive Transport Protocol™</span>
-    <span class="t-item"><span class="t-dot"></span>Regulator AI Global, Inc.</span>
-    <span class="t-item"><span class="t-dot"></span>Post-Merger Integration Planning</span>
-  </div>
-</div>
-
-<!-- ── WHY THIS EXISTS ─────────────────────────────────────────── -->
-<div class="why-banner">
-  <div class="why-inner">
-    <div class="why-label">Why This Exists</div>
-    <p class="why-body">
-      Modern AI-enabled systems often behave differently once they are integrated, scaled, or automated.
-      <strong>Traditional diligence methods cannot easily evaluate how those systems will interact after acquisition or platform expansion.</strong>
-      Regulator AI explores a forward-looking approach to evaluating systemic interaction risk before those integrations occur, allowing organizations to anticipate potential instability rather than discovering it after deployment.
-    </p>
-  </div>
-</div>
-
-<!-- ── PROBLEM ─────────────────────────────────────────────────── -->
-<div class="section" id="problem">
-  <div class="s-label">Acquisition Risk</div>
-  <h2>What Acquirers Cannot See</h2>
-  <p class="lead">Standard diligence evaluates AI systems as they currently operate — not as they will behave once they are scaled, automated, or connected to new infrastructure. The gap between those two states is where acquisition risk concentrates.</p>
-
-  <div class="callout-pair">
-    <div class="co-block">
-      <div class="co-eye">// The Visibility Problem</div>
-      <div class="co-head">AI Systems Behave Differently in Combination</div>
-      <p class="co-body">When acquired AI systems are introduced into an existing technology environment, new interaction patterns emerge that were not present — and could not have been evaluated — before integration. These emergent behaviors carry regulatory exposure and successor liability that standard representations and warranties do not address. Evaluating how systems may interact before those connections are established is the foundational challenge the Regulator AI framework is designed to support.</p>
-    </div>
-    <div class="co-block">
-      <div class="co-eye">// Complexity at Scale</div>
-      <div class="co-head">Interaction Risk Compounds Faster Than Manual Review Allows</div>
-      <p class="co-body">As AI systems scale, automate, and interconnect, the range of potential interaction outcomes grows faster than any organization can assess reactively. Without a forward-looking evaluation capability, organizations are left assessing risk after it has already materialized. The Regulator AI framework enables anticipatory analysis — helping organizations understand potential system behavior before integration, not after the fact.</p>
-    </div>
-  </div>
-
-  <div class="risk-grid">
-    <div class="risk-card reveal">
-      <div class="rk-num">Risk Dimension 01</div>
-      <div class="rk-title">Undisclosed Interaction Pathways</div>
-      <p class="rk-desc">AI systems disclosed during diligence reflect only their current operating context. Once introduced to a new environment, interaction patterns emerge that neither party could observe pre-close. These patterns produce behavior — and liability — that no prior disclosure covers.</p>
-    </div>
-    <div class="risk-card reveal">
-      <div class="rk-num">Risk Dimension 02</div>
-      <div class="rk-title">Oversight Continuity Across the Integration Boundary</div>
-      <p class="rk-desc">Standard integration processes do not carry forward the supervisory context that governed acquired systems pre-close. The result is a structural oversight gap at the moment when liability is highest. Establishing a forward-looking evaluation baseline before systems connect is what makes post-close oversight defensible.</p>
-    </div>
-    <div class="risk-card reveal">
-      <div class="rk-num">Risk Dimension 03</div>
-      <div class="rk-title">Regulatory Documentation Requirements</div>
-      <p class="rk-desc">EU AI Act Article 14 enforcement is active. Acquirers of high-risk AI systems must demonstrate continuous human oversight documentation from the date of close. Generating that record proactively — before integration — is the only approach that holds under regulatory scrutiny.</p>
-    </div>
-    <div class="risk-card reveal">
-      <div class="rk-num">Risk Dimension 04</div>
-      <div class="rk-title">Indemnification Structure Gaps</div>
-      <p class="rk-desc">Representations and warranties do not cover behavior that emerges from the integration itself. Interaction patterns generated post-close are not covered by seller indemnification or R&W insurance under standard deal structures. This exposure requires an anticipatory evaluation approach, not a contractual one.</p>
-    </div>
-  </div>
-
-  <div class="urgency-bar reveal">
-    <div class="u-item">
-      <span class="u-tag">Liability Transfer</span>
-      <div class="u-head">Begins at Close</div>
-      <p class="u-body">Successor liability attaches from the moment of transaction close — not after integration is complete. Predictive evaluation must begin before systems connect.</p>
-    </div>
-    <div class="u-item">
-      <span class="u-tag">Complexity Onset</span>
-      <div class="u-head">Days to Weeks</div>
-      <p class="u-body">Interaction risk between AI systems can compound within weeks of first connection — faster than reactive review allows.</p>
-    </div>
-    <div class="u-item">
-      <span class="u-tag">Regulatory Window</span>
-      <div class="u-head">EU AI Act Active</div>
-      <p class="u-body">Article 14 enforcement is live. Acquirers of high-risk AI systems must demonstrate continuous oversight documentation to regulators and insurers on demand.</p>
-    </div>
-    <div class="u-item" style="border-right:none">
-      <span class="u-tag">Framework Response</span>
-      <div class="u-head">Anticipatory Evaluation</div>
-      <p class="u-body">The Regulator AI framework is activated before systems connect — establishing the supervisory baseline and oversight record that successor liability management requires.</p>
-    </div>
-  </div>
-</div>
-
-<hr class="div">
-
-<!-- ── FRAMEWORK ─────────────────────────────────────────────── -->
-<div class="section-full" id="framework">
-  <div class="inner">
-    <div class="s-label">The Framework</div>
-    <div class="fw-layout">
-      <div>
-        <h2>Predictive Evaluation Before Integration</h2>
-        <p class="lead">The Regulator AI framework introduces a structured evaluation approach that enables organizations to model potential system behavior, assess interaction risk, and establish supervisory continuity — before integration begins and before liability has transferred.</p>
-        <div class="benefit-list">
-          <div class="b-row reveal"><div class="b-icon">⊕</div><div>
-            <div class="b-title">System Behavior Is Evaluated Before Connections Are Established</div>
-            <p class="b-desc">Before acquired systems are introduced to production infrastructure, the framework maps and evaluates potential interaction patterns. This creates a documented behavioral baseline that supports supervisory continuity prior to liability transfer — and produces the evidentiary record that regulators and insurers require.</p>
-          </div></div>
-          <div class="b-row reveal"><div class="b-icon">▣</div><div>
-            <div class="b-title">Complex Interactions Are Surfaced Anticipatorily</div>
-            <p class="b-desc">The framework continuously evaluates how AI systems may interact as integration progresses — surfacing potential risk areas before they produce outcomes. This forward-looking capability enables human reviewers to assess high-risk interaction scenarios before they complete, rather than after the fact.</p>
-          </div></div>
-          <div class="b-row reveal"><div class="b-icon">◎</div><div>
-            <div class="b-title">Human Oversight Is Structural, Not Procedural</div>
-            <p class="b-desc">At any point during integration, authorized personnel retain the ability to pause, redirect, or halt system interaction pathways. This capability is a design property of the framework — not a procedural step that depends on human adherence or organizational continuity.</p>
-          </div></div>
-          <div class="b-row reveal"><div class="b-icon">⬡</div><div>
-            <div class="b-title">Oversight Documentation Begins on Day One</div>
-            <p class="b-desc">All interactions passing through the framework during the integration period are captured in a continuous, verified oversight record — available to regulators, insurers, and legal counsel as documentation that supervisory evaluation was operational from the moment of first system connection.</p>
-          </div></div>
-        </div>
-        <div class="ctp-note">The research direction behind Regulator AI is supported by multiple U.S. provisional patent filings made in March 2026, including the original filing on March 6, 2026. These filings relate to systemic interaction risk, predictive system evaluation, and integration analysis. <strong>Licensing inquiries: <a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a></strong></div>
-      </div>
-      <div>
-        <div class="scenario reveal" style="margin-top:0">
-          <div class="sc-eye">// Illustrative Scenario — Pre-Integration Evaluation</div>
-          <p class="sc-body">A fund closes on an <strong>AI-native workflow company</strong>. Before acquired systems connect to portfolio infrastructure, the Regulator AI framework is activated to model how those systems may behave once introduced to the existing environment. The evaluation surface identifies three potential interaction pathways with elevated risk profiles. An authorized reviewer assesses each: two are cleared; the third is held for legal review of the underlying data-sharing pathway. Every evaluation decision is recorded in the continuous oversight log. When regulators request the oversight record six months later, the entire evaluation sequence is available for review. <strong>Supervisory continuity is documented from day one.</strong></p>
-        </div>
-        <div class="scenario reveal" style="margin-top:1.5rem">
-          <div class="sc-eye">// Illustrative Scenario — Scale and Automation Risk</div>
-          <p class="sc-body">A large enterprise expands an <strong>AI-assisted operations platform</strong> across business units. As automation scope increases, the framework evaluates how system behavior may evolve under increased load, expanded decision scope, and cross-unit interaction — before each expansion phase is authorized. <strong>Forward-looking evaluation replaces reactive monitoring at every stage of scale.</strong></p>
-        </div>
-        <div class="scenario reveal" style="margin-top:1.5rem">
-          <div class="sc-eye">// Illustrative Scenario — Post-Merger Integration Planning</div>
-          <p class="sc-body">Two AI-enabled platforms are being merged following a strategic acquisition. Integration planning teams use the Regulator AI framework to evaluate how the combined system may behave under shared infrastructure — identifying governance readiness gaps, documenting oversight continuity, and producing the compliance record that Article 14 requires before the merged system enters production. <strong>Integration risk is evaluated before it becomes integration liability.</strong></p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<hr class="div">
-
-<!-- ── CAPABILITIES ─────────────────────────────────────────── -->
-<div class="section" id="capability">
-  <div class="s-label">Capabilities</div>
-  <h2>What the Framework Enables</h2>
-  <p class="lead">The Regulator AI framework addresses five connected capability areas. Each is designed to support forward-looking decision making in environments where AI systems operate at scale, under automation, or in the context of technology acquisition and integration.</p>
-
-  <div class="cap-stack">
-    <div class="cap-layer l1">
-      <span class="cap-num">01</span>
-      <div class="cap-content">
-        <div class="cap-name">Predictive System Evaluation</div>
-        <p class="cap-desc">Enables organizations to evaluate how AI systems may behave before integration connections are established. Supports anticipatory decision making for acquisitions and platform expansions where target systems will be introduced to new environments — helping deal teams and integration planners move from reactive discovery to forward-looking assessment.</p>
-      </div>
-      <span class="cap-badge badge-b1">Predictive</span>
-    </div>
-    <div class="cap-layer l2">
-      <span class="cap-num">02</span>
-      <div class="cap-content">
-        <div class="cap-name">Oversight Readiness Assessment</div>
-        <p class="cap-desc">Evaluates whether an organization's supervisory posture is adequate for the AI integration it is planning — before that integration begins. Identifies governance gaps, documents the supervisory baseline, and produces the readiness record that regulators and insurers expect to see from the date of close forward.</p>
-      </div>
-      <span class="cap-badge badge-b2">Governance</span>
-    </div>
-    <div class="cap-layer l3">
-      <span class="cap-num">03</span>
-      <div class="cap-content">
-        <div class="cap-name">Integration Risk Evaluation</div>
-        <p class="cap-desc">Assesses the systemic risk profile of a proposed integration across the full range of conditions under which the combined system may eventually operate — including scale, automation depth, and cross-system interconnection. Designed to surface integration risk before it becomes integration liability.</p>
-      </div>
-      <span class="cap-badge badge-b3">Risk</span>
-    </div>
-    <div class="cap-layer l4">
-      <span class="cap-num">04</span>
-      <div class="cap-content">
-        <div class="cap-name">Systemic Risk Indicators</div>
-        <p class="cap-desc">Surfaces leading indicators of systemic interaction risk across the integration environment — enabling human reviewers to evaluate potential risk trajectories before they develop into material outcomes. Designed for complex, multi-system environments where risk patterns are distributed and not easily visible through conventional review processes.</p>
-      </div>
-      <span class="cap-badge badge-b4">Indicators</span>
-    </div>
-    <div class="cap-layer l5">
-      <span class="cap-num">05</span>
-      <div class="cap-content">
-        <div class="cap-name">Verified Oversight Records</div>
-        <p class="cap-desc">Produces a continuous, verified record of every supervisory evaluation and human decision across the integration lifecycle. Supports EU AI Act Article 14 compliance, insurance requirements, and legal defensibility — generated as an inherent output of the evaluation process, not assembled retroactively.</p>
-      </div>
-      <span class="cap-badge badge-b5">Documentation</span>
-    </div>
-  </div>
-</div>
-
-<hr class="div">
-
-<!-- ── DEAL TIMELINE ─────────────────────────────────────────── -->
-<div class="section" id="timeline">
-  <div class="s-label">Deal Timeline</div>
-  <h2>AI Acquisition Evaluation Timeline</h2>
-  <p class="lead">The Regulator AI framework maps to the phases of an AI acquisition. Each phase carries distinct liability and governance exposure. Forward-looking evaluation addresses each phase in sequence — ensuring supervisory continuity is never interrupted from pre-close baseline through verified convergence.</p>
-  <div class="risk-grid">
-    <div class="risk-card reveal">
-      <div class="rk-num" style="color:var(--blue-bright)">Pre-Close</div>
-      <div class="rk-title">Baseline Behavioral Evaluation</div>
-      <p class="rk-desc">The framework is activated to document how each system currently behaves — before any cross-system connection is established. Interaction patterns are mapped and logged before convergence begins.</p>
-      <p class="rk-desc" style="margin-top:0.75rem">This baseline is what makes post-close oversight meaningful — and establishes that supervisory evaluation was operative before successor liability attached.</p>
-    </div>
-    <div class="risk-card reveal">
-      <div class="rk-num" style="color:var(--blue)">Integration Phase</div>
-      <div class="rk-title">Anticipatory Evaluation Active</div>
-      <p class="rk-desc">As systems begin to interact, the framework evaluates potential behavior and surfaces high-risk interaction scenarios for human review before they complete.</p>
-      <p class="rk-desc" style="margin-top:0.75rem">Human oversight capability is enforced throughout. Every supervisory decision is captured in the continuous documentation record — available to regulators, insurers, and legal counsel as the integration progresses.</p>
-    </div>
-    <div class="risk-card reveal">
-      <div class="rk-num" style="color:var(--text-faint)">Stable Operation</div>
-      <div class="rk-title">Verified Convergence</div>
-      <p class="rk-desc">Once the framework confirms stability across the interaction environment, systems operate under continuous forward-looking oversight.</p>
-      <p class="rk-desc" style="margin-top:0.75rem">The oversight record accumulated during integration is available as continuous documentation that supervisory evaluation was maintained — from the first day of combined operations forward.</p>
-    </div>
-  </div>
-</div>
-
-<hr class="div">
-
-<!-- ── REGULATORY ALIGNMENT ──────────────────────────────────── -->
-<div class="section" id="regulatory">
-  <div class="s-label">Regulatory Alignment</div>
-  <h2>EU AI Act Alignment by Design</h2>
-  <p class="lead">The Regulator AI framework aligns with EU AI Act Article 14 requirements at the design level. Compliance documentation is generated by the framework as an inherent output of the evaluation process — not assembled after the fact, and not reconstructed by counsel after a regulatory inquiry arrives.</p>
-  <div class="risk-grid">
-    <div class="risk-card reveal">
-      <div class="rk-num">EU AI Act — Article 14</div>
-      <div class="rk-title">Effective Human Oversight</div>
-      <p class="rk-desc">Article 14 requires effective human oversight of high-risk AI systems. The Regulator AI framework provides structured evaluation points that ensure AI interactions are assessed before they produce outcomes — making oversight active, forward-looking, and computable rather than aspirational.</p>
-    </div>
-    <div class="risk-card reveal">
-      <div class="rk-num">EU AI Act — Article 14</div>
-      <div class="rk-title">Human Intervention Capability</div>
-      <p class="rk-desc">Article 14 requires that authorized personnel retain the ability to intervene, pause, or halt AI system operation. The Regulator AI framework enforces this capability as a design property — not a procedure. Every intervention is a recorded supervisory event in the continuous documentation record.</p>
-    </div>
-    <div class="risk-card reveal" style="grid-column:1/-1">
-      <div class="rk-num">EU AI Act — Article 14</div>
-      <div class="rk-title">Traceable Accountability</div>
-      <p class="rk-desc">The framework produces a continuous, verified record of every evaluation decision, supervisory condition, and human authorization across the integration lifecycle. This record supports full auditability: any decision can be examined in its original supervisory context. It cannot be altered after the fact. It is available to regulators, insurers, legal counsel, and risk committees as evidence that oversight was operational from the first day of combined operations — and remains so throughout.</p>
-    </div>
-  </div>
-  <div class="urgency-bar reveal">
-    <div class="u-item">
-      <span class="u-tag">Compliance Posture</span>
-      <div class="u-head">Proactive, Not Reactive</div>
-      <p class="u-body">Documentation generated prospectively by the framework is more defensible than documentation assembled after a regulatory inquiry.</p>
-    </div>
-    <div class="u-item">
-      <span class="u-tag">Oversight Continuity</span>
-      <div class="u-head">No Gap at Close</div>
-      <p class="u-body">Supervisory evaluation is active from the moment of first system connection — ensuring oversight continuity at the boundary where liability is highest.</p>
-    </div>
-    <div class="u-item">
-      <span class="u-tag">Acquirer Exposure</span>
-      <div class="u-head">Non-Compliant Integrations Are Becoming Deal-Breakers</div>
-      <p class="u-body">As EU AI Act enforcement takes effect, acquirers who cannot demonstrate oversight continuity from the date of close face direct regulatory exposure. Compliance documentation is a condition of the transaction.</p>
-    </div>
-    <div class="u-item" style="border-right:none">
-      <span class="u-tag">Structural Advantage</span>
-      <div class="u-head">Compliance Is Architectural</div>
-      <p class="u-body">Process-based compliance depends on human adherence and degrades when integration accelerates. The Regulator AI framework enforces oversight at the design level — regardless of integration velocity, team turnover, or system complexity.</p>
-    </div>
-  </div>
-</div>
-
-<hr class="div">
-
-<!-- ── PUBLICATIONS ─────────────────────────────────────────── -->
-<div class="section-full" id="publications" style="background:var(--navy)">
-  <div class="inner">
-    <div class="s-label">Resources</div>
-    <div class="res-layout">
-      <div>
-        <h2>Framework Documentation</h2>
-        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.75;margin-bottom:1rem">Public documentation for the Cognitive Transport Protocol™ and the Regulator AI framework. Available for review by diligence teams, integration leaders, legal counsel, and advisors evaluating AI governance readiness in acquisition contexts.</p>
-        <ul class="res-list">
-          <li><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank"><span class="res-name">CTP Protocol Specification</span><span class="res-meta">github.com/zmichaelakins/ctp-spec ↗</span></a></li>
-          <li><a href="#contact"><span class="res-name">Framework White Paper — Predictive System Evaluation</span><span class="res-meta">Available on request</span></a></li>
-          <li><a href="#contact"><span class="res-name">Integration Evaluation Overview</span><span class="res-meta">Available on request</span></a></li>
-          <li><a href="#contact"><span class="res-name">EU AI Act Article 14 — Framework Alignment Reference</span><span class="res-meta">Available on request</span></a></li>
-          <li><a href="#contact"><span class="res-name">Successor Liability Evaluation — Deal Counsel Brief</span><span class="res-meta">Available on request</span></a></li>
-          <li><a href="#contact"><span class="res-name">Systemic Interaction Risk — Acquisition Evaluation Summary</span><span class="res-meta">Available on request</span></a></li>
-        </ul>
-      </div>
-      <div>
-        <h2 style="font-size:1.3rem">Key Questions</h2>
-        <p style="font-size:0.82rem;color:var(--text-dim);line-height:1.7;margin-bottom:1rem">Questions frequently raised by diligence teams, advisory firms, and legal counsel evaluating forward-looking AI system evaluation capabilities.</p>
-        <div class="faq-list">
-          <div class="faq-item reveal">
-            <p class="faq-q">What is successor liability exposure in an AI acquisition?</p>
-            <p class="faq-a">When an AI company is acquired, the acquirer assumes liability for the target's AI systems from the date of close — including oversight gaps, compliance failures, and interaction patterns that were not visible during diligence. Standard representations and warranties do not cover behavior that emerges from the integration itself. The Regulator AI framework establishes a documented supervisory baseline before systems connect, creating a record that oversight evaluation was active before liability transferred.</p>
-          </div>
-          <div class="faq-item reveal">
-            <p class="faq-q">What is systemic interaction risk in the context of enterprise AI?</p>
-            <p class="faq-a">Systemic interaction risk describes the condition where AI system interaction growth compounds across boundaries — each unmonitored connection generating further interaction pathways, until supervisory control becomes structurally difficult. In AI acquisitions, this compounding can propagate across portfolio infrastructure within weeks of close. The Regulator AI framework applies forward-looking evaluation at every interaction boundary, enabling anticipatory assessment before risk reaches a level that is difficult to contain.</p>
-          </div>
-          <div class="faq-item reveal">
-            <p class="faq-q">How does the framework support EU AI Act Article 14 compliance?</p>
-            <p class="faq-a">Article 14 requires effective human oversight, traceable supervisory actions, and documented intervention capability. The Regulator AI framework provides structured evaluation points and continuous documentation that enforce oversight at the design level. Every supervisory decision, human intervention, and evaluation event is recorded in a continuous, immutable log. Oversight is computable and reproducible — satisfying the requirement that it be operative, not aspirational.</p>
-          </div>
-          <div class="faq-item reveal">
-            <p class="faq-q">When in the deal timeline should evaluation begin?</p>
-            <p class="faq-a">Before systems are connected. Pre-close activation creates the behavioral baseline that makes post-close oversight defensible — and establishes that supervisory evaluation was operative before successor liability attached. Activating the evaluation framework after systems have already converged is more costly and produces a less complete oversight record for regulatory and legal purposes.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ── CONTACT ─────────────────────────────────────────────── -->
-<div id="contact" class="engage-wrap">
-  <div class="s-label" style="justify-content:center">Contact</div>
-  <h2 class="eng-head">Licensing &amp; Transaction Inquiries</h2>
-  <p class="eng-sub">For framework licensing, integration evaluation inquiries, architectural documentation, or AI acquisition transaction support.</p>
-  <p class="eng-email" style="font-size:0.82rem;line-height:2;letter-spacing:0.04em">
-    Zachary Michael Akins<br>
-    <span style="color:var(--text-faint);font-size:0.72rem">CEO, Regulator AI Global, Inc.</span><br>
-    <a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a>
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="section-label">01 — The Problem</div>
+  <h2 class="section-title">Four risks standard diligence<br>cannot see</h2>
+  <p class="section-intro">
+    Every AI acquisition carries exposure that representations, warranties, and technical audits do not cover. These four risk dimensions are structural — they emerge from integration itself.
   </p>
-  <p class="eng-contact">
-    Protocol specification: <a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">github.com/zmichaelakins/ctp-spec</a>
-    &nbsp;·&nbsp;
-    <a href="https://www.regulator-ai.com" target="_blank">regulator-ai.com</a>
-  </p>
-</div>
 
+  <div class="problem-grid">
+    <div class="problem-card" data-num="01">
+      <span class="problem-tag">Undisclosed</span>
+      <h3>Interaction Pathways That Don't Exist Until Integration</h3>
+      <p>AI systems disclosed during diligence reflect their current operating environment. Once introduced to a new infrastructure, new interaction patterns emerge that neither party observed pre-close — producing behavior and liability not covered by any prior disclosure.</p>
+    </div>
+    <div class="problem-card" data-num="02">
+      <span class="problem-tag">Structural Gap</span>
+      <h3>Oversight Continuity Breaks at the Integration Boundary</h3>
+      <p>Standard integration processes do not carry forward the supervisory controls that governed acquired systems before close. The result is a documented oversight gap at the exact moment when regulatory and legal exposure is highest.</p>
+    </div>
+    <div class="problem-card" data-num="03">
+      <span class="problem-tag">Regulatory</span>
+      <h3>EU AI Act Article 14 Requires Continuous Documentation from Close</h3>
+      <p>Acquirers of high-risk AI systems must demonstrate active human oversight from the date of transaction close — not from when integration stabilizes. Assembling that record retroactively does not satisfy enforcement requirements.</p>
+    </div>
+    <div class="problem-card" data-num="04">
+      <span class="problem-tag">Indemnification Gap</span>
+      <h3>Post-Close Behavior Is Not Covered by R&W Insurance</h3>
+      <p>Representations and warranties address the seller's system as it existed pre-close. Interaction patterns that emerge from integration itself are outside the scope of R&W coverage — the acquirer bears that exposure without contractual protection.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VERTICALS -->
+<section id="verticals">
+  <div class="section-label">02 — Who We Serve</div>
+  <h2 class="section-title">Eight verticals.<br>One <em>structural</em> solution.</h2>
+  <p class="section-intro">
+    The same integration risk concentrates differently across industries. Below is a direct mapping of the problem each sector faces and what Regulator AI delivers.
+  </p>
+
+  <div class="verticals-grid">
+
+    <div class="vertical-card">
+      <span class="vertical-icon">⚖️</span>
+      <div class="vertical-title">Private Equity &amp; M&amp;A</div>
+      <div class="vertical-problem">Successor liability attaches at close, not when integration completes</div>
+      <div class="vertical-solution">Pre-close behavioral baseline establishes oversight before liability transfers</div>
+      <p class="vertical-body">Deal teams gain a documented evaluation record covering the target system's interaction risk profile before systems connect — a defensible record for LP reporting, insurers, and regulators.</p>
+    </div>
+
+    <div class="vertical-card">
+      <span class="vertical-icon">🏦</span>
+      <div class="vertical-title">Financial Services</div>
+      <div class="vertical-problem">AI-driven trading, underwriting, and credit systems carry hidden model interaction risk at scale</div>
+      <div class="vertical-solution">Continuous evaluation surfaces risk trajectories before they reach compliance thresholds</div>
+      <p class="vertical-body">Banks and asset managers gain forward-looking visibility into how AI systems behave under load, automation depth, and cross-platform interconnection — before those conditions occur.</p>
+    </div>
+
+    <div class="vertical-card">
+      <span class="vertical-icon">🏥</span>
+      <div class="vertical-title">Healthcare &amp; Life Sciences</div>
+      <div class="vertical-problem">Clinical AI system acquisitions carry FDA, HIPAA, and AI Act compliance exposure simultaneously</div>
+      <div class="vertical-solution">Structured oversight documentation from first system connection through regulatory submission</div>
+      <p class="vertical-body">Acquirers of diagnostic, triage, and clinical decision AI receive a continuous supervisory record that satisfies multi-jurisdiction compliance requirements without retroactive reconstruction.</p>
+    </div>
+
+    <div class="vertical-card">
+      <span class="vertical-icon">⚡</span>
+      <div class="vertical-title">Energy &amp; Critical Infrastructure</div>
+      <div class="vertical-problem">Operational AI failures in energy systems produce physical consequences, not just compliance findings</div>
+      <div class="vertical-solution">Pre-integration evaluation maps failure pathways before systems connect to production infrastructure</div>
+      <p class="vertical-body">Grid operators, pipeline managers, and utility acquirers identify high-risk interaction scenarios in the evaluation environment — not in production — reducing physical exposure at the integration boundary.</p>
+    </div>
+
+    <div class="vertical-card">
+      <span class="vertical-icon">🛡️</span>
+      <div class="vertical-title">Defense &amp; Aerospace</div>
+      <div class="vertical-problem">Autonomous system acquisitions require uninterrupted human override capability — oversight gaps are not acceptable</div>
+      <div class="vertical-solution">Human intervention capability enforced as a structural property, documented from first connection</div>
+      <p class="vertical-body">Defense primes and aerospace integrators gain architecture-level oversight enforcement — not a procedural checklist — covering every supervisory event across the integration lifecycle.</p>
+    </div>
+
+    <div class="vertical-card">
+      <span class="vertical-icon">📋</span>
+      <div class="vertical-title">Legal &amp; Compliance Counsel</div>
+      <div class="vertical-problem">Clients face EU AI Act enforcement without a pre-close compliance record to produce</div>
+      <div class="vertical-solution">Immutable oversight log available on day one for regulatory, litigation, and insurance purposes</div>
+      <p class="vertical-body">Counsel advising on AI acquisitions can require Regulator AI activation as a condition of close — producing the continuous documentation record that regulators, insurers, and courts require.</p>
+    </div>
+
+    <div class="vertical-card">
+      <span class="vertical-icon">🔒</span>
+      <div class="vertical-title">Insurance &amp; Risk Underwriting</div>
+      <div class="vertical-problem">R&W policies exclude post-close AI interaction risk — underwriters lack tools to evaluate it</div>
+      <div class="vertical-solution">Pre-integration evaluation produces a quantified risk profile that informs underwriting decisions</div>
+      <p class="vertical-body">Insurers gain structured visibility into AI system interaction risk before policy issuance — enabling more accurate premium setting and exclusion scoping for AI-enabled acquisition transactions.</p>
+    </div>
+
+    <div class="vertical-card">
+      <span class="vertical-icon">🌐</span>
+      <div class="vertical-title">Enterprise Technology</div>
+      <div class="vertical-problem">Platform acquisitions introduce AI systems that behave unpredictably when connected to existing infrastructure at scale</div>
+      <div class="vertical-solution">Anticipatory evaluation at each integration phase replaces reactive monitoring</div>
+      <p class="vertical-body">Technology acquirers model how acquired AI systems will behave under their existing load, automation scope, and cross-system dependencies — before each phase of integration is authorized.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">03 — The Process</div>
+  <h2 class="section-title">Three phases.<br>Continuous <em>oversight record.</em></h2>
+  <p class="section-intro">
+    The evaluation framework maps to the deal timeline. Each phase produces a documented output — not a report assembled at the end, but a continuous record generated in real time.
+  </p>
+
+  <div class="timeline">
+    <div class="timeline-step">
+      <div class="step-phase">Phase 01</div>
+      <div class="step-num">01</div>
+      <h3>Pre-Close Baseline Evaluation</h3>
+      <p>Before any systems connect, the framework documents how each target system currently behaves in its native environment. Interaction patterns are mapped. Risk dimensions are identified. The supervisory baseline is established.</p>
+      <div class="step-deliverable">Deliverable: Behavioral baseline report + initial risk profile</div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-phase">Phase 02</div>
+      <div class="step-num">02</div>
+      <h3>Active Integration Evaluation</h3>
+      <p>As systems begin to interact, the framework evaluates emerging interaction patterns in real time. High-risk scenarios are surfaced for human review before they complete. Every supervisory decision is logged with timestamp and authorization record.</p>
+      <div class="step-deliverable">Deliverable: Continuous oversight log + escalation record</div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-phase">Phase 03</div>
+      <div class="step-num">03</div>
+      <h3>Verified Convergence &amp; Ongoing Oversight</h3>
+      <p>Once integration stabilizes, the framework confirms behavioral consistency across the combined system. The oversight record accumulated through integration is available for regulatory submission, insurance review, or legal proceedings at any point.</p>
+      <div class="step-deliverable">Deliverable: Verified convergence certificate + full oversight archive</div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section id="outcomes">
+  <div class="section-label">04 — What You Get</div>
+  <h2 class="section-title">Concrete deliverables.<br><em>Not advisory memos.</em></h2>
+  <p class="section-intro">
+    Every engagement produces documented outputs — records that exist independently of the engagement team and remain available to regulators, insurers, and counsel after the transaction closes.
+  </p>
+
+  <div class="outcomes-layout">
+    <div class="outcomes-left">
+      <div class="outcome-row">
+        <div class="outcome-check">✓</div>
+        <div class="outcome-content">
+          <h4>Pre-Close Behavioral Baseline</h4>
+          <p>A documented record of how the target AI system behaves before integration begins — the foundation for defensible post-close oversight.</p>
+        </div>
+      </div>
+      <div class="outcome-row">
+        <div class="outcome-check">✓</div>
+        <div class="outcome-content">
+          <h4>Integration Risk Profile</h4>
+          <p>A structured assessment of how the target system may behave once connected to the acquirer's infrastructure — produced before systems connect.</p>
+        </div>
+      </div>
+      <div class="outcome-row">
+        <div class="outcome-check">✓</div>
+        <div class="outcome-content">
+          <h4>Continuous Oversight Log</h4>
+          <p>A timestamped, immutable record of every evaluation decision and human authorization across the integration lifecycle — available on demand to regulators and insurers.</p>
+        </div>
+      </div>
+      <div class="outcome-row">
+        <div class="outcome-check">✓</div>
+        <div class="outcome-content">
+          <h4>Regulatory Compliance Package</h4>
+          <p>Documentation formatted for EU AI Act Article 14 submission, R&W insurance review, and legal proceedings — generated continuously, not assembled retroactively.</p>
+        </div>
+      </div>
+      <div class="outcome-row">
+        <div class="outcome-check">✓</div>
+        <div class="outcome-content">
+          <h4>Verified Convergence Certificate</h4>
+          <p>Formal confirmation that the combined system has reached behavioral stability — a documented endpoint for integration closure and regulatory reporting.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="outcomes-right">
+      <h3>Regulatory Alignment</h3>
+      <p class="sub">The framework produces compliance documentation as an inherent output — not assembled after the fact.</p>
+
+      <div class="compliance-item">
+        <div class="ci-left">
+          <div class="ci-reg">EU AI Act — Art. 14</div>
+          <div class="ci-desc">Effective human oversight with traceable supervisory actions and documented intervention capability</div>
+        </div>
+        <div class="ci-status">Covered</div>
+      </div>
+      <div class="compliance-item">
+        <div class="ci-left">
+          <div class="ci-reg">NIST AI RMF</div>
+          <div class="ci-desc">Govern, Map, Measure, Manage functions — continuous risk evaluation with documented human review</div>
+        </div>
+        <div class="ci-status">Covered</div>
+      </div>
+      <div class="compliance-item">
+        <div class="ci-left">
+          <div class="ci-reg">ISO 42001</div>
+          <div class="ci-desc">AI management system requirements — documented oversight controls and organizational accountability</div>
+        </div>
+        <div class="ci-status">Covered</div>
+      </div>
+      <div class="compliance-item">
+        <div class="ci-left">
+          <div class="ci-reg">SOC 2 / Audit Readiness</div>
+          <div class="ci-desc">Continuous supervisory log supports security and availability control documentation for audit</div>
+        </div>
+        <div class="ci-status">Covered</div>
+      </div>
+      <div class="compliance-item">
+        <div class="ci-left">
+          <div class="ci-reg">R&amp;W Insurance Review</div>
+          <div class="ci-desc">Pre-integration risk profile supports underwriter review for policies covering AI system behavior</div>
+        </div>
+        <div class="ci-status">Supported</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">05 — Contact</div>
+
+  <div class="contact-layout">
+    <div class="contact-left">
+      <h2>Request a briefing or licensing inquiry</h2>
+      <p>
+        We work with M&A advisory firms, private equity deal teams, enterprise integration leaders, legal counsel, and risk underwriters. Engagements begin with a 30-minute briefing scoped to your transaction or integration context.
+      </p>
+      <div class="contact-detail">
+        <div class="cd-row">
+          <span class="cd-label">Contact</span>
+          <span class="cd-value">Zachary Michael Akins, CEO</span>
+        </div>
+        <div class="cd-row">
+          <span class="cd-label">Company</span>
+          <span class="cd-value">Regulator AI Global, Inc.</span>
+        </div>
+        <div class="cd-row">
+          <span class="cd-label">Email</span>
+          <span class="cd-value"><a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a></span>
+        </div>
+        <div class="cd-row">
+          <span class="cd-label">GitHub</span>
+          <span class="cd-value"><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">zmichaelakins/ctp-spec</a></span>
+        </div>
+        <div class="cd-row">
+          <span class="cd-label">Status</span>
+          <span class="cd-value">17 U.S. Provisionals Filed &amp; Assigned to Regulator AI Global, Inc. — March 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-right">
+      <div class="inquiry-card">
+        <div class="ic-type">M&amp;A / Deal Counsel</div>
+        <div class="ic-title">Transaction Evaluation Briefing</div>
+        <p class="ic-desc">30-minute call scoped to a specific acquisition or integration. We review the target system profile and outline an evaluation approach tied to your deal timeline.</p>
+      </div>
+      <div class="inquiry-card">
+        <div class="ic-type">Enterprise</div>
+        <div class="ic-title">Platform Integration Assessment</div>
+        <p class="ic-desc">Scoping session for organizations expanding AI-enabled platforms across business units or infrastructure environments. Covers automation depth, scale risk, and oversight continuity.</p>
+      </div>
+      <div class="inquiry-card">
+        <div class="ic-type">Licensing &amp; IP</div>
+        <div class="ic-title">Licensing Inquiry</div>
+        <p class="ic-desc">For organizations evaluating the framework technology for integration into existing diligence, governance, or risk management platforms. Licensing terms available on request.</p>
+      </div>
+      <div class="inquiry-card">
+        <div class="ic-type">Insurance &amp; Risk</div>
+        <div class="ic-title">Underwriter Risk Profile</div>
+        <p class="ic-desc">For R&W insurers and AI risk underwriters evaluating pre-integration risk profiling as part of policy issuance or claims assessment processes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <div class="ft-left">
-    <span>Regulator AI Global, Inc.</span> — Cognitive Transport Protocol™ is a trademark of Regulator AI Global, Inc.<br>
-    Education-only license. Commercial rights reserved. Supported by multiple U.S. provisional patent filings (March 2026, including original filing March 6, 2026).
-  </div>
-  <ul class="ft-links">
-    <li><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">GitHub</a></li>
-    <li><a href="#publications">Resources</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</footer>
-
-</div>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const sectionIds = ['problem','framework','capability','timeline','regulatory','publications','contact'];
-const sideLinks = document.querySelectorAll('.side-nav-links a');
-document.querySelectorAll('.reveal'
+  <div class="footer-left">
+    © 2026 Regulator AI Global, Inc. &nbsp;·&nbsp; 
