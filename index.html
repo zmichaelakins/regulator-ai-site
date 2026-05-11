@@ -1,1152 +1,773 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Regulator AI Global — AI Acquisition & Integration Risk</title>
-<meta name="description" content="Pre-close AI behavioral evaluation and post-close oversight continuity for M&A transactions. 22 U.S. patents filed. 36 documented embodiments. EU AI Act Article 14 compliant.">
-<meta property="og:title" content="Regulator AI Global — AI Acquisition & Integration Risk">
-<meta property="og:description" content="Standard due diligence misses AI integration risk. Regulator AI evaluates how acquired systems behave before systems connect — producing a continuous oversight record from pre-close through integration.">
-<meta property="og:url" content="https://regulator-ai.com">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Regulator AI Global — AI Acquisition & Integration Risk">
-<meta name="twitter:description" content="Pre-close AI behavioral evaluation for M&A. 22 U.S. patents. 36 embodiments. EU AI Act Article 14.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23c9973a'/><text x='50%' y='50%' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-weight='bold' font-size='20' fill='%2307090f'>R</text></svg>">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23c9973a'/><text x='50%' y='50%' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-weight='bold' font-size='20' fill='%2307090f'>R</text></svg>">
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-<style>
-:root {
-  --bg: #07090f;
-  --surface: #0d1119;
-  --surface2: #131923;
-  --border: #1c2535;
-  --border2: #253045;
-  --text: #e8ecf2;
-  --text-secondary: #7a8fa8;
-  --text-muted: #3d5068;
-  --accent: #c9973a;
-  --accent-dim: rgba(201,151,58,0.12);
-  --accent-border: rgba(201,151,58,0.3);
-  --teal: #2bbfad;
-  --teal-dim: rgba(43,191,173,0.1);
-  --red: #e05555;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 16px;
-  line-height: 1.65;
-  overflow-x: hidden;
-}
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border2); }
-
-/* ── NAV ── */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 48px;
-  height: 64px;
-  background: rgba(7,9,15,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
-
-.nav-logo {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.nav-links {
-  display: flex;
-  gap: 36px;
-  list-style: none;
-}
-
-.nav-links a {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--text-secondary);
-  text-decoration: none;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: color 0.2s;
-}
-
-.nav-links a:hover { color: var(--text); }
-
-.nav-cta {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  text-decoration: none;
-  border: 1px solid var(--accent-border);
-  padding: 8px 18px;
-  transition: all 0.2s;
-}
-
-.nav-cta:hover {
-  background: var(--accent-dim);
-}
-
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 120px 48px 80px;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 55%;
-  height: 100%;
-  background: 
-    repeating-linear-gradient(0deg, transparent, transparent 59px, var(--border) 59px, var(--border) 60px),
-    repeating-linear-gradient(90deg, transparent, transparent 59px, var(--border) 59px, var(--border) 60px);
-  opacity: 0.25;
-  pointer-events: none;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  top: -200px; right: -100px;
-  width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(201,151,58,0.06) 0%, transparent 65%);
-  pointer-events: none;
-}
-
-.hero-kicker {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 28px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.hero-kicker::before {
-  content: '';
-  width: 32px;
-  height: 1px;
-  background: var(--accent);
-}
-
-.hero h1 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: clamp(40px, 5.5vw, 76px);
-  font-weight: 700;
-  line-height: 1.1;
-  max-width: 840px;
-  margin-bottom: 32px;
-  letter-spacing: -0.02em;
-}
-
-.hero h1 em {
-  font-style: italic;
-  color: var(--accent);
-}
-
-.hero-sub {
-  font-size: 17px;
-  color: var(--text-secondary);
-  max-width: 560px;
-  margin-bottom: 52px;
-  font-weight: 300;
-  line-height: 1.75;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: #07090f;
-  padding: 14px 32px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.2s;
-}
-
-.btn-primary:hover {
-  background: #e0a93e;
-}
-
-.btn-secondary {
-  border: 1px solid var(--border2);
-  color: var(--text-secondary);
-  padding: 14px 32px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.2s;
-}
-
-.btn-secondary:hover {
-  border-color: var(--text-secondary);
-  color: var(--text);
-}
-
-.hero-stats {
-  display: flex;
-  gap: 48px;
-  margin-top: 72px;
-  padding-top: 40px;
-  border-top: 1px solid var(--border);
-}
-
-.stat-item {}
-
-.stat-num {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 28px;
-  font-weight: 500;
-  color: var(--text);
-  line-height: 1;
-  margin-bottom: 6px;
-}
-
-.stat-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-family: 'IBM Plex Mono', monospace;
-}
-
-/* ── SECTIONS ── */
-section {
-  padding: 100px 48px;
-  position: relative;
-}
-
-.section-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 16px;
-}
-
-.section-title {
-  font-family: 'Libre Baskerville', serif;
-  font-size: clamp(28px, 3.5vw, 46px);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  max-width: 680px;
-  margin-bottom: 20px;
-}
-
-.section-title em {
-  font-style: italic;
-  color: var(--accent);
-}
-
-.section-intro {
-  font-size: 16px;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin-bottom: 64px;
-  font-weight: 300;
-  line-height: 1.75;
-}
-
-/* ── PROBLEM ── */
-#problem {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.problem-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--border);
-  margin-top: 64px;
-}
-
-.problem-card {
-  background: var(--surface);
-  padding: 40px 36px;
-  position: relative;
-}
-
-.problem-card::before {
-  content: attr(data-num);
-  position: absolute;
-  top: 32px;
-  right: 32px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  color: var(--text-muted);
-  letter-spacing: 0.1em;
-}
-
-.problem-tag {
-  display: inline-block;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--red);
-  background: rgba(224,85,85,0.08);
-  border: 1px solid rgba(224,85,85,0.2);
-  padding: 4px 10px;
-  margin-bottom: 20px;
-}
-
-.problem-card h3 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 14px;
-  line-height: 1.3;
-}
-
-.problem-card p {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
-/* ── VERTICALS ── */
-#verticals {
-  background: var(--bg);
-}
-
-.verticals-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-}
-
-.vertical-card {
-  background: var(--bg);
-  padding: 36px 28px;
-  transition: background 0.2s;
-  cursor: default;
-}
-
-.vertical-card:hover {
-  background: var(--surface);
-}
-
-.vertical-icon {
-  font-size: 22px;
-  margin-bottom: 20px;
-  display: block;
-}
-
-.vertical-title {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 17px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  line-height: 1.3;
-}
-
-.vertical-problem {
-  font-size: 13px;
-  color: var(--red);
-  margin-bottom: 12px;
-  font-weight: 500;
-  font-family: 'IBM Plex Mono', monospace;
-  letter-spacing: 0.03em;
-}
-
-.vertical-problem::before {
-  content: '↳ ';
-}
-
-.vertical-solution {
-  font-size: 13px;
-  color: var(--teal);
-  margin-bottom: 14px;
-  font-weight: 500;
-  font-family: 'IBM Plex Mono', monospace;
-}
-
-.vertical-solution::before {
-  content: '✓ ';
-}
-
-.vertical-body {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.65;
-}
-
-/* ── HOW IT WORKS ── */
-#how {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.timeline {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border2);
-  margin-top: 64px;
-}
-
-.timeline-step {
-  background: var(--surface);
-  padding: 44px 36px;
-  position: relative;
-}
-
-.step-phase {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.step-phase::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--accent-border);
-}
-
-.step-num {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 42px;
-  font-weight: 500;
-  color: var(--border2);
-  line-height: 1;
-  margin-bottom: 20px;
-}
-
-.timeline-step h3 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 14px;
-}
-
-.timeline-step p {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
-.step-deliverable {
-  margin-top: 24px;
-  padding: 14px 16px;
-  background: var(--bg);
-  border-left: 2px solid var(--accent);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
-/* ── OUTCOMES ── */
-#outcomes {
-  background: var(--bg);
-}
-
-.outcomes-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  margin-top: 64px;
-  align-items: start;
-}
-
-.outcomes-left {}
-
-.outcome-row {
-  display: flex;
-  gap: 20px;
-  padding: 28px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.outcome-row:first-child {
-  border-top: 1px solid var(--border);
-}
-
-.outcome-check {
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--teal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 2px;
-  font-size: 11px;
-  color: var(--teal);
-}
-
-.outcome-content h4 {
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.outcome-content p {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.65;
-}
-
-.outcomes-right {
-  padding: 36px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-}
-
-.outcomes-right h3 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.outcomes-right .sub {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-bottom: 28px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--border);
-}
-
-.compliance-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--border);
-  gap: 16px;
-}
-
-.compliance-item:last-child { border-bottom: none; }
-
-.ci-left {}
-
-.ci-reg {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-  margin-bottom: 4px;
-}
-
-.ci-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.ci-status {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--teal);
-  background: var(--teal-dim);
-  border: 1px solid rgba(43,191,173,0.2);
-  padding: 4px 10px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-/* ── CONTACT ── */
-#contact {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-}
-
-.contact-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  margin-top: 64px;
-}
-
-.contact-left h2 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  letter-spacing: -0.02em;
-}
-
-.contact-left p {
-  font-size: 15px;
-  color: var(--text-secondary);
-  line-height: 1.75;
-  margin-bottom: 36px;
-  font-weight: 300;
-}
-
-.contact-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.cd-row {
-  display: flex;
-  gap: 16px;
-  align-items: baseline;
-}
-
-.cd-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  width: 80px;
-  flex-shrink: 0;
-}
-
-.cd-value {
-  font-size: 14px;
-  color: var(--text);
-}
-
-.cd-value a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.cd-value a:hover {
-  text-decoration: underline;
-}
-
-.contact-right {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.inquiry-card {
-  padding: 24px 28px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  transition: border-color 0.2s;
-}
-
-.inquiry-card:hover {
-  border-color: var(--border2);
-}
-
-.ic-type {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 10px;
-}
-
-.ic-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.ic-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-/* ── FOOTER ── */
-footer {
-  background: var(--bg);
-  border-top: 1px solid var(--border);
-  padding: 32px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.footer-left {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
-}
-
-.footer-right {
-  display: flex;
-  gap: 24px;
-}
-
-.footer-right a {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footer-right a:hover { color: var(--text-secondary); }
-
-/* ── DIVIDER ── */
-.section-divider {
-  width: 100%;
-  height: 1px;
-  background: var(--border);
-}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hero-kicker { animation: fadeUp 0.6s ease both; }
-.hero h1 { animation: fadeUp 0.7s 0.1s ease both; }
-.hero-sub { animation: fadeUp 0.7s 0.2s ease both; }
-.hero-actions { animation: fadeUp 0.7s 0.3s ease both; }
-.hero-stats { animation: fadeUp 0.7s 0.45s ease both; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 1100px) {
-  .verticals-grid { grid-template-columns: repeat(2, 1fr); }
-  .timeline { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 800px) {
-  nav { padding: 0 24px; }
-  .nav-links { display: none; }
-  section { padding: 72px 24px; }
-  .hero { padding: 100px 24px 60px; }
-  .hero-stats { gap: 28px; flex-wrap: wrap; }
-  .problem-grid { grid-template-columns: 1fr; }
-  .verticals-grid { grid-template-columns: 1fr; }
-  .outcomes-layout { grid-template-columns: 1fr; gap: 40px; }
-  .contact-layout { grid-template-columns: 1fr; gap: 40px; }
-  footer { padding: 24px; }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regulator AI Global — AI Governance & Containment</title>
+  <meta name="description" content="Uncontrolled AI doesn't just fail — it cascades across interconnected systems. Regulator AI has the solution. Details available under NDA." />
+
+  <!-- ═══════════════════════════════════════════════════
+       GOOGLE ANALYTICS 4
+       Replace G-XXXXXXXXXX with your Measurement ID
+       ═══════════════════════════════════════════════════ -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Design tokens ─────────────────────────────────── */
+    :root {
+      --navy:       #0a0e1a;
+      --navy-mid:   #0f1525;
+      --navy-light: #151d35;
+      --gold:       #c9973a;
+      --gold-dim:   #8a6626;
+      --gold-pale:  rgba(201,151,58,0.12);
+      --off-white:  #f5f0e8;
+      --muted:      rgba(245,240,232,0.45);
+      --rule:       rgba(201,151,58,0.25);
+    }
+
+    /* ── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--off-white);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise texture overlay ─────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── Navigation ────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--off-white); }
+
+    .nav-cta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 0.55rem 1.3rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: #daa94a; transform: translateY(-1px); }
+
+    /* ── Hero ──────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10rem 4rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Radial gold pulse behind headline */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 38%;
+      left: -10%;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(ellipse at center, rgba(201,151,58,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      animation: pulse 8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.06); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    .hero-headline {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2.4rem, 5.5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 820px;
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-headline .accent {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-subhead {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      font-weight: 300;
+      line-height: 1.75;
+      max-width: 620px;
+      color: rgba(245,240,232,0.8);
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-subhead strong {
+      color: var(--off-white);
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 1rem 2.4rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 0 0 rgba(201,151,58,0);
+    }
+    .btn-primary:hover {
+      background: #daa94a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(201,151,58,0.25);
+    }
+
+    .btn-ghost {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 1rem 2.4rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--off-white); }
+
+    .hero-nda-note {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-top: 1.8rem;
+    }
+
+    /* ── Divider ───────────────────────────────────────── */
+    .gold-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--rule);
+      margin: 0;
+    }
+
+    /* ── Risk Section ──────────────────────────────────── */
+    .section {
+      padding: 7rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.6rem;
+    }
+
+    .section-heading {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.7rem, 3.2vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      max-width: 700px;
+      margin-bottom: 2rem;
+    }
+
+    .section-body {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: rgba(245,240,232,0.82);
+      max-width: 680px;
+    }
+    .section-body + .section-body { margin-top: 1.2rem; }
+
+    /* ── Three-column risk cards ───────────────────────── */
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      margin-top: 4rem;
+      background: var(--rule);
+    }
+
+    .risk-card {
+      background: var(--navy-mid);
+      padding: 2.8rem 2.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .risk-card:hover { background: var(--navy-light); }
+
+    .risk-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--gold);
+      transition: height 0.4s ease;
+    }
+    .risk-card:hover::before { height: 100%; }
+
+    .risk-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-dim);
+      margin-bottom: 1.2rem;
+    }
+
+    .risk-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 1rem;
+      color: var(--off-white);
+    }
+
+    .risk-desc {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: rgba(245,240,232,0.65);
+    }
+
+    /* ── Solution section ──────────────────────────────── */
+    .solution-wrap {
+      background: var(--navy-mid);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 7rem 4rem;
+    }
+
+    .solution-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .solution-left .section-heading { max-width: 100%; }
+
+    .solution-right { padding-top: 0.5rem; }
+
+    .solution-point {
+      display: flex;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(201,151,58,0.1);
+    }
+    .solution-point:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .point-icon {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-top: 0.15rem;
+      min-width: 28px;
+    }
+
+    .point-text {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(245,240,232,0.78);
+    }
+    .point-text strong { color: var(--off-white); font-weight: 500; }
+
+    /* ── NDA inquiry panel ─────────────────────────────── */
+    .nda-section {
+      padding: 7rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .nda-left { }
+
+    .nda-right {
+      background: var(--navy-light);
+      border: 1px solid var(--rule);
+      padding: 3rem;
+    }
+
+    .form-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: rgba(10,14,26,0.6);
+      border: 1px solid rgba(201,151,58,0.25);
+      color: var(--off-white);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.5rem;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus { border-color: var(--gold); }
+
+    .form-textarea { min-height: 100px; resize: vertical; }
+
+    .form-select option { background: var(--navy); }
+
+    .form-submit {
+      width: 100%;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      border: none;
+      padding: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .form-submit:hover { background: #daa94a; transform: translateY(-1px); }
+
+    .form-note {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ── Footer ────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .footer-right {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.8;
+    }
+
+    /* ── Animations ────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .js-ready .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .js-ready .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Responsive ────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .hero { padding: 8rem 2rem 5rem; }
+      .section { padding: 5rem 2rem; }
+      .solution-wrap { padding: 5rem 2rem; }
+      .solution-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .nda-section { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 2rem; }
+      footer { padding: 2.5rem 2rem; flex-direction: column; align-items: flex-start; }
+      .nav-right .nav-link { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">Regulator AI Global <span style="opacity:0.45; font-weight:400;">· Enterprise</span></a>
-  <ul class="nav-links">
-    <li><a href="#problem">The Problem</a></li>
-    <li><a href="#verticals">Embodiments</a></li>
-    <li><a href="#how">Process</a></li>
-    <li><a href="#outcomes">Outcomes</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="#contact" class="nav-cta">Inquire</a>
-</nav>
+  <!-- ── Navigation ───────────────────────────────────── -->
+  <nav>
+    <a href="#" class="nav-logo">Regulator AI Global</a>
+    <div class="nav-right">
+      <a href="#risk" class="nav-link">The Risk</a>
+      <a href="#solution" class="nav-link">The Solution</a>
+      <a href="#nda-inquiry" class="nav-cta">Request NDA Package</a>
+    </div>
+  </nav>
 
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-kicker">Regulator AI Global, Inc. &nbsp;·&nbsp; 22 Patents Filed &amp; Assigned to Corp</div>
-  <h1>AI systems behave differently<br>after acquisition.<br><em>We evaluate them before.</em></h1>
-  <p class="hero-sub">
-    Standard due diligence reviews AI systems as they exist today — not as they will perform once scaled, automated, or integrated into new infrastructure. That gap is where liability concentrates. Regulator AI closes it before close.
-  </p>
-  <div class="hero-actions">
-    <a href="" class="btn-primary" onclick="Calendly.initPopupWidget({url:'https://calendly.com/zmichaelakins'});return false;">Request a Briefing</a>
-    <a href="#problem" class="btn-secondary">See the Problem</a>
-  </div>
-  <div class="hero-stats">
-    <div class="stat-item">
-      <div class="stat-num">Day&nbsp;1</div>
-      <div class="stat-label">When liability transfers</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">Wks 1–3</div>
-      <div class="stat-label">When interaction risk compounds</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">Art. 14</div>
-      <div class="stat-label">EU AI Act — active enforcement</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">Pre-Close</div>
-      <div class="stat-label">When evaluation must begin</div>
-    </div>
-  </div>
-</section>
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <section class="hero">
+    <p class="hero-eyebrow">AI Governance · Control · Risk Management</p>
 
-<!-- PROBLEM -->
-<section id="problem">
-  <div class="section-label">01 — The Problem</div>
-  <h2 class="section-title">Four risks standard diligence<br>cannot see</h2>
-  <p class="section-intro">
-    Every AI acquisition carries exposure that representations, warranties, and technical audits do not cover. These four risk dimensions are structural — they emerge from integration itself.
-  </p>
+    <h1 class="hero-headline">
+      Out-of-control AI can<br/>
+      <span class="accent">destroy your business.</span><br/>
+      The risk isn't just the AI —<br/>
+      it's the combination of systems.
+    </h1>
 
-  <div class="problem-grid">
-    <div class="problem-card" data-num="01">
-      <span class="problem-tag">Undisclosed</span>
-      <h3>Interaction Pathways That Don't Exist Until Integration</h3>
-      <p>AI systems disclosed during diligence reflect their current operating environment. Once introduced to a new infrastructure, new interaction patterns emerge that neither party observed pre-close — producing behavior and liability not covered by any prior disclosure.</p>
-    </div>
-    <div class="problem-card" data-num="02">
-      <span class="problem-tag">Structural Gap</span>
-      <h3>Oversight Continuity Breaks at the Integration Boundary</h3>
-      <p>Standard integration processes do not carry forward the supervisory controls that governed acquired systems before close. The result is a documented oversight gap at the exact moment when regulatory and legal exposure is highest.</p>
-    </div>
-    <div class="problem-card" data-num="03">
-      <span class="problem-tag">Regulatory</span>
-      <h3>EU AI Act Article 14 Requires Continuous Documentation from Close</h3>
-      <p>Acquirers of high-risk AI systems must demonstrate active human oversight from the date of transaction close — not from when integration stabilizes. Assembling that record retroactively does not satisfy enforcement requirements.</p>
-    </div>
-    <div class="problem-card" data-num="04">
-      <span class="problem-tag">Indemnification Gap</span>
-      <h3>Post-Close Behavior Is Not Covered by R&W Insurance</h3>
-      <p>Representations and warranties address the seller's system as it existed pre-close. Interaction patterns that emerge from integration itself are outside the scope of R&W coverage — the acquirer bears that exposure without contractual protection.</p>
-    </div>
-  </div>
-</section>
+    <p class="hero-subhead">
+      When AI operates across interconnected infrastructure, a single uncontrolled
+      interaction doesn't stay local. It cascades. <strong>We have built the solution.</strong>
+      The details are available under NDA.
+    </p>
 
-<!-- VERTICALS -->
-<section id="verticals">
-  <div class="section-label">02 — Who We Serve</div>
-  <h2 class="section-title">Eight embodiments.<br>One <em>structural</em> solution. 36 addressable markets.</h2>
-  <p class="section-intro">
-    The same integration risk concentrates differently across industries. Below is a direct mapping of the problem each sector faces and what Regulator AI delivers. These eight represent the enterprise and M&amp;A embodiments of a 36-application portfolio — each drawing from the same underlying architecture.
-  </p>
-
-  <div class="verticals-grid">
-
-    <div class="vertical-card">
-      <span class="vertical-icon" role="img" aria-label="Scales of justice">⚖️</span>
-      <div class="vertical-title">Private Equity &amp; M&amp;A</div>
-      <div class="vertical-problem">Successor liability attaches at close, not when integration completes</div>
-      <div class="vertical-solution">Pre-close behavioral baseline establishes oversight before liability transfers</div>
-      <p class="vertical-body">Deal teams gain a documented evaluation record covering the target system's interaction risk profile before systems connect — a defensible record for LP reporting, insurers, and regulators.</p>
+    <div class="hero-actions">
+      <a href="#nda-inquiry" class="btn-primary">Request NDA Package</a>
+      <a href="#risk" class="btn-ghost">Understand the Risk</a>
     </div>
 
-    <div class="vertical-card">
-      <span class="vertical-icon" role="img" aria-label="Bank">🏦</span>
-      <div class="vertical-title">Financial Services</div>
-      <div class="vertical-problem">AI-driven trading, underwriting, and credit systems carry hidden model interaction risk at scale</div>
-      <div class="vertical-solution">Continuous evaluation surfaces risk trajectories before they reach compliance thresholds</div>
-      <p class="vertical-body">Banks and asset managers gain forward-looking visibility into how AI systems behave under load, automation depth, and cross-platform interconnection — before those conditions occur.</p>
-    </div>
+    <p class="hero-nda-note">
+      ⬡ &nbsp;Proprietary architecture. Full technical disclosure under executed NDA only.
+    </p>
+  </section>
 
-    <div class="vertical-card">
-      <span class="vertical-icon" role="img" aria-label="Hospital">🏥</span>
-      <div class="vertical-title">Healthcare &amp; Life Sciences</div>
-      <div class="vertical-problem">Clinical AI system acquisitions carry FDA, HIPAA, and AI Act compliance exposure simultaneously</div>
-      <div class="vertical-solution">Structured oversight documentation from first system connection through regulatory submission</div>
-      <p class="vertical-body">Acquirers of diagnostic, triage, and clinical decision AI receive a continuous supervisory record that satisfies multi-jurisdiction compliance requirements without retroactive reconstruction.</p>
-    </div>
+  <div class="gold-rule"></div>
 
-    <div class="vertical-card">
-      <span class="vertical-icon" role="img" aria-label="Energy">⚡</span>
-      <div class="vertical-title">Energy &amp; Critical Infrastructure</div>
-      <div class="vertical-problem">Operational AI failures in energy systems produce physical consequences, not just compliance findings</div>
-      <div class="vertical-solution">Pre-integration evaluation maps failure pathways before systems connect to production infrastructure</div>
-      <p class="vertical-body">Grid operators, pipeline managers, and utility acquirers identify high-risk interaction scenarios in the evaluation environment — not in production — reducing physical exposure at the integration boundary.</p>
-    </div>
+  <!-- ── The Risk ──────────────────────────────────────── -->
+  <section class="section" id="risk">
+    <p class="section-label reveal">The Exposure</p>
+    <h2 class="section-heading reveal">
+      The threat surface is not one AI system.<br/>
+      It is every system that AI touches.
+    </h2>
+    <p class="section-body reveal">
+      Enterprise AI doesn't operate in isolation. It integrates with ERP stacks, financial platforms,
+      operational technology, supply chains, and regulated data environments. The governance frameworks
+      protecting those systems were not designed for autonomous agents operating at machine speed.
+    </p>
+    <p class="section-body reveal">
+      The result is a new class of systemic risk — one that existing compliance, audit, and
+      security frameworks cannot adequately address. Regulators are beginning to move. The window
+      for proactive positioning is narrow.
+    </p>
 
-    <div class="vertical-card">
-      <span class="vertical-icon" role="img" aria-label="Shield">🛡️</span>
-      <div class="vertical-title">Defense &amp; Aerospace</div>
-      <div class="vertical-problem">Autonomous system acquisitions require uninterrupted human override capability — oversight gaps are not acceptable</div>
-      <div class="vertical-solution">Human intervention capability enforced as a structural property, documented from first connection</div>
-      <p class="vertical-body">Defense primes and aerospace integrators gain architecture-level oversight enforcement — not a procedural checklist — covering every supervisory event across the integration lifecycle.</p>
-    </div>
-
-    <div class="vertical-card">
-      <span class="vertical-icon" role="img" aria-label="Clipboard">📋</span>
-      <div class="vertical-title">Legal &amp; Compliance Counsel</div>
-      <div class="vertical-problem">Clients face EU AI Act enforcement without a pre-close compliance record to produce</div>
-      <div class="vertical-solution">Immutable oversight log available on day one for regulatory, litigation, and insurance purposes</div>
-      <p class="vertical-body">Counsel advising on AI acquisitions can require Regulator AI activation as a condition of close — producing the continuous documentation record that regulators, insurers, and courts require.</p>
-    </div>
-
-    <div class="vertical-card">
-      <span class="vertical-icon" role="img" aria-label="Lock">🔒</span>
-      <div class="vertical-title">Insurance &amp; Risk Underwriting</div>
-      <div class="vertical-problem">R&W policies exclude post-close AI interaction risk — underwriters lack tools to evaluate it</div>
-      <div class="vertical-solution">Pre-integration evaluation produces a quantified risk profile that informs underwriting decisions</div>
-      <p class="vertical-body">Insurers gain structured visibility into AI system interaction risk before policy issuance — enabling more accurate premium setting and exclusion scoping for AI-enabled acquisition transactions.</p>
-    </div>
-
-    <div class="vertical-card">
-      <span class="vertical-icon" role="img" aria-label="Globe">🌐</span>
-      <div class="vertical-title">Enterprise Technology</div>
-      <div class="vertical-problem">Platform acquisitions introduce AI systems that behave unpredictably when connected to existing infrastructure at scale</div>
-      <div class="vertical-solution">Anticipatory evaluation at each integration phase replaces reactive monitoring</div>
-      <p class="vertical-body">Technology acquirers model how acquired AI systems will behave under their existing load, automation scope, and cross-system dependencies — before each phase of integration is authorized.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="section-label">03 — The Process</div>
-  <h2 class="section-title">Three phases.<br>Continuous <em>oversight record.</em></h2>
-  <p class="section-intro">
-    The evaluation framework maps to the deal timeline. Each phase produces a documented output — not a report assembled at the end, but a continuous record generated in real time.
-  </p>
-
-  <div class="timeline">
-    <div class="timeline-step">
-      <div class="step-phase">Phase 01</div>
-      <div class="step-num">01</div>
-      <h3>Pre-Close Baseline Evaluation</h3>
-      <p>Before any systems connect, the framework documents how each target system currently behaves in its native environment. Interaction patterns are mapped. Risk dimensions are identified. The supervisory baseline is established.</p>
-      <div class="step-deliverable">Deliverable: Behavioral baseline report + initial risk profile</div>
-    </div>
-    <div class="timeline-step">
-      <div class="step-phase">Phase 02</div>
-      <div class="step-num">02</div>
-      <h3>Active Integration Evaluation</h3>
-      <p>As systems begin to interact, the framework evaluates emerging interaction patterns in real time. High-risk scenarios are surfaced for human review before they complete. Every supervisory decision is logged with timestamp and authorization record.</p>
-      <div class="step-deliverable">Deliverable: Continuous oversight log + escalation record</div>
-    </div>
-    <div class="timeline-step">
-      <div class="step-phase">Phase 03</div>
-      <div class="step-num">03</div>
-      <h3>Verified Convergence &amp; Ongoing Oversight</h3>
-      <p>Once integration stabilizes, the framework confirms behavioral consistency across the combined system. The oversight record accumulated through integration is available for regulatory submission, insurance review, or legal proceedings at any point.</p>
-      <div class="step-deliverable">Deliverable: Verified convergence certificate + full oversight archive</div>
-    </div>
-  </div>
-</section>
-
-<!-- OUTCOMES -->
-<section id="outcomes">
-  <div class="section-label">04 — What You Get</div>
-  <h2 class="section-title">Concrete deliverables.<br><em>Not advisory memos.</em></h2>
-  <p class="section-intro">
-    Every engagement produces documented outputs — records that exist independently of the engagement team and remain available to regulators, insurers, and counsel after the transaction closes.
-  </p>
-
-  <div class="outcomes-layout">
-    <div class="outcomes-left">
-      <div class="outcome-row">
-        <div class="outcome-check">✓</div>
-        <div class="outcome-content">
-          <h4>Pre-Close Behavioral Baseline</h4>
-          <p>A documented record of how the target AI system behaves before integration begins — the foundation for defensible post-close oversight.</p>
-        </div>
+    <div class="risk-grid">
+      <div class="risk-card reveal">
+        <p class="risk-number">01 &nbsp;/&nbsp; SYSTEMIC CASCADES</p>
+        <h3 class="risk-title">AI failure propagates across interconnected systems</h3>
+        <p class="risk-desc">An autonomous agent operating outside defined boundaries doesn't produce a contained error. It produces a chain of downstream state changes across every system it touches — often before any human observer can intervene.</p>
       </div>
-      <div class="outcome-row">
-        <div class="outcome-check">✓</div>
-        <div class="outcome-content">
-          <h4>Integration Risk Profile</h4>
-          <p>A structured assessment of how the target system may behave once connected to the acquirer's infrastructure — produced before systems connect.</p>
-        </div>
+      <div class="risk-card reveal">
+        <p class="risk-number">02 &nbsp;/&nbsp; AUDIT BLIND SPOTS</p>
+        <h3 class="risk-title">Existing audit trails were not built for autonomous action</h3>
+        <p class="risk-desc">Traditional logging captures what happened. It cannot establish that a deterministic, human-authorized decision preceded each consequential AI action. That gap is a material liability under emerging regulatory frameworks.</p>
       </div>
-      <div class="outcome-row">
-        <div class="outcome-check">✓</div>
-        <div class="outcome-content">
-          <h4>Continuous Oversight Log</h4>
-          <p>A timestamped, immutable record of every evaluation decision and human authorization across the integration lifecycle — available on demand to regulators and insurers.</p>
-        </div>
-      </div>
-      <div class="outcome-row">
-        <div class="outcome-check">✓</div>
-        <div class="outcome-content">
-          <h4>Regulatory Compliance Package</h4>
-          <p>Documentation formatted for EU AI Act Article 14 submission, R&W insurance review, and legal proceedings — generated continuously, not assembled retroactively.</p>
-        </div>
-      </div>
-      <div class="outcome-row">
-        <div class="outcome-check">✓</div>
-        <div class="outcome-content">
-          <h4>Verified Convergence Certificate</h4>
-          <p>Formal confirmation that the combined system has reached behavioral stability — a documented endpoint for integration closure and regulatory reporting.</p>
-        </div>
+      <div class="risk-card reveal">
+        <p class="risk-number">03 &nbsp;/&nbsp; REGULATORY EXPOSURE</p>
+        <h3 class="risk-title">The compliance window is closing faster than most organizations recognize</h3>
+        <p class="risk-desc">EU AI Act Article 14 human oversight requirements are operative. US federal AI governance guidance is accelerating. Organizations without verifiable supervisory architectures face both regulatory and M&A valuation risk.</p>
       </div>
     </div>
+  </section>
 
-    <div class="outcomes-right">
-      <h3>Regulatory Alignment</h3>
-      <p class="sub">The framework produces compliance documentation as an inherent output — not assembled after the fact.</p>
+  <div class="gold-rule"></div>
 
-      <div class="compliance-item">
-        <div class="ci-left">
-          <div class="ci-reg">EU AI Act — Art. 14</div>
-          <div class="ci-desc">Effective human oversight with traceable supervisory actions and documented intervention capability</div>
-        </div>
-        <div class="ci-status">Covered</div>
+  <!-- ── The Solution ──────────────────────────────────── -->
+  <div class="solution-wrap" id="solution">
+    <div class="solution-inner">
+      <div class="solution-left">
+        <p class="section-label reveal">The Architecture</p>
+        <h2 class="section-heading reveal">
+          A deterministic supervisory layer. Built before the risk became obvious.
+        </h2>
+        <p class="section-body reveal" style="margin-top:1.5rem;">
+          Regulator AI has developed a foundational governance architecture that enforces
+          human supervisory control at the protocol level — across heterogeneous AI systems,
+          integration boundaries, and regulated operational environments.
+        </p>
+        <p class="section-body reveal" style="margin-top:1.2rem;">
+          The full technical architecture, claims structure, and integration roadmap are
+          available exclusively under executed NDA to qualified counterparties.
+        </p>
+        <a href="#nda-inquiry" class="btn-primary reveal" style="margin-top:2.5rem; display:inline-block;">
+          Request the NDA Package
+        </a>
       </div>
-      <div class="compliance-item">
-        <div class="ci-left">
-          <div class="ci-reg">NIST AI RMF</div>
-          <div class="ci-desc">Govern, Map, Measure, Manage functions — continuous risk evaluation with documented human review</div>
+
+      <div class="solution-right">
+        <div class="solution-point reveal">
+          <span class="point-icon">→</span>
+          <p class="point-text"><strong>Commit-before-execution governance</strong> — no consequential AI action executes without a verified, human-authorized supervisory decision on record.</p>
         </div>
-        <div class="ci-status">Covered</div>
-      </div>
-      <div class="compliance-item">
-        <div class="ci-left">
-          <div class="ci-reg">ISO 42001</div>
-          <div class="ci-desc">AI management system requirements — documented oversight controls and organizational accountability</div>
+        <div class="solution-point reveal">
+          <span class="point-icon">→</span>
+          <p class="point-text"><strong>Cross-system enforcement</strong> — supervisory invariants that hold across integration boundaries, not just within a single application silo.</p>
         </div>
-        <div class="ci-status">Covered</div>
-      </div>
-      <div class="compliance-item">
-        <div class="ci-left">
-          <div class="ci-reg">SOC 2 / Audit Readiness</div>
-          <div class="ci-desc">Continuous supervisory log supports security and availability control documentation for audit</div>
+        <div class="solution-point reveal">
+          <span class="point-icon">→</span>
+          <p class="point-text"><strong>Immutable audit chain</strong> — cryptographically anchored records that satisfy both regulatory human-oversight requirements and M&A diligence standards.</p>
         </div>
-        <div class="ci-status">Covered</div>
-      </div>
-      <div class="compliance-item">
-        <div class="ci-left">
-          <div class="ci-reg">R&amp;W Insurance Review</div>
-          <div class="ci-desc">Pre-integration risk profile supports underwriter review for policies covering AI system behavior</div>
+        <div class="solution-point reveal">
+          <span class="point-icon">→</span>
+          <p class="point-text"><strong>Designed for acquisition</strong> — the architecture is structured for integration into enterprise stacks, defense platforms, and regulated infrastructure environments.</p>
         </div>
-        <div class="ci-status">Supported</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-label">05 — Contact</div>
-
-  <div class="contact-layout">
-    <div class="contact-left">
-      <h2>Request a briefing or licensing inquiry</h2>
-      <p>
-        We work with M&A advisory firms, private equity deal teams, enterprise integration leaders, legal counsel, and risk underwriters. Engagements begin with a 30-minute briefing scoped to your transaction or integration context.
+  <!-- ── NDA Inquiry ───────────────────────────────────── -->
+  <section class="nda-section" id="nda-inquiry">
+    <div class="nda-left">
+      <p class="section-label reveal">Qualified Inquiries</p>
+      <h2 class="section-heading reveal">
+        Further information is available under NDA.
+      </h2>
+      <p class="section-body reveal" style="margin-top:1.5rem;">
+        We are engaging with M&amp;A principals, strategic acquirers, insurance underwriters,
+        and regulatory counsel on a confidential basis. If you represent a qualified
+        counterparty, submit your inquiry and we will respond with the appropriate
+        non-disclosure agreement and evaluation package.
       </p>
-      <div class="contact-detail">
-        <div class="cd-row">
-          <span class="cd-label">Contact</span>
-          <span class="cd-value">Zachary Michael Akins, CEO</span>
-        </div>
-        <div class="cd-row">
-          <span class="cd-label">Company</span>
-          <span class="cd-value">Regulator AI Global, Inc.</span>
-        </div>
-        <div class="cd-row">
-          <span class="cd-label">Email</span>
-          <span class="cd-value"><a href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a></span>
-        </div>
-        <div class="cd-row">
-          <span class="cd-label">GitHub</span>
-          <span class="cd-value"><a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">zmichaelakins/ctp-spec</a></span>
-        </div>
-        <div class="cd-row">
-          <span class="cd-label">Status</span>
-          <span class="cd-value">22 U.S. Provisionals Filed &amp; Assigned to Regulator AI Global, Inc. — March 2026</span>
-        </div>
-      </div>
+      <p class="section-body reveal" style="margin-top:1.2rem; font-size:0.88rem; color: rgba(245,240,232,0.5);">
+        Unsolicited licensing proposals, vendor outreach, and non-qualified inquiries
+        will not receive a response.
+      </p>
     </div>
 
-    <div class="contact-right">
-      <div class="inquiry-card">
-        <div class="ic-type">M&amp;A / Deal Counsel</div>
-        <div class="ic-title">Transaction Evaluation Briefing</div>
-        <p class="ic-desc">30-minute call scoped to a specific acquisition or integration. We review the target system profile and outline an evaluation approach tied to your deal timeline.</p>
-      </div>
-      <div class="inquiry-card">
-        <div class="ic-type">Enterprise</div>
-        <div class="ic-title">Platform Integration Assessment</div>
-        <p class="ic-desc">Scoping session for organizations expanding AI-enabled platforms across business units or infrastructure environments. Covers automation depth, scale risk, and oversight continuity.</p>
-      </div>
-      <div class="inquiry-card">
-        <div class="ic-type">Licensing &amp; IP</div>
-        <div class="ic-title">Licensing Inquiry</div>
-        <p class="ic-desc">For organizations evaluating the framework technology for integration into existing diligence, governance, or risk management platforms. Licensing terms available on request.</p>
-      </div>
-      <div class="inquiry-card">
-        <div class="ic-type">Insurance &amp; Risk</div>
-        <div class="ic-title">Underwriter Risk Profile</div>
-        <p class="ic-desc">For R&W insurers and AI risk underwriters evaluating pre-integration risk profiling as part of policy issuance or claims assessment processes.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="nda-right reveal">
+      <form
+        onsubmit="handleInquiry(event)"
+        autocomplete="off"
+        data-email="zmichaelakins@gmail.com"
+      >
+        <label class="form-label" for="org">Organization</label>
+        <input class="form-input" type="text" id="org" name="org" placeholder="Entity name" required />
 
-<!-- CROSS-LINK -->
-<section style="background: var(--surface); border-top: 1px solid var(--border); padding: 48px;">
-  <div style="max-width: 720px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
-    <div>
-      <div class="section-label" style="margin-bottom: 8px;">Also in this portfolio</div>
-      <p style="font-family: 'Libre Baskerville', serif; font-size: 20px; font-weight: 700; margin-bottom: 8px;">Orbital &amp; Aerospace Embodiments</p>
-      <p style="font-size: 14px; color: var(--text-secondary); max-width: 480px;">The same deterministic oversight architecture applied to LEO constellations, autonomous spacecraft, deep space, and high-reliability aerospace platforms.</p>
-    </div>
-    <a href="https://regulator.life" target="_blank" class="btn-secondary" style="white-space: nowrap;">View Orbital Division →</a>
-  </div>
-</section>
+        <label class="form-label" for="name">Contact Name</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="Full name" required />
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-left">
-    © 2026 Regulator AI Global, Inc. · Highland Village, TX · Patent Pending · 22 U.S. Provisionals Filed &amp; Assigned
-  </div>
-  <div class="footer-right">
-    <a href="https://github.com/zmichaelakins/ctp-spec" target="_blank">GitHub</a>
-    <a href="https://regulator.life" target="_blank">Orbital Division</a>
-    <a href="mailto:zmichaelakins@gmail.com">Contact</a>
-  </div>
-</footer>
+        <label class="form-label" for="email">Business Email</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="you@organization.com" required />
+
+        <label class="form-label" for="role">Counterparty Type</label>
+        <select class="form-select" id="role" name="role" required>
+          <option value="" disabled selected>Select classification</option>
+          <option>Strategic Acquirer / M&amp;A Principal</option>
+          <option>Private Equity / Investment Firm</option>
+          <option>Insurance Underwriter / Risk Advisor</option>
+          <option>Defense / Government Prime</option>
+          <option>Regulatory Counsel / Legal</option>
+          <option>IP Broker / Intermediary</option>
+          <option>Other Qualified Party</option>
+        </select>
+
+        <label class="form-label" for="message">Brief Context (optional)</label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="Nature of your interest or mandate"></textarea>
+
+        <button type="submit" class="form-submit">Submit Inquiry</button>
+
+        <p class="form-note">
+          Submission does not constitute an offer or obligation.<br/>
+          All communications are held in strict confidence pending NDA execution.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <div class="gold-rule"></div>
+
+  <!-- ── Footer ────────────────────────────────────────── -->
+  <footer>
+    <span class="footer-logo">Regulator AI Global, Inc.</span>
+    <div class="footer-right">
+      <span>Highland Village, TX &nbsp;·&nbsp; Delaware C-Corp</span><br/>
+      <span>regulator-ai.com &nbsp;·&nbsp; regulator.life</span><br/>
+      <span style="color: rgba(245,240,232,0.25);">© 2026 Regulator AI Global, Inc. All rights reserved. Patent pending.</span>
+    </div>
+  </footer>
+
+  <script>
+    // ── Scroll reveal ──────────────────────────────────
+    document.documentElement.classList.add('js-ready');
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Form handler ───────────────────────────────────
+    async function handleInquiry(e) {
+      e.preventDefault();
+      const form  = e.target;
+      const btn   = form.querySelector('.form-submit');
+      const role  = document.getElementById('role').value;
+
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      // GA4 event tracking
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'nda_inquiry_submitted', {
+          event_category: 'engagement',
+          event_label: role,
+          value: 1
+        });
+      }
+
+      try {
+        const payload = {
+          _to:         'zmichaelakins@gmail.com',
+          _subject:    'Regulator AI — NDA Inquiry: ' + document.getElementById('org').value,
+          organization: document.getElementById('org').value,
+          contact:      document.getElementById('name').value,
+          email:        document.getElementById('email').value,
+          type:         role,
+          message:      document.getElementById('message').value || '(none)'
+        };
+
+        const res = await fetch('https://formspree.io/f/zmichaelakins@gmail.com', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body:    JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          btn.textContent = 'Inquiry Received';
+          btn.style.background = '#1e3a1e';
+          btn.style.color = '#7ec87e';
+        } else {
+          throw new Error('non-200');
+        }
+      } catch {
+        // Fallback: open mail client with pre-filled body
+        const org  = document.getElementById('org').value;
+        const name = document.getElementById('name').value;
+        const em   = document.getElementById('email').value;
+        const msg  = document.getElementById('message').value;
+        const body = encodeURIComponent(
+          `Organization: ${org}\nContact: ${name}\nEmail: ${em}\nType: ${role}\n\n${msg}`
+        );
+        window.location.href =
+          `mailto:zmichaelakins@gmail.com?subject=Regulator%20AI%20%E2%80%94%20NDA%20Inquiry%3A%20${encodeURIComponent(org)}&body=${body}`;
+        btn.textContent = 'Opening Email Client…';
+        btn.style.background = '#2a3a4a';
+        btn.style.color = '#aac4e0';
+      }
+    }
+  </script>
 
 </body>
 </html>
