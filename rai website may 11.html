@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regulator AI Global — AI Governance & Containment</title>
+  <meta name="description" content="Uncontrolled AI doesn't just fail — it cascades across interconnected systems. Regulator AI has the solution. Details available under NDA." />
+
+  <!-- ═══════════════════════════════════════════════════
+       GOOGLE ANALYTICS 4
+       Replace G-XXXXXXXXXX with your Measurement ID
+       ═══════════════════════════════════════════════════ -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Design tokens ─────────────────────────────────── */
+    :root {
+      --navy:       #0a0e1a;
+      --navy-mid:   #0f1525;
+      --navy-light: #151d35;
+      --gold:       #c9973a;
+      --gold-dim:   #8a6626;
+      --gold-pale:  rgba(201,151,58,0.12);
+      --off-white:  #f5f0e8;
+      --muted:      rgba(245,240,232,0.45);
+      --rule:       rgba(201,151,58,0.25);
+    }
+
+    /* ── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--off-white);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise texture overlay ─────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── Navigation ────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--off-white); }
+
+    .nav-cta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 0.55rem 1.3rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: #daa94a; transform: translateY(-1px); }
+
+    /* ── Hero ──────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10rem 4rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Radial gold pulse behind headline */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 38%;
+      left: -10%;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(ellipse at center, rgba(201,151,58,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      animation: pulse 8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.06); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    .hero-headline {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2.4rem, 5.5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 820px;
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-headline .accent {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-subhead {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      font-weight: 300;
+      line-height: 1.75;
+      max-width: 620px;
+      color: rgba(245,240,232,0.8);
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-subhead strong {
+      color: var(--off-white);
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 1rem 2.4rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 0 0 rgba(201,151,58,0);
+    }
+    .btn-primary:hover {
+      background: #daa94a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(201,151,58,0.25);
+    }
+
+    .btn-ghost {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 1rem 2.4rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--off-white); }
+
+    .hero-nda-note {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-top: 1.8rem;
+    }
+
+    /* ── Divider ───────────────────────────────────────── */
+    .gold-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--rule);
+      margin: 0;
+    }
+
+    /* ── Risk Section ──────────────────────────────────── */
+    .section {
+      padding: 7rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.6rem;
+    }
+
+    .section-heading {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.7rem, 3.2vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      max-width: 700px;
+      margin-bottom: 2rem;
+    }
+
+    .section-body {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: rgba(245,240,232,0.82);
+      max-width: 680px;
+    }
+    .section-body + .section-body { margin-top: 1.2rem; }
+
+    /* ── Three-column risk cards ───────────────────────── */
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      margin-top: 4rem;
+      background: var(--rule);
+    }
+
+    .risk-card {
+      background: var(--navy-mid);
+      padding: 2.8rem 2.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .risk-card:hover { background: var(--navy-light); }
+
+    .risk-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--gold);
+      transition: height 0.4s ease;
+    }
+    .risk-card:hover::before { height: 100%; }
+
+    .risk-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-dim);
+      margin-bottom: 1.2rem;
+    }
+
+    .risk-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 1rem;
+      color: var(--off-white);
+    }
+
+    .risk-desc {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: rgba(245,240,232,0.65);
+    }
+
+    /* ── Solution section ──────────────────────────────── */
+    .solution-wrap {
+      background: var(--navy-mid);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 7rem 4rem;
+    }
+
+    .solution-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .solution-left .section-heading { max-width: 100%; }
+
+    .solution-right { padding-top: 0.5rem; }
+
+    .solution-point {
+      display: flex;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(201,151,58,0.1);
+    }
+    .solution-point:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .point-icon {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-top: 0.15rem;
+      min-width: 28px;
+    }
+
+    .point-text {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(245,240,232,0.78);
+    }
+    .point-text strong { color: var(--off-white); font-weight: 500; }
+
+    /* ── NDA inquiry panel ─────────────────────────────── */
+    .nda-section {
+      padding: 7rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .nda-left { }
+
+    .nda-right {
+      background: var(--navy-light);
+      border: 1px solid var(--rule);
+      padding: 3rem;
+    }
+
+    .form-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: rgba(10,14,26,0.6);
+      border: 1px solid rgba(201,151,58,0.25);
+      color: var(--off-white);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.5rem;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus { border-color: var(--gold); }
+
+    .form-textarea { min-height: 100px; resize: vertical; }
+
+    .form-select option { background: var(--navy); }
+
+    .form-submit {
+      width: 100%;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      border: none;
+      padding: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .form-submit:hover { background: #daa94a; transform: translateY(-1px); }
+
+    .form-note {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ── Footer ────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .footer-right {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.8;
+    }
+
+    /* ── Animations ────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .js-ready .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .js-ready .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Responsive ────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .hero { padding: 8rem 2rem 5rem; }
+      .section { padding: 5rem 2rem; }
+      .solution-wrap { padding: 5rem 2rem; }
+      .solution-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .nda-section { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 2rem; }
+      footer { padding: 2.5rem 2rem; flex-direction: column; align-items: flex-start; }
+      .nav-right .nav-link { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ───────────────────────────────────── -->
+  <nav>
+    <a href="#" class="nav-logo">Regulator AI Global</a>
+    <div class="nav-right">
+      <a href="#risk" class="nav-link">The Risk</a>
+      <a href="#solution" class="nav-link">The Solution</a>
+      <a href="#nda-inquiry" class="nav-cta">Request NDA Package</a>
+    </div>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <section class="hero">
+    <p class="hero-eyebrow">AI Governance · Control · Risk Management</p>
+
+    <h1 class="hero-headline">
+      Out-of-control AI can<br/>
+      <span class="accent">destroy your business.</span><br/>
+      The risk isn't just the AI —<br/>
+      it's the combination of systems.
+    </h1>
+
+    <p class="hero-subhead">
+      When AI operates across interconnected infrastructure, a single uncontrolled
+      interaction doesn't stay local. It cascades. <strong>We have built the solution.</strong>
+      The details are available under NDA.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#nda-inquiry" class="btn-primary">Request NDA Package</a>
+      <a href="#risk" class="btn-ghost">Understand the Risk</a>
+    </div>
+
+    <p class="hero-nda-note">
+      ⬡ &nbsp;Proprietary architecture. Full technical disclosure under executed NDA only.
+    </p>
+  </section>
+
+  <div class="gold-rule"></div>
+
+  <!-- ── The Risk ──────────────────────────────────────── -->
+  <section class="section" id="risk">
+    <p class="section-label reveal">The Exposure</p>
+    <h2 class="section-heading reveal">
+      The threat surface is not one AI system.<br/>
+      It is every system that AI touches.
+    </h2>
+    <p class="section-body reveal">
+      Enterprise AI doesn't operate in isolation. It integrates with ERP stacks, financial platforms,
+      operational technology, supply chains, and regulated data environments. The governance frameworks
+      protecting those systems were not designed for autonomous agents operating at machine speed.
+    </p>
+    <p class="section-body reveal">
+      The result is a new class of systemic risk — one that existing compliance, audit, and
+      security frameworks cannot adequately address. Regulators are beginning to move. The window
+      for proactive positioning is narrow.
+    </p>
+
+    <div class="risk-grid">
+      <div class="risk-card reveal">
+        <p class="risk-number">01 &nbsp;/&nbsp; SYSTEMIC CASCADES</p>
+        <h3 class="risk-title">AI failure propagates across interconnected systems</h3>
+        <p class="risk-desc">An autonomous agent operating outside defined boundaries doesn't produce a contained error. It produces a chain of downstream state changes across every system it touches — often before any human observer can intervene.</p>
+      </div>
+      <div class="risk-card reveal">
+        <p class="risk-number">02 &nbsp;/&nbsp; AUDIT BLIND SPOTS</p>
+        <h3 class="risk-title">Existing audit trails were not built for autonomous action</h3>
+        <p class="risk-desc">Traditional logging captures what happened. It cannot establish that a deterministic, human-authorized decision preceded each consequential AI action. That gap is a material liability under emerging regulatory frameworks.</p>
+      </div>
+      <div class="risk-card reveal">
+        <p class="risk-number">03 &nbsp;/&nbsp; REGULATORY EXPOSURE</p>
+        <h3 class="risk-title">The compliance window is closing faster than most organizations recognize</h3>
+        <p class="risk-desc">EU AI Act Article 14 human oversight requirements are operative. US federal AI governance guidance is accelerating. Organizations without verifiable supervisory architectures face both regulatory and M&A valuation risk.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="gold-rule"></div>
+
+  <!-- ── The Solution ──────────────────────────────────── -->
+  <div class="solution-wrap" id="solution">
+    <div class="solution-inner">
+      <div class="solution-left">
+        <p class="section-label reveal">The Architecture</p>
+        <h2 class="section-heading reveal">
+          A deterministic supervisory layer. Built before the risk became obvious.
+        </h2>
+        <p class="section-body reveal" style="margin-top:1.5rem;">
+          Regulator AI has developed a foundational governance architecture that enforces
+          human supervisory control at the protocol level — across heterogeneous AI systems,
+          integration boundaries, and regulated operational environments.
+        </p>
+        <p class="section-body reveal" style="margin-top:1.2rem;">
+          The full technical architecture, claims structure, and integration roadmap are
+          available exclusively under executed NDA to qualified counterparties.
+        </p>
+        <a href="#nda-inquiry" class="btn-primary reveal" style="margin-top:2.5rem; display:inline-block;">
+          Request the NDA Package
+        </a>
+      </div>
+
+      <div class="solution-right">
+        <div class="solution-point reveal">
+          <span class="point-icon">→</span>
+          <p class="point-text"><strong>Commit-before-execution governance</strong> — no consequential AI action executes without a verified, human-authorized supervisory decision on record.</p>
+        </div>
+        <div class="solution-point reveal">
+          <span class="point-icon">→</span>
+          <p class="point-text"><strong>Cross-system enforcement</strong> — supervisory invariants that hold across integration boundaries, not just within a single application silo.</p>
+        </div>
+        <div class="solution-point reveal">
+          <span class="point-icon">→</span>
+          <p class="point-text"><strong>Immutable audit chain</strong> — cryptographically anchored records that satisfy both regulatory human-oversight requirements and M&A diligence standards.</p>
+        </div>
+        <div class="solution-point reveal">
+          <span class="point-icon">→</span>
+          <p class="point-text"><strong>Designed for acquisition</strong> — the architecture is structured for integration into enterprise stacks, defense platforms, and regulated infrastructure environments.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NDA Inquiry ───────────────────────────────────── -->
+  <section class="nda-section" id="nda-inquiry">
+    <div class="nda-left">
+      <p class="section-label reveal">Qualified Inquiries</p>
+      <h2 class="section-heading reveal">
+        Further information is available under NDA.
+      </h2>
+      <p class="section-body reveal" style="margin-top:1.5rem;">
+        We are engaging with M&amp;A principals, strategic acquirers, insurance underwriters,
+        and regulatory counsel on a confidential basis. If you represent a qualified
+        counterparty, submit your inquiry and we will respond with the appropriate
+        non-disclosure agreement and evaluation package.
+      </p>
+      <p class="section-body reveal" style="margin-top:1.2rem; font-size:0.88rem; color: rgba(245,240,232,0.5);">
+        Unsolicited licensing proposals, vendor outreach, and non-qualified inquiries
+        will not receive a response.
+      </p>
+    </div>
+
+    <div class="nda-right reveal">
+      <form
+        onsubmit="handleInquiry(event)"
+        autocomplete="off"
+        data-email="zmichaelakins@gmail.com"
+      >
+        <label class="form-label" for="org">Organization</label>
+        <input class="form-input" type="text" id="org" name="org" placeholder="Entity name" required />
+
+        <label class="form-label" for="name">Contact Name</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="Full name" required />
+
+        <label class="form-label" for="email">Business Email</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="you@organization.com" required />
+
+        <label class="form-label" for="role">Counterparty Type</label>
+        <select class="form-select" id="role" name="role" required>
+          <option value="" disabled selected>Select classification</option>
+          <option>Strategic Acquirer / M&amp;A Principal</option>
+          <option>Private Equity / Investment Firm</option>
+          <option>Insurance Underwriter / Risk Advisor</option>
+          <option>Defense / Government Prime</option>
+          <option>Regulatory Counsel / Legal</option>
+          <option>IP Broker / Intermediary</option>
+          <option>Other Qualified Party</option>
+        </select>
+
+        <label class="form-label" for="message">Brief Context (optional)</label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="Nature of your interest or mandate"></textarea>
+
+        <button type="submit" class="form-submit">Submit Inquiry</button>
+
+        <p class="form-note">
+          Submission does not constitute an offer or obligation.<br/>
+          All communications are held in strict confidence pending NDA execution.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <div class="gold-rule"></div>
+
+  <!-- ── Footer ────────────────────────────────────────── -->
+  <footer>
+    <span class="footer-logo">Regulator AI Global, Inc.</span>
+    <div class="footer-right">
+      <span>Highland Village, TX &nbsp;·&nbsp; Delaware C-Corp</span><br/>
+      <span>regulator-ai.com &nbsp;·&nbsp; regulator.life</span><br/>
+      <span style="color: rgba(245,240,232,0.25);">© 2026 Regulator AI Global, Inc. All rights reserved. Patent pending.</span>
+    </div>
+  </footer>
+
+  <script>
+    // ── Scroll reveal ──────────────────────────────────
+    document.documentElement.classList.add('js-ready');
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Form handler ───────────────────────────────────
+    async function handleInquiry(e) {
+      e.preventDefault();
+      const form  = e.target;
+      const btn   = form.querySelector('.form-submit');
+      const role  = document.getElementById('role').value;
+
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      // GA4 event tracking
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'nda_inquiry_submitted', {
+          event_category: 'engagement',
+          event_label: role,
+          value: 1
+        });
+      }
+
+      try {
+        const payload = {
+          _to:         'zmichaelakins@gmail.com',
+          _subject:    'Regulator AI — NDA Inquiry: ' + document.getElementById('org').value,
+          organization: document.getElementById('org').value,
+          contact:      document.getElementById('name').value,
+          email:        document.getElementById('email').value,
+          type:         role,
+          message:      document.getElementById('message').value || '(none)'
+        };
+
+        const res = await fetch('https://formspree.io/f/zmichaelakins@gmail.com', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body:    JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          btn.textContent = 'Inquiry Received';
+          btn.style.background = '#1e3a1e';
+          btn.style.color = '#7ec87e';
+        } else {
+          throw new Error('non-200');
+        }
+      } catch {
+        // Fallback: open mail client with pre-filled body
+        const org  = document.getElementById('org').value;
+        const name = document.getElementById('name').value;
+        const em   = document.getElementById('email').value;
+        const msg  = document.getElementById('message').value;
+        const body = encodeURIComponent(
+          `Organization: ${org}\nContact: ${name}\nEmail: ${em}\nType: ${role}\n\n${msg}`
+        );
+        window.location.href =
+          `mailto:zmichaelakins@gmail.com?subject=Regulator%20AI%20%E2%80%94%20NDA%20Inquiry%3A%20${encodeURIComponent(org)}&body=${body}`;
+        btn.textContent = 'Opening Email Client…';
+        btn.style.background = '#2a3a4a';
+        btn.style.color = '#aac4e0';
+      }
+    }
+  </script>
+
+</body>
+</html>
