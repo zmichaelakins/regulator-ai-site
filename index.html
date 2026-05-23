@@ -796,7 +796,7 @@ function downloadBrief() {
   var bin = atob(b64);
   var buf = new Uint8Array(bin.length);
   for (var i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
-  var blob = new Blob([buf], {type: 'application/pdf'});
+  var blob = new Blob([buf], {type: 'application/octet-stream'});
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.href = url;
