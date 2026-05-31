@@ -1,769 +1,1242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Regulator AI Global — AI Governance & Containment</title>
-  <meta name="description" content="Uncontrolled AI doesn't just fail — it cascades across interconnected systems. Regulator AI has the solution. Details available under NDA." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regulator AI Global — AI Governance &amp; Containment</title>
+<meta name="description" content="AI hallucinations are collapsing M&amp;A valuations, stalling deployments, and creating uninsurable liabilities. Regulator AI Global owns the electrical code for AI. 33 provisional patents. Details under NDA.">
+<meta property="og:title" content="Regulator AI Global — The Electrical Code for AI">
+<meta property="og:description" content="AI hallucinations are making M&amp;A impossible. Regulator AI Global has the solution. 33 provisional patents filed. $150M opening valuation. Details under NDA.">
+<meta property="og:url" content="https://regulator-ai.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Regulator AI Global — The Electrical Code for AI">
+<meta name="twitter:description" content="AI hallucinations are making M&amp;A impossible. 33 provisional patents. Details under NDA.">
 
-  <!-- ═══════════════════════════════════════════════════
-       GOOGLE ANALYTICS 4
-       Replace G-XXXXXXXXXX with your Measurement ID
-       ═══════════════════════════════════════════════════ -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-535645632"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-535645632');
-  </script>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-535645632"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-535645632');
+</script>
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    /* ── Design tokens ─────────────────────────────────── */
-    :root {
-      --navy:       #0a0e1a;
-      --navy-mid:   #0f1525;
-      --navy-light: #151d35;
-      --gold:       #c9973a;
-      --gold-dim:   #8a6626;
-      --gold-pale:  rgba(201,151,58,0.12);
-      --off-white:  #f5f0e8;
-      --muted:      rgba(245,240,232,0.45);
-      --rule:       rgba(201,151,58,0.25);
-    }
+<style>
+  :root {
+    --navy:       #0a0e1a;
+    --navy-mid:   #0f1525;
+    --navy-light: #151d35;
+    --gold:       #c9973a;
+    --gold-dim:   #8a6626;
+    --gold-pale:  rgba(201,151,58,0.10);
+    --off-white:  #f5f0e8;
+    --muted:      rgba(245,240,232,0.45);
+    --rule:       rgba(201,151,58,0.22);
+  }
 
-    /* ── Reset ─────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
 
-    body {
-      background: var(--navy);
-      color: var(--off-white);
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-weight: 300;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
+  body {
+    background: var(--navy);
+    color: var(--off-white);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
 
-    /* ── Noise texture overlay ─────────────────────────── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
-    }
+  /* Noise texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
 
-    /* ── Navigation ────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.4rem 4rem;
-      background: rgba(10,14,26,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--rule);
-    }
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 4rem;
+    background: rgba(10,14,26,0.93);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .nav-right { display: flex; align-items: center; gap: 2.5rem; }
+  .nav-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--off-white); }
+  .nav-cta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--gold);
+    padding: 0.55rem 1.3rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: #daa94a; transform: translateY(-1px); }
 
-    .nav-logo {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      color: var(--gold);
-      text-transform: uppercase;
-      text-decoration: none;
-    }
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10rem 4rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 30%; left: -10%;
+    width: 75vw; height: 75vw;
+    background: radial-gradient(ellipse at center, rgba(201,151,58,0.055) 0%, transparent 68%);
+    pointer-events: none;
+    animation: pulse 9s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50%       { opacity: 1;   transform: scale(1.07); }
+  }
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+  .hero-headline {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(2.2rem, 5vw, 4.6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 900px;
+    margin-bottom: 2.2rem;
+  }
+  .hero-headline .accent { color: var(--gold); font-style: italic; }
+  .hero-subhead {
+    font-size: clamp(1rem, 1.5vw, 1.18rem);
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 640px;
+    color: rgba(245,240,232,0.8);
+    margin-bottom: 3.5rem;
+  }
+  .hero-subhead strong { color: var(--off-white); font-weight: 500; }
+  .hero-actions { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--gold);
+    padding: 1rem 2.4rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { background: #daa94a; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,151,58,0.25); }
+  .btn-ghost {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 1rem 2.4rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--off-white); }
+  .hero-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-top: 1.8rem;
+  }
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-    }
+  /* ── Stat bar ── */
+  .stat-bar {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+  .stat-item {
+    flex: 1;
+    max-width: 280px;
+    padding: 2.2rem 2rem;
+    text-align: center;
+    border-right: 1px solid var(--rule);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
 
-    .nav-link {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-link:hover { color: var(--off-white); }
+  /* ── Shared section styles ── */
+  .gold-rule { width: 100%; height: 1px; background: var(--rule); }
+  .section { padding: 7rem 4rem; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.6rem;
+  }
+  .section-heading {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(1.7rem, 3vw, 2.7rem);
+    font-weight: 700;
+    line-height: 1.2;
+    max-width: 760px;
+    margin-bottom: 2rem;
+  }
+  .section-body {
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: rgba(245,240,232,0.82);
+    max-width: 700px;
+  }
 
-    .nav-cta {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--navy);
-      background: var(--gold);
-      padding: 0.55rem 1.3rem;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .nav-cta:hover { background: #daa94a; transform: translateY(-1px); }
+  /* ── Hallucination / M&A Risk section ── */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+    margin-top: 4rem;
+    background: var(--rule);
+  }
+  .risk-card {
+    background: var(--navy-mid);
+    padding: 2.8rem 2.2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .risk-card:hover { background: var(--navy-light); }
+  .risk-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--gold);
+    transition: height 0.4s ease;
+  }
+  .risk-card:hover::before { height: 100%; }
+  .risk-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    margin-bottom: 1.2rem;
+  }
+  .risk-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.12rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 1rem;
+  }
+  .risk-desc { font-size: 0.9rem; line-height: 1.78; color: rgba(245,240,232,0.65); }
 
-    /* ── Hero ──────────────────────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 10rem 4rem 6rem;
-      position: relative;
-      overflow: hidden;
-    }
+  /* ── Solution section ── */
+  .solution-wrap {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 7rem 4rem;
+  }
+  .solution-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .solution-point {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(201,151,58,0.1);
+  }
+  .solution-point:last-child { border-bottom: none; margin-bottom: 0; }
+  .point-icon {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    min-width: 28px;
+    margin-top: 0.18rem;
+  }
+  .point-text { font-size: 0.95rem; line-height: 1.75; color: rgba(245,240,232,0.78); }
+  .point-text strong { color: var(--off-white); font-weight: 500; }
 
-    /* Radial gold pulse behind headline */
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 38%;
-      left: -10%;
-      width: 70vw;
-      height: 70vw;
-      background: radial-gradient(ellipse at center, rgba(201,151,58,0.06) 0%, transparent 70%);
-      pointer-events: none;
-      animation: pulse 8s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50%       { opacity: 1;   transform: scale(1.06); }
-    }
+  /* ── Applications grid ── */
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5px;
+    margin-top: 4rem;
+    background: var(--rule);
+  }
+  .app-card {
+    background: var(--navy-mid);
+    padding: 2.4rem 2rem;
+    transition: background 0.3s;
+  }
+  .app-card:hover { background: var(--navy-light); }
+  .app-sector {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.9rem;
+  }
+  .app-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+  .app-desc { font-size: 0.88rem; line-height: 1.72; color: rgba(245,240,232,0.62); }
 
-    .hero-eyebrow {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2rem;
-    }
+  /* ── Differentiation table ── */
+  .diff-wrap {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 7rem 4rem;
+  }
+  .diff-inner { max-width: 1000px; margin: 0 auto; }
+  .diff-table { width: 100%; border-collapse: collapse; margin-top: 3rem; }
+  .diff-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: left;
+    padding: 0.9rem 1.2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .diff-table td {
+    font-size: 0.9rem;
+    padding: 1.1rem 1.2rem;
+    border-bottom: 1px solid rgba(201,151,58,0.08);
+    color: rgba(245,240,232,0.78);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .diff-table tr:last-child td { border-bottom: none; }
+  .diff-table tr.highlight td { color: var(--off-white); background: rgba(201,151,58,0.05); }
+  .diff-table td:first-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--gold);
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .diff-table tr.highlight td:first-child { color: var(--gold); }
 
-    .hero-headline {
-      font-family: 'Libre Baskerville', serif;
-      font-size: clamp(2.4rem, 5.5vw, 5rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      max-width: 820px;
-      margin-bottom: 2.2rem;
-    }
+  /* ── Valuation section ── */
+  .val-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--rule);
+    margin-top: 3.5rem;
+  }
+  .val-card {
+    background: var(--navy-mid);
+    padding: 2.6rem 2rem;
+    text-align: center;
+  }
+  .val-method {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 1rem;
+  }
+  .val-amount {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .val-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+  .val-convergence {
+    margin-top: 2.5rem;
+    background: rgba(201,151,58,0.06);
+    border: 1px solid var(--rule);
+    padding: 2rem 2.4rem;
+    text-align: center;
+  }
+  .val-convergence-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+  .val-convergence-number {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--off-white);
+  }
+  .val-convergence-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    line-height: 1.6;
+  }
 
-    .hero-headline .accent {
-      color: var(--gold);
-      font-style: italic;
-    }
+  /* ── Regulatory timeline ── */
+  .timeline {
+    margin-top: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 2px solid var(--rule);
+    padding-left: 2rem;
+    max-width: 700px;
+  }
+  .timeline-item { padding-bottom: 2.5rem; position: relative; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.56rem;
+    top: 0.35rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .timeline-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .timeline-event {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-desc { font-size: 0.88rem; color: rgba(245,240,232,0.62); line-height: 1.65; }
 
-    .hero-subhead {
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: clamp(1rem, 1.6vw, 1.2rem);
-      font-weight: 300;
-      line-height: 1.75;
-      max-width: 620px;
-      color: rgba(245,240,232,0.8);
-      margin-bottom: 3.5rem;
-    }
+  /* ── PDF showcase ── */
+  .pdf-wrap {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 7rem 4rem;
+  }
+  .pdf-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .pdf-facsimile {
+    background: #f8f4ed;
+    color: #1a1a1a;
+    padding: 2.8rem 2.4rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    position: relative;
+    border-top: 4px solid var(--gold);
+  }
+  .pdf-fac-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #8a6626;
+    margin-bottom: 0.8rem;
+  }
+  .pdf-fac-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0a0e1a;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+  .pdf-fac-subtitle {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+    color: #444;
+    margin-bottom: 1.4rem;
+    line-height: 1.5;
+  }
+  .pdf-fac-rule { height: 1px; background: rgba(201,151,58,0.35); margin-bottom: 1.4rem; }
+  .pdf-fac-body {
+    font-size: 0.82rem;
+    line-height: 1.72;
+    color: #2a2a2a;
+  }
+  .pdf-fac-body p { margin-bottom: 0.9rem; }
+  .pdf-fac-authors {
+    margin-top: 1.4rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: #555;
+    line-height: 1.8;
+  }
+  .pdf-fac-watermark {
+    position: absolute;
+    bottom: 1rem; right: 1.2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    color: rgba(201,151,58,0.4);
+    text-transform: uppercase;
+  }
+  .pdf-right {}
+  .pdf-right .section-label { margin-bottom: 1.2rem; }
+  .pdf-right .section-heading { font-size: clamp(1.5rem, 2.5vw, 2.4rem); margin-bottom: 1.4rem; }
+  .pdf-right .section-body { margin-bottom: 2rem; }
+  .btn-download {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--gold);
+    padding: 1rem 2.2rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-download:hover { background: #daa94a; transform: translateY(-2px); }
+  .btn-download-icon { font-size: 1rem; }
 
-    .hero-subhead strong {
-      color: var(--off-white);
-      font-weight: 500;
-    }
+  /* ── Bruce Perens advisor ── */
+  .advisor-wrap {
+    padding: 5rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .advisor-card {
+    background: var(--navy-light);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--gold);
+    padding: 3rem 3.2rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2.8rem;
+    align-items: start;
+  }
+  .advisor-initial {
+    width: 72px; height: 72px;
+    background: var(--gold-pale);
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .advisor-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .advisor-name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .advisor-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--gold-dim);
+    margin-bottom: 1.2rem;
+  }
+  .advisor-bio { font-size: 0.95rem; line-height: 1.8; color: rgba(245,240,232,0.78); max-width: 680px; }
 
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
+  /* ── NDA Form ── */
+  .nda-section {
+    padding: 7rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .nda-right {
+    background: var(--navy-light);
+    border: 1px solid var(--rule);
+    padding: 3rem;
+  }
+  .form-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: rgba(10,14,26,0.6);
+    border: 1px solid rgba(201,151,58,0.25);
+    color: var(--off-white);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-textarea { min-height: 100px; resize: vertical; }
+  .form-select option { background: var(--navy); }
+  .form-submit {
+    width: 100%;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--gold);
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .form-submit:hover { background: #daa94a; transform: translateY(-1px); }
+  .form-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
 
-    .btn-primary {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--navy);
-      background: var(--gold);
-      padding: 1rem 2.4rem;
-      text-decoration: none;
-      display: inline-block;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 0 0 0 rgba(201,151,58,0);
-    }
-    .btn-primary:hover {
-      background: #daa94a;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(201,151,58,0.25);
-    }
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.8;
+  }
 
-    .btn-ghost {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid var(--gold-dim);
-      padding: 1rem 2.4rem;
-      text-decoration: none;
-      display: inline-block;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--off-white); }
+  /* ── Animations ── */
+  .reveal { opacity: 1; transform: none; transition: opacity 0.7s ease, transform 0.7s ease; }
+  .js-ready .reveal { opacity: 0; transform: translateY(20px); }
+  .js-ready .reveal.visible { opacity: 1; transform: none; }
 
-    .hero-nda-note {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      margin-top: 1.8rem;
-    }
-
-    /* ── Divider ───────────────────────────────────────── */
-    .gold-rule {
-      width: 100%;
-      height: 1px;
-      background: var(--rule);
-      margin: 0;
-    }
-
-    /* ── Risk Section ──────────────────────────────────── */
-    .section {
-      padding: 7rem 4rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.6rem;
-    }
-
-    .section-heading {
-      font-family: 'Libre Baskerville', serif;
-      font-size: clamp(1.7rem, 3.2vw, 2.8rem);
-      font-weight: 700;
-      line-height: 1.2;
-      max-width: 700px;
-      margin-bottom: 2rem;
-    }
-
-    .section-body {
-      font-size: 1.05rem;
-      line-height: 1.85;
-      color: rgba(245,240,232,0.82);
-      max-width: 680px;
-    }
-    .section-body + .section-body { margin-top: 1.2rem; }
-
-    /* ── Three-column risk cards ───────────────────────── */
-    .risk-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5px;
-      margin-top: 4rem;
-      background: var(--rule);
-    }
-
-    .risk-card {
-      background: var(--navy-mid);
-      padding: 2.8rem 2.2rem;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s;
-    }
-    .risk-card:hover { background: var(--navy-light); }
-
-    .risk-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 0;
-      background: var(--gold);
-      transition: height 0.4s ease;
-    }
-    .risk-card:hover::before { height: 100%; }
-
-    .risk-number {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: var(--gold-dim);
-      margin-bottom: 1.2rem;
-    }
-
-    .risk-title {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      line-height: 1.35;
-      margin-bottom: 1rem;
-      color: var(--off-white);
-    }
-
-    .risk-desc {
-      font-size: 0.9rem;
-      line-height: 1.75;
-      color: rgba(245,240,232,0.65);
-    }
-
-    /* ── Solution section ──────────────────────────────── */
-    .solution-wrap {
-      background: var(--navy-mid);
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      padding: 7rem 4rem;
-    }
-
-    .solution-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: start;
-    }
-
-    .solution-left .section-heading { max-width: 100%; }
-
-    .solution-right { padding-top: 0.5rem; }
-
-    .solution-point {
-      display: flex;
-      gap: 1.2rem;
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid rgba(201,151,58,0.1);
-    }
-    .solution-point:last-child { border-bottom: none; margin-bottom: 0; }
-
-    .point-icon {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--gold);
-      letter-spacing: 0.1em;
-      margin-top: 0.15rem;
-      min-width: 28px;
-    }
-
-    .point-text {
-      font-size: 0.95rem;
-      line-height: 1.75;
-      color: rgba(245,240,232,0.78);
-    }
-    .point-text strong { color: var(--off-white); font-weight: 500; }
-
-    /* ── NDA inquiry panel ─────────────────────────────── */
-    .nda-section {
-      padding: 7rem 4rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: start;
-    }
-
-    .nda-left { }
-
-    .nda-right {
-      background: var(--navy-light);
-      border: 1px solid var(--rule);
-      padding: 3rem;
-    }
-
-    .form-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .form-input, .form-select, .form-textarea {
-      width: 100%;
-      background: rgba(10,14,26,0.6);
-      border: 1px solid rgba(201,151,58,0.25);
-      color: var(--off-white);
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: 0.9rem;
-      padding: 0.85rem 1rem;
-      margin-bottom: 1.5rem;
-      outline: none;
-      transition: border-color 0.2s;
-      appearance: none;
-    }
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus { border-color: var(--gold); }
-
-    .form-textarea { min-height: 100px; resize: vertical; }
-
-    .form-select option { background: var(--navy); }
-
-    .form-submit {
-      width: 100%;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--navy);
-      background: var(--gold);
-      border: none;
-      padding: 1rem;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .form-submit:hover { background: #daa94a; transform: translateY(-1px); }
-
-    .form-note {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-top: 1rem;
-      line-height: 1.6;
-    }
-
-    /* ── Footer ────────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--rule);
-      padding: 3rem 4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer-logo {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
-
-    .footer-right {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      text-align: right;
-      line-height: 1.8;
-    }
-
-    /* ── Animations ────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .js-ready .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .js-ready .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ── Responsive ────────────────────────────────────── */
-    @media (max-width: 900px) {
-      nav { padding: 1.2rem 2rem; }
-      .hero { padding: 8rem 2rem 5rem; }
-      .section { padding: 5rem 2rem; }
-      .solution-wrap { padding: 5rem 2rem; }
-      .solution-inner { grid-template-columns: 1fr; gap: 3rem; }
-      .nda-section { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 2rem; }
-      footer { padding: 2.5rem 2rem; flex-direction: column; align-items: flex-start; }
-      .nav-right .nav-link { display: none; }
-    }
-  </style>
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .hero { padding: 8rem 2rem 5rem; }
+    .section { padding: 5rem 2rem; }
+    .solution-wrap, .diff-wrap, .pdf-wrap { padding: 5rem 2rem; }
+    .solution-inner, .pdf-inner, .nda-section { grid-template-columns: 1fr; gap: 3rem; }
+    .val-grid { grid-template-columns: 1fr; }
+    .advisor-card { grid-template-columns: 1fr; gap: 1.5rem; }
+    .advisor-initial { width: 52px; height: 52px; font-size: 1.4rem; }
+    footer { padding: 2.5rem 2rem; flex-direction: column; align-items: flex-start; }
+    .footer-right { text-align: left; }
+    .nav-right .nav-link { display: none; }
+    .stat-bar { flex-wrap: wrap; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--rule); max-width: 100%; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- ── Navigation ───────────────────────────────────── -->
-  <nav>
-    <a href="#" class="nav-logo">Regulator AI Global</a>
-    <div class="nav-right">
-      <a href="#risk" class="nav-link">The Risk</a>
-      <a href="#solution" class="nav-link">The Solution</a>
-      <a href="#nda-inquiry" class="nav-cta">Request NDA Package</a>
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-logo">Regulator AI Global</a>
+  <div class="nav-right">
+    <a href="#risk" class="nav-link">The Risk</a>
+    <a href="#solution" class="nav-link">The Solution</a>
+    <a href="#paper" class="nav-link">The Paper</a>
+    <a href="#nda-inquiry" class="nav-cta">Request NDA Package</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-eyebrow">AI Governance · Hallucination Containment · M&amp;A Risk</p>
+  <h1 class="hero-headline">
+    AI hallucinations. Cascading system failures.<br/>
+    Uninsurable liabilities. Quantum vulnerability.<br/>
+    Your shareholders are asking questions.<br/>
+    <span class="accent">Regulator AI Global built the infrastructure<br/>
+    to make safe AI possible.</span><br/>
+    The electrical code for AI.
+  </h1>
+  <p class="hero-subhead">
+    In interconnected enterprise systems, a single hallucinated valuation, a misinterpreted
+    regulatory signal, or a runaway AI loop doesn't stay local. It cascades —
+    collapsing M&amp;A transactions, triggering liability, and creating losses no insurer will cover.
+    <strong>Regulator AI Global owns the electrical code for AI.</strong>
+    The solution is available under NDA.
+  </p>
+  <div class="hero-actions">
+    <a href="#nda-inquiry" class="btn-primary">Request NDA Package</a>
+    <a href="#risk" class="btn-ghost">Understand the Risk</a>
+  </div>
+  <p class="hero-note">⬡ &nbsp;33 provisional patents filed. Full technical disclosure under executed NDA only.</p>
+</section>
+
+<!-- Stat bar -->
+<div class="stat-bar">
+  <div class="stat-item">
+    <div class="stat-number">33</div>
+    <div class="stat-label">Provisional Patents Filed</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">36+</div>
+    <div class="stat-label">Documented Embodiments</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">$150M</div>
+    <div class="stat-label">Opening Acquisition Valuation</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">Dec '27</div>
+    <div class="stat-label">EU AI Act Art. 14 Deadline</div>
+  </div>
+</div>
+
+<div class="gold-rule"></div>
+
+<!-- Risk Section -->
+<section class="section" id="risk">
+  <p class="section-label reveal">The Exposure</p>
+  <h2 class="section-heading reveal">
+    AI hallucinations are making M&amp;A impossible —<br/>and most boards don't know it yet.
+  </h2>
+  <p class="section-body reveal">
+    Due diligence was designed for static assets. AI systems are not static. A hallucinated
+    valuation, a misclassified regulatory exposure, or an autonomous trading loop operating
+    outside its intended bounds can detonate a transaction — during diligence, at close,
+    or eighteen months into integration. The liability doesn't disappear. It compounds.
+  </p>
+  <div class="risk-grid" style="margin-top:3.5rem;">
+    <div class="risk-card reveal">
+      <p class="risk-number">01 &nbsp;/&nbsp; HALLUCINATION CASCADE</p>
+      <h3 class="risk-title">One hallucinated input can collapse an entire transaction</h3>
+      <p class="risk-desc">Financial firms now use AI for valuations, portfolio analysis, and M&amp;A strategy. A single hallucinated figure — undetected — propagates through every downstream model it touches. By the time it surfaces, the damage is structural, not correctable.</p>
     </div>
-  </nav>
-
-  <!-- ── Hero ─────────────────────────────────────────── -->
-  <section class="hero">
-    <p class="hero-eyebrow">AI Governance · Control · Risk Management</p>
-
-    <h1 class="hero-headline">
-      Out-of-control AI can<br/>
-      <span class="accent">destroy your business.</span><br/>
-      The risk isn't just the AI —<br/>
-      it's the combination of systems.
-    </h1>
-
-    <p class="hero-subhead">
-      When AI operates across interconnected infrastructure, a single uncontrolled
-      interaction doesn't stay local. It cascades. <strong>We have built the solution.</strong>
-      The details are available under NDA.
-    </p>
-
-    <div class="hero-actions">
-      <a href="#nda-inquiry" class="btn-primary">Request NDA Package</a>
-      <a href="#risk" class="btn-ghost">Understand the Risk</a>
+    <div class="risk-card reveal">
+      <p class="risk-number">02 &nbsp;/&nbsp; GHOST ASSET LIABILITY</p>
+      <h3 class="risk-title">Hidden AI interactions create uninsurable, compounding losses</h3>
+      <p class="risk-desc">When multiple AI systems interact, they generate emergent failure modes no single system audit can detect. These "Ghost Assets" — unbounded, invisible liabilities — are already causing insurers to deny coverage and boards to halt deployments.</p>
     </div>
-
-    <p class="hero-nda-note">
-      ⬡ &nbsp;Proprietary architecture. Full technical disclosure under executed NDA only.
-    </p>
-  </section>
-
-  <div class="gold-rule"></div>
-
-  <!-- ── The Risk ──────────────────────────────────────── -->
-  <section class="section" id="risk">
-    <p class="section-label reveal">The Exposure</p>
-    <h2 class="section-heading reveal">
-      The threat surface is not one AI system.<br/>
-      It is every system that AI touches.
-    </h2>
-    <p class="section-body reveal">
-      Enterprise AI doesn't operate in isolation. It integrates with ERP stacks, financial platforms,
-      operational technology, supply chains, and regulated data environments. The governance frameworks
-      protecting those systems were not designed for autonomous agents operating at machine speed.
-    </p>
-    <p class="section-body reveal">
-      The result is a new class of systemic risk — one that existing compliance, audit, and
-      security frameworks cannot adequately address. Regulators are beginning to move. The window
-      for proactive positioning is narrow.
-    </p>
-
-    <div class="risk-grid">
-      <div class="risk-card reveal">
-        <p class="risk-number">01 &nbsp;/&nbsp; SYSTEMIC CASCADES</p>
-        <h3 class="risk-title">AI failure propagates across interconnected systems</h3>
-        <p class="risk-desc">An autonomous agent operating outside defined boundaries doesn't produce a contained error. It produces a chain of downstream state changes across every system it touches — often before any human observer can intervene.</p>
-      </div>
-      <div class="risk-card reveal">
-        <p class="risk-number">02 &nbsp;/&nbsp; AUDIT BLIND SPOTS</p>
-        <h3 class="risk-title">Existing audit trails were not built for autonomous action</h3>
-        <p class="risk-desc">Traditional logging captures what happened. It cannot establish that a deterministic, human-authorized decision preceded each consequential AI action. That gap is a material liability under emerging regulatory frameworks.</p>
-      </div>
-      <div class="risk-card reveal">
-        <p class="risk-number">03 &nbsp;/&nbsp; REGULATORY EXPOSURE</p>
-        <h3 class="risk-title">The compliance window is closing faster than most organizations recognize</h3>
-        <p class="risk-desc">EU AI Act Article 14 human oversight requirements are operative. US federal AI governance guidance is accelerating. Organizations without verifiable supervisory architectures face both regulatory and M&A valuation risk.</p>
-      </div>
+    <div class="risk-card reveal">
+      <p class="risk-number">03 &nbsp;/&nbsp; REGULATORY EXPOSURE</p>
+      <h3 class="risk-title">The compliance window is closing faster than most organizations recognize</h3>
+      <p class="risk-desc">EU AI Act Article 14 human oversight requirements are operative. US federal AI governance guidance is accelerating. Organizations without verifiable supervisory architectures face both regulatory exposure and M&amp;A valuation risk that cannot be papered over.</p>
     </div>
-  </section>
+    <div class="risk-card reveal">
+      <p class="risk-number">04 &nbsp;/&nbsp; ORBITAL &amp; INFRASTRUCTURE RISK</p>
+      <h3 class="risk-title">In aerospace and energy, AI hallucinations don't just cost money — they cost lives</h3>
+      <p class="risk-desc">Satellite constellations, autonomous aerospace systems, and AI-managed energy grids operate at machine speed. A single mistaken command — hallucinated or unauthorized — can trigger Kessler Syndrome, a grid failure, or a weapons systems incident with no human able to intervene in time.</p>
+    </div>
+  </div>
+</section>
 
-  <div class="gold-rule"></div>
+<div class="gold-rule"></div>
 
-  <!-- ── The Solution ──────────────────────────────────── -->
-  <div class="solution-wrap" id="solution">
-    <div class="solution-inner">
-      <div class="solution-left">
-        <p class="section-label reveal">The Architecture</p>
-        <h2 class="section-heading reveal">
-          A deterministic supervisory layer. Built before the risk became obvious.
-        </h2>
-        <p class="section-body reveal" style="margin-top:1.5rem;">
-          Regulator AI has developed a foundational governance architecture that enforces
-          human supervisory control at the protocol level — across heterogeneous AI systems,
-          integration boundaries, and regulated operational environments.
-        </p>
-        <p class="section-body reveal" style="margin-top:1.2rem;">
-          The full technical architecture, claims structure, and integration roadmap are
-          available exclusively under executed NDA to qualified counterparties.
-        </p>
-        <a href="#nda-inquiry" class="btn-primary reveal" style="margin-top:2.5rem; display:inline-block;">
-          Request the NDA Package
-        </a>
+<!-- Solution -->
+<div class="solution-wrap" id="solution">
+  <div class="solution-inner">
+    <div>
+      <p class="section-label reveal">The Architecture</p>
+      <h2 class="section-heading reveal">
+        The electrical code for AI — built before the risk became obvious.
+      </h2>
+      <p class="section-body reveal" style="margin-top:1.4rem;">
+        Regulator AI Global has developed a foundational governance architecture that enforces
+        human supervisory control at the protocol level — across heterogeneous AI systems,
+        integration boundaries, and regulated operational environments. No AI action executes
+        unless it is ordered, predicted safe, semantically valid, within controlled failure
+        bounds, and explicitly authorized.
+      </p>
+      <p class="section-body reveal" style="margin-top:1.2rem;">
+        The full technical architecture, 33-patent claims structure, and integration roadmap
+        are available exclusively under executed NDA to qualified counterparties.
+      </p>
+      <a href="#nda-inquiry" class="btn-primary reveal" style="margin-top:2.5rem; display:inline-block;">
+        Request the NDA Package
+      </a>
+    </div>
+    <div>
+      <div class="solution-point reveal">
+        <span class="point-icon">→</span>
+        <p class="point-text"><strong>The Flight Recorder</strong> — no AI action or governance decision moves forward until it is irrevocably written to a tamper-proof, write-once audit chain. Every critical AI process is replayable for regulators, insurers, and M&amp;A diligence teams.</p>
       </div>
-
-      <div class="solution-right">
-        <div class="solution-point reveal">
-          <span class="point-icon">→</span>
-          <p class="point-text"><strong>Commit-before-execution governance</strong> — no consequential AI action executes without a verified, human-authorized supervisory decision on record.</p>
-        </div>
-        <div class="solution-point reveal">
-          <span class="point-icon">→</span>
-          <p class="point-text"><strong>Cross-system enforcement</strong> — supervisory invariants that hold across integration boundaries, not just within a single application silo.</p>
-        </div>
-        <div class="solution-point reveal">
-          <span class="point-icon">→</span>
-          <p class="point-text"><strong>Immutable audit chain</strong> — cryptographically anchored records that satisfy both regulatory human-oversight requirements and M&A diligence standards.</p>
-        </div>
-        <div class="solution-point reveal">
-          <span class="point-icon">→</span>
-          <p class="point-text"><strong>Designed for acquisition</strong> — the architecture is structured for integration into enterprise stacks, defense platforms, and regulated infrastructure environments.</p>
-        </div>
+      <div class="solution-point reveal">
+        <span class="point-icon">→</span>
+        <p class="point-text"><strong>The Mistake Detector</strong> — characteristic hallucination patterns are identified and intercepted in real time. The architecture safely restarts or gracefully halts the process before small errors become catastrophic failures.</p>
+      </div>
+      <div class="solution-point reveal">
+        <span class="point-icon">→</span>
+        <p class="point-text"><strong>Human-in-the-Loop (Done Right)</strong> — the system monitors human oversight capacity in real time. If the approval queue grows too long, it automatically throttles or halts risky processes before they compound.</p>
+      </div>
+      <div class="solution-point reveal">
+        <span class="point-icon">→</span>
+        <p class="point-text"><strong>Deterministic Energy Orchestration (DEO)</strong> — extends the same commit-before-execution governance to physical power flows. Every electron and every orbital beam must traverse a mandatory five-phase handshake before any flow is authorized.</p>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ── NDA Inquiry ───────────────────────────────────── -->
-  <section class="nda-section" id="nda-inquiry">
-    <div class="nda-left">
-      <p class="section-label reveal">Qualified Inquiries</p>
-      <h2 class="section-heading reveal">
-        Further information is available under NDA.
+<div class="gold-rule"></div>
+
+<!-- Applications -->
+<section class="section" id="applications">
+  <p class="section-label reveal">Where the Stakes Are Highest</p>
+  <h2 class="section-heading reveal">Six sectors. One governance architecture.</h2>
+  <p class="section-body reveal">While this technology applies to virtually all AI deployments, Regulator AI Global has documented 36+ embodiments across the sectors where hallucination and autonomous failure carry the highest consequences.</p>
+  <div class="apps-grid">
+    <div class="app-card reveal">
+      <p class="app-sector">Aerospace · Satellites · Defense</p>
+      <h3 class="app-title">Collision avoidance AI operating at orbital scale</h3>
+      <p class="app-desc">A single mistaken collision-avoidance command could trigger Kessler Syndrome — rendering orbital space unusable for generations. Our governance layer ensures AI only acts within provably safe trajectory envelopes.</p>
+    </div>
+    <div class="app-card reveal">
+      <p class="app-sector">Finance · M&amp;A</p>
+      <h3 class="app-title">Hallucinated valuations and runaway trading loops</h3>
+      <p class="app-desc">One hallucinated valuation or misinterpreted regulatory signal can wipe out billions. Our technology keeps AI actions within finite, auditable bounds — turning unbounded risk into something boards and insurers can underwrite.</p>
+    </div>
+    <div class="app-card reveal">
+      <p class="app-sector">Insurance · Liability</p>
+      <h3 class="app-title">Ghost Assets — the uninsurable liability hiding in every AI stack</h3>
+      <p class="app-desc">Insurers are increasingly unwilling to cover businesses exposed to compounding AI-driven failures. Our containment systems create a finite, transparent risk profile that makes insurance possible again.</p>
+    </div>
+    <div class="app-card reveal">
+      <p class="app-sector">Healthcare</p>
+      <h3 class="app-title">Missed diagnoses and overlooked drug interactions</h3>
+      <p class="app-desc">Incorrect AI-driven diagnoses and overlooked medication interactions cost lives. Our technology gives doctors powerful AI assistance while enforcing human oversight at the right moments with complete, tamper-proof records.</p>
+    </div>
+    <div class="app-card reveal">
+      <p class="app-sector">Robotics</p>
+      <h3 class="app-title">The Three Laws of Robotics — finally enforceable</h3>
+      <p class="app-desc">Isaac Asimov gave us the Three Laws in 1942. No one knew how to enforce them — until now. Regulator AI Global has that technology, governing autonomous physical systems operating with human or superhuman capability.</p>
+    </div>
+    <div class="app-card reveal">
+      <p class="app-sector">Space Energy · DEO</p>
+      <h3 class="app-title">Orbital wireless power transfer governed at the photon level</h3>
+      <p class="app-desc">Wireless power from LEO is on the horizon. The AI managing these beams controls what is, in effect, a death ray if misaimed. DEO brings commit-before-execution discipline to every photon packet — with cryptographic authorization before any beam fires.</p>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- Differentiation -->
+<div class="diff-wrap">
+  <div class="diff-inner">
+    <p class="section-label reveal">Differentiation</p>
+    <h2 class="section-heading reveal">We are not a lock on the door. We are the building code.</h2>
+    <p class="section-body reveal">If you have been shown competing products, here is how to understand the difference — without any technical background required.</p>
+    <table class="diff-table reveal">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>What They Do</th>
+          <th>What They Cannot Do</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SailPoint</td>
+          <td>Manages who is allowed to use an AI system and what data they can access. The locks on the doors.</td>
+          <td>Once the AI is inside the building, they have no say in what it does.</td>
+        </tr>
+        <tr>
+          <td>Dataiku</td>
+          <td>Helps teams build, test, and track AI models. A management office for AI development.</td>
+          <td>Cannot stop a fully approved AI from making a catastrophic mistake once it is running.</td>
+        </tr>
+        <tr>
+          <td>Gravitee</td>
+          <td>Coordinates data flow between AI agents. Traffic cops for AI communication.</td>
+          <td>Does not determine whether the bridge itself is safe to cross.</td>
+        </tr>
+        <tr class="highlight">
+          <td>Regulator AI Global</td>
+          <td>The building code — the specification that the bridge cannot be built in a way that allows it to collapse.</td>
+          <td style="color: var(--gold); font-size:0.82rem; font-style:italic;">Not "we hope it doesn't collapse." It cannot collapse — by design.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="gold-rule"></div>
+
+<!-- Valuation -->
+<section class="section" id="valuation">
+  <p class="section-label reveal">Financial Analysis</p>
+  <h2 class="section-heading reveal">Three independent lenses. One convergence.</h2>
+  <p class="section-body reveal">Three valuation methods. Three different teams. The surprising result was not that the numbers differed — it was that they clustered within 15% of each other.</p>
+  <div class="val-grid reveal">
+    <div class="val-card">
+      <p class="val-method">Method 01 — Relief from Royalty</p>
+      <div class="val-amount">$142M</div>
+      <p class="val-desc">What would a rational buyer pay to avoid reinventing this across aerospace, finance, healthcare, and energy?</p>
+    </div>
+    <div class="val-card">
+      <p class="val-method">Method 02 — Cost to Recreate</p>
+      <div class="val-amount">$168M</div>
+      <p class="val-desc">33 provisionals, single priority date, spanning AI cognition to physical electrons. Even a well-funded team needs 3–4 years to replicate.</p>
+    </div>
+    <div class="val-card">
+      <p class="val-method">Method 03 — Real Options</p>
+      <div class="val-amount">$135M</div>
+      <p class="val-desc">Acquisition, licensing, open-source ecosystem capture, or insurance underwriting. Each path has option value. Ownership blocks competitors from building around the governance layer.</p>
+    </div>
+  </div>
+  <div class="val-convergence reveal">
+    <p class="val-convergence-label">Acquisition Baseline — Opening Position</p>
+    <div class="val-convergence-number">$150M</div>
+    <p class="val-convergence-sub">Three independent lenses converging within 15% · No revenue assumed · No synergies · No uplift from setting the governance standard</p>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- Regulatory Timeline -->
+<section class="section">
+  <p class="section-label reveal">Regulatory Horizon</p>
+  <h2 class="section-heading reveal">The compliance window is not theoretical. It has a calendar.</h2>
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <p class="timeline-date">March 6 – May 19, 2026</p>
+      <p class="timeline-event">33 Provisional Patents Filed</p>
+      <p class="timeline-desc">Priority-of-invention irrevocably established across AI cognition, supervisory containment, and physical energy governance.</p>
+    </div>
+    <div class="timeline-item">
+      <p class="timeline-date">December 2, 2027</p>
+      <p class="timeline-event">EU AI Act Article 14 — Human Oversight Requirements Operative</p>
+      <p class="timeline-desc">Following a May 2026 provisional agreement, the EU pushed the Annex III high-risk AI systems deadline 16 months — from August 2026 to December 2, 2027. The requirement did not change. Organizations without a verifiable supervisory architecture still face regulatory and M&amp;A valuation risk — the window simply extended.</p>
+    </div>
+    <div class="timeline-item">
+      <p class="timeline-date">March 6, 2027</p>
+      <p class="timeline-event">Non-Provisional Consolidation Deadline</p>
+      <p class="timeline-desc">The acquisition window for the full 33-provisional portfolio at the current valuation baseline closes at NP filing. Strategic acquirers are advised to engage well in advance of this date.</p>
+    </div>
+    <div class="timeline-item">
+      <p class="timeline-date">2028 – 2032</p>
+      <p class="timeline-event">Quantum Horizon</p>
+      <p class="timeline-desc">Post-quantum encryption is integrated throughout the architecture. The portfolio is designed for long-horizon trustworthiness against future cryptographic threats.</p>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- PDF Showcase -->
+<div class="pdf-wrap" id="paper">
+  <div class="pdf-inner">
+    <div class="pdf-facsimile reveal">
+      <p class="pdf-fac-eyebrow">Regulator AI Global</p>
+      <h2 class="pdf-fac-title">The Electrical Code<br>for AI</h2>
+      <p class="pdf-fac-subtitle">AI Governance Infrastructure from Cognition to Action<br>
+      The governance operating system for AI and power infrastructure, available as a unified IP acquisition of 33 Provisional Patents, filed May 2026.</p>
+      <div class="pdf-fac-rule"></div>
+      <div class="pdf-fac-body">
+        <p><strong>A New Power Needs a New Code</strong></p>
+        <p>Whenever mankind has dealt with new power, there has been a stage of imposing governance and control upon it. The time of governing and controlling AI is upon us.</p>
+        <p>While AI brings immense power, it is prone to hallucination and mistakes. These can cause loss of life, damage to property, and financial or operational disasters. But we can have an electrical code for AI — one that harnesses its power while keeping its operation within safe, provable boundaries.</p>
+        <p>Regulator AI Global owns the electrical code for AI. In a portfolio of 33 provisional patents filed between March 6th and May 19th 2026, we have irrevocably established our priority-of-invention.</p>
+      </div>
+      <div class="pdf-fac-authors">
+        Zachary Michael Akins, Founder &amp; CEO<br>
+        Bruce Perens, Strategic Advisor<br>
+        Regulator AI Global, Inc. · Highland Village, TX
+      </div>
+      <div class="pdf-fac-watermark">Page 1 of 7</div>
+    </div>
+    <div class="pdf-right">
+      <p class="section-label reveal">The White Paper</p>
+      <h2 class="section-heading reveal" style="font-size:clamp(1.5rem,2.5vw,2.2rem);">
+        "The Electrical Code for AI" — co-authored with legendary open-source pioneer Bruce Perens.
       </h2>
-      <p class="section-body reveal" style="margin-top:1.5rem;">
-        We are engaging with M&amp;A principals, strategic acquirers, insurance underwriters,
-        and regulatory counsel on a confidential basis. If you represent a qualified
-        counterparty, submit your inquiry and we will respond with the appropriate
-        non-disclosure agreement and evaluation package.
+      <p class="section-body reveal">
+        The full paper covers the case for AI governance as mandatory infrastructure, six high-stakes application sectors, competitive differentiation, a three-method financial analysis converging at $150M, and proposed next steps for qualified acquirers.
       </p>
-      <p class="section-body reveal" style="margin-top:1.2rem; font-size:0.88rem; color: rgba(245,240,232,0.5);">
-        Unsolicited licensing proposals, vendor outreach, and non-qualified inquiries
-        will not receive a response.
+      <p class="section-body reveal" style="margin-top:1rem;">
+        Available in full as a free download. NDA required for the complete patent portfolio and technical architecture.
+      </p>
+      <a href="https://drive.google.com/uc?export=download&id=1Dt8b4SPZIlSxeo7CZWPR2hqXjD6tu38V"
+         class="btn-download reveal"
+         style="margin-top:2rem;"
+         target="_blank"
+         rel="noopener noreferrer">
+        <span class="btn-download-icon">↓</span>
+        Download the Full Paper (PDF)
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="gold-rule"></div>
+
+<!-- Bruce Perens -->
+<div class="advisor-wrap">
+  <div class="advisor-card reveal">
+    <div class="advisor-initial">BP</div>
+    <div>
+      <p class="advisor-tag">Strategic Advisor · Co-Author</p>
+      <h3 class="advisor-name">Bruce Perens</h3>
+      <p class="advisor-title">Legendary Co-Founder, Open Source Initiative · Software Governance Pioneer</p>
+      <p class="advisor-bio">
+        Bruce Perens is one of the most consequential figures in the history of software governance. As the legendary co-founder of the Open Source Initiative and author of the Open Source Definition, he fundamentally shaped how the world thinks about software freedom, accountability, and verifiable standards. His decades of work in software verification, build integrity, and drift detection directly informed the architectural principles at the core of Regulator AI Global's patent portfolio. Bruce serves as Strategic Advisor and co-author of <em>The Electrical Code for AI</em>.
       </p>
     </div>
+  </div>
+</div>
 
-    <div class="nda-right reveal">
-      <form
-        onsubmit="handleInquiry(event)"
-        autocomplete="off"
-        data-email="zmichaelakins@gmail.com"
-      >
-        <label class="form-label" for="org">Organization</label>
-        <input class="form-input" type="text" id="org" name="org" placeholder="Entity name" required />
+<div class="gold-rule"></div>
 
-        <label class="form-label" for="name">Contact Name</label>
-        <input class="form-input" type="text" id="name" name="name" placeholder="Full name" required />
+<!-- NDA Inquiry -->
+<section class="nda-section" id="nda-inquiry">
+  <div>
+    <p class="section-label reveal">Qualified Inquiries</p>
+    <h2 class="section-heading reveal">Further information is available under NDA.</h2>
+    <p class="section-body reveal" style="margin-top:1.4rem;">
+      We are engaging with M&amp;A principals, strategic acquirers, insurance underwriters,
+      and regulatory counsel on a confidential basis. If you represent a qualified
+      counterparty, submit your inquiry and we will respond with the appropriate
+      non-disclosure agreement and evaluation package.
+    </p>
+    <p class="section-body reveal" style="margin-top:1.2rem; font-size:0.88rem; color:rgba(245,240,232,0.45);">
+      Unsolicited licensing proposals, vendor outreach, and non-qualified inquiries
+      will not receive a response.
+    </p>
+  </div>
+  <div class="nda-right reveal">
+    <form onsubmit="handleInquiry(event)" autocomplete="off">
+      <label class="form-label" for="org">Organization</label>
+      <input class="form-input" type="text" id="org" name="org" placeholder="Entity name" required />
 
-        <label class="form-label" for="email">Business Email</label>
-        <input class="form-input" type="email" id="email" name="email" placeholder="you@organization.com" required />
+      <label class="form-label" for="name">Contact Name</label>
+      <input class="form-input" type="text" id="name" name="name" placeholder="Full name" required />
 
-        <label class="form-label" for="role">Counterparty Type</label>
-        <select class="form-select" id="role" name="role" required>
-          <option value="" disabled selected>Select classification</option>
-          <option>Strategic Acquirer / M&amp;A Principal</option>
-          <option>Private Equity / Investment Firm</option>
-          <option>Insurance Underwriter / Risk Advisor</option>
-          <option>Defense / Government Prime</option>
-          <option>Regulatory Counsel / Legal</option>
-          <option>IP Broker / Intermediary</option>
-          <option>Other Qualified Party</option>
-        </select>
+      <label class="form-label" for="email">Business Email</label>
+      <input class="form-input" type="email" id="email" name="email" placeholder="you@organization.com" required />
 
-        <label class="form-label" for="message">Brief Context (optional)</label>
-        <textarea class="form-textarea" id="message" name="message" placeholder="Nature of your interest or mandate"></textarea>
+      <label class="form-label" for="role">Counterparty Type</label>
+      <select class="form-select" id="role" name="role" required>
+        <option value="" disabled selected>Select classification</option>
+        <option>Strategic Acquirer / M&amp;A Principal</option>
+        <option>Private Equity / Investment Firm</option>
+        <option>Insurance Underwriter / Risk Advisor</option>
+        <option>Defense / Government Prime</option>
+        <option>Regulatory Counsel / Legal</option>
+        <option>IP Broker / Intermediary</option>
+        <option>Other Qualified Party</option>
+      </select>
 
-        <button type="submit" class="form-submit">Submit Inquiry</button>
+      <label class="form-label" for="message">Brief Context (optional)</label>
+      <textarea class="form-textarea" id="message" name="message" placeholder="Nature of your interest or mandate"></textarea>
 
-        <p class="form-note">
-          Submission does not constitute an offer or obligation.<br/>
-          All communications are held in strict confidence pending NDA execution.
-        </p>
-      </form>
-    </div>
-  </section>
+      <button type="submit" class="form-submit">Submit Inquiry</button>
 
-  <div class="gold-rule"></div>
+      <p class="form-note">
+        Submission does not constitute an offer or obligation.<br/>
+        All communications are held in strict confidence pending NDA execution.
+      </p>
+    </form>
+  </div>
+</section>
 
-  <!-- ── Footer ────────────────────────────────────────── -->
-  <footer>
-    <span class="footer-logo">Regulator AI Global, Inc.</span>
-    <div class="footer-right">
-      <span>Highland Village, TX &nbsp;·&nbsp; Delaware C-Corp</span><br/>
-      <span>regulator-ai.com &nbsp;·&nbsp; regulator.life</span><br/>
-      <span style="color: rgba(245,240,232,0.25);">© 2026 Regulator AI Global, Inc. All rights reserved. Patent pending.</span>
-    </div>
-  </footer>
+<div class="gold-rule"></div>
 
-  <script>
-    // ── Scroll reveal ──────────────────────────────────
+<!-- Footer -->
+<footer>
+  <span class="footer-logo">Regulator AI Global, Inc.</span>
+  <div class="footer-right">
+    <span>Highland Village, TX &nbsp;·&nbsp; Delaware C-Corp</span><br/>
+    <span>regulator-ai.com &nbsp;·&nbsp; regulator.life</span><br/>
+    <span style="color:rgba(245,240,232,0.22);">© 2026 Regulator AI Global, Inc. All rights reserved. Patent pending.</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const jsReady = () => {
+    if (typeof IntersectionObserver === 'undefined') return;
     document.documentElement.classList.add('js-ready');
-    const observer = new IntersectionObserver(
+    const obs = new IntersectionObserver(
       entries => entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
       }),
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     );
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+    }, 2000);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', jsReady);
+  } else {
+    jsReady();
+  }
 
-    // ── Form handler ───────────────────────────────────
-    async function handleInquiry(e) {
-      e.preventDefault();
-      const form  = e.target;
-      const btn   = form.querySelector('.form-submit');
-      const role  = document.getElementById('role').value;
+  // Form handler — Web3Forms
+  async function handleInquiry(e) {
+    e.preventDefault();
+    const btn  = e.target.querySelector('.form-submit');
+    const role = document.getElementById('role').value;
 
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
 
-      // GA4 event tracking
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'nda_inquiry_submitted', {
-          event_category: 'engagement',
-          event_label: role,
-          value: 1
-        });
-      }
-
-      try {
-        const payload = {
-          access_key:   '89e9a5b8-c1ac-42c3-854a-6fe781032b77',
-          subject:      'Regulator AI — NDA Inquiry: ' + document.getElementById('org').value,
-          from_name:    'Regulator AI Website',
-          organization: document.getElementById('org').value,
-          contact:      document.getElementById('name').value,
-          email:        document.getElementById('email').value,
-          type:         role,
-          message:      document.getElementById('message').value || '(none)'
-        };
-
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body:    JSON.stringify(payload)
-        });
-
-        const data = await res.json();
-
-        if (data.success) {
-          btn.textContent = 'Inquiry Received';
-          btn.style.background = '#1e3a1e';
-          btn.style.color = '#7ec87e';
-          btn.disabled = false;
-        } else {
-          throw new Error(data.message || 'Submission failed');
-        }
-      } catch (err) {
-        btn.textContent = 'Error — Try Again';
-        btn.style.background = '#3a1e1e';
-        btn.style.color = '#e07e7e';
-        btn.disabled = false;
-        console.error('Form error:', err);
-      }
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'nda_inquiry_submitted', {
+        event_category: 'engagement',
+        event_label: role,
+        value: 1
+      });
     }
-  </script>
+
+    try {
+      const payload = {
+        access_key:   '89e9a5b8-c1ac-42c3-854a-6fe781032b77',
+        subject:      'Regulator AI — NDA Inquiry: ' + document.getElementById('org').value,
+        from_name:    'Regulator AI Website',
+        organization: document.getElementById('org').value,
+        contact:      document.getElementById('name').value,
+        email:        document.getElementById('email').value,
+        type:         role,
+        message:      document.getElementById('message').value || '(none)'
+      };
+
+      const res  = await fetch('https://api.web3forms.com/submit', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        btn.textContent = 'Inquiry Received';
+        btn.style.background = '#1e3a1e';
+        btn.style.color = '#7ec87e';
+        btn.disabled = false;
+      } else {
+        throw new Error(data.message || 'Submission failed');
+      }
+    } catch (err) {
+      btn.textContent = 'Error — Try Again';
+      btn.style.background = '#3a1e1e';
+      btn.style.color = '#e07e7e';
+      btn.disabled = false;
+      console.error('Form error:', err);
+    }
+  }
+</script>
 
 </body>
 </html>
