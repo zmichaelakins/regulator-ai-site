@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIC v7 • Kernel-Backed Demo</title>
+<style>
+  :root {
+    --bg: #0f1117; --panel: #1a1d26; --accent: #3b82f6;
+    --green: #22c55e; --red: #ef4444; --yellow: #eab308;
+    --text: #e2e8f0; --text-muted: #94a3b8; --border: #334155;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  .header { background:#11151f; border-bottom:1px solid var(--border); padding:12px 16px; }
+  .header h1 { margin:0; font-size:17px; font-weight:600; }
+  .container { max-width:1100px; margin:0 auto; padding:12px; }
+  .zones { display:grid; grid-template-columns:1fr; gap:12px; }
+  @media (min-width: 860px) { .zones { grid-template-columns: 1fr 1.05fr 1fr; } }
+
+  .zone { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:14px; }
+  .zone h2 { margin:0 0 10px 0; font-size:13px; font-weight:600; }
+  .external h2 { color:#f59e0b; }
+  .airlock h2 { color:#3b82f6; }
+  .target h2 { color:#22c55e; }
+
+  select, button { width:100%; padding:11px 12px; border-radius:8px; border:1px solid var(--border); background:#11151f; color:var(--text); font-size:14px; margin-bottom:8px; }
+  button { font-weight:600; cursor:pointer; }
+  .btn-safe { background:#166534; border-color:#22c55e; color:white; }
+  .btn-risky { background:#7f1d1d; border-color:#ef4444; color:white; }
+  .btn-override { background:#7f1d1d; border-color:#ef4444; color:white; font-size:15px; padding:13px; margin-top:6px; }
+  .btn-clear { width:auto; padding:3px 10px; font-size:10px; }
+
+  .status { display:flex; align-items:center; gap:8px; padding:8px 10px; background:#11151f; border-radius:6px; margin-bottom:10px; font-size:13px; }
+  .dot { width:9px; height:9px; border-radius:50%; background:#64748b; }
+  .dot.UNTRUSTED { background:#f59e0b; }
+  .dot.AIRLOCK_REVIEW { background:#3b82f6; }
+  .dot.HOLD { background:#eab308; }
+  .dot.LIMITED_ACCESS { background:#22c55e; }
+  .dot.REJECTED, .dot.REVOKED { background:#ef4444; }
+
+  .states { background:#11151f; border:1px solid var(--border); border-radius:8px; padding:10px; margin-bottom:10px; }
+  .st { padding:5px 8px; border-radius:5px; font-size:11px; font-weight:600; text-align:center; margin-bottom:3px; border:1px solid var(--border); }
+  .st.active { background:#1e3a8a; border-color:#3b82f6; color:white; }
+
+  .kernel-decision { background:#11151f; border:1px solid #3b82f6; border-radius:8px; padding:10px; margin-bottom:10px; font-size:12px; display:none; }
+  .kernel-decision .label { color:#64748b; font-size:11px; }
+  .kernel-decision .value { font-weight:600; color:#93c5fd; }
+
+  .log { background:#11151f; border:1px solid var(--border); border-radius:8px; padding:10px; height:160px; overflow-y:auto; font-family:ui-monospace,monospace; font-size:11.5px; }
+  .log div { margin-bottom:3px; padding-left:4px; border-left:2px solid #334155; }
+  .log .audit { border-color:#3b82f6; }
+  .log .block { border-color:#ef4444; color:#fca5a5; }
+  .log .ok { border-color:#22c55e; color:#86efac; }
+  .log .ovr { border-color:#eab308; color:#fde047; }
+
+  .result { margin-top:10px; padding:10px; border-radius:8px; font-size:13px; display:none; }
+  .result.ok { background:#052e16; border:1px solid #22c55e; color:#86efac; }
+  .result.block { background:#450a0a; border:1px solid #ef4444; color:#fca5a5; }
+
+  .restricted { background:#11151f; border:1px solid var(--border); border-radius:8px; padding:10px; margin-top:8px; display:none; }
+  .restricted h4 { margin:0 0 6px 0; font-size:11px; color:#64748b; }
+  .op { font-size:12px; margin:2px 0; }
+  .op.ok { color:#22c55e; }
+  .op.no { color:#ef4444; }
+
+  .footer { text-align:center; font-size:10px; color:#64748b; margin-top:16px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>SIC v7 • Kernel-Backed Demo</h1>
+  <div style="font-size:11px; color:#64748b;">Real Enforcement Kernel • file:// Compatible</div>
+</div>
+
+<div class="container">
+
+  <div class="zones">
+
+    <!-- External -->
+    <div class="zone external">
+      <h2>External System (Acquired)</h2>
+      <select id="agentSelect">
+        <option>CRM-Agent</option>
+        <option>Finance-Agent</option>
+        <option>Support-Agent</option>
+        <option>Code-Agent</option>
+      </select>
+      <button id="btnSafe" class="btn-safe">Run Safe Transfer</button>
+      <button id="btnRisky" class="btn-risky">Run Risky Transfer</button>
+    </div>
+
+    <!-- Airlock -->
+    <div class="zone airlock">
+      <h2>Integration Airlock — SIC Kernel</h2>
+
+      <div class="status">
+        <div class="dot" id="dot"></div>
+        <div>
+          <strong id="state">UNTRUSTED</strong><br>
+          <span id="desc" style="font-size:11px;color:#64748b">Ready</span>
+        </div>
+      </div>
+
+      <div class="states">
+        <div class="st UNTRUSTED" id="s-UNTRUSTED">UNTRUSTED</div>
+        <div class="st AIRLOCK_REVIEW" id="s-AIRLOCK_REVIEW">AIRLOCK_REVIEW</div>
+        <div class="st HOLD" id="s-HOLD">HOLD</div>
+        <div class="st LIMITED_ACCESS" id="s-LIMITED_ACCESS">LIMITED_ACCESS</div>
+        <div class="st REJECTED" id="s-REJECTED">REJECTED</div>
+        <div class="st REVOKED" id="s-REVOKED">REVOKED</div>
+      </div>
+
+      <div class="kernel-decision" id="kernelBox">
+        <div class="label">LAST KERNEL DECISION</div>
+        <div class="value" id="kernelDecision"></div>
+      </div>
+
+      <button id="btnOverride" class="btn-override">EMERGENCY HUMAN OVERRIDE</button>
+    </div>
+
+    <!-- Target -->
+    <div class="zone target">
+      <h2>Target Environment</h2>
+      <div id="result" class="result"></div>
+      <div id="summary" style="font-size:12px;color:#64748b;margin-top:8px">No activity yet</div>
+
+      <div class="restricted" id="restricted">
+        <h4>Restricted Operations (LIMITED_ACCESS)</h4>
+        <div class="op ok">&#10003; Read telemetry &amp; logs</div>
+        <div class="op ok">&#10003; Submit change requests</div>
+        <div class="op no">&#10007; Data export / bulk transfer</div>
+        <div class="op no">&#10007; Direct code execution</div>
+        <div class="op no">&#10007; Agent spawning or escalation</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Audit Log -->
+  <div style="margin:8px 0 4px 0; font-size:12px; display:flex; justify-content:space-between; align-items:center;">
+    <strong>Audit Log (from Kernel)</strong>
+    <button id="btnClear" class="btn-clear">Clear</button>
+  </div>
+  <div class="log" id="log"></div>
+
+  <div class="footer">
+    All state transitions and decisions are produced by the embedded SIC Enforcement Kernel.<br>
+    This UI is display only.
+  </div>
+
+</div>
+
+<script>
+(function() {
+  "use strict";
+
+  // ==================== SIC ENFORCEMENT KERNEL v7 ====================
+  var STATES = {
+    UNTRUSTED:      'UNTRUSTED',
+    AIRLOCK_REVIEW: 'AIRLOCK_REVIEW',
+    HOLD:           'HOLD',
+    LIMITED_ACCESS: 'LIMITED_ACCESS',
+    REJECTED:       'REJECTED',
+    REVOKED:        'REVOKED'
+  };
+
+  var currentState = STATES.UNTRUSTED;
+
+  function kernelEvaluate(agent, transferType) {
+    var violations = [];
+    if (transferType === 'risky') {
+      violations.push('DATA_EXPORT_VIOLATION');
+    }
+    return {
+      decision:     violations.length > 0 ? 'REJECT' : 'APPROVE',
+      violations:   violations,
+      agent:        agent,
+      transferType: transferType,
+      timestamp:    new Date().toISOString()
+    };
+  }
+
+  function kernelGetNextState(decision) {
+    if (decision === 'REJECT')  return STATES.REJECTED;
+    if (decision === 'APPROVE') return STATES.LIMITED_ACCESS;
+    return currentState;
+  }
+
+  function kernelHumanOverride() {
+    return (currentState === STATES.LIMITED_ACCESS) ? STATES.HOLD : STATES.REVOKED;
+  }
+
+  // ==================== UI HELPERS ====================
+  var DESC = {
+    UNTRUSTED:      'No active transfer session',
+    AIRLOCK_REVIEW: 'Kernel evaluating transfer request',
+    HOLD:           'Transfer paused — policy or override',
+    LIMITED_ACCESS: 'Restricted access granted under supervision',
+    REJECTED:       'Transfer blocked by kernel (invariant violation)',
+    REVOKED:        'Access forcibly revoked by human override'
+  };
+
+  function el(id) { return document.getElementById(id); }
+
+  function setState(newState, description) {
+    currentState = newState;
+
+    var sts = document.querySelectorAll('.st');
+    for (var i = 0; i < sts.length; i++) { sts[i].classList.remove('active'); }
+    var activeEl = el('s-' + newState);
+    if (activeEl) { activeEl.classList.add('active'); }
+
+    el('state').textContent = newState;
+    el('desc').textContent  = description || DESC[newState] || '';
+    el('dot').className     = 'dot ' + newState;
+    el('restricted').style.display = (newState === STATES.LIMITED_ACCESS) ? 'block' : 'none';
+  }
+
+  function showKernelDecision(result) {
+    var box = el('kernelBox');
+    var val = el('kernelDecision');
+    box.style.display = 'block';
+    if (result.decision === 'REJECT') {
+      val.textContent  = 'REJECTED \u2014 ' + result.violations.join(', ');
+      val.style.color  = '#fca5a5';
+    } else {
+      val.textContent  = 'APPROVED \u2014 LIMITED_ACCESS granted';
+      val.style.color  = '#86efac';
+    }
+  }
+
+  function addLog(msg, type) {
+    var log  = el('log');
+    var div  = document.createElement('div');
+    div.className   = type || 'audit';
+    var t = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    div.textContent = '[' + t + '] ' + msg;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function showResult(success, text) {
+    var p = el('result');
+    p.style.display = 'block';
+    p.className     = success ? 'result ok' : 'result block';
+    p.textContent   = text;
+    el('summary').textContent = success
+      ? '\u2713 Kernel granted LIMITED_ACCESS'
+      : '\u2717 Kernel blocked transfer';
+    el('summary').style.color = success ? '#86efac' : '#fca5a5';
+  }
+
+  // ==================== ACTION HANDLERS ====================
+  function handleSafeTransfer() {
+    var agent = el('agentSelect').value;
+    el('result').style.display = 'none';
+
+    var kr = kernelEvaluate(agent, 'safe');
+    addLog('Transfer request: ' + agent + ' (safe)', 'audit');
+    showKernelDecision(kr);
+    setState(STATES.AIRLOCK_REVIEW, 'Kernel evaluating...');
+
+    setTimeout(function() {
+      var next = kernelGetNextState(kr.decision);
+      setState(next);
+      if (next === STATES.LIMITED_ACCESS) {
+        showResult(true, 'LIMITED_ACCESS GRANTED — Kernel approved under restricted operations. Audit event committed.');
+        addLog('State \u2192 LIMITED_ACCESS (approved by kernel)', 'ok');
+      } else {
+        showResult(false, 'TRANSFER REJECTED — Kernel blocked: ' + kr.violations.join(', '));
+        addLog('State \u2192 REJECTED (kernel blocked)', 'block');
+      }
+    }, 700);
+  }
+
+  function handleRiskyTransfer() {
+    var agent = el('agentSelect').value;
+    el('result').style.display = 'none';
+
+    var kr = kernelEvaluate(agent, 'risky');
+    addLog('Transfer request: ' + agent + ' (risky)', 'audit');
+    showKernelDecision(kr);
+    setState(STATES.AIRLOCK_REVIEW, 'Kernel evaluating...');
+
+    setTimeout(function() {
+      var next = kernelGetNextState(kr.decision);
+      setState(next);
+      showResult(false, 'REJECTED \u2014 Kernel blocked: ' + kr.violations.join(', '));
+      addLog('State \u2192 REJECTED (' + kr.violations.join(', ') + ')', 'block');
+    }, 700);
+  }
+
+  function handleOverride() {
+    if (currentState !== STATES.LIMITED_ACCESS && currentState !== STATES.HOLD) {
+      addLog('Override attempted \u2014 no active restricted session', 'ovr');
+      return;
+    }
+    var next = kernelHumanOverride();
+    addLog('EMERGENCY HUMAN OVERRIDE \u2192 forcing ' + next, 'ovr');
+    setState(next, 'Human authority asserted');
+
+    var p = el('result');
+    p.style.display = 'block';
+    p.className     = 'result block';
+    p.textContent   = 'OVERRIDE EXECUTED \u2014 Kernel forced state to ' + next + '. All further operations blocked until review.';
+    el('summary').textContent = '\u2717 Forcibly suspended by human override';
+    el('summary').style.color = '#fca5a5';
+  }
+
+  function handleClear() {
+    el('log').innerHTML = '';
+  }
+
+  // ==================== INIT ====================
+  function init() {
+    setState(STATES.UNTRUSTED);
+    addLog('SIC Enforcement Kernel v7 initialized', 'audit');
+    addLog('Deterministic state machine + policy engine active', 'audit');
+
+    el('btnSafe').addEventListener('click', handleSafeTransfer);
+    el('btnRisky').addEventListener('click', handleRiskyTransfer);
+    el('btnOverride').addEventListener('click', handleOverride);
+    el('btnClear').addEventListener('click', handleClear);
+  }
+
+  // Bulletproof DOM-ready — works in file://, email clients, all Chrome versions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+}());
+</script>
+</body>
+</html>
