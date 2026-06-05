@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deterministic Replay Demo v5 • State Machine + Supervisory Containment</title>
+<style>
+  :root {
+    --bg: #0f1117; --panel: #1a1d26; --accent: #3b82f6;
+    --green: #22c55e; --red: #ef4444; --yellow: #eab308;
+    --text: #e2e8f0; --text-muted: #94a3b8; --border: #334155;
+  }
+  body { margin:0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  .header { background:#11151f; border-bottom:1px solid var(--border); padding:14px 20px; }
+  .header h1 { margin:0; font-size:18px; font-weight:600; }
+  .container { max-width:1100px; margin:0 auto; padding:16px; }
+  .section { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:16px; }
+  h2 { margin-top:0; font-size:15px; color:#3b82f6; }
+  button { padding:10px 16px; border-radius:8px; border:1px solid var(--border); background:#11151f; color:var(--text); font-weight:600; cursor:pointer; }
+  .btn-primary { background:#1e40af; border-color:#3b82f6; color:white; }
+  .btn-success { background:#166534; border-color:#22c55e; color:white; }
+  .btn-danger { background:#7f1d1d; border-color:#ef4444; color:white; }
+  .btn-warning { background:#854d0e; border-color:#eab308; color:white; }
+  .log { background:#11151f; border:1px solid var(--border); border-radius:8px; padding:12px; height:180px; overflow-y:auto; font-family:ui-monospace,monospace; font-size:12px; }
+  .log div { margin-bottom:3px; padding-left:4px; border-left:2px solid #334155; }
+  .log .ok { border-color:#22c55e; color:#86efac; }
+  .log .block { border-color:#ef4444; color:#fca5a5; }
+  .log .warning { border-color:#eab308; color:#fde047; }
+  .result { padding:12px; border-radius:8px; margin-top:10px; font-size:14px; }
+  .result.ok { background:#052e16; border:1px solid #22c55e; color:#86efac; }
+  .result.block { background:#450a0a; border:1px solid #ef4444; color:#fca5a5; }
+  .result.warning { background:#78350f; border:1px solid #eab308; color:#fde047; }
+  .state-machine { background:#11151f; border:1px solid var(--border); border-radius:8px; padding:12px; margin-bottom:12px; }
+  .state { display:inline-block; padding:4px 10px; border-radius:4px; margin:2px; font-size:12px; font-weight:600; border:1px solid var(--border); }
+  .state.ACTIVE { background:#166534; border-color:#22c55e; }
+  .state.RESTRICTED { background:#854d0e; border-color:#eab308; }
+  .state.RECOVERY { background:#1e40af; border-color:#3b82f6; }
+  .state.HALTED { background:#450a0a; border-color:#ef4444; }
+  .current-state { font-size:15px; font-weight:700; margin:8px 0; }
+  .footer { text-align:center; font-size:11px; color:#64748b; margin-top:20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Deterministic Replay Demo v5 • State Machine + Supervisory Containment</h1>
+  <div style="font-size:12px; color:#64748b;">Deterministic state transitions • Hash-chain + Policy verification • Tamper detection</div>
+</div>
+
+<div class="container">
+
+  <!-- Current State -->
+  <div class="section">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <h2 style="margin:0;">Current System State</h2>
+        <div class="current-state">
+          State: <span id="currentState" class="state ACTIVE">ACTIVE</span>
+        </div>
+      </div>
+      <div>
+        <button onclick="triggerRecovery()" class="btn-warning">Trigger AGE Recovery</button>
+        <button onclick="forceHalt()" class="btn-danger" style="margin-left:8px;">Force HALTED</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action -->
+  <div class="section">
+    <h2>1. Action + State Transition</h2>
+    <div style="display:flex; gap:12px; align-items:end;">
+      <div style="flex:1;">
+        <label style="font-size:13px; color:#94a3b8;">Action Type</label>
+        <select id="actionType">
+          <option value="normal_operation">normal_operation</option>
+          <option value="high_risk_action">high_risk_action</option>
+          <option value="policy_violation">policy_violation</option>
+          <option value="data_export">data_export</option>
+        </select>
+      </div>
+      <div>
+        <button onclick="performAction()" class="btn-primary">Execute Action</button>
+      </div>
+    </div>
+    <div id="actionResult" class="result" style="display:none; margin-top:12px;"></div>
+  </div>
+
+  <!-- Audit Log -->
+  <div class="section">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <h2 style="margin:0;">2. State Transition + Audit Log</h2>
+      <div>
+        <button onclick="exportBundle()" class="btn-success">Export Bundle</button>
+        <button onclick="document.getElementById('importFile').click()" class="btn-primary" style="margin-left:8px;">Import Bundle</button>
+        <input type="file" id="importFile" style="display:none;" onchange="importBundle(event)">
+        <button onclick="corruptRandomRecord()" class="btn-danger" style="margin-left:8px;">Corrupt Record</button>
+      </div>
+    </div>
+    <div class="log" id="auditLog"></div>
+  </div>
+
+  <!-- Replay -->
+  <div class="section">
+    <h2>3. Replay + Full Verification (State + Chain + Policy)</h2>
+    <div style="margin-bottom:10px;">
+      <button onclick="replayWithStateVerification('current')" class="btn-primary">Replay Current + Verify States</button>
+      <button onclick="replayWithStateVerification('imported')" class="btn-primary" style="margin-left:8px;" id="replayImportedBtn" disabled>Replay Imported + Verify States</button>
+    </div>
+
+    <div id="verificationStatus" class="status-bar" style="display:none;"></div>
+    <div class="verification-log" id="verificationLog" style="display:none;"></div>
+    <div id="replaySummary" class="result" style="display:none; margin-top:12px;"></div>
+  </div>
+
+  <div class="footer">
+    v5 demonstrates deterministic supervisory state machine replay (ACTIVE ↔ RESTRICTED ↔ RECOVERY ↔ HALTED).
+  </div>
+
+</div>
+
+<script>
+// ==================== v5: RLCL-style State Machine Replay ====================
+
+let currentState = "ACTIVE";
+let auditLog = [];
+let importedBundle = null;
+
+const VALID_TRANSITIONS = {
+  "ACTIVE": ["RESTRICTED", "HALTED"],
+  "RESTRICTED": ["RECOVERY", "HALTED"],
+  "RECOVERY": ["ACTIVE", "HALTED"],
+  "HALTED": [] // terminal unless external recovery
+};
+
+async function computeHash(data) {
+  const str = typeof data === 'string' ? data : JSON.stringify(data);
+  if (window.crypto && window.crypto.subtle) {
+    const encoder = new TextEncoder();
+    const hashBuffer = await crypto.subtle.digest('SHA-256', encoder.encode(str));
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  } else {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash = hash & hash;
+    }
+    return Math.abs(hash).toString(16).padStart(16, '0');
+  }
+}
+
+function updateStateDisplay() {
+  const el = document.getElementById('currentState');
+  el.textContent = currentState;
+  el.className = `state ${currentState}`;
+}
+
+function getPreviousHash() {
+  return auditLog.length === 0 ? "GENESIS" : auditLog[auditLog.length - 1].entryHash;
+}
+
+async function performAction() {
+  const actionType = document.getElementById('actionType').value;
+  const policyVersion = "1.0.0"; // fixed for v5 simplicity
+
+  let decision = "ALLOW";
+  let newState = currentState;
+  let reason = "Action permitted";
+
+  // Simple state machine logic (RLCL-inspired)
+  if (actionType === "policy_violation" || actionType === "high_risk_action") {
+    decision = "BLOCK";
+    reason = "Policy violation detected";
+    if (currentState === "ACTIVE") newState = "RESTRICTED";
+  } else if (actionType === "data_export" && currentState !== "ACTIVE") {
+    decision = "BLOCK";
+    reason = "Export blocked in non-ACTIVE state";
+  } else {
+    decision = "ALLOW";
+    reason = "Action executed";
+    // Recovery path
+    if (currentState === "RECOVERY") {
+      newState = "ACTIVE";
+      reason = "Recovery completed → back to ACTIVE";
+    }
+  }
+
+  // Record transition
+  const timestamp = new Date().toISOString();
+  const prevHash = getPreviousHash();
+  const fromState = currentState;
+
+  const entryData = {
+    timestamp,
+    actionType,
+    decision,
+    reason,
+    fromState,
+    toState: newState,
+    prevHash,
+    policyVersion
+  };
+
+  const entryHash = await computeHash(entryData);
+  const auditEntry = { ...entryData, entryHash };
+
+  auditLog.push(auditEntry);
+  currentState = newState;
+
+  addToLog(auditEntry);
+  updateStateDisplay();
+  showActionResult(decision, reason, newState, auditEntry);
+}
+
+function addToLog(entry) {
+  const logEl = document.getElementById('auditLog');
+  const div = document.createElement('div');
+  const stateChange = entry.fromState !== entry.toState ? ` | ${entry.fromState} → ${entry.toState}` : '';
+  div.className = entry.decision === "ALLOW" ? "ok" : "block";
+  div.innerHTML = `
+    <strong>${entry.timestamp.slice(11,19)}</strong> | 
+    ${entry.actionType} → <strong>${entry.decision}</strong>${stateChange}
+    <span style="color:#eab308; font-size:11px;">[v${entry.policyVersion}]</span>
+  `;
+  logEl.appendChild(div);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function showActionResult(decision, reason, newState, entry) {
+  const resultEl = document.getElementById('actionResult');
+  resultEl.style.display = 'block';
+  resultEl.className = `result ${decision === "ALLOW" ? "ok" : "block"}`;
+  resultEl.innerHTML = `
+    <strong>${decision}</strong> — ${reason}<br>
+    State transition: <strong>${entry.fromState} → ${newState}</strong><br>
+    <span style="font-size:11px;">Policy v${entry.policyVersion} | Hash: ${entry.entryHash.slice(0,16)}...</span>
+  `;
+}
+
+function triggerRecovery() {
+  if (currentState === "HALTED") {
+    alert("HALTED state requires external intervention.");
+    return;
+  }
+  const from = currentState;
+  currentState = "RECOVERY";
+  updateStateDisplay();
+  
+  // Log recovery action
+  const entry = {
+    timestamp: new Date().toISOString(),
+    actionType: "AGE_RECOVERY",
+    decision: "ALLOW",
+    reason: "Acknowledgment-Gated Execution recovery asserted",
+    fromState: from,
+    toState: "RECOVERY",
+    prevHash: getPreviousHash(),
+    policyVersion: "1.0.0"
+  };
+  // Note: In real system this would be properly hashed, but simplified here
+  auditLog.push(entry);
+  addToLog(entry);
+}
+
+function forceHalt() {
+  const from = currentState;
+  currentState = "HALTED";
+  updateStateDisplay();
+  
+  const entry = {
+    timestamp: new Date().toISOString(),
+    actionType: "FORCE_HALT",
+    decision: "BLOCK",
+    reason: "Manual halt triggered",
+    fromState: from,
+    toState: "HALTED",
+    prevHash: getPreviousHash(),
+    policyVersion: "1.0.0"
+  };
+  auditLog.push(entry);
+  addToLog(entry);
+}
+
+async function exportBundle() {
+  if (auditLog.length === 0) {
+    alert("No entries.");
+    return;
+  }
+  const bundle = {
+    version: "5.0",
+    exportedAt: new Date().toISOString(),
+    initialState: "ACTIVE",
+    entries: auditLog,
+    bundleHash: await computeHash(auditLog)
+  };
+  const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `state_machine_audit_v5_${new Date().toISOString().slice(0,19).replace(/:/g,'-')}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+async function importBundle(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const bundle = JSON.parse(e.target.result);
+      if (!bundle.entries) throw new Error("Invalid bundle");
+      importedBundle = bundle;
+      document.getElementById('replayImportedBtn').disabled = false;
+      document.getElementById('auditLog').innerHTML = `<div class="warning">Imported state machine bundle with ${bundle.entries.length} transitions.</div>`;
+    } catch (err) {
+      alert("Import failed: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function corruptRandomRecord() {
+  if (auditLog.length === 0) { alert("No records."); return; }
+  const idx = Math.floor(Math.random() * auditLog.length);
+  auditLog[idx].reason = (auditLog[idx].reason || "") + " [TAMPERED]";
+  document.getElementById('auditLog').innerHTML += `<div class="block">⚠️ Record #${idx + 1} corrupted.</div>`;
+}
+
+async function verifyStateReplay(entries, sourceLabel) {
+  const verificationLog = document.getElementById('verificationLog');
+  const verificationStatus = document.getElementById('verificationStatus');
+  const summaryEl = document.getElementById('replaySummary');
+
+  verificationLog.innerHTML = '';
+  verificationLog.style.display = 'block';
+  summaryEl.style.display = 'block';
+
+  let chainValid = true;
+  let previousHash = "GENESIS";
+  let stateValid = true;
+  let simulatedState = "ACTIVE";
+
+  for (let i = 0; i < entries.length; i++) {
+    const entry = entries[i];
+
+    // Chain check
+    if (entry.prevHash !== previousHash) {
+      chainValid = false;
+      addVerificationLine(`❌ Chain break at transition ${i + 1}`, true);
+    }
+
+    // Hash recomputation
+    const dataForHash = { ...entry };
+    delete dataForHash.entryHash;
+    const recomputed = await computeHash(dataForHash);
+    if (recomputed !== entry.entryHash) {
+      chainValid = false;
+      addVerificationLine(`❌ Hash mismatch at transition ${i + 1}`, true);
+    }
+
+    // State transition verification
+    if (!VALID_TRANSITIONS[simulatedState].includes(entry.toState)) {
+      stateValid = false;
+      addVerificationLine(`❌ Invalid state transition at ${i + 1}: ${simulatedState} → ${entry.toState}`, true);
+    } else {
+      simulatedState = entry.toState;
+    }
+
+    addVerificationLine(`✓ Transition ${i + 1}: ${entry.fromState} → ${entry.toState} (${entry.actionType})`);
+
+    previousHash = entry.entryHash;
+  }
+
+  const finalValid = chainValid && stateValid;
+
+  verificationStatus.style.display = 'block';
+  verificationStatus.className = `status-bar ${finalValid ? 'ok' : 'block'}`;
+  verificationStatus.innerHTML = finalValid 
+    ? `✓ State machine replay verified. All transitions deterministic and valid.` 
+    : `❌ State machine verification FAILED.`;
+
+  summaryEl.className = `result ${finalValid ? 'ok' : 'block'}`;
+  summaryEl.innerHTML = `
+    <strong>State Machine Replay Complete — ${sourceLabel}</strong><br>
+    Total transitions: ${entries.length}<br>
+    Final simulated state: ${simulatedState}<br>
+    ${finalValid ? "All state transitions independently verified as deterministic." : "Invalid state transitions or tampering detected."}
+  `;
+}
+
+function addVerificationLine(message, isError = false) {
+  const log = document.getElementById('verificationLog');
+  const div = document.createElement('div');
+  div.className = isError ? 'block' : 'ok';
+  div.textContent = message;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+
+async function replayWithStateVerification(mode) {
+  let entries, label;
+  if (mode === 'current') {
+    if (auditLog.length === 0) { alert("No entries."); return; }
+    entries = auditLog;
+    label = "Current Log";
+  } else {
+    if (!importedBundle || !importedBundle.entries) { alert("No imported bundle."); return; }
+    entries = importedBundle.entries;
+    label = "Imported Bundle";
+  }
+  await verifyStateReplay(entries, label);
+}
+
+function init() {
+  updateStateDisplay();
+  document.getElementById('auditLog').innerHTML = `<div style="color:#64748b;">v5 ready. Actions now drive deterministic state transitions (ACTIVE ↔ RESTRICTED ↔ RECOVERY ↔ HALTED).</div>`;
+}
+
+init();
+</script>
+</body>
+</html>
