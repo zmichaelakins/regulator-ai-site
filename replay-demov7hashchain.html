@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIC Replay v7 • Hash-Chained Governance</title>
+<style>
+  :root {
+    --bg: #0f1117; --panel: #1a1d26; --accent: #3b82f6;
+    --green: #22c55e; --red: #ef4444; --yellow: #eab308;
+    --text: #e2e8f0; --text-muted: #94a3b8; --border: #334155;
+  }
+  body { margin:0; font-family: system-ui, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  .header { background:#11151f; padding:14px 20px; border-bottom:1px solid var(--border); }
+  .header h1 { margin:0; font-size:18px; }
+  .container { max-width:1100px; margin:0 auto; padding:16px; }
+  .grid { display:grid; grid-template-columns: 1fr 1.1fr; gap:16px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+  .panel { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px; }
+  .panel h2 { margin:0 0 12px 0; font-size:14px; color:var(--accent); }
+
+  button { width:100%; padding:12px; font-size:14px; font-weight:600; border-radius:8px; border:1px solid var(--border); background:#11151f; color:var(--text); margin-bottom:8px; cursor:pointer; }
+  .btn-danger { background:#7f1d1d; border-color:#ef4444; color:white; }
+  .btn-success { background:#166534; border-color:#22c55e; color:white; }
+
+  .status { padding:10px 14px; background:#11151f; border-radius:8px; margin-bottom:12px; font-size:15px; }
+  .state { font-weight:700; font-size:18px; }
+  .state.ACTIVE { color:#22c55e; }
+  .state.RESTRICTED { color:#eab308; }
+  .state.RECOVERY { color:#3b82f6; }
+  .state.HALTED { color:#ef4444; }
+
+  .log { background:#11151f; border:1px solid var(--border); border-radius:8px; padding:12px; height:220px; overflow-y:auto; font-family:ui-monospace,monospace; font-size:12px; }
+  .log div { margin-bottom:3px; padding-left:4px; border-left:2px solid #334155; }
+  .log .hash { color:#64748b; font-size:11px; }
+
+  .hash-chain { background:#11151f; border:1px solid var(--border); border-radius:8px; padding:12px; margin-top:12px; }
+  .hash-entry { font-family:ui-monospace,monospace; font-size:11px; padding:4px 0; border-bottom:1px solid #334155; display:flex; justify-content:space-between; }
+  .hash-entry:last-child { border-bottom:none; }
+  .hash-ok { color:#22c55e; }
+  .hash-bad { color:#ef4444; }
+
+  .footer { text-align:center; font-size:11px; color:#64748b; margin-top:20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>SIC Replay v7 • Hash-Chained Deterministic Governance</h1>
+</div>
+
+<div class="container">
+
+  <div class="grid">
+
+    <!-- Control Panel -->
+    <div class="panel">
+      <h2>Control</h2>
+      <div class="status">
+        Current State: <span class="state ACTIVE" id="currentState">ACTIVE</span>
+      </div>
+
+      <button onclick="performAction('normal')">Perform Normal Action</button>
+      <button onclick="performAction('violation')" class="btn-danger">Trigger Policy Violation</button>
+      <button onclick="triggerRecovery()" class="btn-success">Trigger Recovery</button>
+      <button onclick="forceHalt()" class="btn-danger">Force Halt</button>
+
+      <hr style="border-color:#334155; margin:16px 0;">
+      <button onclick="runReplay()" class="btn-success">▶ Run Full Replay &amp; Verify</button>
+      <button onclick="resetDemo()">Reset Demo</button>
+    </div>
+
+    <!-- Audit Log + Hash Chain -->
+    <div class="panel">
+      <h2>Audit Log (Hash-Chained)</h2>
+      <div class="log" id="log"></div>
+
+      <div class="hash-chain">
+        <h2 style="font-size:13px; margin:0 0 8px 0; color:#64748b;">Recent Hash Chain</h2>
+        <div id="hashChain"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Every record includes a deterministic <strong>entryHash</strong>. Replay verifies hash chain + state transitions.
+  </div>
+
+</div>
+
+<script>
+// ==================== SIC REPLAY v7 - FIXED ====================
+
+let currentState = "ACTIVE";
+let auditLog = [];
+let policyVersion = 1;
+
+// Allowed transitions (HALTED is now recoverable)
+const ALLOWED_TRANSITIONS = {
+  "ACTIVE":    ["ACTIVE", "RESTRICTED", "HALTED"],
+  "RESTRICTED":["RESTRICTED", "RECOVERY", "HALTED"],
+  "RECOVERY":  ["RECOVERY", "ACTIVE", "HALTED"],
+  "HALTED":    ["HALTED", "RECOVERY"]   // HALTED can recover
+};
+
+function getTimestamp() {
+  return new Date().toISOString().slice(11, 19);
+}
+
+function computeEntryHash(entry) {
+  const str = JSON.stringify({
+    ts: entry.ts,
+    action: entry.action,
+    fromState: entry.fromState,
+    toState: entry.toState,
+    policyVersion: entry.policyVersion,
+    prevHash: entry.prevHash || ""
+  });
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return "0x" + Math.abs(hash).toString(16).padStart(8, "0");
+}
+
+function addLog(message, type = "normal", hash = null) {
+  const logEl = document.getElementById("log");
+  const div = document.createElement("div");
+  div.className = type;
+  let html = `[${getTimestamp()}] ${message}`;
+  if (hash) html += `<br><span class="hash">entryHash: ${hash}</span>`;
+  div.innerHTML = html;
+  logEl.appendChild(div);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function updateState(newState) {
+  currentState = newState;
+  const el = document.getElementById("currentState");
+  el.textContent = newState;
+  el.className = "state " + newState;
+}
+
+function updateHashChain() {
+  const container = document.getElementById("hashChain");
+  container.innerHTML = "";
+
+  const recent = auditLog.slice(-5).reverse();
+  recent.forEach((entry) => {
+    const div = document.createElement("div");
+    div.className = "hash-entry";
+    div.innerHTML = `
+      <span>${entry.action} (${entry.fromState}→${entry.toState})</span>
+      <span class="hash-ok">${entry.entryHash}</span>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function createAuditRecord(action, fromState, toState, extra = {}) {
+  const entry = {
+    ts: getTimestamp(),
+    action,
+    fromState,
+    toState,
+    policyVersion,
+    prevHash: auditLog.length > 0 ? auditLog[auditLog.length - 1].entryHash : "0x00000000",
+    ...extra
+  };
+  entry.entryHash = computeEntryHash(entry);
+  return entry;
+}
+
+function performAction(type) {
+  const from = currentState;
+  let to = from;
+  let actionName = type === "violation" ? "POLICY_VIOLATION" : "NORMAL_ACTION";
+
+  if (type === "violation" && from === "ACTIVE") {
+    to = "RESTRICTED";
+  }
+
+  const record = createAuditRecord(actionName, from, to);
+  auditLog.push(record);
+
+  if (to !== from) updateState(to);
+
+  addLog(`${actionName} → ${to}`, type === "violation" ? "block" : "normal", record.entryHash);
+  updateHashChain();
+}
+
+function triggerRecovery() {
+  if (currentState !== "RESTRICTED" && currentState !== "HALTED") {
+    addLog("Recovery can only be triggered from RESTRICTED or HALTED");
+    return;
+  }
+
+  const from = currentState;
+  const to = "RECOVERY";
+
+  const record = createAuditRecord("RECOVERY_INITIATED", from, to, { recoveryId: "REC-" + Date.now() });
+  auditLog.push(record);
+
+  updateState(to);
+  addLog(`Recovery initiated → ${to}`, "ok", record.entryHash);
+  updateHashChain();
+}
+
+function forceHalt() {
+  const from = currentState;
+  const to = "HALTED";
+
+  const record = createAuditRecord("FORCE_HALT", from, to, { reason: "Manual intervention" });
+  auditLog.push(record);
+
+  updateState(to);
+  addLog(`Force Halt executed → ${to}`, "block", record.entryHash);
+  updateHashChain();
+}
+
+function runReplay() {
+  const logEl = document.getElementById("log");
+  logEl.innerHTML = "";
+  addLog("=== STARTING DETERMINISTIC REPLAY v7 ===", "audit");
+
+  let simulatedState = "ACTIVE";
+  let lastHash = "0x00000000";
+  let verified = true;
+
+  for (let i = 0; i < auditLog.length; i++) {
+    const entry = auditLog[i];
+
+    // 1. Hash chain verification
+    const recomputed = computeEntryHash({ ...entry, prevHash: lastHash });
+    if (recomputed !== entry.entryHash) {
+      addLog(`❌ HASH CHAIN BROKEN at entry ${i + 1}`, "block");
+      verified = false;
+      break;
+    }
+
+    // 2. Strict fromState check
+    if (entry.fromState !== simulatedState) {
+      addLog(`❌ FROM-STATE MISMATCH at entry ${i + 1}`, "block");
+      verified = false;
+      break;
+    }
+
+    // 3. Transition validation (self-transition = legal no-op)
+    if (entry.toState === simulatedState) {
+      // Valid state-preserving action
+    } else {
+      const allowed = ALLOWED_TRANSITIONS[simulatedState] || [];
+      if (!allowed.includes(entry.toState)) {
+        addLog(`❌ ILLEGAL TRANSITION at entry ${i + 1}`, "block");
+        verified = false;
+        break;
+      }
+    }
+
+    simulatedState = entry.toState;
+    lastHash = entry.entryHash;
+
+    addLog(`✓ ${entry.action} (${entry.fromState}→${entry.toState})`, "ok");
+  }
+
+  if (verified) {
+    addLog("=== REPLAY COMPLETE — FULL VERIFICATION PASSED ===", "ok");
+    document.getElementById("currentState").textContent = simulatedState;
+    document.getElementById("currentState").className = "state " + simulatedState;
+  } else {
+    addLog("=== REPLAY FAILED — INTEGRITY VIOLATION ===", "block");
+  }
+}
+
+function resetDemo() {
+  currentState = "ACTIVE";
+  auditLog = [];
+  policyVersion = 1;
+
+  document.getElementById("log").innerHTML = "";
+  document.getElementById("hashChain").innerHTML = "";
+  document.getElementById("currentState").textContent = "ACTIVE";
+  document.getElementById("currentState").className = "state ACTIVE";
+
+  addLog("Demo reset to ACTIVE state");
+}
+
+function init() {
+  document.getElementById("currentState").textContent = currentState;
+  addLog("SIC Replay v7 initialized — HALTED is recoverable, self-transitions allowed");
+}
+init();
+</script>
+</body>
+</html>
