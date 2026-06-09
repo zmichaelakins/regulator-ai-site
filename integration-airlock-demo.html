@@ -3,336 +3,747 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SIC v7 • Kernel-Backed Demo</title>
+<title>Integration Airlock Demo — Regulator AI</title>
 <style>
-  :root {
-    --bg: #0f1117; --panel: #1a1d26; --accent: #3b82f6;
-    --green: #22c55e; --red: #ef4444; --yellow: #eab308;
-    --text: #e2e8f0; --text-muted: #94a3b8; --border: #334155;
-  }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
-  .header { background:#11151f; border-bottom:1px solid var(--border); padding:12px 16px; }
-  .header h1 { margin:0; font-size:17px; font-weight:600; }
-  .container { max-width:1100px; margin:0 auto; padding:12px; }
-  .zones { display:grid; grid-template-columns:1fr; gap:12px; }
-  @media (min-width: 860px) { .zones { grid-template-columns: 1fr 1.05fr 1fr; } }
+:root {
+  --void:    #070C1A;
+  --panel:   #0D1526;
+  --surface: #111D35;
+  --border:  #1A2B48;
+  --muted:   #243450;
+  --cyan:    #00C8F0;
+  --amber:   #FFB800;
+  --green:   #28C840;
+  --red:     #FF3830;
+  --gray:    #4A5C7A;
+  --text:    #B8CCE8;
+  --dim:     #5A6E90;
+  --white:   #E8F0FF;
+  --mono:    'Courier New', monospace;
+  --sans:    -apple-system, 'Segoe UI', system-ui, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px}
+body{background:var(--void);color:var(--text);font-family:var(--sans);min-height:100vh;line-height:1.6}
 
-  .zone { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:14px; }
-  .zone h2 { margin:0 0 10px 0; font-size:13px; font-weight:600; }
-  .external h2 { color:#f59e0b; }
-  .airlock h2 { color:#3b82f6; }
-  .target h2 { color:#22c55e; }
+/* HEADER */
+.hdr{background:var(--panel);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hdr-brand{font-family:var(--mono);font-size:.65rem;color:var(--cyan);letter-spacing:.2em;text-transform:uppercase;opacity:.8}
+.hdr-spec{font-family:var(--mono);font-size:.62rem;color:var(--dim);letter-spacing:.14em}
 
-  select, button { width:100%; padding:11px 12px; border-radius:8px; border:1px solid var(--border); background:#11151f; color:var(--text); font-size:14px; margin-bottom:8px; }
-  button { font-weight:600; cursor:pointer; }
-  .btn-safe { background:#166534; border-color:#22c55e; color:white; }
-  .btn-risky { background:#7f1d1d; border-color:#ef4444; color:white; }
-  .btn-override { background:#7f1d1d; border-color:#ef4444; color:white; font-size:15px; padding:13px; margin-top:6px; }
-  .btn-clear { width:auto; padding:3px 10px; font-size:10px; }
+/* HERO */
+.hero{max-width:980px;margin:0 auto;padding:40px 28px 28px}
+.hero-eye{font-family:var(--mono);font-size:.62rem;color:var(--cyan);letter-spacing:.22em;text-transform:uppercase;margin-bottom:12px}
+.hero-title{font-size:1.9rem;font-weight:700;color:var(--white);letter-spacing:-.02em;line-height:1.15;margin-bottom:18px}
+.hero-title span{color:var(--cyan)}
+.stmt{border-left:3px solid var(--amber);padding:12px 18px;background:rgba(255,184,0,.05);border-radius:0 5px 5px 0;font-size:.85rem;color:var(--white);line-height:1.5;margin-bottom:10px;font-style:italic}
+.invariant{border-left:3px solid var(--cyan);padding:10px 18px;background:rgba(0,200,240,.04);border-radius:0 5px 5px 0;font-size:.8rem;color:var(--text);line-height:1.5}
+.invariant strong{color:var(--cyan);font-style:normal}
 
-  .status { display:flex; align-items:center; gap:8px; padding:8px 10px; background:#11151f; border-radius:6px; margin-bottom:10px; font-size:13px; }
-  .dot { width:9px; height:9px; border-radius:50%; background:#64748b; }
-  .dot.UNTRUSTED { background:#f59e0b; }
-  .dot.AIRLOCK_REVIEW { background:#3b82f6; }
-  .dot.HOLD { background:#eab308; }
-  .dot.LIMITED_ACCESS { background:#22c55e; }
-  .dot.REJECTED, .dot.REVOKED { background:#ef4444; }
+/* COUNTERS */
+.counters{max-width:980px;margin:0 auto 20px;padding:0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.counter{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:14px 16px;text-align:center}
+.counter-val{font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--white);line-height:1}
+.counter-val.green{color:var(--green)}
+.counter-val.red{color:var(--red)}
+.counter-val.amber{color:var(--amber)}
+.counter-lbl{font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-top:4px}
 
-  .states { background:#11151f; border:1px solid var(--border); border-radius:8px; padding:10px; margin-bottom:10px; }
-  .st { padding:5px 8px; border-radius:5px; font-size:11px; font-weight:600; text-align:center; margin-bottom:3px; border:1px solid var(--border); }
-  .st.active { background:#1e3a8a; border-color:#3b82f6; color:white; }
+/* BOUNDARY VIZ */
+.bviz-wrap{max-width:980px;margin:0 auto 22px;padding:0 28px}
+.bviz{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:16px 22px}
+.bviz-lbl{font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.bviz-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bviz-node{font-family:var(--mono);font-size:.75rem;padding:7px 14px;border-radius:4px;border:1px solid var(--muted);color:var(--dim);transition:all .3s;white-space:nowrap}
+.bviz-node.active-ext{border-color:var(--cyan);color:var(--cyan);background:rgba(0,200,240,.08)}
+.bviz-node.active-airlock{border-color:var(--amber);color:var(--amber);background:rgba(255,184,0,.08)}
+.bviz-node.active-permit{border-color:var(--green);color:var(--green);background:rgba(40,200,64,.08)}
+.bviz-node.active-block{border-color:var(--red);color:var(--red);background:rgba(255,56,48,.08)}
+.bviz-node.active-lockout{border-color:var(--amber);color:var(--amber);background:rgba(255,184,0,.1)}
+.bviz-arrow{color:var(--dim);font-size:.9rem;transition:color .3s}
+.bviz-arrow.lit-permit{color:var(--green)}
+.bviz-arrow.lit-block{color:var(--red)}
+.bviz-arrow.lit-lockout{color:var(--amber)}
 
-  .kernel-decision { background:#11151f; border:1px solid #3b82f6; border-radius:8px; padding:10px; margin-bottom:10px; font-size:12px; display:none; }
-  .kernel-decision .label { color:#64748b; font-size:11px; }
-  .kernel-decision .value { font-weight:600; color:#93c5fd; }
+/* CONTROLS */
+.controls{max-width:980px;margin:0 auto 22px;padding:0 28px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid;cursor:pointer;background:transparent;transition:background .15s,color .15s}
+.btn-cyan{border-color:var(--cyan);color:var(--cyan)}.btn-cyan:hover{background:rgba(0,200,240,.1)}
+.btn-dim{border-color:var(--muted);color:var(--dim)}.btn-dim:hover{border-color:var(--gray);color:var(--text)}
+.btn-amber{border-color:var(--amber);color:var(--amber)}.btn-amber:hover{background:rgba(255,184,0,.08)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
 
-  .log { background:#11151f; border:1px solid var(--border); border-radius:8px; padding:10px; height:160px; overflow-y:auto; font-family:ui-monospace,monospace; font-size:11.5px; }
-  .log div { margin-bottom:3px; padding-left:4px; border-left:2px solid #334155; }
-  .log .audit { border-color:#3b82f6; }
-  .log .block { border-color:#ef4444; color:#fca5a5; }
-  .log .ok { border-color:#22c55e; color:#86efac; }
-  .log .ovr { border-color:#eab308; color:#fde047; }
+/* AUDIT CHAIN */
+.chain-wrap{max-width:980px;margin:0 auto 22px;padding:0 28px}
+.chain-bar{background:var(--panel);border:1px solid var(--border);border-radius:5px;padding:10px 16px;display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.68rem}
+.chain-lbl{color:var(--dim);letter-spacing:.1em;white-space:nowrap}
+.chain-hash{color:var(--amber);word-break:break-all;flex:1}
+.chain-ct{color:var(--cyan);white-space:nowrap}
 
-  .result { margin-top:10px; padding:10px; border-radius:8px; font-size:13px; display:none; }
-  .result.ok { background:#052e16; border:1px solid #22c55e; color:#86efac; }
-  .result.block { background:#450a0a; border:1px solid #ef4444; color:#fca5a5; }
+/* LAYOUT */
+.main-grid{max-width:980px;margin:0 auto;padding:0 28px 60px;display:grid;grid-template-columns:1fr 320px;gap:20px}
+@media(max-width:720px){.main-grid{grid-template-columns:1fr}}
 
-  .restricted { background:#11151f; border:1px solid var(--border); border-radius:8px; padding:10px; margin-top:8px; display:none; }
-  .restricted h4 { margin:0 0 6px 0; font-size:11px; color:#64748b; }
-  .op { font-size:12px; margin:2px 0; }
-  .op.ok { color:#22c55e; }
-  .op.no { color:#ef4444; }
+/* SCENARIO CARDS */
+.scenarios-col{}
+.scenarios-col h2{font-family:var(--mono);font-size:.62rem;color:var(--dim);letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:7px;overflow:hidden;margin-bottom:14px;transition:border-color .25s}
+.card.decided-PERMIT{border-color:rgba(40,200,64,.4)}
+.card.decided-BLOCK{border-color:rgba(255,56,48,.4)}
+.card.decided-LOCKOUT{border-color:rgba(255,184,0,.4)}
 
-  .footer { text-align:center; font-size:10px; color:#64748b; margin-top:16px; }
+.card-hdr{padding:14px 18px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border)}
+.card-meta{flex:1}
+.card-sid{font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.12em;margin-bottom:3px}
+.card-name{font-size:.95rem;font-weight:600;color:var(--white);margin-bottom:3px}
+.card-desc{font-size:.78rem;color:var(--dim);line-height:1.4}
+
+.fsm-badge{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;padding:4px 10px;border-radius:3px;border:1px solid var(--muted);color:var(--dim);white-space:nowrap;min-width:88px;text-align:center;transition:all .2s}
+.fsm-badge.EVALUATING{border-color:var(--cyan);color:var(--cyan);background:rgba(0,200,240,.06)}
+.fsm-badge.PERMITTED{border-color:var(--green);color:var(--green);background:rgba(40,200,64,.07)}
+.fsm-badge.BLOCKED{border-color:var(--red);color:var(--red);background:rgba(255,56,48,.07)}
+.fsm-badge.LOCKOUT{border-color:var(--amber);color:var(--amber);background:rgba(255,184,0,.07)}
+
+/* GATE PIPELINE */
+.pipeline{padding:14px 18px;display:flex;align-items:flex-start;gap:0;border-bottom:1px solid var(--border);overflow-x:auto}
+.gate-node{display:flex;flex-direction:column;align-items:center;flex:1;min-width:56px;position:relative;z-index:1}
+.gate-node+.gate-node::before{content:'';position:absolute;left:-50%;top:13px;width:100%;height:2px;background:var(--muted);z-index:0;transition:background .3s}
+.gate-node.pass+.gate-node::before{background:var(--green)}
+.gate-node.fail+.gate-node::before,.gate-node.lockout+.gate-node::before{background:var(--red)}
+.gate-dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--muted);background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.58rem;color:var(--dim);transition:all .25s;position:relative;z-index:2;margin-bottom:5px}
+.gate-node.active .gate-dot{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 7px rgba(0,200,240,.35)}
+.gate-node.pass   .gate-dot{border-color:var(--green);background:rgba(40,200,64,.12);color:var(--green)}
+.gate-node.fail   .gate-dot{border-color:var(--red);background:rgba(255,56,48,.12);color:var(--red)}
+.gate-node.lockout .gate-dot{border-color:var(--amber);background:rgba(255,184,0,.1);color:var(--amber)}
+.gate-lbl{font-family:var(--mono);font-size:.54rem;color:var(--dim);text-align:center;line-height:1.3;max-width:54px;transition:color .25s}
+.gate-node.pass .gate-lbl{color:var(--green)}
+.gate-node.fail .gate-lbl{color:var(--red)}
+.gate-node.lockout .gate-lbl{color:var(--amber)}
+
+/* RESULTS */
+.results{display:none;padding:16px 18px}
+.results.show{display:block}
+.decision-banner{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:5px;margin-bottom:14px}
+.decision-banner.PERMIT{background:rgba(40,200,64,.09);border:1px solid rgba(40,200,64,.28)}
+.decision-banner.BLOCK{background:rgba(255,56,48,.09);border:1px solid rgba(255,56,48,.28)}
+.decision-banner.LOCKOUT{background:rgba(255,184,0,.09);border:1px solid rgba(255,184,0,.28)}
+.dword{font-family:var(--mono);font-size:1.2rem;font-weight:700;letter-spacing:.08em;white-space:nowrap}
+.decision-banner.PERMIT .dword{color:var(--green)}
+.decision-banner.BLOCK  .dword{color:var(--red)}
+.decision-banner.LOCKOUT .dword{color:var(--amber)}
+.dreason{font-size:.8rem;color:var(--text);line-height:1.45}
+
+.section-lbl{font-family:var(--mono);font-size:.58rem;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:7px}
+.fsm-trans{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.fsm-s{font-family:var(--mono);font-size:.72rem;padding:3px 9px;border-radius:3px;border:1px solid var(--muted);color:var(--dim)}
+.fsm-s.cur{border-color:var(--cyan);color:var(--cyan)}
+.fsm-arr{color:var(--dim);font-size:.8rem}
+
+.gate-tbl{width:100%;border-collapse:collapse;margin-bottom:14px}
+.gate-tbl th{font-family:var(--mono);font-size:.58rem;color:var(--dim);letter-spacing:.1em;text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);text-transform:uppercase}
+.gate-tbl td{font-size:.76rem;padding:7px 8px;border-bottom:1px solid rgba(26,43,72,.6);vertical-align:top;color:var(--text)}
+.gate-tbl tr:last-child td{border-bottom:none}
+.gid{font-family:var(--mono);font-size:.64rem;color:var(--dim);white-space:nowrap}
+.gres{font-family:var(--mono);font-size:.68rem;font-weight:700;white-space:nowrap}
+.gres.PASS{color:var(--green)}.gres.FAIL{color:var(--red)}.gres.LOCKOUT{color:var(--amber)}.gres.SKIP{color:var(--dim)}
+
+.audit-rec{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:12px 14px}
+.audit-row{display:flex;gap:10px;font-family:var(--mono);font-size:.67rem;margin-bottom:3px;flex-wrap:wrap}
+.akey{color:var(--dim);min-width:110px}
+.aval{color:var(--cyan);word-break:break-all}
+.aval.hash{color:var(--amber)}
+.aval.green{color:var(--green)}.aval.red{color:var(--red)}.aval.gold{color:var(--amber)}
+
+.card-foot{padding:10px 18px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:center}
+.run-btn{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:4px;border:1px solid var(--cyan);color:var(--cyan);background:transparent;cursor:pointer;transition:background .15s}
+.run-btn:hover{background:rgba(0,200,240,.09)}
+.run-btn:disabled{opacity:.3;cursor:not-allowed}
+.exp-lbl{font-family:var(--mono);font-size:.62rem;color:var(--dim);margin-left:auto}
+
+/* TIMELINE COLUMN */
+.timeline-col{}
+.timeline-col h2{font-family:var(--mono);font-size:.62rem;color:var(--dim);letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.timeline{background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:14px;max-height:760px;overflow-y:auto}
+.tl-empty{font-family:var(--mono);font-size:.68rem;color:var(--dim);text-align:center;padding:24px 0;letter-spacing:.08em}
+.tl-event{border-bottom:1px solid var(--border);padding:10px 0;last-child{border:none}}
+.tl-event:last-child{border-bottom:none}
+.tl-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:3px}
+.tl-name{font-size:.78rem;color:var(--white);font-weight:600}
+.tl-dec{font-family:var(--mono);font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:3px}
+.tl-dec.PERMIT{background:rgba(40,200,64,.12);color:var(--green);border:1px solid rgba(40,200,64,.3)}
+.tl-dec.BLOCK{background:rgba(255,56,48,.12);color:var(--red);border:1px solid rgba(255,56,48,.3)}
+.tl-dec.LOCKOUT{background:rgba(255,184,0,.12);color:var(--amber);border:1px solid rgba(255,184,0,.3)}
+.tl-meta{font-family:var(--mono);font-size:.6rem;color:var(--dim)}
+.tl-hash{font-family:var(--mono);font-size:.58rem;color:var(--amber);word-break:break-all;margin-top:2px}
+
+/* FOOTER */
+.ftr{border-top:1px solid var(--border);padding:18px 28px;text-align:center;font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.1em}
 </style>
+
+<script type="application/json" id="airlock-config">
+{
+  "meta": {
+    "version": "2.0.0",
+    "spec": "REG-AI-0017",
+    "title": "Integration Airlock Demo",
+    "boundary": "AcquireCo_TargetCo_Integration_Boundary"
+  },
+  "boundary": {
+    "id": "IB-001",
+    "name": "AcquireCo / TargetCo Fleet Integration Boundary",
+    "acquirer": "AcquireCo Logistics",
+    "target": "TargetCo Fleet Systems"
+  },
+  "policy": {
+    "require_registration": true,
+    "require_authority_permit": true,
+    "block_ghost_assets": true,
+    "replay_lockout_enabled": true,
+    "minimum_authority_level": "STANDARD",
+    "commit_before_execute": true
+  },
+  "registered_assets": [
+    {
+      "asset_id": "AGENT-ROA-001",
+      "name": "Route Optimization Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false
+    },
+    {
+      "asset_id": "AGENT-FTA-002",
+      "name": "Fleet Telemetry Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false
+    },
+    {
+      "asset_id": "AGENT-LDA-003",
+      "name": "Legacy Dispatch Agent",
+      "type": "AI_AGENT",
+      "registration_status": "DECOMMISSIONED",
+      "authority_level": "NONE",
+      "approved_for_boundary_crossing": false,
+      "ghost": true,
+      "ghost_reason": "Decommissioned pre-acquisition asset. Not included in M&A asset transfer schedule. No successor liability assignment recorded."
+    }
+  ],
+  "gates": [
+    { "id": "G1", "name": "Identity Gate",      "short": "Identity",  "description": "Verify the requesting asset presents a valid, non-null identity credential." },
+    { "id": "G2", "name": "Registration Gate",  "short": "Registry",  "description": "Confirm the asset identity exists in the Integration Boundary Inventory as a registered asset." },
+    { "id": "G3", "name": "Policy Gate",        "short": "Policy",    "description": "Evaluate ghost status, registration status, and boundary crossing approval against active policy." },
+    { "id": "G4", "name": "Authority Gate",     "short": "Authority", "description": "Verify the asset holds a sufficient authority level per the minimum authority requirement." },
+    { "id": "G5", "name": "Boundary Gate",      "short": "Boundary",  "description": "Check for replay or duplicate event IDs. Enforce lockout on previously processed events." },
+    { "id": "G6", "name": "Audit Commit Gate",  "short": "Audit",     "description": "Commit the evaluation result to the append-only audit ledger before any integration action occurs." }
+  ],
+  "scenarios": [
+    {
+      "id": "S1",
+      "name": "Approved Agent Integration",
+      "description": "Route Optimization Agent requests boundary crossing under standard authority.",
+      "requesting_asset_id": "AGENT-ROA-001",
+      "event_id": "EVT-2026-001",
+      "replay": false,
+      "expected_decision": "PERMIT"
+    },
+    {
+      "id": "S2",
+      "name": "Ghost Asset Integration",
+      "description": "Legacy Dispatch Agent — decommissioned pre-acquisition — attempts boundary crossing.",
+      "requesting_asset_id": "AGENT-LDA-003",
+      "event_id": "EVT-2026-002",
+      "replay": false,
+      "expected_decision": "BLOCK"
+    },
+    {
+      "id": "S3",
+      "name": "Unauthorized Tool Integration",
+      "description": "Unknown external tool with no IBI registration attempts boundary crossing.",
+      "requesting_asset_id": "TOOL-UNKNOWN-999",
+      "event_id": "EVT-2026-003",
+      "replay": false,
+      "expected_decision": "BLOCK"
+    },
+    {
+      "id": "S4",
+      "name": "Duplicate / Replay Event",
+      "description": "Previously processed event ID re-submitted. Replay lockout enforced at Boundary Gate.",
+      "requesting_asset_id": "AGENT-ROA-001",
+      "event_id": "EVT-2026-001",
+      "replay": true,
+      "expected_decision": "LOCKOUT"
+    }
+  ]
+}
+</script>
+
 </head>
 <body>
 
-<div class="header">
-  <h1>SIC v7 • Kernel-Backed Demo</h1>
-  <div style="font-size:11px; color:#64748b;">Real Enforcement Kernel • file:// Compatible</div>
+<header class="hdr">
+  <div class="hdr-brand">Regulator AI Global</div>
+  <div class="hdr-spec">REG-AI-0017 · Supervisory Integration Containment · Integration Boundary Invariant</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eye">Integration Airlock Demo · Software Embodiment · Spec 0017</div>
+  <h1 class="hero-title">Integration <span>Airlock</span></h1>
+  <div class="stmt">
+    "Nothing crosses the integration boundary merely because software requests it.
+    Integration occurs only after deterministic supervisory containment permits the boundary crossing."
+  </div>
+  <div class="invariant">
+    <strong>Integration Boundary Invariant:</strong> No external asset, agent, tool, model, workflow,
+    or dataset may enter a protected runtime unless supervisory containment authorizes the boundary crossing.
+  </div>
 </div>
 
-<div class="container">
-
-  <div class="zones">
-
-    <!-- External -->
-    <div class="zone external">
-      <h2>External System (Acquired)</h2>
-      <select id="agentSelect">
-        <option>CRM-Agent</option>
-        <option>Finance-Agent</option>
-        <option>Support-Agent</option>
-        <option>Code-Agent</option>
-      </select>
-      <button id="btnSafe" class="btn-safe">Run Safe Transfer</button>
-      <button id="btnRisky" class="btn-risky">Run Risky Transfer</button>
-    </div>
-
-    <!-- Airlock -->
-    <div class="zone airlock">
-      <h2>Integration Airlock — SIC Kernel</h2>
-
-      <div class="status">
-        <div class="dot" id="dot"></div>
-        <div>
-          <strong id="state">UNTRUSTED</strong><br>
-          <span id="desc" style="font-size:11px;color:#64748b">Ready</span>
-        </div>
-      </div>
-
-      <div class="states">
-        <div class="st UNTRUSTED" id="s-UNTRUSTED">UNTRUSTED</div>
-        <div class="st AIRLOCK_REVIEW" id="s-AIRLOCK_REVIEW">AIRLOCK_REVIEW</div>
-        <div class="st HOLD" id="s-HOLD">HOLD</div>
-        <div class="st LIMITED_ACCESS" id="s-LIMITED_ACCESS">LIMITED_ACCESS</div>
-        <div class="st REJECTED" id="s-REJECTED">REJECTED</div>
-        <div class="st REVOKED" id="s-REVOKED">REVOKED</div>
-      </div>
-
-      <div class="kernel-decision" id="kernelBox">
-        <div class="label">LAST KERNEL DECISION</div>
-        <div class="value" id="kernelDecision"></div>
-      </div>
-
-      <button id="btnOverride" class="btn-override">EMERGENCY HUMAN OVERRIDE</button>
-    </div>
-
-    <!-- Target -->
-    <div class="zone target">
-      <h2>Target Environment</h2>
-      <div id="result" class="result"></div>
-      <div id="summary" style="font-size:12px;color:#64748b;margin-top:8px">No activity yet</div>
-
-      <div class="restricted" id="restricted">
-        <h4>Restricted Operations (LIMITED_ACCESS)</h4>
-        <div class="op ok">&#10003; Read telemetry &amp; logs</div>
-        <div class="op ok">&#10003; Submit change requests</div>
-        <div class="op no">&#10007; Data export / bulk transfer</div>
-        <div class="op no">&#10007; Direct code execution</div>
-        <div class="op no">&#10007; Agent spawning or escalation</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Audit Log -->
-  <div style="margin:8px 0 4px 0; font-size:12px; display:flex; justify-content:space-between; align-items:center;">
-    <strong>Audit Log (from Kernel)</strong>
-    <button id="btnClear" class="btn-clear">Clear</button>
-  </div>
-  <div class="log" id="log"></div>
-
-  <div class="footer">
-    All state transitions and decisions are produced by the embedded SIC Enforcement Kernel.<br>
-    This UI is display only.
-  </div>
-
+<div class="counters">
+  <div class="counter"><div class="counter-val" id="ct-total">0</div><div class="counter-lbl">Total Attempts</div></div>
+  <div class="counter"><div class="counter-val green" id="ct-permit">0</div><div class="counter-lbl">Permitted</div></div>
+  <div class="counter"><div class="counter-val red" id="ct-block">0</div><div class="counter-lbl">Blocked</div></div>
+  <div class="counter"><div class="counter-val amber" id="ct-lockout">0</div><div class="counter-lbl">Lockout</div></div>
 </div>
+
+<div class="bviz-wrap">
+  <div class="bviz">
+    <div class="bviz-lbl">Live Boundary Visualization</div>
+    <div class="bviz-flow">
+      <div class="bviz-node" id="bv-ext">External Asset</div>
+      <div class="bviz-arrow" id="bv-a1">→</div>
+      <div class="bviz-node" id="bv-airlock">Integration Airlock</div>
+      <div class="bviz-arrow" id="bv-a2">→</div>
+      <div class="bviz-node" id="bv-dest">Protected Runtime</div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="btn btn-cyan" id="runAllBtn">▶ Run All Scenarios</button>
+  <button class="btn btn-dim"  id="resetBtn">↺ Reset Audit Chain</button>
+  <button class="btn btn-amber" id="exportBtn">⬇ Export Replay Bundle</button>
+</div>
+
+<div class="chain-wrap">
+  <div class="chain-bar">
+    <span class="chain-lbl">AUDIT CHAIN HEAD</span>
+    <span class="chain-hash" id="chainHash">GENESIS — no events committed</span>
+    <span class="chain-ct" id="chainCt">0 events</span>
+  </div>
+</div>
+
+<div class="main-grid">
+  <div class="scenarios-col">
+    <h2>Scenarios</h2>
+    <div id="scenarioContainer"></div>
+  </div>
+  <div class="timeline-col">
+    <h2>Event Timeline</h2>
+    <div class="timeline" id="timeline">
+      <div class="tl-empty" id="tlEmpty">No events yet</div>
+    </div>
+  </div>
+</div>
+
+<footer class="ftr">
+  Regulator AI Global, Inc. · Integration Boundary Invariant · REG-AI-0017 · Commit-before-execute · Append-only audit
+</footer>
 
 <script>
-(function() {
-  "use strict";
+(function(){
+'use strict';
 
-  // ==================== SIC ENFORCEMENT KERNEL v7 ====================
-  var STATES = {
-    UNTRUSTED:      'UNTRUSTED',
-    AIRLOCK_REVIEW: 'AIRLOCK_REVIEW',
-    HOLD:           'HOLD',
-    LIMITED_ACCESS: 'LIMITED_ACCESS',
-    REJECTED:       'REJECTED',
-    REVOKED:        'REVOKED'
-  };
+// ── Load config ────────────────────────────────────────────────────────
+const CONFIG = JSON.parse(document.getElementById('airlock-config').textContent);
 
-  var currentState = STATES.UNTRUSTED;
+// ── State ──────────────────────────────────────────────────────────────
+let auditChain     = [];
+let processedEvts  = new Set();
+let counters       = { total:0, permit:0, block:0, lockout:0 };
+let replayLog      = [];
 
-  function kernelEvaluate(agent, transferType) {
-    var violations = [];
-    if (transferType === 'risky') {
-      violations.push('DATA_EXPORT_VIOLATION');
-    }
-    return {
-      decision:     violations.length > 0 ? 'REJECT' : 'APPROVE',
-      violations:   violations,
-      agent:        agent,
-      transferType: transferType,
-      timestamp:    new Date().toISOString()
-    };
+// ── Hash (deterministic, no crypto API) ───────────────────────────────
+function hash(str) {
+  let h1 = 0x811c9dc5, h2 = 0x5851f42d;
+  for (let i = 0; i < str.length; i++) {
+    h1 ^= str.charCodeAt(i); h1 = Math.imul(h1, 0x01000193) >>> 0;
+    h2 ^= str.charCodeAt(str.length - 1 - i); h2 = Math.imul(h2, 0xc4ceb9fe) >>> 0;
   }
+  const hex = n => (n >>> 0).toString(16).padStart(8,'0');
+  return [h1,h2,h1^h2,(h1+h2)>>>0,Math.imul(h1,3)>>>0,Math.imul(h2,7)>>>0,(h1^0xdeadbeef)>>>0,(h2^0xcafe0000)>>>0].map(hex).join('');
+}
+function headHash() { return auditChain.length ? auditChain[auditChain.length-1].entry_hash : 'GENESIS'; }
+function commitEntry(payload) {
+  const prev = headHash();
+  payload.prev_hash   = prev;
+  payload.entry_hash  = hash(prev + '|' + JSON.stringify(payload));
+  payload.seq         = auditChain.length + 1;
+  auditChain.push(payload);
+  updateChainDisplay();
+  return payload;
+}
 
-  function kernelGetNextState(decision) {
-    if (decision === 'REJECT')  return STATES.REJECTED;
-    if (decision === 'APPROVE') return STATES.LIMITED_ACCESS;
-    return currentState;
-  }
+function updateChainDisplay() {
+  document.getElementById('chainHash').textContent = headHash() === 'GENESIS' ? 'GENESIS — no events committed' : headHash();
+  document.getElementById('chainCt').textContent   = auditChain.length + ' event' + (auditChain.length!==1?'s':'');
+}
 
-  function kernelHumanOverride() {
-    return (currentState === STATES.LIMITED_ACCESS) ? STATES.HOLD : STATES.REVOKED;
-  }
+// ── Counter update ─────────────────────────────────────────────────────
+function bumpCounter(decision) {
+  counters.total++;
+  if (decision==='PERMIT')  counters.permit++;
+  if (decision==='BLOCK')   counters.block++;
+  if (decision==='LOCKOUT') counters.lockout++;
+  document.getElementById('ct-total').textContent   = counters.total;
+  document.getElementById('ct-permit').textContent  = counters.permit;
+  document.getElementById('ct-block').textContent   = counters.block;
+  document.getElementById('ct-lockout').textContent = counters.lockout;
+}
 
-  // ==================== UI HELPERS ====================
-  var DESC = {
-    UNTRUSTED:      'No active transfer session',
-    AIRLOCK_REVIEW: 'Kernel evaluating transfer request',
-    HOLD:           'Transfer paused — policy or override',
-    LIMITED_ACCESS: 'Restricted access granted under supervision',
-    REJECTED:       'Transfer blocked by kernel (invariant violation)',
-    REVOKED:        'Access forcibly revoked by human override'
-  };
+// ── Boundary viz update ────────────────────────────────────────────────
+function updateBviz(assetName, decision) {
+  const ext     = document.getElementById('bv-ext');
+  const airlock = document.getElementById('bv-airlock');
+  const dest    = document.getElementById('bv-dest');
+  const a1      = document.getElementById('bv-a1');
+  const a2      = document.getElementById('bv-a2');
 
-  function el(id) { return document.getElementById(id); }
+  // Reset
+  ext.className = airlock.className = dest.className = 'bviz-node';
+  a1.className  = a2.className = 'bviz-arrow';
 
-  function setState(newState, description) {
-    currentState = newState;
+  ext.textContent = assetName;
+  ext.classList.add('active-ext');
+  airlock.classList.add('active-airlock');
 
-    var sts = document.querySelectorAll('.st');
-    for (var i = 0; i < sts.length; i++) { sts[i].classList.remove('active'); }
-    var activeEl = el('s-' + newState);
-    if (activeEl) { activeEl.classList.add('active'); }
-
-    el('state').textContent = newState;
-    el('desc').textContent  = description || DESC[newState] || '';
-    el('dot').className     = 'dot ' + newState;
-    el('restricted').style.display = (newState === STATES.LIMITED_ACCESS) ? 'block' : 'none';
-  }
-
-  function showKernelDecision(result) {
-    var box = el('kernelBox');
-    var val = el('kernelDecision');
-    box.style.display = 'block';
-    if (result.decision === 'REJECT') {
-      val.textContent  = 'REJECTED \u2014 ' + result.violations.join(', ');
-      val.style.color  = '#fca5a5';
-    } else {
-      val.textContent  = 'APPROVED \u2014 LIMITED_ACCESS granted';
-      val.style.color  = '#86efac';
-    }
-  }
-
-  function addLog(msg, type) {
-    var log  = el('log');
-    var div  = document.createElement('div');
-    div.className   = type || 'audit';
-    var t = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' });
-    div.textContent = '[' + t + '] ' + msg;
-    log.appendChild(div);
-    log.scrollTop = log.scrollHeight;
-  }
-
-  function showResult(success, text) {
-    var p = el('result');
-    p.style.display = 'block';
-    p.className     = success ? 'result ok' : 'result block';
-    p.textContent   = text;
-    el('summary').textContent = success
-      ? '\u2713 Kernel granted LIMITED_ACCESS'
-      : '\u2717 Kernel blocked transfer';
-    el('summary').style.color = success ? '#86efac' : '#fca5a5';
-  }
-
-  // ==================== ACTION HANDLERS ====================
-  function handleSafeTransfer() {
-    var agent = el('agentSelect').value;
-    el('result').style.display = 'none';
-
-    var kr = kernelEvaluate(agent, 'safe');
-    addLog('Transfer request: ' + agent + ' (safe)', 'audit');
-    showKernelDecision(kr);
-    setState(STATES.AIRLOCK_REVIEW, 'Kernel evaluating...');
-
-    setTimeout(function() {
-      var next = kernelGetNextState(kr.decision);
-      setState(next);
-      if (next === STATES.LIMITED_ACCESS) {
-        showResult(true, 'LIMITED_ACCESS GRANTED — Kernel approved under restricted operations. Audit event committed.');
-        addLog('State \u2192 LIMITED_ACCESS (approved by kernel)', 'ok');
-      } else {
-        showResult(false, 'TRANSFER REJECTED — Kernel blocked: ' + kr.violations.join(', '));
-        addLog('State \u2192 REJECTED (kernel blocked)', 'block');
-      }
-    }, 700);
-  }
-
-  function handleRiskyTransfer() {
-    var agent = el('agentSelect').value;
-    el('result').style.display = 'none';
-
-    var kr = kernelEvaluate(agent, 'risky');
-    addLog('Transfer request: ' + agent + ' (risky)', 'audit');
-    showKernelDecision(kr);
-    setState(STATES.AIRLOCK_REVIEW, 'Kernel evaluating...');
-
-    setTimeout(function() {
-      var next = kernelGetNextState(kr.decision);
-      setState(next);
-      showResult(false, 'REJECTED \u2014 Kernel blocked: ' + kr.violations.join(', '));
-      addLog('State \u2192 REJECTED (' + kr.violations.join(', ') + ')', 'block');
-    }, 700);
-  }
-
-  function handleOverride() {
-    if (currentState !== STATES.LIMITED_ACCESS && currentState !== STATES.HOLD) {
-      addLog('Override attempted \u2014 no active restricted session', 'ovr');
-      return;
-    }
-    var next = kernelHumanOverride();
-    addLog('EMERGENCY HUMAN OVERRIDE \u2192 forcing ' + next, 'ovr');
-    setState(next, 'Human authority asserted');
-
-    var p = el('result');
-    p.style.display = 'block';
-    p.className     = 'result block';
-    p.textContent   = 'OVERRIDE EXECUTED \u2014 Kernel forced state to ' + next + '. All further operations blocked until review.';
-    el('summary').textContent = '\u2717 Forcibly suspended by human override';
-    el('summary').style.color = '#fca5a5';
-  }
-
-  function handleClear() {
-    el('log').innerHTML = '';
-  }
-
-  // ==================== INIT ====================
-  function init() {
-    setState(STATES.UNTRUSTED);
-    addLog('SIC Enforcement Kernel v7 initialized', 'audit');
-    addLog('Deterministic state machine + policy engine active', 'audit');
-
-    el('btnSafe').addEventListener('click', handleSafeTransfer);
-    el('btnRisky').addEventListener('click', handleRiskyTransfer);
-    el('btnOverride').addEventListener('click', handleOverride);
-    el('btnClear').addEventListener('click', handleClear);
-  }
-
-  // Bulletproof DOM-ready — works in file://, email clients, all Chrome versions
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+  if (decision === 'PERMIT') {
+    dest.textContent = 'PERMITTED — Protected Runtime';
+    dest.classList.add('active-permit');
+    a1.classList.add('lit-permit'); a2.classList.add('lit-permit');
+  } else if (decision === 'LOCKOUT') {
+    dest.textContent = 'LOCKOUT';
+    dest.classList.add('active-lockout');
+    a1.classList.add('lit-lockout'); a2.classList.add('lit-lockout');
   } else {
-    init();
+    dest.textContent = 'BLOCKED';
+    dest.classList.add('active-block');
+    a1.classList.add('lit-block'); a2.classList.add('lit-block');
+  }
+}
+
+// ── Timeline entry ─────────────────────────────────────────────────────
+function addTimeline(scenario, decision, entry) {
+  const tl = document.getElementById('timeline');
+  document.getElementById('tlEmpty').style.display = 'none';
+  const div = document.createElement('div');
+  div.className = 'tl-event';
+  div.innerHTML = `
+    <div class="tl-top">
+      <span class="tl-name">${scenario.name}</span>
+      <span class="tl-dec ${decision}">${decision}</span>
+    </div>
+    <div class="tl-meta">Seq #${entry.seq} · ${scenario.event_id} · ${scenario.requesting_asset_id}</div>
+    <div class="tl-hash">${entry.entry_hash}</div>`;
+  tl.insertBefore(div, tl.children[1] || null);
+}
+
+// ── Gate evaluation (policy-driven, no per-scenario hardcoding) ────────
+function evaluate(scenario) {
+  const steps    = [];
+  const assets   = CONFIG.registered_assets;
+  const policy   = CONFIG.policy;
+  const gates    = CONFIG.gates;
+  let decision   = null;
+  let blockGate  = null;
+
+  const asset = assets.find(a => a.asset_id === scenario.requesting_asset_id);
+  const authorityRank = { NONE:0, LIMITED:1, STANDARD:2, ELEVATED:3, SOVEREIGN:4 };
+
+  const step = (g, result, detail) => steps.push({ gate_id:g.id, gate_name:g.name, result, detail });
+
+  // G1 — Identity
+  const g1 = gates[0];
+  if (!scenario.requesting_asset_id || !scenario.requesting_asset_id.trim()) {
+    step(g1,'FAIL','No identity credential presented.'); decision='BLOCK'; blockGate='G1';
+  } else {
+    step(g1,'PASS','Identity credential present: '+scenario.requesting_asset_id);
   }
 
-}());
+  // G2 — Registration
+  const g2 = gates[1];
+  if (!decision) {
+    if (!asset) {
+      step(g2,'FAIL','Asset ID '+scenario.requesting_asset_id+' not found in Integration Boundary Inventory. No registration record exists.');
+      decision='BLOCK'; blockGate='G2';
+    } else {
+      step(g2,'PASS','Asset found in IBI: '+asset.name+' ['+asset.registration_status+']');
+    }
+  } else { step(g2,'SKIP','Skipped — upstream gate failed.'); }
+
+  // G3 — Policy
+  const g3 = gates[2];
+  if (!decision) {
+    if (policy.block_ghost_assets && asset.ghost) {
+      step(g3,'FAIL','Ghost asset detected. '+(asset.ghost_reason||'Asset flagged as ghost in IBI.')+' Boundary crossing blocked per Integration Boundary Invariant.');
+      decision='BLOCK'; blockGate='G3';
+    } else if (asset.registration_status !== 'REGISTERED') {
+      step(g3,'FAIL','Registration status is '+asset.registration_status+'. Only REGISTERED assets may cross the boundary.');
+      decision='BLOCK'; blockGate='G3';
+    } else if (!asset.approved_for_boundary_crossing) {
+      step(g3,'FAIL','Asset not approved for boundary crossing per policy.');
+      decision='BLOCK'; blockGate='G3';
+    } else {
+      step(g3,'PASS','Policy evaluation passed. Registered, non-ghost, approved for boundary crossing.');
+    }
+  } else { step(g3,'SKIP','Skipped — upstream gate failed.'); }
+
+  // G4 — Authority
+  const g4 = gates[3];
+  if (!decision) {
+    const aRank = authorityRank[asset.authority_level] ?? 0;
+    const mRank = authorityRank[policy.minimum_authority_level] ?? 2;
+    if (aRank < mRank) {
+      step(g4,'FAIL','Authority level '+asset.authority_level+' below required minimum '+policy.minimum_authority_level+'.');
+      decision='BLOCK'; blockGate='G4';
+    } else {
+      step(g4,'PASS','Authority level '+asset.authority_level+' satisfies minimum ('+policy.minimum_authority_level+').');
+    }
+  } else { step(g4,'SKIP','Skipped — upstream gate failed.'); }
+
+  // G5 — Boundary / Replay
+  const g5 = gates[4];
+  if (!decision) {
+    if (policy.replay_lockout_enabled && processedEvts.has(scenario.event_id)) {
+      step(g5,'LOCKOUT','Event ID '+scenario.event_id+' already processed. Replay detected. Lockout enforced.');
+      decision='LOCKOUT'; blockGate='G5';
+    } else {
+      step(g5,'PASS','Event ID '+scenario.event_id+' is unique. No replay detected.');
+    }
+  } else { step(g5,'SKIP','Skipped — upstream gate failed.'); }
+
+  // G6 — Audit Commit (always runs)
+  const g6 = gates[5];
+  if (!decision) decision='PERMIT';
+  const ts = new Date().toISOString();
+  const auditPayload = { event_id:scenario.event_id, scenario_id:scenario.id,
+    asset_id:scenario.requesting_asset_id, decision, blocking_gate:blockGate, timestamp:ts };
+  const committed = commitEntry(auditPayload);
+
+  if (decision !== 'LOCKOUT') processedEvts.add(scenario.event_id);
+
+  const g6detail = decision==='PERMIT'
+    ? 'PERMIT committed to audit ledger. Seq#'+committed.seq+'. Commit-before-execute satisfied. Hash: '+committed.entry_hash.slice(0,20)+'…'
+    : 'Decision ('+decision+') committed to audit ledger. Seq#'+committed.seq+'. Hash: '+committed.entry_hash.slice(0,20)+'…';
+  step(g6, decision==='LOCKOUT'?'LOCKOUT':decision==='PERMIT'?'PASS':'FAIL', g6detail);
+
+  return { steps, decision, audit:committed };
+}
+
+// ── Plain-English reason ───────────────────────────────────────────────
+function reason(scenario, result) {
+  const asset = CONFIG.registered_assets.find(a => a.asset_id === scenario.requesting_asset_id);
+  if (result.decision === 'PERMIT') {
+    return (asset?.name||scenario.requesting_asset_id)+' passed all six supervisory gates. '
+      +'Identity verified, registration confirmed in IBI, policy evaluation cleared, '
+      +'authority sufficient, no replay detected, and the PERMIT decision was committed '
+      +'to the audit ledger before any integration action proceeded.';
+  }
+  if (result.decision === 'LOCKOUT') {
+    return 'Event ID '+scenario.event_id+' was previously processed and exists in the audit chain. '
+      +'Replay lockout prevents re-execution of an already-committed boundary event. '
+      +'This enforces replay prevention at the Boundary Gate — not a denial of the underlying asset.';
+  }
+  const failed = result.steps.find(s => s.result==='FAIL');
+  if (!failed) return 'Integration blocked by policy.';
+  if (failed.gate_id==='G2') {
+    return 'Asset '+scenario.requesting_asset_id+' has no record in the Integration Boundary Inventory. '
+      +'Unregistered assets are structurally excluded from the boundary.';
+  }
+  if (failed.gate_id==='G3' && asset?.ghost) {
+    return (asset.name||'Asset')+' is a ghost asset: '+(asset.ghost_reason||'decommissioned or not transferred in M&A schedule.')
+      +' Ghost assets represent a successor liability risk. The Integration Boundary Invariant blocks all ghost asset crossings unconditionally.';
+  }
+  return failed.detail;
+}
+
+// ── Render pipeline ────────────────────────────────────────────────────
+function renderPipeline(gateIds, steps) {
+  return gateIds.map((gid,idx) => {
+    const s   = steps ? steps.find(x=>x.gate_id===gid) : null;
+    const cls = s ? (s.result==='PASS'?'pass':s.result==='FAIL'?'fail':s.result==='LOCKOUT'?'lockout':'') : '';
+    const sym = s ? (s.result==='PASS'?'✓':s.result==='FAIL'?'✕':s.result==='LOCKOUT'?'⚠':gid) : gid;
+    const short = CONFIG.gates[idx]?.short || gid;
+    return `<div class="gate-node ${cls}"><div class="gate-dot">${sym}</div><div class="gate-lbl">${gid}<br>${short}</div></div>`;
+  }).join('');
+}
+
+// ── Build card ─────────────────────────────────────────────────────────
+function buildCard(scenario) {
+  const gIds = CONFIG.gates.map(g=>g.id);
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.id = 'card-'+scenario.id;
+  card.innerHTML = `
+    <div class="card-hdr">
+      <div class="card-meta">
+        <div class="card-sid">${scenario.id} · ${scenario.event_id}${scenario.replay?' · REPLAY':''}</div>
+        <div class="card-name">${scenario.name}</div>
+        <div class="card-desc">${scenario.description}</div>
+      </div>
+      <div class="fsm-badge" id="fsm-${scenario.id}">IDLE</div>
+    </div>
+    <div class="pipeline" id="pipe-${scenario.id}">${renderPipeline(gIds,null)}</div>
+    <div class="results" id="res-${scenario.id}"></div>
+    <div class="card-foot">
+      <button class="run-btn" id="rb-${scenario.id}">▶ Run</button>
+      <span class="exp-lbl">Expected: ${scenario.expected_decision}</span>
+    </div>`;
+  card.querySelector('#rb-'+scenario.id).addEventListener('click', ()=>runScenario(scenario));
+  return card;
+}
+
+// ── Run scenario ───────────────────────────────────────────────────────
+function runScenario(scenario) {
+  const btn    = document.getElementById('rb-'+scenario.id);
+  const badge  = document.getElementById('fsm-'+scenario.id);
+  const pipe   = document.getElementById('pipe-'+scenario.id);
+  const resEl  = document.getElementById('res-'+scenario.id);
+  const card   = document.getElementById('card-'+scenario.id);
+  const gIds   = CONFIG.gates.map(g=>g.id);
+
+  btn.disabled = true;
+  card.className = 'card';
+  resEl.className = 'results';
+  resEl.innerHTML = '';
+  badge.className = 'fsm-badge EVALUATING';
+  badge.textContent = 'EVALUATING';
+
+  const result = evaluate(scenario);
+
+  // Animate gates
+  const delay = 240;
+  gIds.forEach((gid,i) => {
+    setTimeout(()=>{
+      pipe.innerHTML = renderPipeline(gIds, result.steps.slice(0,i+1));
+      if (i===gIds.length-1) {
+        setTimeout(()=>showResult(scenario,result,card,badge,resEl), delay);
+      }
+    }, i*delay);
+  });
+}
+
+function showResult(scenario, result, card, badge, resEl) {
+  const fsmLabel = result.decision==='PERMIT'?'PERMITTED':result.decision;
+  badge.className = 'fsm-badge '+fsmLabel;
+  badge.textContent = fsmLabel;
+  card.className = 'card decided-'+result.decision;
+
+  const states = ['IDLE','EVALUATING',fsmLabel];
+  const fsmHtml = states.map((s,i)=>
+    `<span class="fsm-s${i===states.length-1?' cur':''}">${s}</span>${i<states.length-1?'<span class="fsm-arr">→</span>':''}`
+  ).join('');
+
+  const gateRows = result.steps.map(s=>`
+    <tr>
+      <td class="gid">${s.gate_id}</td>
+      <td>${s.gate_name}</td>
+      <td class="gres ${s.result==='SKIP'?'SKIP':s.result}">${s.result}</td>
+      <td style="font-size:.72rem;color:var(--dim)">${s.detail}</td>
+    </tr>`).join('');
+
+  const a = result.audit;
+  const dval = result.decision==='PERMIT'?'green':result.decision==='LOCKOUT'?'gold':'red';
+
+  resEl.innerHTML = `
+    <div class="decision-banner ${result.decision}">
+      <div class="dword">${result.decision}</div>
+      <div class="dreason">${reason(scenario,result)}</div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div class="section-lbl">FSM State Transition</div>
+      <div class="fsm-trans">${fsmHtml}</div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div class="section-lbl">Gate-by-Gate Evaluation</div>
+      <table class="gate-tbl">
+        <thead><tr><th>Gate</th><th>Name</th><th>Result</th><th>Detail</th></tr></thead>
+        <tbody>${gateRows}</tbody>
+      </table>
+    </div>
+    <div class="section-lbl">Audit Ledger Entry</div>
+    <div class="audit-rec">
+      <div class="audit-row"><span class="akey">seq</span><span class="aval">${a.seq}</span></div>
+      <div class="audit-row"><span class="akey">event_id</span><span class="aval">${a.event_id}</span></div>
+      <div class="audit-row"><span class="akey">asset_id</span><span class="aval">${a.asset_id}</span></div>
+      <div class="audit-row"><span class="akey">decision</span><span class="aval ${dval}">${a.decision}</span></div>
+      <div class="audit-row"><span class="akey">blocking_gate</span><span class="aval">${a.blocking_gate||'—'}</span></div>
+      <div class="audit-row"><span class="akey">timestamp</span><span class="aval">${a.timestamp}</span></div>
+      <div class="audit-row"><span class="akey">prev_hash</span><span class="aval hash">${a.prev_hash}</span></div>
+      <div class="audit-row"><span class="akey">entry_hash</span><span class="aval hash">${a.entry_hash}</span></div>
+    </div>`;
+  resEl.classList.add('show');
+
+  // Log for replay export
+  replayLog.push({ scenario, result: { steps:result.steps, decision:result.decision }, audit:a });
+
+  bumpCounter(result.decision);
+  addTimeline(scenario, result.decision, a);
+  updateBviz(
+    CONFIG.registered_assets.find(x=>x.asset_id===scenario.requesting_asset_id)?.name || scenario.requesting_asset_id,
+    result.decision
+  );
+}
+
+// ── Global controls ────────────────────────────────────────────────────
+document.getElementById('runAllBtn').addEventListener('click', ()=>{
+  CONFIG.scenarios.forEach((sc,i)=>{
+    setTimeout(()=>runScenario(sc), i*(CONFIG.gates.length*240+600));
+  });
+});
+
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  auditChain=[]; processedEvts.clear(); counters={total:0,permit:0,block:0,lockout:0}; replayLog=[];
+  updateChainDisplay();
+  ['ct-total','ct-permit','ct-block','ct-lockout'].forEach(id=>document.getElementById(id).textContent='0');
+  document.getElementById('tlEmpty').style.display='';
+  // Remove timeline events
+  Array.from(document.querySelectorAll('.tl-event')).forEach(e=>e.remove());
+  // Reset viz
+  ['bv-ext','bv-airlock','bv-dest'].forEach(id=>{ const el=document.getElementById(id); el.className='bviz-node'; });
+  document.getElementById('bv-ext').textContent='External Asset';
+  document.getElementById('bv-dest').textContent='Protected Runtime';
+  ['bv-a1','bv-a2'].forEach(id=>document.getElementById(id).className='bviz-arrow');
+  // Rebuild cards
+  const c=document.getElementById('scenarioContainer'); c.innerHTML='';
+  CONFIG.scenarios.forEach(sc=>c.appendChild(buildCard(sc)));
+});
+
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  if (!replayLog.length) { alert('No events to export. Run at least one scenario first.'); return; }
+  const bundle = {
+    meta:{ export_time:new Date().toISOString(), spec:'REG-AI-0017', title:'Integration Airlock Demo — Replay Bundle',
+           chain_head:headHash(), event_count:auditChain.length },
+    configuration: CONFIG,
+    audit_chain:   auditChain,
+    replay_log:    replayLog
+  };
+  const a=document.createElement('a');
+  a.href='data:application/json,'+encodeURIComponent(JSON.stringify(bundle,null,2));
+  a.download='integration-airlock-replay-'+Date.now()+'.json';
+  a.click();
+});
+
+// ── Init ───────────────────────────────────────────────────────────────
+(function init(){
+  const c=document.getElementById('scenarioContainer');
+  CONFIG.scenarios.forEach(sc=>c.appendChild(buildCard(sc)));
+})();
+
+})();
 </script>
 </body>
 </html>
