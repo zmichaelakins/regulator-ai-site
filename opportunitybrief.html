@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regulator AI Global — Opportunity Brief · June 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  /* ── TOKENS ───────────────────────────────────────────────── */
+  :root {
+    --navy:     #0B1F3A;
+    --navy-mid: #112847;
+    --navy-lt:  #1A3A5C;
+    --cyan:     #0094C6;
+    --cyan-dim: #0078A8;
+    --gold:     #C9A84C;
+    --gold-dim: #A8893A;
+    --white:    #FFFFFF;
+    --off:      #F0F4F8;
+    --muted:    #8BA3BD;
+    --rule:     #1E3A5A;
+    --text:     #D4E2F0;
+    --text-dim: #8BA3BD;
+
+    --mono: "IBM Plex Mono", monospace;
+    --sans: "IBM Plex Sans", sans-serif;
+    --serif: "IBM Plex Serif", serif;
+
+    --page: 820px;
+    --gutter: 48px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { background: #07121F; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--navy);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PRINT WRAPPER ────────────────────────────────────────── */
+  .page {
+    max-width: var(--page);
+    margin: 0 auto;
+    background: var(--navy);
+    position: relative;
+  }
+
+  /* ── RUNNING HEADER ───────────────────────────────────────── */
+  .running-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px var(--gutter);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    background: rgba(11, 31, 58, 0.97);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+
+  .running-header .wordmark {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--cyan);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .running-header .conf {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── COVER ────────────────────────────────────────────────── */
+  .cover {
+    padding: 72px var(--gutter) 60px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,180,216,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .cover-title {
+    font-family: var(--sans);
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+
+  .cover-sub {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cyan);
+    margin-bottom: 36px;
+    line-height: 1.3;
+  }
+
+  .cover-rule {
+    width: 64px;
+    height: 3px;
+    background: var(--gold);
+    margin-bottom: 36px;
+  }
+
+  .cover-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+  }
+
+  .cover-meta-item {
+    padding: 20px 24px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .cover-meta-item:last-child { border-right: none; }
+
+  .meta-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .meta-value {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .meta-value.accent { color: var(--cyan); }
+
+  .meta-sub {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+
+  /* ── SECTIONS ─────────────────────────────────────────────── */
+  .section {
+    padding: 52px var(--gutter);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section:last-of-type { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .section-title {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .section-title-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    margin-bottom: 4px;
+  }
+
+  p {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  p strong {
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  /* ── CALLOUT BOX ──────────────────────────────────────────── */
+  .callout {
+    background: var(--navy-mid);
+    border-left: 3px solid var(--gold);
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+
+  .callout-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .callout p {
+    font-size: 15px;
+    margin-bottom: 0;
+    color: var(--text);
+  }
+
+  .callout p strong { color: var(--cyan); }
+
+  /* ── ASSET GRID ───────────────────────────────────────────── */
+  .asset-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 24px 0;
+  }
+
+  .asset-card {
+    background: var(--navy-mid);
+    padding: 24px 22px;
+  }
+
+  .asset-card-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .asset-list {
+    list-style: none;
+  }
+
+  .asset-list li {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(30,58,90,0.5);
+    padding-left: 14px;
+    position: relative;
+    font-weight: 300;
+  }
+
+  .asset-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  .asset-list li:last-child { border-bottom: none; }
+
+  /* ── PHASE TABLE ──────────────────────────────────────────── */
+  .phase-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 13.5px;
+  }
+
+  .phase-table thead tr {
+    background: var(--navy-lt);
+  }
+
+  .phase-table thead th {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .phase-table tbody tr {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .phase-table tbody tr:last-child { border-bottom: none; }
+
+  .phase-table tbody tr.active-row {
+    background: rgba(0, 180, 216, 0.05);
+  }
+
+  .phase-table td {
+    padding: 16px;
+    vertical-align: top;
+    color: var(--text);
+    font-weight: 300;
+  }
+
+  .phase-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .phase-badge.complete { color: #4CAF7A; }
+  .phase-badge.active   { color: var(--cyan); }
+  .phase-badge.pending  { color: var(--muted); }
+
+  .status-pill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  .status-pill.complete { background: rgba(76,175,122,0.12); color: #4CAF7A; border: 1px solid rgba(76,175,122,0.3); }
+  .status-pill.active   { background: rgba(0,180,216,0.12);  color: var(--cyan); border: 1px solid rgba(0,180,216,0.3); }
+  .status-pill.pending  { background: rgba(139,163,189,0.08); color: var(--muted); border: 1px solid rgba(139,163,189,0.2); }
+
+  /* ── PATHS ────────────────────────────────────────────────── */
+  .paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 24px 0;
+  }
+
+  .path-card {
+    background: var(--navy-mid);
+    padding: 26px 22px;
+  }
+
+  .path-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .path-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .path-body {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    font-weight: 300;
+    margin-bottom: 0;
+  }
+
+  /* ── DEADLINE STRIP ───────────────────────────────────────── */
+  .deadline-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 24px 0;
+  }
+
+  .deadline-item {
+    background: var(--navy-mid);
+    padding: 22px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .deadline-date {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cyan);
+    white-space: nowrap;
+    line-height: 1.3;
+    min-width: 110px;
+  }
+
+  .deadline-desc {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  /* ── CLOSING THESIS ───────────────────────────────────────── */
+  .thesis {
+    background: var(--navy-lt);
+    border: 1px solid var(--cyan-dim);
+    padding: 36px 40px;
+    margin: 32px 0 0;
+    position: relative;
+  }
+
+  .thesis::before {
+    content: '"';
+    position: absolute;
+    top: 12px; left: 24px;
+    font-family: var(--serif);
+    font-size: 80px;
+    color: rgba(0,180,216,0.12);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .thesis-text {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.75;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── DOMAIN TAGS ──────────────────────────────────────────── */
+  .domain-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0 8px;
+  }
+
+  .domain-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    background: var(--navy-mid);
+  }
+
+  /* ── FOOTER ───────────────────────────────────────────────── */
+  .doc-footer {
+    padding: 28px var(--gutter);
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--navy-mid);
+  }
+
+  .doc-footer .footer-left {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+  }
+
+  .doc-footer .footer-right {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+  }
+
+  /* ── DIVIDER ──────────────────────────────────────────────── */
+  .kicker {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+
+  /* ── ADVISOR BLOCK ────────────────────────────────────────── */
+  .advisor-list {
+    list-style: none;
+    margin: 16px 0 0;
+  }
+
+  .advisor-list li {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.7;
+    padding: 14px 0 14px 20px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .advisor-list li:last-child { border-bottom: none; }
+
+  .advisor-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 22px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .advisor-list li strong {
+    color: var(--white);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+
+  /* ── CTA BLOCK ────────────────────────────────────────────── */
+  .cta-block {
+    background: var(--navy-lt);
+    border-top: 3px solid var(--gold);
+    padding: 52px var(--gutter) 48px;
+    text-align: center;
+  }
+
+  .cta-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .cta-headline {
+    font-family: var(--sans);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .cta-body {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 36px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  /* ── CONTACT BLOCK ───────────────────────────────────────── */
+  .contact-block {
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-process {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.75;
+    margin-bottom: 28px;
+  }
+
+  .contact-email {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--navy);
+    background: var(--gold);
+    padding: 14px 36px;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: background 0.15s;
+  }
+
+  .contact-email:hover { background: var(--gold-dim); }
+
+  .contact-name {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    line-height: 1.7;
+  }
+
+  /* ── PRINT ────────────────────────────────────────────────── */
+  @media print {
+    .running-header { display: none; }
+    html { background: white; }
+    body { background: white; color: #111; }
+    .page { max-width: 100%; }
+  }
+
+  @media (max-width: 680px) {
+    :root { --gutter: 24px; }
+    .cover-title { font-size: 32px; }
+    .cover-meta { grid-template-columns: 1fr; }
+    .cover-meta-item { border-right: none; border-bottom: 1px solid var(--rule); }
+    .asset-grid, .paths, .deadline-strip { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- RUNNING HEADER -->
+  <header class="running-header">
+    <span class="wordmark">Regulator AI Global, Inc.</span>
+    <span class="conf">Confidential — For Discussion Purposes Only</span>
+  </header>
+
+  <!-- COVER -->
+  <section class="cover">
+    <div class="cover-eyebrow">Opportunity Brief · Strategic Growth Capital · June 2026</div>
+    <div class="cover-title">Regulator AI Global</div>
+    <div class="cover-sub">The Inflection Point: Converting a Patent Estate<br>Into Defensible IP Value</div>
+    <div class="cover-rule"></div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="meta-label">Capital Sought</div>
+        <div class="meta-value accent">$X &ndash; $10,000,000</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="meta-label">Structure</div>
+        <div class="meta-value">Strategic Growth Capital · Flexible to Convertible</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="meta-label">Founder &amp; CEO</div>
+        <div class="meta-value">Zachary Michael Akins</div>
+        <div class="meta-sub">Founder &amp; CEO · Sole Inventor of Record · 33 Provisionals · USPTO Customer No. 227292</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. WHAT REGULATOR AI IS -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">What Regulator AI Is</h2>
+      <div class="section-title-rule"></div>
+    </div>
+    <p>Regulator AI Global, Inc. is the sole developer and owner of the <strong>Cognitive Transport Protocol™</strong> (CTP) and <strong>Deterministic Supervisory Containment</strong> (DSC) architecture — a foundational governance layer for autonomous AI systems.</p>
+    <p>CTP/DSC functions as a non-bypassable enforcement plane: a deterministic finite state machine that sits between autonomous AI decision-making and real-world action. Every output from an autonomous system passes through a defined gate sequence before execution. There are no exceptions. There are no bypass paths. There is no equivalent commercially available architecture.</p>
+    <p>The architecture has been documented, structured, and filed across 33 provisional patent applications spanning six domain families:</p>
+    <div class="domain-tags">
+      <span class="domain-tag">M&amp;A / Private Equity</span>
+      <span class="domain-tag">Financial / CBDC</span>
+      <span class="domain-tag">Aerospace / Defense / Orbital</span>
+      <span class="domain-tag">Infrastructure / Smart Cities</span>
+      <span class="domain-tag">Healthcare / Life Sciences</span>
+      <span class="domain-tag">Industrial / Service Robotics</span>
+    </div>
+    <p style="margin-top:16px;">This is not a concept. The architecture exists. The documentation exists. The filings exist. The company exists.</p>
+  </section>
+
+  <!-- 2. ASSET INVENTORY -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">The Asset Inventory</h2>
+      <div class="section-title-rule"></div>
+    </div>
+    <p>As of June 2026, Regulator AI has completed the following:</p>
+    <div class="asset-grid">
+      <div class="asset-card">
+        <div class="asset-card-label">Filed &amp; Assigned IP</div>
+        <ul class="asset-list">
+          <li>33 provisionals filed and assigned to Regulator AI Global, Inc. of record at USPTO</li>
+          <li>Four non-provisional applications near filing-ready — NP1–NP4 of a planned seven-NP portfolio</li>
+          <li>USPTO Customer No. 227292</li>
+          <li>Anchor filing App# 63/998,559 · March 6, 2026</li>
+          <li>NP consolidation deadline: March 6, 2027</li>
+        </ul>
+      </div>
+      <div class="asset-card">
+        <div class="asset-card-label">Technical Architecture</div>
+        <ul class="asset-list">
+          <li>Cognitive Transport Protocol™ trademark filed Feb 3, 2026 (Serial No. 99631937, Class 42)</li>
+          <li>Full technical specification, white papers, calibration guides, failure mode libraries</li>
+          <li>Reference implementations and demos at <a href="https://regulator-ai.com" target="_blank" style="color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,148,198,0.4);">regulator-ai.com</a></li>
+          <li>EU AI Act Article 14 compliance framework</li>
+          <li>RLCL v2.0 deterministic FSM with dual-gate recovery</li>
+        </ul>
+      </div>
+      <div class="asset-card">
+        <div class="asset-card-label">Business Infrastructure</div>
+        <ul class="asset-list">
+          <li>Strategic Advisor: Bruce Perens (co-founder, Open Source Initiative) · equity ratified May 23, 2026</li>
+          <li>Data room, NDAs, and licensing frameworks complete</li>
+          <li>Delaware C-Corporation · clean cap table</li>
+          <li>Dual-brand IP track: <a href="https://regulator-ai.com" target="_blank" style="color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,148,198,0.4);">regulator-ai.com</a> + <a href="https://regulator.life" target="_blank" style="color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,148,198,0.4);">regulator.life</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. STRATEGIC ADVISOR -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Strategic Advisor: Bruce Perens</h2>
+      <div class="section-title-rule"></div>
+    </div>
+    <div class="advisor-block">
+      <div class="advisor-bio">
+        <p>Bruce Perens is the co-founder of the Open Source Initiative and the author of the Open Source Definition — the foundational document that established the legal and philosophical framework for open source software globally. His work shaped the licensing, governance, and commercialization models that underpin the modern software industry.</p>
+        <p>Perens joined Regulator AI Global as Strategic Advisor with a formal equity agreement ratified May 23, 2026. His engagement is not ceremonial. He brings three things that are directly material to the prosecution and commercialization of this portfolio:</p>
+        <ul class="advisor-list">
+          <li><strong>Government and defense relationships.</strong> Perens has operated at the intersection of open source, defense procurement, and federal policy for decades. The Regulator AI portfolio spans Family C — Aerospace, Defense, and Orbital Systems — where those relationships are access.</li>
+          <li><strong>IP and licensing credibility.</strong> As the architect of open source licensing frameworks adopted globally, Perens understands the structure of IP grants, commercialization carve-outs, and dual-use governance at a level few advisors can match. His presence signals to sophisticated acquirers and licensees that the IP architecture has been reviewed by someone who has built licensing frameworks at scale.</li>
+          <li><strong>Post Open positioning.</strong> Perens is the founder of Ham Open Technologies (hamopen.org) and the architect of the Post Open licensing model — a framework designed to require corporate contributors to compensate individual developers. Regulator AI has structured a perpetual annuity carve-out to hamopen.org as part of the advisor agreement, aligning the company with the emerging post-open governance movement and signaling values that resonate with institutional and government partners concerned about AI governance at the policy level.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. WHY THE ASSET MATTERS -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Why the Asset Matters</h2>
+      <div class="section-title-rule"></div>
+    </div>
+    <p>Autonomous AI is expanding across every domain in this portfolio: financial services, defense contracting, healthcare, critical infrastructure, industrial automation. Every major deployment faces a common unsolved problem — how do you guarantee deterministic, auditable, non-bypassable control over an autonomous system?</p>
+    <p>Regulators are providing the answer: you mandate it. The EU AI Act, US executive orders on AI governance, and NIST AI RMF frameworks are all moving in the same direction. The compliance layer CTP/DSC provides is not a feature — it is a regulatory requirement becoming legally enforceable. The EU AI Act Article 14 enforcement deadline is <strong>December 2, 2027</strong>.</p>
+    <p>Regulator AI has built the architecture, filed the IP, and established reference implementations before the compliance wave arrives. That timing is not accidental. It is the thesis.</p>
+    <div class="callout">
+      <div class="callout-label">Structural Position</div>
+      <p>CTP/DSC sits at the chokepoint between autonomous AI and real-world consequence. Any enterprise deploying autonomous systems in regulated domains must either <strong>license this architecture</strong>, build a functionally equivalent one independently, or remain non-compliant. There is no fourth option.</p>
+    </div>
+  </section>
+
+  <!-- 5. THE INFLECTION POINT -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">The Inflection Point</h2>
+      <div class="section-title-rule"></div>
+    </div>
+    <p>Patent prosecution is the value-creation bottleneck. A provisional filing establishes a priority date; it does not create enforceable rights. The transition from provisional to issued non-provisional converts documented claims into defensible legal instruments. That conversion is underway now.</p>
+    <table class="phase-table">
+      <thead>
+        <tr>
+          <th style="width:110px;">Phase</th>
+          <th>Description</th>
+          <th style="width:200px;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="phase-badge complete">Phase 1</span></td>
+          <td>IP formation · 33 provisionals filed · Cognitive Transport Protocol™ (CTP) and DSC framework established · Architecture documented</td>
+          <td><span class="status-pill complete">✓ Complete</span></td>
+        </tr>
+        <tr class="active-row">
+          <td><span class="phase-badge active">Phase 2</span></td>
+          <td>Non-provisional conversion · Four of seven NPs approaching filing-ready status · Portfolio hardening · Reference implementations · Advisor and broker network activated</td>
+          <td><span class="status-pill active">⟶ Active · Inflection Point</span></td>
+        </tr>
+        <tr>
+          <td><span class="phase-badge pending">Phase 3</span></td>
+          <td>Licensing · Strategic partnerships · Acquisition discussions · Commercial deployment</td>
+          <td><span class="status-pill pending">Pending prosecution milestone</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Phase 2 is the inflection point. NP1 through NP4 are approaching filing-ready status — four of a planned seven non-provisional applications. The NP consolidation deadline is <strong>March 6, 2027</strong>. Capital deployed now funds prosecution through that deadline — the single event that transforms 33 filed provisionals into an issued, enforceable patent estate.</p>
+    <p>Before prosecution completes, the asset is a highly credentialed claim. After prosecution, it is a legally enforceable property right with a 20-year term, assigned to a Delaware C-Corporation with a clean cap table, a Strategic Advisor of record. The uncertainty that currently suppresses valuation is knowable, bounded, and funded into resolution.</p>
+  </section>
+
+  <!-- 6. STRATEGIC OUTCOMES -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Strategic Outcomes</h2>
+      <div class="section-title-rule"></div>
+    </div>
+    <p>Three paths exist from prosecution completion. They are not mutually exclusive.</p>
+    <div class="paths">
+      <div class="path-card">
+        <div class="path-label">Path A</div>
+        <div class="path-title">Licensing</div>
+        <p class="path-body">Enterprise licenses to autonomous system deployers in regulated verticals. Each of six domain families represents a distinct licensing market. The RLCL v2.0 framework and EU AI Act compliance hooks provide a buyer value proposition tied to regulatory obligation, not discretionary preference.</p>
+      </div>
+      <div class="path-card">
+        <div class="path-label">Path B</div>
+        <div class="path-title">Strategic Acquisition</div>
+        <p class="path-body">The portfolio is structured for dual-track positioning: <a href="https://regulator-ai.com" target="_blank" style="color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,148,198,0.4);">regulator-ai.com</a> targets enterprise M&amp;A/PE acquirers; <a href="https://regulator.life" target="_blank" style="color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,148,198,0.4);">regulator.life</a> targets aerospace, defense, and orbital buyers. Acquirers purchase issued, prosecuted patents with documented claim coverage and clean assignment chains. That is what prosecution produces.</p>
+      </div>
+      <div class="path-card">
+        <div class="path-label">Path C</div>
+        <div class="path-title">Platform Build</div>
+        <p class="path-body">With a prosecuted patent estate as a defensive moat, Regulator AI deploys a SaaS compliance layer to enterprise customers directly. The Integration Airlock Demo and AcquireCo/TargetCo M&amp;A scenario provide working reference architecture for the product roadmap.</p>
+      </div>
+    </div>
+    <p>The $150M Real Options Valuation model treats these three paths as contingent claims on the prosecuted estate. Whether that specific figure is realized depends on prosecution outcome, market conditions, and execution. What is not in dispute is the sequencing: <strong>prosecution is the prerequisite event for all three paths.</strong></p>
+  </section>
+
+  <!-- 7. WHY NOW -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2 class="section-title">Why Now</h2>
+      <div class="section-title-rule"></div>
+    </div>
+    <p>The window is defined by two external constraints that cannot be adjusted:</p>
+    <div class="deadline-strip">
+      <div class="deadline-item">
+        <div class="deadline-date">March 6, 2027</div>
+        <div class="deadline-desc">NP consolidation deadline. Missing it forfeits provisional priority dates established by the anchor filing. This deadline is fixed and non-negotiable.</div>
+      </div>
+      <div class="deadline-item">
+        <div class="deadline-date">December 2, 2027</div>
+        <div class="deadline-desc">EU AI Act Article 14 enforcement deadline. Regulated enterprises must have compliant autonomous system governance in place. This is the demand event the portfolio is positioned to serve.</div>
+      </div>
+    </div>
+    <p>Capital raised funds prosecution through the March 2027 deadline, positions the company ahead of the December 2027 compliance wave, and enables licensing and M&amp;A outreach to operate from a position of issued IP rather than pending claims.</p>
+    <div class="callout" style="border-left-color:var(--gold);margin-top:24px;">
+      <div class="callout-label">Dual-Use Notice</div>
+      <p>Certain applications within the Regulator AI portfolio involve dual-use considerations spanning defense, aerospace, and critical infrastructure. Full disclosure is available under NDA to qualified strategic partners. Investors with defense, government, or orbital systems mandates are encouraged to request a deeper briefing.</p>
+    </div>
+
+    <p>The risk/reward profile is unusual. The downside is bounded: prosecution cost is defined, the deadline is defined, the claim coverage is documented. The upside is a fully enforceable patent estate positioned at the regulatory chokepoint of the fastest-growing technology sector in the market.</p>
+    <div class="thesis">
+      <p class="thesis-text">The assets exist. The architecture is documented. The filings are in place. The inflection point is funded prosecution — one identifiable, bounded, time-constrained event that converts a credentialed provisional portfolio into an enforceable IP estate at the precise moment the regulatory market for that estate becomes mandatory.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <div class="cta-eyebrow">Next Step</div>
+    <div class="cta-headline">The data room is ready.<br>The conversation starts here.</div>
+    <p class="cta-body">Qualified investors and strategic partners may request data room access below. All submissions are reviewed directly by the founder.</p>
+
+    <div class="contact-block">
+      <p class="contact-process">Access begins with a conversation with our founder,<br>followed by a mutual NDA and personal invitation to the data room.</p>
+      <a class="contact-email" href="mailto:zmichaelakins@gmail.com">zmichaelakins@gmail.com</a>
+      <div class="contact-name">Zachary Michael Akins &nbsp;·&nbsp; Founder &amp; CEO, Regulator AI Global, Inc.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="doc-footer">
+    <div class="footer-left">
+      Regulator AI Global, Inc. · Highland Village, TX<br>
+      <a href="https://regulator-ai.com" target="_blank" style="color:var(--muted);text-decoration:none;">regulator-ai.com</a> · <a href="https://regulator.life" target="_blank" style="color:var(--muted);text-decoration:none;">regulator.life</a>
+    </div>
+    <div class="footer-right">
+      This document is confidential and provided for discussion purposes only.<br>
+      It does not constitute an offer to sell or solicitation to buy any security.
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
