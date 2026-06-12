@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<style>
+#pw-gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #1F4E79;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 30px;
+}
+#pw-gate h2 {
+  color: #fff; font-family: -apple-system, sans-serif;
+  font-size: 18px; margin: 0 0 6px 0; text-align: center;
+}
+#pw-gate p {
+  color: rgba(255,255,255,0.65); font-family: -apple-system, sans-serif;
+  font-size: 13px; margin: 0 0 24px 0; text-align: center;
+}
+#pw-gate input {
+  width: 100%; max-width: 320px;
+  padding: 12px 16px; font-size: 15px;
+  border: 2px solid #C8A84B; border-radius: 8px;
+  background: rgba(255,255,255,0.08); color: #fff;
+  outline: none; margin-bottom: 12px;
+  font-family: -apple-system, sans-serif;
+  text-align: center; letter-spacing: 0.1em;
+}
+#pw-gate input::placeholder { color: rgba(255,255,255,0.4); letter-spacing: normal; }
+#pw-gate button {
+  width: 100%; max-width: 320px;
+  padding: 12px; font-size: 15px; font-weight: 700;
+  background: #C8A84B; color: #1a1000;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-family: -apple-system, sans-serif;
+}
+#pw-gate .pw-error {
+  color: #ff9999; font-size: 13px; margin-top: 10px;
+  font-family: -apple-system, sans-serif; display: none;
+}
+</style>
+<title>Regulator AI • Portfolio Architecture Index</title>
+<style>
+:root {
+  --primary: #1F4E79;
+  --primary-light: #e8f0f8;
+  --accent: #C8A84B;
+  --text: #1a1a1a;
+  --text-muted: #666;
+  --border: #dde3ea;
+  --bg: #f4f6f9;
+  --white: #ffffff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.09);
+  --radius: 8px;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  margin: 0; padding: 0;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+.site-header {
+  background: var(--primary);
+  padding: 16px 20px 14px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.site-header h1 {
+  margin: 0 0 3px 0;
+  font-size: clamp(14px, 4vw, 18px);
+  font-weight: 700; color: #fff; letter-spacing: 0.04em;
+}
+.site-header .subtitle {
+  font-size: clamp(11px, 3vw, 13px);
+  color: rgba(255,255,255,0.72); margin: 0;
+}
+.sticky-controls {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 14px 8px;
+  position: sticky; top: 56px; z-index: 198;
+  box-shadow: var(--shadow-sm);
+}
+.nav-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.nav-divider { width: 1px; height: 22px; background: var(--border); flex-shrink: 0; margin: 0 2px; }
+.nav-btn {
+  padding: 5px 13px; font-size: 12px; font-weight: 500;
+  border: 1px solid var(--border); background: var(--white);
+  border-radius: 20px; cursor: pointer;
+  white-space: nowrap; color: var(--text-muted); line-height: 1.4;
+}
+.nav-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.nav-btn.view-btn.active { background: var(--accent); color: #1a1000; border-color: var(--accent); }
+.search-row { margin-top: 8px; display: flex; gap: 6px; align-items: center; position: relative; }
+.search-btn { padding: 8px 12px; font-size: 13px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; background: var(--primary); color: #fff; white-space: nowrap; flex-shrink: 0; }
+.clear-btn { background: #dde3ea; color: #555; }
+.search-row input {
+  flex: 1; padding: 8px 14px 8px 34px;
+  font-size: 14px; border: 1px solid var(--border);
+  border-radius: 6px; background: var(--bg); color: var(--text);
+  outline: none; font-family: inherit;
+}
+.search-row input:focus { border-color: var(--primary); }
+.search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+.container { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
+.layer-section, .np-section { margin-bottom: 28px; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.section-pill { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; color: #fff; letter-spacing: 0.05em; text-transform: uppercase; }
+.section-count { font-size: 12px; color: var(--text-muted); }
+.card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 15px 16px;
+  margin-bottom: 10px; box-shadow: var(--shadow-sm);
+}
+.card-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.card-id {
+  font-family: "SF Mono","Fira Code",monospace;
+  font-weight: 600; font-size: 13px;
+  color: var(--primary); background: var(--primary-light);
+  padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+}
+.card-name { font-weight: 600; font-size: 14px; color: var(--text); flex: 1; min-width: 100px; }
+.card-badge {
+  font-size: 10px; font-weight: 700; padding: 3px 8px;
+  border-radius: 12px; color: #fff; white-space: nowrap;
+  margin-left: auto; flex-shrink: 0;
+}
+.card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+@media (max-width: 600px) { .card-body { grid-template-columns: 1fr; } .container { padding: 12px 10px 40px; } }
+.field-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+.field-value { font-size: 13px; color: #333; line-height: 1.45; }
+.field-full { grid-column: 1 / -1; }
+.card.reserved { background: #fafafa; border-style: dashed; border-color: #ccc; opacity: 0.65; }
+.reserved-label { color: var(--text-muted); font-style: italic; }
+.site-footer {
+  text-align: center; padding: 24px 20px 36px;
+  font-size: 11px; color: #999;
+  border-top: 1px solid var(--border);
+  font-family: "SF Mono","Fira Code",monospace; line-height: 1.8;
+}
+</style>
+</head>
+<body>
+
+<div id="pw-gate">
+  <h2>REGULATOR AI GLOBAL, INC.</h2>
+  <p>Portfolio Architecture Index &nbsp;·&nbsp; Confidential<br>Enter access password to continue</p>
+  <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter'){checkPW()}">
+  <button onclick="checkPW()">Access Document</button>
+  <div class="pw-error" id="pw-error">Incorrect password. Please try again.</div>
+</div>
+
+<header class="site-header" id="site-header">
+  <h1>REGULATOR AI GLOBAL, INC. <span style="color:#C8A84B">·</span> Portfolio Architecture Index</h1>
+  <p class="subtitle">33 U.S. Provisional Patents &nbsp;·&nbsp; <span style="color:rgba(200,168,75,0.9)">Confidential — NDA Required</span> &nbsp;·&nbsp; Anchor: March 6, 2026</p>
+</header>
+
+<div class="sticky-controls" id="sticky-controls">
+  <div class="nav-row">
+    <button class="nav-btn view-btn active" id="btn-layer" onclick="switchView('layer')">Layer View</button>
+    <button class="nav-btn view-btn" id="btn-np" onclick="switchView('np')">NP Strategy View</button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn active" id="btn-all" onclick="showAll()">All 33</button>
+    <button class="nav-btn" onclick="filterByLayer('0')" data-layer="0">Layer 0</button>
+    <button class="nav-btn" onclick="filterByLayer('1')" data-layer="1">Layer 1</button>
+    <button class="nav-btn" onclick="filterByLayer('2')" data-layer="2">Layer 2</button>
+    <button class="nav-btn" onclick="filterByLayer('3')" data-layer="3">Layer 3</button>
+    <button class="nav-btn" onclick="filterByLayer('4')" data-layer="4">Layer 4</button>
+  </div>
+  <div class="search-row">
+    <span class="search-icon">&#9906;</span>
+    <input type="text" id="search" placeholder="Search by ID, name, problem, invariant…" oninput="onSearch()">
+    <button class="search-btn" onclick="onSearch()">Search</button>
+    <button class="search-btn clear-btn" onclick="showAll()">Clear</button>
+  </div>
+  <div id="search-status" style="font-size:12px;color:#888;padding:4px 2px;min-height:16px;"></div>
+</div>
+
+<div class="container" id="main-container">
+
+  <div id="layer-view">
+<div class="layer-section" data-layer="0">
+  <div class="section-header">
+    <span class="section-pill" style="background:#1b5e20">Layer 0 — Foundation</span>
+    <span class="section-count">1 filings</span>
+  </div>
+  <div class="card" data-layer="0" data-np="Anchor" data-search="reg-ai-0000 000 dsc / ctp foundation autonomous systems lack deterministic supervision at the protocol level before any action executes. core deterministic supervisory containment architecture + cognitive transport protocol. establishes commit-before-execution and authority viability invariant as the foundation. all high-stakes autonomous systems foundation of entire portfolio. anchor none (anchor)">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0000</span>
+    <span class="card-name">DSC / CTP Foundation</span>
+    <span class="card-badge" style="background:#1b5e20">Layer 0</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Autonomous systems lack deterministic supervision at the protocol level before any action executes.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Core Deterministic Supervisory Containment Architecture + Cognitive Transport Protocol. Establishes commit-before-execution and Authority Viability invariant as the foundation.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">All high-stakes autonomous systems</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Foundation of entire portfolio.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">None (Anchor)</div></div>
+  </div>
+</div>
+</div>
+<div class="layer-section" data-layer="1">
+  <div class="section-header">
+    <span class="section-pill" style="background:#1565C0">Layer 1 — Core Invariants</span>
+    <span class="section-count">17 filings</span>
+  </div>
+  <div class="card" data-layer="1" data-np="NP2" data-search="reg-ai-0001 001 ghost assets (family a) hidden interaction liabilities invisible to standard m&a due diligence. ghost asset discovery via temporal interaction graphs and supervisory-capacity violation detection. m&a, insurance m&a diligence & exposure mapping. np2 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0001</span>
+    <span class="card-name">Ghost Assets (Family A)</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Hidden interaction liabilities invisible to standard M&A due diligence.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Ghost Asset discovery via temporal interaction graphs and supervisory-capacity violation detection.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">M&A, insurance</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">M&A diligence & exposure mapping.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP2" data-search="reg-ai-0002 002 interaction risk & governance maturity unmeasured interaction risk and governance gaps in m&a and enterprise deployments. interaction graph density modeling + supervisory capacity with decay. governance maturity model. m&a, enterprise governance m&a liability scoring and insurance inputs. np2 000, 001">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0002</span>
+    <span class="card-name">Interaction Risk & Governance Maturity</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unmeasured interaction risk and governance gaps in M&A and enterprise deployments.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Interaction graph density modeling + supervisory capacity with decay. Governance Maturity Model.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">M&A, enterprise governance</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">M&A liability scoring and insurance inputs.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 001</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP1" data-search="reg-ai-0003 003 ceiling-gated load governance unbounded load and state transitions in real-time systems. deterministic ceiling-gated load governance kernel with clamp operator and per-tick execution order. real-time control high-reliability computing. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0003</span>
+    <span class="card-name">Ceiling-Gated Load Governance</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unbounded load and state transitions in real-time systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic ceiling-gated load governance kernel with clamp operator and per-tick execution order.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Real-time control</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">High-reliability computing.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP2" data-search="reg-ai-0004 004 integration airlocks unsafe cross-system interaction pathways during integration. integration airlocks with quarantine layers and cryptographic execution tokens. enforces integration boundary invariant. m&a integration, defense safe system integration. np2 000–003">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0004</span>
+    <span class="card-name">Integration Airlocks</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unsafe cross-system interaction pathways during integration.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Integration Airlocks with quarantine layers and cryptographic execution tokens. Enforces Integration Boundary Invariant.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">M&A integration, defense</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Safe system integration.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000–003</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0005 005 governance telemetry / rtis tamperable or non-authoritative audit trails. append-only governance log with lockout state. rtis as authoritative system-of-record. compliance, forensics audit integrity foundation. np4 000–004">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0005</span>
+    <span class="card-name">Governance Telemetry / RTIS</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Tamperable or non-authoritative audit trails.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Append-only governance log with LOCKOUT state. RTIS as authoritative system-of-record.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Compliance, forensics</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Audit integrity foundation.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000–004</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP1" data-search="reg-ai-0006 006 predictive cascade simulation unpredictable failure propagation in complex systems. predictive simulation of interaction cascades using interaction graphs. risk modeling, insurance preemptive containment. np1 000–005">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0006</span>
+    <span class="card-name">Predictive Cascade Simulation</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unpredictable failure propagation in complex systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Predictive simulation of interaction cascades using interaction graphs.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Risk modeling, insurance</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Preemptive containment.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000–005</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP3" data-search="reg-ai-0007 007 human-in-the-loop veto / haip human override unreachable or degraded in contested environments. deterministic human-in-the-loop veto protocols. override reachability invariant. aviation, defense, robotics guaranteed human authority. np3 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0007</span>
+    <span class="card-name">Human-in-the-Loop Veto / HAIP</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Human override unreachable or degraded in contested environments.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic Human-in-the-Loop veto protocols. Override Reachability Invariant.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Aviation, defense, robotics</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Guaranteed human authority.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0008 008 hardware scu / ugm software-only governance insufficient at hardware/edge level. hardware-level supervisory containment units (scu) and universal governance module (ugm). edge devices, itar/defense hardware-rooted trust. np4 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0008</span>
+    <span class="card-name">Hardware SCU / UGM</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Software-only governance insufficient at hardware/edge level.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Hardware-level Supervisory Containment Units (SCU) and Universal Governance Module (UGM).</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Edge devices, ITAR/defense</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Hardware-rooted trust.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0009 009 automated regulatory certification manual or slow compliance verification fails real-time regulatory needs. automated regulatory certification and continuous compliance verification. regulated industries, eu ai act regulatory compliance automation. np4 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0009</span>
+    <span class="card-name">Automated Regulatory Certification</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Manual or slow compliance verification fails real-time regulatory needs.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Automated regulatory certification and continuous compliance verification.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Regulated industries, EU AI Act</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Regulatory compliance automation.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0010 010 non-invasive governance governance that invades privacy or requires heavy instrumentation. non-invasive governance mechanisms with privacy-by-design. healthcare, finance, privacy privacy-preserving governance. np4 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0010</span>
+    <span class="card-name">Non-Invasive Governance</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Governance that invades privacy or requires heavy instrumentation.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Non-invasive governance mechanisms with privacy-by-design.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Healthcare, finance, privacy</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Privacy-preserving governance.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP1" data-search="reg-ai-0011 011 hard invariant enforcement soft or bypassable enforcement of governance invariants. hard invariant enforcement + pre-commit gating in load governance kernels. high-stakes control non-bypassable enforcement. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0011</span>
+    <span class="card-name">Hard Invariant Enforcement</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Soft or bypassable enforcement of governance invariants.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Hard invariant enforcement + pre-commit gating in load governance kernels.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">High-stakes control</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Non-bypassable enforcement.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP5" data-search="reg-ai-0012 012 multi-agent swarm governance / maci unbounded agent interaction explosion in multi-agent systems. bounded interaction growth invariant with pcm and ibc execution gate. swarm robotics, multi-agent ai safe multi-agent scaling. np5 000, 020">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0012</span>
+    <span class="card-name">Multi-Agent Swarm Governance / MACI</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unbounded agent interaction explosion in multi-agent systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Bounded Interaction Growth Invariant with PCM and IBC Execution Gate.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Swarm robotics, multi-agent AI</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Safe multi-agent scaling.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 020</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP1" data-search="reg-ai-0013 013 ctp extensions for distributed agents centralized governance does not scale to distributed agents. cognitive transport protocol extensions for distributed autonomous agents. distributed systems, edge swarms distributed governance at scale. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0013</span>
+    <span class="card-name">CTP Extensions for Distributed Agents</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Centralized governance does not scale to distributed agents.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Cognitive Transport Protocol extensions for distributed autonomous agents.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Distributed systems, edge swarms</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Distributed governance at scale.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0014 014 asce certification envelope unverifiable deployment boundaries and unbounded machine risk. autonomous system certification envelope (asce) with verifiable bounded risk. certification, insurance deployment certification. np4 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0014</span>
+    <span class="card-name">ASCE Certification Envelope</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unverifiable deployment boundaries and unbounded machine risk.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Autonomous System Certification Envelope (ASCE) with verifiable bounded risk.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Certification, insurance</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Deployment certification.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP1" data-search="reg-ai-0015 015 governance-bounded model serving unconstrained model serving and inference in enterprise ai. governance-bounded model serving with load-constrained, governance-aware routing. enterprise ai platforms safe enterprise model serving. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0015</span>
+    <span class="card-name">Governance-Bounded Model Serving</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unconstrained model serving and inference in enterprise AI.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Governance-bounded model serving with load-constrained, governance-aware routing.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Enterprise AI platforms</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Safe enterprise model serving.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP3" data-search="reg-ai-0016 016 orbital / aerospace human-override human authority lost during blackout or contested orbital environments. deterministic human-override systems for orbital platforms (human firewall). space, satellites, defense orbital governance & mission assurance. np3 000, 007">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0016</span>
+    <span class="card-name">Orbital / Aerospace Human-Override</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Human authority lost during blackout or contested orbital environments.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic human-override systems for orbital platforms (Human Firewall).</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Space, satellites, defense</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Orbital governance & mission assurance.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 007</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0020 020 rtis — runtime telemetry integrity tamperable or non-authoritative audit/telemetry. audit integrity invariant. append-only logging as authoritative system-of-record. compliance, forensics authoritative audit foundation. np4 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0020</span>
+    <span class="card-name">RTIS — Runtime Telemetry Integrity</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Tamperable or non-authoritative audit/telemetry.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Audit Integrity Invariant. Append-only logging as authoritative system-of-record.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Compliance, forensics</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Authoritative audit foundation.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card reserved" data-layer="1" data-np="" data-search="reg-ai-0022 reserved">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0022</span>
+    <span class="card-name reserved-label">Reserved — No Specification Assigned</span>
+  </div>
+</div>
+</div>
+<div class="layer-section" data-layer="2">
+  <div class="section-header">
+    <span class="section-pill" style="background:#bf360c">Layer 2 — Operational Extensions</span>
+    <span class="section-count">10 filings</span>
+  </div>
+  <div class="card" data-layer="2" data-np="NP3" data-search="reg-ai-0019 019 haip — human authority interface protocol human override unreachable or non-deterministic under load/failure. override reachability invariant. human authority as deterministic, enforceable architectural property. high-stakes domains human authority as enforceable property. np3 000, 007">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0019</span>
+    <span class="card-name">HAIP — Human Authority Interface Protocol</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Human override unreachable or non-deterministic under load/failure.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Override Reachability Invariant. Human authority as deterministic, enforceable architectural property.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">High-stakes domains</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Human authority as enforceable property.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 007</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP5" data-search="reg-ai-0021 021 maci — multi-agent containment uncontrolled interaction growth across multi-agent systems. bounded interaction growth invariant with commit-gated interaction records. multi-agent systems, swarms safe scaling of agent populations. np5 000, 020">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0021</span>
+    <span class="card-name">MACI — Multi-Agent Containment</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Uncontrolled interaction growth across multi-agent systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Bounded Interaction Growth Invariant with commit-gated interaction records.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Multi-agent systems, swarms</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Safe scaling of agent populations.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 020</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0023 023 disa — deterministic interaction scheduling unscheduled or conflicting interactions in constrained systems. deterministic interaction scheduling and arbitration with globally consistent ordering. real-time systems predictable scheduling under load. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0023</span>
+    <span class="card-name">DISA — Deterministic Interaction Scheduling</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unscheduled or conflicting interactions in constrained systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic interaction scheduling and arbitration with globally consistent ordering.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Real-time systems</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Predictable scheduling under load.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0024 024 scf-pc — supervisory capacity forecasting unexpected supervisory overload under peak conditions. supervisory capacity forecasting and preemptive containment. high-load operations preemptive load management. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0024</span>
+    <span class="card-name">SCF-PC — Supervisory Capacity Forecasting</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unexpected supervisory overload under peak conditions.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Supervisory capacity forecasting and preemptive containment.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">High-load operations</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Preemptive load management.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0025 025 cstsb — cross-system state translation semantic/state mismatch across heterogeneous systems. cross-system state translation into canonical supervisory representation (g_ctp). heterogeneous integration integration of disparate systems. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0025</span>
+    <span class="card-name">CSTSB — Cross-System State Translation</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Semantic/state mismatch across heterogeneous systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Cross-system state translation into canonical supervisory representation (G_CTP).</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Heterogeneous integration</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Integration of disparate systems.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0026 026 ddgfp — deterministic degradation catastrophic failure instead of graceful degradation. deterministic degradation protocol with monotonic, non-escalatory transitions. safety-critical systems fail-safe design. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0026</span>
+    <span class="card-name">DDGFP — Deterministic Degradation</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Catastrophic failure instead of graceful degradation.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic degradation protocol with monotonic, non-escalatory transitions.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Safety-critical systems</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Fail-safe design.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0028 028 scce — symbolic compression inefficient or lossy semantic handling in high-volume governance. symbolic compression cognitive encoding. gate 0 in np1 seven-gate pipeline. symbolic fidelity invariant. high-volume governance efficient semantic compression. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0028</span>
+    <span class="card-name">SCCE — Symbolic Compression</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Inefficient or lossy semantic handling in high-volume governance.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Symbolic compression cognitive encoding. Gate 0 in NP1 seven-gate pipeline. Symbolic Fidelity Invariant.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">High-volume governance</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Efficient semantic compression.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0029 029 qrsp — quantum resilience future quantum threats to cryptographic governance and archival. quantum resilience supervisory protocol. mandates pqc level iii+ after t_q with rtis-committed algorithm selection. long-horizon, post-quantum quantum-resistant governance. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0029</span>
+    <span class="card-name">QRSP — Quantum Resilience</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Future quantum threats to cryptographic governance and archival.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Quantum Resilience Supervisory Protocol. Mandates PQC Level III+ after T_q with RTIS-committed algorithm selection.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Long-horizon, post-quantum</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Quantum-resistant governance.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP7" data-search="reg-ai-0030 030 deo — deterministic energy orchestration uncontrolled physical energy/power flows without commit-before-execution governance. deterministic energy orchestration protocol. five-phase shl sequence with ba token committed before breaker closure. physical isomorph of ctp/dsc. orbital power, energy infrastructure physical admissibility layer. bridges ai governance to electrons. np7 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0030</span>
+    <span class="card-name">DEO — Deterministic Energy Orchestration</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Uncontrolled physical energy/power flows without commit-before-execution governance.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic Energy Orchestration Protocol. Five-phase SHL sequence with BA token committed before breaker closure. Physical isomorph of CTP/DSC.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Orbital power, energy infrastructure</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Physical admissibility layer. Bridges AI governance to electrons.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP6" data-search="reg-ai-0032 032 cp-hacp — cross-paradigm agent containment semantic drift and loss of override across heterogeneous paradigms (llm, neuromorphic, symbolic, robotic). paradigm translation + heterogeneous interaction growth + cross-paradigm override reachability as simultaneous gates. g_ctp as universal interlingua. mixed-paradigm swarms, defense safe governance of heterogeneous agent populations. np6 000, 012, 021">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0032</span>
+    <span class="card-name">CP-HACP — Cross-Paradigm Agent Containment</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Semantic drift and loss of override across heterogeneous paradigms (LLM, neuromorphic, symbolic, robotic).</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Paradigm Translation + Heterogeneous Interaction Growth + Cross-Paradigm Override Reachability as simultaneous gates. G_CTP as universal interlingua.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Mixed-paradigm swarms, defense</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Safe governance of heterogeneous agent populations.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 012, 021</div></div>
+  </div>
+</div>
+</div>
+<div class="layer-section" data-layer="3">
+  <div class="section-header">
+    <span class="section-pill" style="background:#880e4f">Layer 3 — Commercialization</span>
+    <span class="section-count">3 filings</span>
+  </div>
+  <div class="card" data-layer="3" data-np="NP2" data-search="reg-ai-0017 017 sic — supervisory integration containment unsafe integration of autonomous systems during m&a creates hidden successor liability. integration boundary invariant with commit-before-forwarding and permit tokens. forward guard. m&a, enterprise integration m&a risk containment. highest commercial value. np2 000, 004">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0017</span>
+    <span class="card-name">SIC — Supervisory Integration Containment</span>
+    <span class="card-badge" style="background:#880e4f">Layer 3</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unsafe integration of autonomous systems during M&A creates hidden successor liability.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Integration Boundary Invariant with commit-before-forwarding and PERMIT tokens. Forward Guard.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">M&A, enterprise integration</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">M&A risk containment. Highest commercial value.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 004</div></div>
+  </div>
+</div>
+<div class="card" data-layer="3" data-np="NP5" data-search="reg-ai-0018 018 drbia — risk bounding & insurance unbounded or uninsurable risk from autonomous behavior. bounded loss invariant with deterministic risk bounding and insurance alignment. insurance, board risk insurability of ai systems. np5 000, 005">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0018</span>
+    <span class="card-name">DRBIA — Risk Bounding & Insurance</span>
+    <span class="card-badge" style="background:#880e4f">Layer 3</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unbounded or uninsurable risk from autonomous behavior.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Bounded Loss Invariant with deterministic risk bounding and insurance alignment.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Insurance, board risk</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Insurability of AI systems.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 005</div></div>
+  </div>
+</div>
+<div class="card" data-layer="3" data-np="NP1" data-search="reg-ai-0027 027 gterl — governance tokenization lack of tokenized or rights-managed governance. governance tokenization with hsm-signed, capacity-bound, revocable tokens. tokenized governance, licensing tokenized execution rights. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0027</span>
+    <span class="card-name">GTERL — Governance Tokenization</span>
+    <span class="card-badge" style="background:#880e4f">Layer 3</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Lack of tokenized or rights-managed governance.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Governance tokenization with HSM-signed, capacity-bound, revocable tokens.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Tokenized governance, licensing</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Tokenized execution rights.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+</div>
+<div class="layer-section" data-layer="4">
+  <div class="section-header">
+    <span class="section-pill" style="background:#4527a0">Layer 4 — Long-Horizon Governance</span>
+    <span class="section-count">2 filings</span>
+  </div>
+  <div class="card" data-layer="4" data-np="NP6" data-search="reg-ai-0031 031 dsc-rp — simulation containment & replay ungoverned simulation, digital twin divergence, and non-reproducible forensic replay. simulation fidelity + deterministic replay + twin boundary invariants. bit-for-bit reconstruction from rtis. ai flight recorder. m&a replay, insurance, defense, orbital governed digital twins and forensic replay. np6 000, 005, 020, 028, 029, 014">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0031</span>
+    <span class="card-name">DSC-RP — Simulation Containment & Replay</span>
+    <span class="card-badge" style="background:#4527a0">Layer 4</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Ungoverned simulation, digital twin divergence, and non-reproducible forensic replay.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Simulation Fidelity + Deterministic Replay + Twin Boundary Invariants. Bit-for-bit reconstruction from RTIS. AI flight recorder.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">M&A replay, insurance, defense, orbital</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Governed digital twins and forensic replay.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 005, 020, 028, 029, 014</div></div>
+  </div>
+</div>
+<div class="card" data-layer="4" data-np="NP6" data-search="reg-ai-0033 033 pgm-lhap — persistent governance memory state discontinuity and ungoverned memory evolution across multi-decade lifecycles. persistent memory integrity + lifecycle containment + memory evolution invariants. system soul continuity via chained hash. orbital, defense, multi-decade infrastructure multi-decade governed persistence and quantum-resilient archival. np6 000, 005, 020, 028, 029, 031">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0033</span>
+    <span class="card-name">PGM-LHAP — Persistent Governance Memory</span>
+    <span class="card-badge" style="background:#4527a0">Layer 4</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">State discontinuity and ungoverned memory evolution across multi-decade lifecycles.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Persistent Memory Integrity + Lifecycle Containment + Memory Evolution Invariants. System soul continuity via chained hash.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Orbital, defense, multi-decade infrastructure</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Multi-decade governed persistence and quantum-resilient archival.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 005, 020, 028, 029, 031</div></div>
+  </div>
+</div>
+</div>
+  </div>
+
+  <div id="np-view" style="display:none">
+<div class="np-section" data-np="Anchor">
+  <div class="section-header">
+    <span class="section-pill" style="background:#1F4E79">Anchor</span>
+    <span class="section-count">Anchor Filing (000) &nbsp;·&nbsp; 1 filings</span>
+  </div>
+  <div class="card" data-layer="0" data-np="Anchor" data-search="reg-ai-0000 000 dsc / ctp foundation autonomous systems lack deterministic supervision at the protocol level before any action executes. core deterministic supervisory containment architecture + cognitive transport protocol. establishes commit-before-execution and authority viability invariant as the foundation. all high-stakes autonomous systems foundation of entire portfolio. anchor none (anchor)">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0000</span>
+    <span class="card-name">DSC / CTP Foundation</span>
+    <span class="card-badge" style="background:#1b5e20">Layer 0</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Autonomous systems lack deterministic supervision at the protocol level before any action executes.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Core Deterministic Supervisory Containment Architecture + Cognitive Transport Protocol. Establishes commit-before-execution and Authority Viability invariant as the foundation.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">All high-stakes autonomous systems</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Foundation of entire portfolio.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">None (Anchor)</div></div>
+  </div>
+</div>
+</div>
+<div class="np-section" data-np="NP1">
+  <div class="section-header">
+    <span class="section-pill" style="background:#1565C0">NP1</span>
+    <span class="section-count">NP1 — Unified Supervisory Control Plane &nbsp;·&nbsp; 12 filings</span>
+  </div>
+  <div class="card" data-layer="1" data-np="NP1" data-search="reg-ai-0003 003 ceiling-gated load governance unbounded load and state transitions in real-time systems. deterministic ceiling-gated load governance kernel with clamp operator and per-tick execution order. real-time control high-reliability computing. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0003</span>
+    <span class="card-name">Ceiling-Gated Load Governance</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unbounded load and state transitions in real-time systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic ceiling-gated load governance kernel with clamp operator and per-tick execution order.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Real-time control</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">High-reliability computing.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP1" data-search="reg-ai-0006 006 predictive cascade simulation unpredictable failure propagation in complex systems. predictive simulation of interaction cascades using interaction graphs. risk modeling, insurance preemptive containment. np1 000–005">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0006</span>
+    <span class="card-name">Predictive Cascade Simulation</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unpredictable failure propagation in complex systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Predictive simulation of interaction cascades using interaction graphs.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Risk modeling, insurance</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Preemptive containment.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000–005</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP1" data-search="reg-ai-0011 011 hard invariant enforcement soft or bypassable enforcement of governance invariants. hard invariant enforcement + pre-commit gating in load governance kernels. high-stakes control non-bypassable enforcement. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0011</span>
+    <span class="card-name">Hard Invariant Enforcement</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Soft or bypassable enforcement of governance invariants.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Hard invariant enforcement + pre-commit gating in load governance kernels.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">High-stakes control</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Non-bypassable enforcement.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP1" data-search="reg-ai-0013 013 ctp extensions for distributed agents centralized governance does not scale to distributed agents. cognitive transport protocol extensions for distributed autonomous agents. distributed systems, edge swarms distributed governance at scale. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0013</span>
+    <span class="card-name">CTP Extensions for Distributed Agents</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Centralized governance does not scale to distributed agents.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Cognitive Transport Protocol extensions for distributed autonomous agents.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Distributed systems, edge swarms</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Distributed governance at scale.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP1" data-search="reg-ai-0015 015 governance-bounded model serving unconstrained model serving and inference in enterprise ai. governance-bounded model serving with load-constrained, governance-aware routing. enterprise ai platforms safe enterprise model serving. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0015</span>
+    <span class="card-name">Governance-Bounded Model Serving</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unconstrained model serving and inference in enterprise AI.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Governance-bounded model serving with load-constrained, governance-aware routing.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Enterprise AI platforms</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Safe enterprise model serving.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0023 023 disa — deterministic interaction scheduling unscheduled or conflicting interactions in constrained systems. deterministic interaction scheduling and arbitration with globally consistent ordering. real-time systems predictable scheduling under load. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0023</span>
+    <span class="card-name">DISA — Deterministic Interaction Scheduling</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unscheduled or conflicting interactions in constrained systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic interaction scheduling and arbitration with globally consistent ordering.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Real-time systems</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Predictable scheduling under load.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0024 024 scf-pc — supervisory capacity forecasting unexpected supervisory overload under peak conditions. supervisory capacity forecasting and preemptive containment. high-load operations preemptive load management. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0024</span>
+    <span class="card-name">SCF-PC — Supervisory Capacity Forecasting</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unexpected supervisory overload under peak conditions.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Supervisory capacity forecasting and preemptive containment.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">High-load operations</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Preemptive load management.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0025 025 cstsb — cross-system state translation semantic/state mismatch across heterogeneous systems. cross-system state translation into canonical supervisory representation (g_ctp). heterogeneous integration integration of disparate systems. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0025</span>
+    <span class="card-name">CSTSB — Cross-System State Translation</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Semantic/state mismatch across heterogeneous systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Cross-system state translation into canonical supervisory representation (G_CTP).</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Heterogeneous integration</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Integration of disparate systems.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0026 026 ddgfp — deterministic degradation catastrophic failure instead of graceful degradation. deterministic degradation protocol with monotonic, non-escalatory transitions. safety-critical systems fail-safe design. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0026</span>
+    <span class="card-name">DDGFP — Deterministic Degradation</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Catastrophic failure instead of graceful degradation.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic degradation protocol with monotonic, non-escalatory transitions.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Safety-critical systems</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Fail-safe design.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="3" data-np="NP1" data-search="reg-ai-0027 027 gterl — governance tokenization lack of tokenized or rights-managed governance. governance tokenization with hsm-signed, capacity-bound, revocable tokens. tokenized governance, licensing tokenized execution rights. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0027</span>
+    <span class="card-name">GTERL — Governance Tokenization</span>
+    <span class="card-badge" style="background:#880e4f">Layer 3</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Lack of tokenized or rights-managed governance.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Governance tokenization with HSM-signed, capacity-bound, revocable tokens.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Tokenized governance, licensing</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Tokenized execution rights.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0028 028 scce — symbolic compression inefficient or lossy semantic handling in high-volume governance. symbolic compression cognitive encoding. gate 0 in np1 seven-gate pipeline. symbolic fidelity invariant. high-volume governance efficient semantic compression. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0028</span>
+    <span class="card-name">SCCE — Symbolic Compression</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Inefficient or lossy semantic handling in high-volume governance.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Symbolic compression cognitive encoding. Gate 0 in NP1 seven-gate pipeline. Symbolic Fidelity Invariant.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">High-volume governance</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Efficient semantic compression.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP1" data-search="reg-ai-0029 029 qrsp — quantum resilience future quantum threats to cryptographic governance and archival. quantum resilience supervisory protocol. mandates pqc level iii+ after t_q with rtis-committed algorithm selection. long-horizon, post-quantum quantum-resistant governance. np1 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0029</span>
+    <span class="card-name">QRSP — Quantum Resilience</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Future quantum threats to cryptographic governance and archival.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Quantum Resilience Supervisory Protocol. Mandates PQC Level III+ after T_q with RTIS-committed algorithm selection.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Long-horizon, post-quantum</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Quantum-resistant governance.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+</div>
+<div class="np-section" data-np="NP2">
+  <div class="section-header">
+    <span class="section-pill" style="background:#2E7D32">NP2</span>
+    <span class="section-count">NP2 — SIC Wedge (Integration & M&A Containment) &nbsp;·&nbsp; 4 filings</span>
+  </div>
+  <div class="card" data-layer="1" data-np="NP2" data-search="reg-ai-0001 001 ghost assets (family a) hidden interaction liabilities invisible to standard m&a due diligence. ghost asset discovery via temporal interaction graphs and supervisory-capacity violation detection. m&a, insurance m&a diligence & exposure mapping. np2 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0001</span>
+    <span class="card-name">Ghost Assets (Family A)</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Hidden interaction liabilities invisible to standard M&A due diligence.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Ghost Asset discovery via temporal interaction graphs and supervisory-capacity violation detection.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">M&A, insurance</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">M&A diligence & exposure mapping.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP2" data-search="reg-ai-0002 002 interaction risk & governance maturity unmeasured interaction risk and governance gaps in m&a and enterprise deployments. interaction graph density modeling + supervisory capacity with decay. governance maturity model. m&a, enterprise governance m&a liability scoring and insurance inputs. np2 000, 001">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0002</span>
+    <span class="card-name">Interaction Risk & Governance Maturity</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unmeasured interaction risk and governance gaps in M&A and enterprise deployments.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Interaction graph density modeling + supervisory capacity with decay. Governance Maturity Model.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">M&A, enterprise governance</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">M&A liability scoring and insurance inputs.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 001</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP2" data-search="reg-ai-0004 004 integration airlocks unsafe cross-system interaction pathways during integration. integration airlocks with quarantine layers and cryptographic execution tokens. enforces integration boundary invariant. m&a integration, defense safe system integration. np2 000–003">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0004</span>
+    <span class="card-name">Integration Airlocks</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unsafe cross-system interaction pathways during integration.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Integration Airlocks with quarantine layers and cryptographic execution tokens. Enforces Integration Boundary Invariant.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">M&A integration, defense</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Safe system integration.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000–003</div></div>
+  </div>
+</div>
+<div class="card" data-layer="3" data-np="NP2" data-search="reg-ai-0017 017 sic — supervisory integration containment unsafe integration of autonomous systems during m&a creates hidden successor liability. integration boundary invariant with commit-before-forwarding and permit tokens. forward guard. m&a, enterprise integration m&a risk containment. highest commercial value. np2 000, 004">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0017</span>
+    <span class="card-name">SIC — Supervisory Integration Containment</span>
+    <span class="card-badge" style="background:#880e4f">Layer 3</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unsafe integration of autonomous systems during M&A creates hidden successor liability.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Integration Boundary Invariant with commit-before-forwarding and PERMIT tokens. Forward Guard.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">M&A, enterprise integration</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">M&A risk containment. Highest commercial value.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 004</div></div>
+  </div>
+</div>
+</div>
+<div class="np-section" data-np="NP3">
+  <div class="section-header">
+    <span class="section-pill" style="background:#E65100">NP3</span>
+    <span class="section-count">NP3 — HAIP Wedge (Human Authority & Override) &nbsp;·&nbsp; 3 filings</span>
+  </div>
+  <div class="card" data-layer="1" data-np="NP3" data-search="reg-ai-0007 007 human-in-the-loop veto / haip human override unreachable or degraded in contested environments. deterministic human-in-the-loop veto protocols. override reachability invariant. aviation, defense, robotics guaranteed human authority. np3 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0007</span>
+    <span class="card-name">Human-in-the-Loop Veto / HAIP</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Human override unreachable or degraded in contested environments.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic Human-in-the-Loop veto protocols. Override Reachability Invariant.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Aviation, defense, robotics</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Guaranteed human authority.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP3" data-search="reg-ai-0016 016 orbital / aerospace human-override human authority lost during blackout or contested orbital environments. deterministic human-override systems for orbital platforms (human firewall). space, satellites, defense orbital governance & mission assurance. np3 000, 007">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0016</span>
+    <span class="card-name">Orbital / Aerospace Human-Override</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Human authority lost during blackout or contested orbital environments.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic human-override systems for orbital platforms (Human Firewall).</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Space, satellites, defense</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Orbital governance & mission assurance.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 007</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP3" data-search="reg-ai-0019 019 haip — human authority interface protocol human override unreachable or non-deterministic under load/failure. override reachability invariant. human authority as deterministic, enforceable architectural property. high-stakes domains human authority as enforceable property. np3 000, 007">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0019</span>
+    <span class="card-name">HAIP — Human Authority Interface Protocol</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Human override unreachable or non-deterministic under load/failure.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Override Reachability Invariant. Human authority as deterministic, enforceable architectural property.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">High-stakes domains</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Human authority as enforceable property.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 007</div></div>
+  </div>
+</div>
+</div>
+<div class="np-section" data-np="NP4">
+  <div class="section-header">
+    <span class="section-pill" style="background:#6A1B9A">NP4</span>
+    <span class="section-count">NP4 — RTIS Foundational (Audit Integrity) &nbsp;·&nbsp; 6 filings</span>
+  </div>
+  <div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0005 005 governance telemetry / rtis tamperable or non-authoritative audit trails. append-only governance log with lockout state. rtis as authoritative system-of-record. compliance, forensics audit integrity foundation. np4 000–004">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0005</span>
+    <span class="card-name">Governance Telemetry / RTIS</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Tamperable or non-authoritative audit trails.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Append-only governance log with LOCKOUT state. RTIS as authoritative system-of-record.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Compliance, forensics</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Audit integrity foundation.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000–004</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0008 008 hardware scu / ugm software-only governance insufficient at hardware/edge level. hardware-level supervisory containment units (scu) and universal governance module (ugm). edge devices, itar/defense hardware-rooted trust. np4 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0008</span>
+    <span class="card-name">Hardware SCU / UGM</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Software-only governance insufficient at hardware/edge level.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Hardware-level Supervisory Containment Units (SCU) and Universal Governance Module (UGM).</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Edge devices, ITAR/defense</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Hardware-rooted trust.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0009 009 automated regulatory certification manual or slow compliance verification fails real-time regulatory needs. automated regulatory certification and continuous compliance verification. regulated industries, eu ai act regulatory compliance automation. np4 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0009</span>
+    <span class="card-name">Automated Regulatory Certification</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Manual or slow compliance verification fails real-time regulatory needs.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Automated regulatory certification and continuous compliance verification.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Regulated industries, EU AI Act</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Regulatory compliance automation.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0010 010 non-invasive governance governance that invades privacy or requires heavy instrumentation. non-invasive governance mechanisms with privacy-by-design. healthcare, finance, privacy privacy-preserving governance. np4 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0010</span>
+    <span class="card-name">Non-Invasive Governance</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Governance that invades privacy or requires heavy instrumentation.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Non-invasive governance mechanisms with privacy-by-design.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Healthcare, finance, privacy</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Privacy-preserving governance.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0014 014 asce certification envelope unverifiable deployment boundaries and unbounded machine risk. autonomous system certification envelope (asce) with verifiable bounded risk. certification, insurance deployment certification. np4 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0014</span>
+    <span class="card-name">ASCE Certification Envelope</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unverifiable deployment boundaries and unbounded machine risk.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Autonomous System Certification Envelope (ASCE) with verifiable bounded risk.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Certification, insurance</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Deployment certification.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+<div class="card" data-layer="1" data-np="NP4" data-search="reg-ai-0020 020 rtis — runtime telemetry integrity tamperable or non-authoritative audit/telemetry. audit integrity invariant. append-only logging as authoritative system-of-record. compliance, forensics authoritative audit foundation. np4 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0020</span>
+    <span class="card-name">RTIS — Runtime Telemetry Integrity</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Tamperable or non-authoritative audit/telemetry.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Audit Integrity Invariant. Append-only logging as authoritative system-of-record.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Compliance, forensics</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Authoritative audit foundation.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+</div>
+<div class="np-section" data-np="NP5">
+  <div class="section-header">
+    <span class="section-pill" style="background:#AD1457">NP5</span>
+    <span class="section-count">NP5 — MACI / DRBIA (Multi-Agent + Risk Bounding) &nbsp;·&nbsp; 3 filings</span>
+  </div>
+  <div class="card" data-layer="1" data-np="NP5" data-search="reg-ai-0012 012 multi-agent swarm governance / maci unbounded agent interaction explosion in multi-agent systems. bounded interaction growth invariant with pcm and ibc execution gate. swarm robotics, multi-agent ai safe multi-agent scaling. np5 000, 020">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0012</span>
+    <span class="card-name">Multi-Agent Swarm Governance / MACI</span>
+    <span class="card-badge" style="background:#1565C0">Layer 1</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unbounded agent interaction explosion in multi-agent systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Bounded Interaction Growth Invariant with PCM and IBC Execution Gate.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Swarm robotics, multi-agent AI</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Safe multi-agent scaling.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 020</div></div>
+  </div>
+</div>
+<div class="card" data-layer="3" data-np="NP5" data-search="reg-ai-0018 018 drbia — risk bounding & insurance unbounded or uninsurable risk from autonomous behavior. bounded loss invariant with deterministic risk bounding and insurance alignment. insurance, board risk insurability of ai systems. np5 000, 005">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0018</span>
+    <span class="card-name">DRBIA — Risk Bounding & Insurance</span>
+    <span class="card-badge" style="background:#880e4f">Layer 3</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Unbounded or uninsurable risk from autonomous behavior.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Bounded Loss Invariant with deterministic risk bounding and insurance alignment.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Insurance, board risk</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Insurability of AI systems.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 005</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP5" data-search="reg-ai-0021 021 maci — multi-agent containment uncontrolled interaction growth across multi-agent systems. bounded interaction growth invariant with commit-gated interaction records. multi-agent systems, swarms safe scaling of agent populations. np5 000, 020">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0021</span>
+    <span class="card-name">MACI — Multi-Agent Containment</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Uncontrolled interaction growth across multi-agent systems.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Bounded Interaction Growth Invariant with commit-gated interaction records.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Multi-agent systems, swarms</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Safe scaling of agent populations.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 020</div></div>
+  </div>
+</div>
+</div>
+<div class="np-section" data-np="NP6">
+  <div class="section-header">
+    <span class="section-pill" style="background:#00695C">NP6</span>
+    <span class="section-count">NP6 Candidate — Governance Extension &nbsp;·&nbsp; 3 filings</span>
+  </div>
+  <div class="card" data-layer="4" data-np="NP6" data-search="reg-ai-0031 031 dsc-rp — simulation containment & replay ungoverned simulation, digital twin divergence, and non-reproducible forensic replay. simulation fidelity + deterministic replay + twin boundary invariants. bit-for-bit reconstruction from rtis. ai flight recorder. m&a replay, insurance, defense, orbital governed digital twins and forensic replay. np6 000, 005, 020, 028, 029, 014">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0031</span>
+    <span class="card-name">DSC-RP — Simulation Containment & Replay</span>
+    <span class="card-badge" style="background:#4527a0">Layer 4</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Ungoverned simulation, digital twin divergence, and non-reproducible forensic replay.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Simulation Fidelity + Deterministic Replay + Twin Boundary Invariants. Bit-for-bit reconstruction from RTIS. AI flight recorder.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">M&A replay, insurance, defense, orbital</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Governed digital twins and forensic replay.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 005, 020, 028, 029, 014</div></div>
+  </div>
+</div>
+<div class="card" data-layer="2" data-np="NP6" data-search="reg-ai-0032 032 cp-hacp — cross-paradigm agent containment semantic drift and loss of override across heterogeneous paradigms (llm, neuromorphic, symbolic, robotic). paradigm translation + heterogeneous interaction growth + cross-paradigm override reachability as simultaneous gates. g_ctp as universal interlingua. mixed-paradigm swarms, defense safe governance of heterogeneous agent populations. np6 000, 012, 021">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0032</span>
+    <span class="card-name">CP-HACP — Cross-Paradigm Agent Containment</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Semantic drift and loss of override across heterogeneous paradigms (LLM, neuromorphic, symbolic, robotic).</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Paradigm Translation + Heterogeneous Interaction Growth + Cross-Paradigm Override Reachability as simultaneous gates. G_CTP as universal interlingua.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Mixed-paradigm swarms, defense</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Safe governance of heterogeneous agent populations.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 012, 021</div></div>
+  </div>
+</div>
+<div class="card" data-layer="4" data-np="NP6" data-search="reg-ai-0033 033 pgm-lhap — persistent governance memory state discontinuity and ungoverned memory evolution across multi-decade lifecycles. persistent memory integrity + lifecycle containment + memory evolution invariants. system soul continuity via chained hash. orbital, defense, multi-decade infrastructure multi-decade governed persistence and quantum-resilient archival. np6 000, 005, 020, 028, 029, 031">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0033</span>
+    <span class="card-name">PGM-LHAP — Persistent Governance Memory</span>
+    <span class="card-badge" style="background:#4527a0">Layer 4</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">State discontinuity and ungoverned memory evolution across multi-decade lifecycles.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Persistent Memory Integrity + Lifecycle Containment + Memory Evolution Invariants. System soul continuity via chained hash.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Orbital, defense, multi-decade infrastructure</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Multi-decade governed persistence and quantum-resilient archival.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000, 005, 020, 028, 029, 031</div></div>
+  </div>
+</div>
+</div>
+<div class="np-section" data-np="NP7">
+  <div class="section-header">
+    <span class="section-pill" style="background:#5D4037">NP7</span>
+    <span class="section-count">NP7 Candidate — DEO Physical Admissibility Layer &nbsp;·&nbsp; 1 filings</span>
+  </div>
+  <div class="card" data-layer="2" data-np="NP7" data-search="reg-ai-0030 030 deo — deterministic energy orchestration uncontrolled physical energy/power flows without commit-before-execution governance. deterministic energy orchestration protocol. five-phase shl sequence with ba token committed before breaker closure. physical isomorph of ctp/dsc. orbital power, energy infrastructure physical admissibility layer. bridges ai governance to electrons. np7 000">
+  <div class="card-header">
+    <span class="card-id">REG-AI-0030</span>
+    <span class="card-name">DEO — Deterministic Energy Orchestration</span>
+    <span class="card-badge" style="background:#bf360c">Layer 2</span>
+  </div>
+  <div class="card-body">
+    <div class="field-full"><div class="field-label">Problem Solved</div><div class="field-value">Uncontrolled physical energy/power flows without commit-before-execution governance.</div></div>
+    <div class="field-full"><div class="field-label">Core Invariant / Contribution</div><div class="field-value">Deterministic Energy Orchestration Protocol. Five-phase SHL sequence with BA token committed before breaker closure. Physical isomorph of CTP/DSC.</div></div>
+    <div class=""><div class="field-label">Primary Domains</div><div class="field-value">Orbital power, energy infrastructure</div></div>
+    <div class=""><div class="field-label">Commercial Relevance</div><div class="field-value">Physical admissibility layer. Bridges AI governance to electrons.</div></div>
+    <div class=""><div class="field-label">Dependencies</div><div class="field-value">000</div></div>
+  </div>
+</div>
+</div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  All IP assigned to Regulator AI Global, Inc. (Delaware C-Corp) &nbsp;·&nbsp; Unified priority date: March 6, 2026<br>
+  Confidential &nbsp;·&nbsp; Non-provisional consolidation targeted Q1 2027<br>
+  REG-AI-0022 is intentionally reserved — no specification assigned
+</footer>
+
+<script>
+// Password gate
+(function() {
+  var HASH = "0b209d34c36c0148b9059bae76db3453ca8610d0a8ac3c49e0fb1d3508591553";
+  var SESSION_KEY = 'rai_auth';
+
+  function sha256(str) {
+    // Simple check against stored hash via SubtleCrypto
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
+      .then(function(buf) {
+        return Array.from(new Uint8Array(buf))
+          .map(function(b) { return b.toString(16).padStart(2,'0'); })
+          .join('');
+      });
+  }
+
+  function showDoc() {
+    var gate = document.getElementById('pw-gate');
+    if (gate) gate.style.display = 'none';
+  }
+
+  // Check session (so they don't re-enter every refresh)
+  if (sessionStorage.getItem(SESSION_KEY) === '1') {
+    showDoc();
+  }
+
+  window.checkPW = function() {
+    var val = document.getElementById('pw-input').value;
+    sha256(val).then(function(hash) {
+      if (hash === HASH) {
+        sessionStorage.setItem(SESSION_KEY, '1');
+        showDoc();
+      } else {
+        document.getElementById('pw-error').style.display = 'block';
+        document.getElementById('pw-input').value = '';
+        document.getElementById('pw-input').focus();
+      }
+    });
+  };
+})();
+</script>
+
+<script>
+var currentView = 'layer';
+
+function updateOffset() {
+  var h = document.getElementById('site-header').offsetHeight;
+  if (h > 0) document.getElementById('sticky-controls').style.top = h + 'px';
+}
+updateOffset();
+setTimeout(updateOffset, 200);
+window.onresize = updateOffset;
+
+function setStatus(msg) {
+  var el = document.getElementById('search-status');
+  if (el) el.textContent = msg;
+}
+
+function activeView() {
+  return document.getElementById(currentView === 'layer' ? 'layer-view' : 'np-view');
+}
+
+function switchView(view) {
+  currentView = view;
+  document.getElementById('layer-view').style.display = view === 'layer' ? '' : 'none';
+  document.getElementById('np-view').style.display = view === 'np' ? '' : 'none';
+  document.getElementById('btn-layer').className = 'nav-btn view-btn' + (view === 'layer' ? ' active' : '');
+  document.getElementById('btn-np').className = 'nav-btn view-btn' + (view === 'np' ? ' active' : '');
+  if (view === 'np') { clearLayerBtns(); document.getElementById('btn-all').className = 'nav-btn active'; }
+  resetAll();
+}
+
+function showAll() {
+  document.getElementById('search').value = '';
+  clearLayerBtns();
+  document.getElementById('btn-all').className = 'nav-btn active';
+  resetAll();
+  setStatus('');
+}
+
+function resetAll() {
+  var view = activeView();
+  var cards = view.querySelectorAll('.card');
+  for (var i = 0; i < cards.length; i++) cards[i].style.display = '';
+  var secs = view.querySelectorAll('.layer-section, .np-section');
+  for (var i = 0; i < secs.length; i++) secs[i].style.display = '';
+}
+
+function filterByLayer(layer) {
+  if (currentView !== 'layer') switchView('layer');
+  clearLayerBtns();
+  document.getElementById('btn-all').className = 'nav-btn';
+  var b = document.querySelector('[data-layer="' + layer + '"].nav-btn');
+  if (b) b.className = 'nav-btn active';
+  document.getElementById('search').value = '';
+  setStatus('');
+  resetAll();
+  var secs = document.querySelectorAll('#layer-view .layer-section');
+  for (var i = 0; i < secs.length; i++) {
+    secs[i].style.display = secs[i].getAttribute('data-layer') === layer ? '' : 'none';
+  }
+}
+
+function onSearch() {
+  clearLayerBtns();
+  document.getElementById('btn-all').className = 'nav-btn active';
+
+  var term = document.getElementById('search').value.toLowerCase().trim();
+
+  if (!term) { resetAll(); setStatus(''); return; }
+
+  var view = activeView();
+  var cards = view.querySelectorAll('.card');
+  var matched = 0;
+
+  for (var i = 0; i < cards.length; i++) {
+    var ds = (cards[i].getAttribute('data-search') || '').toLowerCase();
+    var show = ds.indexOf(term) !== -1;
+    cards[i].style.display = show ? '' : 'none';
+    if (show) matched++;
+  }
+
+  // Hide empty sections
+  var secs = view.querySelectorAll('.layer-section, .np-section');
+  for (var j = 0; j < secs.length; j++) {
+    var cs = secs[j].querySelectorAll('.card');
+    var vis = false;
+    for (var k = 0; k < cs.length; k++) {
+      if (cs[k].style.display !== 'none') { vis = true; break; }
+    }
+    secs[j].style.display = vis ? '' : 'none';
+  }
+
+  setStatus(matched + ' result' + (matched !== 1 ? 's' : '') + ' for "' + term + '"');
+}
+
+function clearLayerBtns() {
+  var btns = document.querySelectorAll('[data-layer].nav-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].className = 'nav-btn';
+}
+
+var el = document.getElementById('search');
+if (el) {
+  ['input','keyup','change','compositionend'].forEach(function(evt) {
+    el.addEventListener(evt, onSearch);
+  });
+  el.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.keyCode === 13) { e.preventDefault(); onSearch(); }
+  });
+}
+</script>
+</body>
+</html>
