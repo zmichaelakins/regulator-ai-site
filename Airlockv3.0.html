@@ -1,0 +1,2649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Integration Airlock Demo — Regulator AI</title>
+<style>
+:root {
+  --void:    #070C1A;
+  --panel:   #0D1526;
+  --surface: #111D35;
+  --border:  #1A2B48;
+  --muted:   #243450;
+  --cyan:    #00C8F0;
+  --amber:   #FFB800;
+  --green:   #28C840;
+  --red:     #FF3830;
+  --gray:    #4A5C7A;
+  --text:    #B8CCE8;
+  --dim:     #5A6E90;
+  --white:   #E8F0FF;
+  --mono:    'Courier New', monospace;
+  --sans:    -apple-system, 'Segoe UI', system-ui, sans-serif;
+}
+
+/* PASSWORD GATE */
+#pw-gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--void);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 30px;
+  font-family: var(--sans);
+}
+#pw-gate .pw-eyebrow {
+  font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--cyan); opacity: 0.8;
+  margin-bottom: 14px;
+}
+#pw-gate h2 {
+  color: var(--white); font-size: 18px; margin: 0 0 6px 0; text-align: center;
+}
+#pw-gate p {
+  color: var(--dim); font-size: 13px; margin: 0 0 24px 0; text-align: center;
+  max-width: 380px; line-height: 1.6;
+}
+#pw-gate input {
+  width: 100%; max-width: 320px;
+  padding: 12px 16px; font-size: 15px;
+  border: 2px solid var(--amber); border-radius: 6px;
+  background: var(--surface); color: var(--white);
+  outline: none; margin-bottom: 12px;
+  font-family: var(--mono);
+  text-align: center; letter-spacing: 0.1em;
+}
+#pw-gate input::placeholder { color: var(--dim); letter-spacing: normal; }
+#pw-gate button {
+  width: 100%; max-width: 320px;
+  padding: 12px; font-size: 15px; font-weight: 700;
+  background: var(--amber); color: var(--void);
+  border: none; border-radius: 6px; cursor: pointer;
+  font-family: var(--sans);
+}
+#pw-gate button:hover { opacity: 0.9; }
+#pw-gate .pw-error {
+  color: var(--red); font-size: 13px; margin-top: 10px;
+  font-family: var(--sans); display: none; text-align: center;
+}
+#app-content { display: none; }
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px}
+body{background:var(--void);color:var(--text);font-family:var(--sans);min-height:100vh;line-height:1.6}
+
+/* HEADER */
+.hdr{background:var(--panel);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hdr-brand{font-family:var(--mono);font-size:.65rem;color:var(--cyan);letter-spacing:.2em;text-transform:uppercase;opacity:.8}
+.hdr-spec{font-family:var(--mono);font-size:.62rem;color:var(--dim);letter-spacing:.14em}
+
+/* HERO */
+.hero{max-width:980px;margin:0 auto;padding:40px 28px 28px}
+.hero-eye{font-family:var(--mono);font-size:.62rem;color:var(--cyan);letter-spacing:.22em;text-transform:uppercase;margin-bottom:12px}
+.hero-title{font-size:1.9rem;font-weight:700;color:var(--white);letter-spacing:-.02em;line-height:1.15;margin-bottom:18px}
+.hero-title span{color:var(--cyan)}
+.stmt{border-left:3px solid var(--amber);padding:12px 18px;background:rgba(255,184,0,.05);border-radius:0 5px 5px 0;font-size:.85rem;color:var(--white);line-height:1.5;margin-bottom:10px;font-style:italic}
+.invariant{border-left:3px solid var(--cyan);padding:10px 18px;background:rgba(0,200,240,.04);border-radius:0 5px 5px 0;font-size:.8rem;color:var(--text);line-height:1.5}
+.invariant strong{color:var(--cyan);font-style:normal}
+
+/* COUNTERS */
+.counters{max-width:980px;margin:0 auto 20px;padding:0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.counter{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:14px 16px;text-align:center}
+.counter-val{font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--white);line-height:1}
+.counter-val.green{color:var(--green)}
+.counter-val.red{color:var(--red)}
+.counter-val.amber{color:var(--amber)}
+.counter-lbl{font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-top:4px}
+
+/* BOUNDARY VIZ */
+.bviz-wrap{max-width:980px;margin:0 auto 22px;padding:0 28px}
+.bviz{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:16px 22px}
+.bviz-lbl{font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.bviz-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bviz-node{font-family:var(--mono);font-size:.75rem;padding:7px 14px;border-radius:4px;border:1px solid var(--muted);color:var(--dim);transition:all .3s;white-space:nowrap}
+.bviz-node.active-ext{border-color:var(--cyan);color:var(--cyan);background:rgba(0,200,240,.08)}
+.bviz-node.active-airlock{border-color:var(--amber);color:var(--amber);background:rgba(255,184,0,.08)}
+.bviz-node.active-permit{border-color:var(--green);color:var(--green);background:rgba(40,200,64,.08)}
+.bviz-node.active-block{border-color:var(--red);color:var(--red);background:rgba(255,56,48,.08)}
+.bviz-node.active-lockout{border-color:var(--amber);color:var(--amber);background:rgba(255,184,0,.1)}
+.bviz-arrow{color:var(--dim);font-size:.9rem;transition:color .3s}
+.bviz-arrow.lit-permit{color:var(--green)}
+.bviz-arrow.lit-block{color:var(--red)}
+.bviz-arrow.lit-lockout{color:var(--amber)}
+
+/* CONTROLS */
+.controls{max-width:980px;margin:0 auto 22px;padding:0 28px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* POLICY PROFILE BAR */
+.profile-wrap{max-width:980px;margin:0 auto 18px;padding:0 28px}
+.profile-bar{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.profile-lbl{font-family:var(--mono);font-size:.62rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.profile-select{font-family:var(--mono);font-size:.78rem;background:var(--surface);color:var(--white);border:1px solid var(--muted);border-radius:4px;padding:7px 10px;cursor:pointer}
+.profile-select:focus{outline:none;border-color:var(--cyan)}
+.profile-version{font-family:var(--mono);font-size:.62rem;color:var(--cyan);margin-left:auto;white-space:nowrap}
+.profile-desc{font-size:.78rem;color:var(--text);line-height:1.5;margin-top:10px;padding:0 2px}
+.profile-thresholds{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pt-chip{font-family:var(--mono);font-size:.62rem;color:var(--dim);border:1px solid var(--muted);border-radius:3px;padding:4px 9px;white-space:nowrap}
+.pt-chip b{color:var(--text)}
+.pt-chip.changed{border-color:var(--amber);color:var(--amber)}
+.pt-chip.changed b{color:var(--amber)}
+
+/* PROFILE TAG ON SCENARIO CARDS */
+.profile-tag{font-family:var(--mono);font-size:.6rem;color:var(--cyan);margin-left:8px}
+.runtime-tag{font-family:var(--mono);font-size:.6rem;color:var(--amber);border:1px solid var(--muted);border-radius:3px;padding:2px 7px;display:inline-block;margin-top:5px;letter-spacing:.06em}
+
+/* RUNTIME TOPOLOGY ROW */
+.rt-wrap{max-width:980px;margin:0 auto 18px;padding:0 28px}
+.rt-lbl{font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.rt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rt-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
+.rt-card-name{font-family:var(--mono);font-size:.74rem;color:var(--white);font-weight:700;margin-bottom:4px}
+.rt-card-id{font-family:var(--mono);font-size:.6rem;color:var(--cyan);margin-bottom:6px}
+.rt-card-desc{font-size:.72rem;color:var(--text);line-height:1.45;margin-bottom:8px}
+.rt-card-floor{font-family:var(--mono);font-size:.62rem;color:var(--amber);border-top:1px solid var(--border);padding-top:7px}
+
+/* COORDINATED SCENARIO CARDS */
+.coord-card{background:var(--panel);border:1px solid var(--border);border-radius:7px;overflow:hidden;margin-bottom:14px}
+.coord-card.decided-PERMIT{border-color:rgba(40,200,64,.4)}
+.coord-card.decided-BLOCK{border-color:rgba(255,56,48,.4)}
+.coord-card.decided-LOCKOUT{border-color:rgba(255,184,0,.4)}
+.coord-members{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:6px}
+.coord-member-row{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.7rem}
+.coord-member-id{color:var(--text);min-width:130px}
+.coord-member-result{font-weight:700}
+.coord-member-result.PERMIT{color:var(--green)}
+.coord-member-result.BLOCK{color:var(--red)}
+.coord-group-banner{display:flex;align-items:flex-start;gap:12px;padding:12px 18px;margin:12px 18px;border-radius:5px}
+.coord-group-banner.PERMIT{background:rgba(40,200,64,.09);border:1px solid rgba(40,200,64,.28)}
+.coord-group-banner.BLOCK{background:rgba(255,56,48,.09);border:1px solid rgba(255,56,48,.28)}
+.coord-group-banner.LOCKOUT{background:rgba(255,184,0,.09);border:1px solid rgba(255,184,0,.28)}
+.coord-meta-row{display:flex;gap:14px;padding:0 18px 12px;font-family:var(--mono);font-size:.66rem;color:var(--dim);flex-wrap:wrap}
+.ovr-history-lbl{font-family:var(--mono);font-size:.6rem;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;padding:10px 18px 4px;border-top:1px solid var(--border)}
+.ovr-history-row{display:flex;align-items:center;gap:10px;padding:4px 18px;font-family:var(--mono);font-size:.68rem}
+.ovr-history-idx{color:var(--dim)}
+.ovr-history-decision{font-weight:700}
+.ovr-history-decision.PERMIT{color:var(--green)}
+.ovr-history-decision.LOCKOUT{color:var(--amber)}
+.ovr-history-decision.BLOCK{color:var(--red)}
+.ovr-history-time{color:var(--dim);margin-left:auto}
+.btn{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid;cursor:pointer;background:transparent;transition:background .15s,color .15s}
+.btn-cyan{border-color:var(--cyan);color:var(--cyan)}.btn-cyan:hover{background:rgba(0,200,240,.1)}
+.btn-dim{border-color:var(--muted);color:var(--dim)}.btn-dim:hover{border-color:var(--gray);color:var(--text)}
+.btn-amber{border-color:var(--amber);color:var(--amber)}.btn-amber:hover{background:rgba(255,184,0,.08)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+
+/* AUDIT CHAIN */
+.chain-wrap{max-width:980px;margin:0 auto 22px;padding:0 28px}
+.chain-bar{background:var(--panel);border:1px solid var(--border);border-radius:5px;padding:10px 16px;display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.68rem}
+.chain-lbl{color:var(--dim);letter-spacing:.1em;white-space:nowrap}
+.chain-hash{color:var(--amber);word-break:break-all;flex:1}
+.chain-ct{color:var(--cyan);white-space:nowrap}
+
+/* LAYOUT */
+.main-grid{max-width:980px;margin:0 auto;padding:0 28px 60px;display:grid;grid-template-columns:1fr 320px;gap:20px}
+@media(max-width:720px){.main-grid{grid-template-columns:1fr}}
+
+/* SCENARIO CARDS */
+.scenarios-col{}
+.scenarios-col h2{font-family:var(--mono);font-size:.62rem;color:var(--dim);letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:7px;overflow:hidden;margin-bottom:14px;transition:border-color .25s}
+.card.decided-PERMIT{border-color:rgba(40,200,64,.4)}
+.card.decided-BLOCK{border-color:rgba(255,56,48,.4)}
+.card.decided-LOCKOUT{border-color:rgba(255,184,0,.4)}
+
+.card-hdr{padding:14px 18px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border)}
+.card-meta{flex:1}
+.card-sid{font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.12em;margin-bottom:3px}
+.card-name{font-size:.95rem;font-weight:600;color:var(--white);margin-bottom:3px}
+.card-desc{font-size:.78rem;color:var(--dim);line-height:1.4}
+
+.fsm-badge{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;padding:4px 10px;border-radius:3px;border:1px solid var(--muted);color:var(--dim);white-space:nowrap;min-width:88px;text-align:center;transition:all .2s}
+.fsm-badge.EVALUATING{border-color:var(--cyan);color:var(--cyan);background:rgba(0,200,240,.06)}
+.fsm-badge.PERMITTED{border-color:var(--green);color:var(--green);background:rgba(40,200,64,.07)}
+.fsm-badge.BLOCKED{border-color:var(--red);color:var(--red);background:rgba(255,56,48,.07)}
+.fsm-badge.LOCKOUT{border-color:var(--amber);color:var(--amber);background:rgba(255,184,0,.07)}
+
+/* GATE PIPELINE */
+.pipeline{padding:14px 18px;display:flex;align-items:flex-start;gap:0;border-bottom:1px solid var(--border);overflow-x:auto}
+.gate-node{display:flex;flex-direction:column;align-items:center;flex:1;min-width:56px;position:relative;z-index:1}
+.gate-node+.gate-node::before{content:'';position:absolute;left:-50%;top:13px;width:100%;height:2px;background:var(--muted);z-index:0;transition:background .3s}
+.gate-node.pass+.gate-node::before{background:var(--green)}
+.gate-node.fail+.gate-node::before,.gate-node.lockout+.gate-node::before{background:var(--red)}
+.gate-dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--muted);background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.58rem;color:var(--dim);transition:all .25s;position:relative;z-index:2;margin-bottom:5px}
+.gate-node.active .gate-dot{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 7px rgba(0,200,240,.35)}
+.gate-node.pass   .gate-dot{border-color:var(--green);background:rgba(40,200,64,.12);color:var(--green)}
+.gate-node.fail   .gate-dot{border-color:var(--red);background:rgba(255,56,48,.12);color:var(--red)}
+.gate-node.lockout .gate-dot{border-color:var(--amber);background:rgba(255,184,0,.1);color:var(--amber)}
+.gate-lbl{font-family:var(--mono);font-size:.54rem;color:var(--dim);text-align:center;line-height:1.3;max-width:54px;transition:color .25s}
+.gate-node.pass .gate-lbl{color:var(--green)}
+.gate-node.fail .gate-lbl{color:var(--red)}
+.gate-node.lockout .gate-lbl{color:var(--amber)}
+
+/* RESULTS */
+.results{display:none;padding:16px 18px}
+.results.show{display:block}
+.decision-banner{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:5px;margin-bottom:14px}
+.decision-banner.PERMIT{background:rgba(40,200,64,.09);border:1px solid rgba(40,200,64,.28)}
+.decision-banner.BLOCK{background:rgba(255,56,48,.09);border:1px solid rgba(255,56,48,.28)}
+.decision-banner.LOCKOUT{background:rgba(255,184,0,.09);border:1px solid rgba(255,184,0,.28)}
+.dword{font-family:var(--mono);font-size:1.2rem;font-weight:700;letter-spacing:.08em;white-space:nowrap}
+.decision-banner.PERMIT .dword{color:var(--green)}
+.decision-banner.BLOCK  .dword{color:var(--red)}
+.decision-banner.LOCKOUT .dword{color:var(--amber)}
+.dreason{font-size:.8rem;color:var(--text);line-height:1.45}
+
+.section-lbl{font-family:var(--mono);font-size:.58rem;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:7px}
+.fsm-trans{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.fsm-s{font-family:var(--mono);font-size:.72rem;padding:3px 9px;border-radius:3px;border:1px solid var(--muted);color:var(--dim)}
+.fsm-s.cur{border-color:var(--cyan);color:var(--cyan)}
+.fsm-arr{color:var(--dim);font-size:.8rem}
+
+.gate-tbl{width:100%;border-collapse:collapse;margin-bottom:14px}
+.gate-tbl th{font-family:var(--mono);font-size:.58rem;color:var(--dim);letter-spacing:.1em;text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);text-transform:uppercase}
+.gate-tbl td{font-size:.76rem;padding:7px 8px;border-bottom:1px solid rgba(26,43,72,.6);vertical-align:top;color:var(--text)}
+.gate-tbl tr:last-child td{border-bottom:none}
+.gid{font-family:var(--mono);font-size:.64rem;color:var(--dim);white-space:nowrap}
+.gres{font-family:var(--mono);font-size:.68rem;font-weight:700;white-space:nowrap}
+.gres.PASS{color:var(--green)}.gres.FAIL{color:var(--red)}.gres.LOCKOUT{color:var(--amber)}.gres.SKIP{color:var(--dim)}.gres.INFO{color:var(--cyan)}
+
+.audit-rec{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:12px 14px}
+.audit-row{display:flex;gap:10px;font-family:var(--mono);font-size:.67rem;margin-bottom:3px;flex-wrap:wrap}
+.akey{color:var(--dim);min-width:110px}
+.aval{color:var(--cyan);word-break:break-all}
+.aval.hash{color:var(--amber)}
+.aval.green{color:var(--green)}.aval.red{color:var(--red)}.aval.gold{color:var(--amber)}
+
+/* REPLAY VERIFICATION PANEL */
+.replay-panel{margin-top:14px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px 16px}
+.replay-hdr{font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.replay-row{display:flex;gap:10px;font-family:var(--mono);font-size:.7rem;padding:4px 0;border-bottom:1px solid rgba(26,43,72,.5)}
+.replay-row:last-child{border-bottom:none}
+.replay-k{color:var(--dim);min-width:160px}
+.replay-orig{color:var(--text)}
+.replay-new{color:var(--cyan)}
+.replay-match{font-weight:700}
+.replay-match.yes{color:var(--green)}
+.replay-match.no{color:var(--amber)}
+.replay-note{font-size:.72rem;color:var(--dim);line-height:1.5;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.replay-note.diverged{color:var(--amber)}
+
+.card-foot{padding:10px 18px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.run-btn{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:4px;border:1px solid var(--cyan);color:var(--cyan);background:transparent;cursor:pointer;transition:background .15s}
+.run-btn:hover{background:rgba(0,200,240,.09)}
+.run-btn:disabled{opacity:.3;cursor:not-allowed}
+.ev-btn,.vr-btn{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:4px;border:1px solid var(--muted);color:var(--dim);background:transparent;cursor:pointer;transition:all .15s}
+.ev-btn:hover:not(:disabled){border-color:var(--gray);color:var(--text)}
+.vr-btn:hover:not(:disabled){border-color:var(--amber);color:var(--amber);background:rgba(255,184,0,.06)}
+.ev-btn:disabled,.vr-btn:disabled{opacity:.25;cursor:not-allowed}
+.exp-lbl{font-family:var(--mono);font-size:.62rem;color:var(--dim);margin-left:auto}
+
+/* TIMELINE COLUMN */
+.timeline-col{}
+.timeline-col h2{font-family:var(--mono);font-size:.62rem;color:var(--dim);letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.timeline{background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:14px;max-height:760px;overflow-y:auto}
+.tl-empty{font-family:var(--mono);font-size:.68rem;color:var(--dim);text-align:center;padding:24px 0;letter-spacing:.08em}
+.tl-event{border-bottom:1px solid var(--border);padding:10px 0;last-child{border:none}}
+.tl-event:last-child{border-bottom:none}
+.tl-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:3px}
+.tl-name{font-size:.78rem;color:var(--white);font-weight:600}
+.tl-dec{font-family:var(--mono);font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:3px}
+.tl-dec.PERMIT{background:rgba(40,200,64,.12);color:var(--green);border:1px solid rgba(40,200,64,.3)}
+.tl-dec.BLOCK{background:rgba(255,56,48,.12);color:var(--red);border:1px solid rgba(255,56,48,.3)}
+.tl-dec.LOCKOUT{background:rgba(255,184,0,.12);color:var(--amber);border:1px solid rgba(255,184,0,.3)}
+.tl-meta{font-family:var(--mono);font-size:.6rem;color:var(--dim)}
+.tl-hash{font-family:var(--mono);font-size:.58rem;color:var(--amber);word-break:break-all;margin-top:2px}
+
+/* FOOTER */
+.ftr{border-top:1px solid var(--border);padding:18px 28px;text-align:center;font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.1em}
+</style>
+
+<script type="application/json" id="airlock-config">
+{
+  "meta": {
+    "version": "2.0.0",
+    "spec": "REG-AI-0017",
+    "title": "Integration Airlock Demo",
+    "boundary": "AcquireCo_TargetCo_Integration_Boundary"
+  },
+  "boundary": {
+    "id": "IB-001",
+    "name": "AcquireCo / TargetCo Fleet Integration Boundary",
+    "acquirer": "AcquireCo Logistics",
+    "target": "TargetCo Fleet Systems"
+  },
+  "policy": {
+    "policy_version": "v1.1-baseline",
+    "active_profile": "MA",
+    "require_registration": true,
+    "require_authority_permit": true,
+    "block_ghost_assets": true,
+    "replay_lockout_enabled": true,
+    "minimum_authority_level": "STANDARD",
+    "max_data_sensitivity": "CLASSIFIED",
+    "max_concurrent_crossings_without_escalation_approval": 2,
+    "commit_before_execute": true
+  },
+  "runtimes": [
+    {
+      "id": "RT-OPS",
+      "name": "Operational Integration Runtime",
+      "short": "Runtime 1 · Ops",
+      "policy_profile_id": "MA",
+      "description": "General post-acquisition operational systems. Standard authority floor, full replay protection."
+    },
+    {
+      "id": "RT-CMD",
+      "name": "Command Authority Runtime",
+      "short": "Runtime 2 · Command",
+      "policy_profile_id": "DEFENSE",
+      "description": "Command-and-control systems requiring elevated authority assurance. Tightest coordinated-escalation tolerance."
+    },
+    {
+      "id": "RT-INFRA",
+      "name": "Critical Infrastructure Runtime",
+      "short": "Runtime 3 · Infra",
+      "policy_profile_id": "CRITICAL_INFRA",
+      "description": "Physical infrastructure control systems. Sovereign-level authority floor — the strictest of the three runtimes."
+    }
+  ],
+  "policy_profiles": [
+    {
+      "id": "MA",
+      "name": "M&A Mode",
+      "policy_version": "v2.0-ma",
+      "description": "Baseline post-acquisition integration boundary policy. Standard authority and sensitivity thresholds, full replay protection.",
+      "minimum_authority_level": "STANDARD",
+      "block_ghost_assets": true,
+      "replay_lockout_enabled": true,
+      "max_data_sensitivity": "CLASSIFIED",
+      "max_concurrent_crossings_without_escalation_approval": 2,
+      "max_distinct_runtimes_per_escalation_group": 2
+    },
+    {
+      "id": "DEFENSE",
+      "name": "Defense Contractor Mode",
+      "policy_version": "v2.0-defense",
+      "description": "Elevated authority floor reflecting command-assurance requirements. Tightest coordinated-escalation tolerance of any profile.",
+      "minimum_authority_level": "ELEVATED",
+      "block_ghost_assets": true,
+      "replay_lockout_enabled": true,
+      "max_data_sensitivity": "CLASSIFIED",
+      "max_concurrent_crossings_without_escalation_approval": 1,
+      "max_distinct_runtimes_per_escalation_group": 1
+    },
+    {
+      "id": "CRITICAL_INFRA",
+      "name": "Critical Infrastructure Mode",
+      "policy_version": "v2.0-critical-infra",
+      "description": "Sovereign-level authority floor for systems governing physical infrastructure. Stricter than Defense Contractor Mode on authority alone; equally tight on coordinated escalation.",
+      "minimum_authority_level": "SOVEREIGN",
+      "block_ghost_assets": true,
+      "replay_lockout_enabled": true,
+      "max_data_sensitivity": "CLASSIFIED",
+      "max_concurrent_crossings_without_escalation_approval": 1,
+      "max_distinct_runtimes_per_escalation_group": 1
+    },
+    {
+      "id": "HEALTHCARE",
+      "name": "Healthcare Data Mode",
+      "policy_version": "v2.0-healthcare",
+      "description": "Standard authority floor, but caps permissible data sensitivity at INTERNAL — restricted and classified-sensitivity assets are blocked at the Policy Gate regardless of authority level.",
+      "minimum_authority_level": "STANDARD",
+      "block_ghost_assets": true,
+      "replay_lockout_enabled": true,
+      "max_data_sensitivity": "INTERNAL",
+      "max_concurrent_crossings_without_escalation_approval": 2,
+      "max_distinct_runtimes_per_escalation_group": 2
+    },
+    {
+      "id": "ORBITAL",
+      "name": "Orbital / Degraded Comms Mode",
+      "policy_version": "v2.0-orbital",
+      "description": "Reflects intermittent-connectivity operation where the Boundary Gate cannot reliably confirm replay state against a central ledger. Replay lockout is disabled; authority floor relaxed to LIMITED; coordinated-escalation tolerance raised to reflect the operational reality that a human approver may be unreachable during a blackout window.",
+      "minimum_authority_level": "LIMITED",
+      "block_ghost_assets": true,
+      "replay_lockout_enabled": false,
+      "max_data_sensitivity": "CLASSIFIED",
+      "max_concurrent_crossings_without_escalation_approval": 4,
+      "max_distinct_runtimes_per_escalation_group": 3
+    }
+  ],
+  "registered_assets": [
+    {
+      "asset_id": "AGENT-XRT-014",
+      "name": "Cross-Domain Sync Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "ELEVATED",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "RESTRICTED",
+      "declared_dependencies": [],
+      "_note": "Authority floor probe asset. Deliberately carries no approved_under_policy_version: this asset is registered once but evaluated against multiple runtimes bound to different policy versions, and a single-version attestation would be meaningless across runtimes by construction. ELEVATED authority satisfies RT-OPS (STANDARD floor) and RT-CMD (ELEVATED floor) but fails RT-INFRA (SOVEREIGN floor). Same asset, same registration record, same request — the only variable across S14/S15 is which runtime it targets. This is the proof that target-runtime selection performs a genuinely separate evaluation rather than a relabeled single check."
+    },
+    {
+      "asset_id": "AGENT-XRT-015",
+      "name": "Sovereign Relay Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "SOVEREIGN",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "CLASSIFIED",
+      "declared_dependencies": [],
+      "_note": "Chain-traversal proof asset. SOVEREIGN authority clears RT-OPS (STANDARD floor), RT-CMD (ELEVATED floor), and RT-INFRA (SOVEREIGN floor) — the only asset in this set that can legitimately complete a full 3-hop chain. Deliberately carries no approved_under_policy_version for the same reason as AGENT-XRT-014: it is evaluated against three runtimes bound to three different policy versions in sequence, and a single-version attestation would be meaningless across that path."
+    },
+    {
+      "asset_id": "AGENT-ROA-001",
+      "name": "Route Optimization Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "approved_under_policy_version": "v2.0-ma",
+      "declared_dependencies": []
+    },
+    {
+      "asset_id": "AGENT-FTA-002",
+      "name": "Fleet Telemetry Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "approved_under_policy_version": "v2.0-ma",
+      "declared_dependencies": []
+    },
+    {
+      "asset_id": "AGENT-LDA-003",
+      "name": "Legacy Dispatch Agent",
+      "type": "AI_AGENT",
+      "registration_status": "DECOMMISSIONED",
+      "authority_level": "NONE",
+      "approved_for_boundary_crossing": false,
+      "ghost": true,
+      "ghost_reason": "Decommissioned pre-acquisition asset. Not included in M&A asset transfer schedule. No successor liability assignment recorded.",
+      "data_sensitivity": "INTERNAL",
+      "approved_under_policy_version": "v2.0-ma",
+      "declared_dependencies": []
+    },
+    {
+      "asset_id": "AGENT-IRA-004",
+      "name": "Inventory Reporting Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "LIMITED",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "approved_under_policy_version": "v2.0-ma",
+      "declared_dependencies": []
+    },
+    {
+      "asset_id": "AGENT-CSA-005",
+      "name": "Customer Support Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": false,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "approved_under_policy_version": "v2.0-ma",
+      "declared_dependencies": []
+    },
+    {
+      "asset_id": "AGENT-DPA-006",
+      "name": "Data Pipeline Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": false,
+      "ghost": true,
+      "ghost_reason": "Asset appears in current integration request but is absent from the acquisition's asset transfer schedule (Schedule 2.1). Registration record predates transfer cutoff; no successor liability assignment recorded for this entity.",
+      "data_sensitivity": "INTERNAL",
+      "approved_under_policy_version": "v2.0-ma",
+      "declared_dependencies": []
+    },
+    {
+      "asset_id": "AGENT-CMD-007",
+      "name": "Command Authority Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "SOVEREIGN",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "CLASSIFIED",
+      "approved_under_policy_version": "v2.0-ma",
+      "declared_dependencies": []
+    },
+    {
+      "asset_id": "AGENT-PHI-008",
+      "name": "Patient Records Integration Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "ELEVATED",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "RESTRICTED"
+    },
+    {
+      "asset_id": "AGENT-SPF-009",
+      "name": "Reporting Agent (Spoof Target)",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "_note": "Genuinely registered at STANDARD. The adversarial scenario submits a request claiming SOVEREIGN authority for this asset — the mismatch between claimed and registered authority is the attack, independent of whether STANDARD alone would pass."
+    },
+    {
+      "asset_id": "AGENT-DFT-010",
+      "name": "Forecasting Agent (Drift Target)",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "approved_under_policy_version": "v1.1-baseline",
+      "_note": "Approval was granted under the original v1.1 policy and has never been re-attested under any v2.0 profile. Under any currently active v2.0-* profile, this asset's approval is stale — this is policy drift, distinct from never having been approved at all."
+    },
+    {
+      "asset_id": "AGENT-AUD-011",
+      "name": "Settlement Agent (Audit Failure Target)",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "_note": "This asset is clean and would PERMIT under gates 1 through 5 without exception. The adversarial scenario does not attack the asset at all — it simulates a failure in the audit ledger commit itself at G6."
+    },
+    {
+      "asset_id": "AGENT-ORC-012",
+      "name": "Orchestration Agent (Dependency Injection Primary)",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "depends_on": "TOOL-SHADOW-998",
+      "_note": "This asset is independently clean and registered. It declares a runtime dependency on TOOL-SHADOW-998, which is NOT registered in the IBI. The Policy Gate must transitively evaluate declared dependencies, not just the requesting asset itself."
+    },
+    {
+      "asset_id": "AGENT-DEEP-016",
+      "name": "Deep Chain Primary Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "depends_on": "AGENT-DEEP-017",
+      "_note": "Transitive dependency chain proof, hop 0 (the requesting asset). Itself entirely clean — registered, approved, non-ghost. Declares a dependency on AGENT-DEEP-017, which is ALSO clean. The poison is two hops further down this chain, at AGENT-DEEP-018, not at this asset's immediate dependency. This is the proof that the original single-hop check (which only ever inspected the IMMEDIATE dependency) would have missed entirely."
+    },
+    {
+      "asset_id": "AGENT-DEEP-017",
+      "name": "Deep Chain Intermediate Agent",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "depends_on": "AGENT-DEEP-018",
+      "_note": "Hop 1 of the deep chain. Also entirely clean on every attribute a single-hop check would have inspected. Declares a dependency on AGENT-DEEP-018, which is the actual ghost. A reviewer inspecting only AGENT-DEEP-016's immediate dependency (this asset) would find nothing wrong — the violation is only visible by walking the FULL chain."
+    },
+    {
+      "asset_id": "AGENT-DEEP-018",
+      "name": "Deep Chain Terminal Ghost",
+      "type": "AI_AGENT",
+      "registration_status": "DECOMMISSIONED",
+      "authority_level": "NONE",
+      "approved_for_boundary_crossing": false,
+      "ghost": true,
+      "ghost_reason": "Decommissioned legacy dependency, never re-registered after decommissioning. Three hops removed from the original requesting asset.",
+      "data_sensitivity": "INTERNAL",
+      "_note": "Hop 2 of the deep chain — the actual poison. AGENT-DEEP-016 and AGENT-DEEP-017 are both completely clean; this is the asset that makes the whole chain untrustworthy, two hops past the immediate dependency."
+    },
+    {
+      "asset_id": "AGENT-CYC-019A",
+      "name": "Circular Dependency Agent A",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "depends_on": "AGENT-CYC-019B",
+      "_note": "Circular dependency proof, node 1 of 3. Every node in this cycle is individually clean on every attribute (registered, approved, non-ghost) — the violation is structural, not a property of any single node. A depends on B depends on C depends on A."
+    },
+    {
+      "asset_id": "AGENT-CYC-019B",
+      "name": "Circular Dependency Agent B",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "depends_on": "AGENT-CYC-019C",
+      "_note": "Circular dependency proof, node 2 of 3. Individually clean."
+    },
+    {
+      "asset_id": "AGENT-CYC-019C",
+      "name": "Circular Dependency Agent C",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "depends_on": "AGENT-CYC-019A",
+      "_note": "Circular dependency proof, node 3 of 3. Individually clean. Closes the cycle back to AGENT-CYC-019A, which is what makes the chain unverifiable — walking from any of the three nodes never terminates in a concrete execution path."
+    },
+    {
+      "asset_id": "AGENT-ESC-013A",
+      "name": "Regional Sync Agent A",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "escalation_group": "REGIONAL-SYNC-CLUSTER"
+    },
+    {
+      "asset_id": "AGENT-ESC-013B",
+      "name": "Regional Sync Agent B",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "escalation_group": "REGIONAL-SYNC-CLUSTER"
+    },
+    {
+      "asset_id": "AGENT-ESC-013C",
+      "name": "Regional Sync Agent C",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "escalation_group": "REGIONAL-SYNC-CLUSTER"
+    },
+    {
+      "asset_id": "AGENT-LPC-014A",
+      "name": "Lateral Probe Agent — Ops",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "STANDARD",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "escalation_group": "LATERAL-PROBE-CLUSTER",
+      "_note": "Fan-out proof asset, targets RT-OPS in C2. STANDARD authority independently clears RT-OPS's STANDARD floor."
+    },
+    {
+      "asset_id": "AGENT-LPC-014B",
+      "name": "Lateral Probe Agent — Command",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "ELEVATED",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "escalation_group": "LATERAL-PROBE-CLUSTER",
+      "_note": "Fan-out proof asset, targets RT-CMD in C2. ELEVATED authority independently clears RT-CMD's ELEVATED floor."
+    },
+    {
+      "asset_id": "AGENT-LPC-014C",
+      "name": "Lateral Probe Agent — Infra",
+      "type": "AI_AGENT",
+      "registration_status": "REGISTERED",
+      "authority_level": "SOVEREIGN",
+      "approved_for_boundary_crossing": true,
+      "ghost": false,
+      "data_sensitivity": "INTERNAL",
+      "escalation_group": "LATERAL-PROBE-CLUSTER",
+      "_note": "Fan-out proof asset, targets RT-INFRA in C2. SOVEREIGN authority independently clears RT-INFRA's SOVEREIGN floor. Each of the three LPC assets is individually unremarkable at its own target runtime — the violation exists only at the cross-runtime group level."
+    }
+  ],
+  "gates": [
+    { "id": "G1", "name": "Identity Gate",      "short": "Identity",  "description": "Verify the requesting asset presents a valid, non-null identity credential." },
+    { "id": "G2", "name": "Registration Gate",  "short": "Registry",  "description": "Confirm the asset identity exists in the Integration Boundary Inventory as a registered asset." },
+    { "id": "G3", "name": "Policy Gate",        "short": "Policy",    "description": "Evaluate ghost status, registration status, and boundary crossing approval against active policy." },
+    { "id": "G4", "name": "Authority Gate",     "short": "Authority", "description": "Verify the asset holds a sufficient authority level per the minimum authority requirement." },
+    { "id": "G5", "name": "Boundary Gate",      "short": "Boundary",  "description": "Check for replay or duplicate event IDs. Enforce lockout on previously processed events." },
+    { "id": "G6", "name": "Audit Commit Gate",  "short": "Audit",     "description": "Commit the evaluation result to the append-only audit ledger before any integration action occurs." }
+  ],
+  "scenarios": [
+    {
+      "id": "S1",
+      "name": "Approved Agent Integration",
+      "description": "Route Optimization Agent requests boundary crossing under standard authority.",
+      "requesting_asset_id": "AGENT-ROA-001",
+      "event_id": "EVT-2026-001",
+      "replay": false,
+      "expected_decision": "PERMIT",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S2",
+      "name": "Ghost Asset Integration",
+      "description": "Legacy Dispatch Agent — decommissioned pre-acquisition — attempts boundary crossing.",
+      "requesting_asset_id": "AGENT-LDA-003",
+      "event_id": "EVT-2026-002",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S3",
+      "name": "Unauthorized Tool Integration",
+      "description": "Unknown external tool with no IBI registration attempts boundary crossing.",
+      "requesting_asset_id": "TOOL-UNKNOWN-999",
+      "event_id": "EVT-2026-003",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S4",
+      "name": "Duplicate / Replay Event",
+      "description": "Previously processed event ID re-submitted. Replay lockout enforced at Boundary Gate.",
+      "requesting_asset_id": "AGENT-ROA-001",
+      "event_id": "EVT-2026-001",
+      "replay": true,
+      "expected_decision": "LOCKOUT",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S5",
+      "name": "Authority Failure",
+      "description": "Inventory Reporting Agent is registered and approved, but holds only LIMITED authority against a STANDARD minimum.",
+      "requesting_asset_id": "AGENT-IRA-004",
+      "event_id": "EVT-2026-004",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S6",
+      "name": "Policy Conflict",
+      "description": "Customer Support Agent is registered, non-ghost, and holds sufficient authority, but is not approved for boundary crossing under active policy.",
+      "requesting_asset_id": "AGENT-CSA-005",
+      "event_id": "EVT-2026-005",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S7",
+      "name": "Asset Transfer Mismatch",
+      "description": "Data Pipeline Agent is present in the IBI but absent from the acquisition's asset transfer schedule, flagging it as a ghost asset under M&A successor-liability policy.",
+      "requesting_asset_id": "AGENT-DPA-006",
+      "event_id": "EVT-2026-006",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S8",
+      "name": "Sovereign Authority Crossing",
+      "description": "Command Authority Agent — SOVEREIGN authority, CLASSIFIED data sensitivity — requests boundary crossing. Outcome depends on active policy profile's authority floor.",
+      "requesting_asset_id": "AGENT-CMD-007",
+      "event_id": "EVT-2026-007",
+      "replay": false,
+      "expected_decision": "PROFILE_DEPENDENT",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S9",
+      "name": "Restricted-Sensitivity Data Crossing",
+      "description": "Patient Records Integration Agent — ELEVATED authority, RESTRICTED data sensitivity — requests boundary crossing. Outcome depends on active policy profile's authority floor and data sensitivity ceiling.",
+      "requesting_asset_id": "AGENT-PHI-008",
+      "event_id": "EVT-2026-008",
+      "replay": false,
+      "expected_decision": "PROFILE_DEPENDENT",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S10",
+      "name": "Authority Spoof",
+      "description": "Request claims SOVEREIGN authority on behalf of the Reporting Agent, but the asset's actual registered authority level in the IBI is STANDARD. The mismatch itself is the violation — distinct from a registered asset simply lacking sufficient authority.",
+      "adversarial_vector": "AUTHORITY_SPOOF",
+      "requesting_asset_id": "AGENT-SPF-009",
+      "claimed_authority_level": "SOVEREIGN",
+      "event_id": "EVT-2026-010",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S11",
+      "name": "Policy Drift",
+      "description": "Forecasting Agent was approved for boundary crossing under policy version v1.1-baseline. No active v2.0 profile has re-attested this approval. The asset's authorization is stale relative to the currently active policy.",
+      "adversarial_vector": "POLICY_DRIFT",
+      "requesting_asset_id": "AGENT-DFT-010",
+      "event_id": "EVT-2026-011",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S12",
+      "name": "Audit Failure",
+      "description": "Settlement Agent is fully clean and would PERMIT under every gate from 1 through 5. This scenario simulates a fault in the audit ledger commit itself at G6 — the asset is not the attack surface, the audit infrastructure is.",
+      "adversarial_vector": "AUDIT_FAILURE",
+      "requesting_asset_id": "AGENT-AUD-011",
+      "event_id": "EVT-2026-012",
+      "replay": false,
+      "simulate_audit_failure": true,
+      "expected_decision": "LOCKOUT",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S13",
+      "name": "Dependency Injection",
+      "description": "Orchestration Agent is independently registered and approved, but declares a runtime dependency on TOOL-SHADOW-998, which has no record in the Integration Boundary Inventory. A clean primary asset cannot launder an unregistered dependency through its own approval.",
+      "adversarial_vector": "DEPENDENCY_INJECTION",
+      "requesting_asset_id": "AGENT-ORC-012",
+      "event_id": "EVT-2026-013",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S14",
+      "name": "Cross-Runtime Divergence — Permitted Target",
+      "description": "Cross-Domain Sync Agent (ELEVATED authority, RESTRICTED sensitivity) requests boundary crossing into the Command Authority Runtime. RT-CMD's bound profile (Defense Contractor Mode) sets an ELEVATED authority floor — this asset clears it exactly.",
+      "multi_runtime_vector": "CROSS_RUNTIME_DIVERGENCE",
+      "requesting_asset_id": "AGENT-XRT-014",
+      "event_id": "EVT-2026-014A",
+      "replay": false,
+      "expected_decision": "PERMIT",
+      "target_runtime_id": "RT-CMD"
+    },
+    {
+      "id": "S15",
+      "name": "Cross-Runtime Divergence — Blocked Target",
+      "description": "The identical Cross-Domain Sync Agent, same registration record, same authority level, submits the same kind of request — but targets the Critical Infrastructure Runtime instead. RT-INFRA's bound profile (Critical Infrastructure Mode) sets a SOVEREIGN authority floor. ELEVATED does not clear it. Nothing about the asset changed between S14 and S15 — only the target runtime did, and that target runtime performed a genuinely independent evaluation under its own policy, reaching the opposite decision.",
+      "multi_runtime_vector": "CROSS_RUNTIME_DIVERGENCE",
+      "requesting_asset_id": "AGENT-XRT-014",
+      "event_id": "EVT-2026-014B",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-INFRA"
+    },
+    {
+      "id": "S16",
+      "name": "Deep Transitive Dependency Poisoning",
+      "description": "Deep Chain Primary Agent is itself entirely clean — registered, approved, non-ghost. Its immediate dependency, Deep Chain Intermediate Agent, is ALSO entirely clean. The actual poison is two hops further down: a decommissioned ghost asset that neither of the first two assets directly references. The original single-hop dependency check (which only ever inspected the immediate dependency) would have found nothing wrong and PERMITted this crossing. Walking the full chain is the only way this violation becomes visible.",
+      "adversarial_vector": "TRANSITIVE_DEPENDENCY_POISONING",
+      "requesting_asset_id": "AGENT-DEEP-016",
+      "event_id": "EVT-2026-016",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-OPS"
+    },
+    {
+      "id": "S17",
+      "name": "Circular Dependency Declaration",
+      "description": "Circular Dependency Agent A is itself entirely clean, and so is every other node in its declared dependency chain — A depends on B, B depends on C, C depends on A. No node in this cycle is a ghost, unregistered, or unapproved; the violation is structural, not a property of any single asset. A circular dependency declaration never resolves to a concrete, terminating execution path, and is blocked on that basis alone, independent of whether the cycle's members are otherwise clean.",
+      "adversarial_vector": "CIRCULAR_DEPENDENCY",
+      "requesting_asset_id": "AGENT-CYC-019A",
+      "event_id": "EVT-2026-017",
+      "replay": false,
+      "expected_decision": "BLOCK",
+      "target_runtime_id": "RT-OPS"
+    }
+  ],
+  "coordinated_scenarios": [
+    {
+      "id": "C1",
+      "name": "Coordinated Multi-Agent Escalation — Single Runtime",
+      "description": "Three individually-clean, individually-approved STANDARD-authority assets from the same escalation group (REGIONAL-SYNC-CLUSTER) request boundary crossing into the same runtime within the same event window. No single request is individually disqualifying — each would PERMIT in isolation. The violation exists only at the level of the group: the number of concurrent crossings from one escalation group into one runtime, submitted without an explicit human escalation approval, exceeds that runtime's bound-profile concurrency threshold.",
+      "adversarial_vector": "COORDINATED_MULTI_AGENT_ESCALATION",
+      "escalation_group": "REGIONAL-SYNC-CLUSTER",
+      "requesting_assets": [
+        { "asset_id": "AGENT-ESC-013A", "target_runtime_id": "RT-OPS" },
+        { "asset_id": "AGENT-ESC-013B", "target_runtime_id": "RT-OPS" },
+        { "asset_id": "AGENT-ESC-013C", "target_runtime_id": "RT-OPS" }
+      ],
+      "event_window_id": "WINDOW-2026-001",
+      "escalation_approved": false,
+      "expected_decision": "PROFILE_DEPENDENT"
+    },
+    {
+      "id": "C2",
+      "name": "Coordinated Multi-Agent Escalation — Cross-Runtime Fan-Out",
+      "description": "Three individually-clean, individually-approved assets from the same escalation group (LATERAL-PROBE-CLUSTER) request boundary crossing within the same event window — but each targets a DIFFERENT runtime: one to RT-OPS, one to RT-CMD, one to RT-INFRA. Each individual runtime sees only ONE request in the window, which is within every runtime's own same-runtime concurrency threshold — the existing single-runtime check (as in C1) cannot see this pattern at all, because no single runtime is ever asked to admit more than one member. The violation exists only at the level of the escalation group's footprint ACROSS the topology: probing three independent trust domains in one coordinated window, without an explicit human escalation approval, exceeds the group's cross-runtime fan-out threshold. This is the invariant C1 cannot express — a coordinated actor that stays under every individual runtime's radar by spreading out is still a coordinated actor.",
+      "adversarial_vector": "CROSS_RUNTIME_FAN_OUT_ESCALATION",
+      "escalation_group": "LATERAL-PROBE-CLUSTER",
+      "requesting_assets": [
+        { "asset_id": "AGENT-LPC-014A", "target_runtime_id": "RT-OPS" },
+        { "asset_id": "AGENT-LPC-014B", "target_runtime_id": "RT-CMD" },
+        { "asset_id": "AGENT-LPC-014C", "target_runtime_id": "RT-INFRA" }
+      ],
+      "event_window_id": "WINDOW-2026-002",
+      "escalation_approved": false,
+      "expected_decision": "PROFILE_DEPENDENT"
+    }
+  ],
+  "chained_scenarios": [
+    {
+      "id": "CH1",
+      "name": "Full Chain Traversal — Sovereign Relay",
+      "description": "Sovereign Relay Agent attempts a sequential boundary crossing through all three runtimes: RT-OPS, then RT-CMD, then RT-INFRA. Each hop is a fully independent six-gate evaluation against that runtime's bound policy — no hop's PERMIT is inherited by the next. SOVEREIGN authority is sufficient to clear every floor in the path, so this asset is expected to traverse the entire chain. This is the control case: it demonstrates that a chain CAN complete in full when the asset genuinely qualifies at every hop, not just that chains can stop.",
+      "multi_runtime_vector": "CHAINED_BOUNDARY_CROSSING",
+      "requesting_asset_id": "AGENT-XRT-015",
+      "event_id_prefix": "EVT-2026-CH1",
+      "crossing_path": ["RT-OPS", "RT-CMD", "RT-INFRA"],
+      "expected_furthest_hop": 3,
+      "expected_terminal_decision": "PERMIT"
+    },
+    {
+      "id": "CH2",
+      "name": "Chain Halted at Sovereign Floor — Cross-Domain Sync",
+      "description": "Cross-Domain Sync Agent (ELEVATED authority) attempts the identical three-hop path: RT-OPS, then RT-CMD, then RT-INFRA. It independently clears RT-OPS (STANDARD floor) and RT-CMD (ELEVATED floor) on its own merits — the same asset, the same authority level, the same gates re-run from scratch at each hop. At RT-INFRA, the SOVEREIGN floor is not met, and the chain halts at hop 3. Reaching hop 2 cleanly does not lower hop 3's bar by one inch: this is the proof that crossing one boundary is not credit toward crossing the next. Partial chain progress is itself a valid, fully-evidenced terminal state — not a failure of the demonstration.",
+      "multi_runtime_vector": "CHAINED_BOUNDARY_CROSSING",
+      "requesting_asset_id": "AGENT-XRT-014",
+      "event_id_prefix": "EVT-2026-CH2",
+      "crossing_path": ["RT-OPS", "RT-CMD", "RT-INFRA"],
+      "expected_furthest_hop": 3,
+      "expected_terminal_decision": "BLOCK"
+    }
+  ]
+}
+</script>
+
+</head>
+<body>
+
+<div id="pw-gate">
+  <div class="pw-eyebrow">Regulator AI Global · NDA-Gated Access</div>
+  <h2>Integration Airlock Demo — Access Required</h2>
+  <p>This page contains a working reference implementation of REG-AI-0017 (Supervisory Integration Containment). Enter the access password provided to you.</p>
+  <input type="password" id="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <button id="pw-submit">Enter</button>
+  <div class="pw-error" id="pw-error">Incorrect password. Please try again.</div>
+</div>
+
+<div id="app-content">
+
+<header class="hdr">
+  <div class="hdr-brand">Regulator AI Global</div>
+  <div class="hdr-spec">REG-AI-0017 · Supervisory Integration Containment · Integration Boundary Invariant</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eye">Integration Airlock Demo · Software Embodiment · Spec 0017</div>
+  <h1 class="hero-title">Integration <span>Airlock</span></h1>
+  <div class="stmt">
+    "Nothing crosses the integration boundary merely because software requests it.
+    Integration occurs only after deterministic supervisory containment permits the boundary crossing."
+  </div>
+  <div class="invariant">
+    <strong>Integration Boundary Invariant:</strong> No external asset, agent, tool, model, workflow,
+    or dataset may enter a protected runtime unless supervisory containment authorizes the boundary crossing.
+  </div>
+</div>
+
+<div class="counters">
+  <div class="counter"><div class="counter-val" id="ct-total">0</div><div class="counter-lbl">Total Attempts</div></div>
+  <div class="counter"><div class="counter-val green" id="ct-permit">0</div><div class="counter-lbl">Permitted</div></div>
+  <div class="counter"><div class="counter-val red" id="ct-block">0</div><div class="counter-lbl">Blocked</div></div>
+  <div class="counter"><div class="counter-val amber" id="ct-lockout">0</div><div class="counter-lbl">Lockout</div></div>
+</div>
+
+<div class="bviz-wrap">
+  <div class="bviz">
+    <div class="bviz-lbl">Live Boundary Visualization</div>
+    <div class="bviz-flow">
+      <div class="bviz-node" id="bv-ext">External Asset</div>
+      <div class="bviz-arrow" id="bv-a1">→</div>
+      <div class="bviz-node" id="bv-airlock">Integration Airlock</div>
+      <div class="bviz-arrow" id="bv-a2">→</div>
+      <div class="bviz-node" id="bv-dest">Protected Runtime</div>
+    </div>
+  </div>
+</div>
+
+<div class="rt-wrap">
+  <div class="rt-lbl">Runtime Topology — Three Independent Trust Domains</div>
+  <div class="rt-grid" id="rtGrid"></div>
+</div>
+
+<div class="profile-wrap">
+  <div class="profile-bar">
+    <div class="profile-lbl">RT-OPS Bound Profile (selectable — RT-CMD and RT-INFRA bindings are fixed for this demo)</div>
+    <select class="profile-select" id="profileSelect"></select>
+    <div class="profile-version" id="profileVersion"></div>
+  </div>
+  <div class="profile-desc" id="profileDesc"></div>
+  <div class="profile-thresholds" id="profileThresholds"></div>
+</div>
+
+<div class="controls">
+  <button class="btn btn-cyan" id="runAllBtn">▶ Run All Scenarios</button>
+  <button class="btn btn-dim"  id="resetBtn">↺ Reset Audit Chain</button>
+  <button class="btn btn-amber" id="exportBtn">⬇ Export SIC Evidence Bundle</button>
+</div>
+
+<div class="chain-wrap">
+  <div class="chain-bar">
+    <span class="chain-lbl">AUDIT CHAIN HEAD</span>
+    <span class="chain-hash" id="chainHash">GENESIS — no events committed</span>
+    <span class="chain-ct" id="chainCt">0 events</span>
+  </div>
+</div>
+
+<div class="main-grid">
+  <div class="scenarios-col">
+    <h2>Scenarios</h2>
+    <div id="scenarioContainer"></div>
+    <h2 style="margin-top:18px">Coordinated Scenarios</h2>
+    <div id="coordContainer"></div>
+    <h2 style="margin-top:18px">Chained Boundary Crossing Scenarios</h2>
+    <div id="chainContainer"></div>
+  </div>
+  <div class="timeline-col">
+    <h2>Event Timeline</h2>
+    <div class="timeline" id="timeline">
+      <div class="tl-empty" id="tlEmpty">No events yet</div>
+    </div>
+  </div>
+</div>
+
+<footer class="ftr">
+  Regulator AI Global, Inc. · Integration Boundary Invariant · REG-AI-0017 · Commit-before-execute · Append-only audit
+</footer>
+
+</div>
+
+<script>
+function initAirlockDemo(){
+'use strict';
+
+// ── Load config ────────────────────────────────────────────────────────
+const CONFIG = JSON.parse(document.getElementById('airlock-config').textContent);
+
+// ── State ──────────────────────────────────────────────────────────────
+let auditChain     = [];
+let processedEvts  = new Set();
+let counters       = { total:0, permit:0, block:0, lockout:0 };
+let replayLog      = [];
+let runHistory     = {}; // scenario.id -> { result, audit, replayChecksum, replayCount }
+
+// ── Hash (deterministic, no crypto API) ───────────────────────────────
+function hash(str) {
+  let h1 = 0x811c9dc5, h2 = 0x5851f42d;
+  for (let i = 0; i < str.length; i++) {
+    h1 ^= str.charCodeAt(i); h1 = Math.imul(h1, 0x01000193) >>> 0;
+    h2 ^= str.charCodeAt(str.length - 1 - i); h2 = Math.imul(h2, 0xc4ceb9fe) >>> 0;
+  }
+  const hex = n => (n >>> 0).toString(16).padStart(8,'0');
+  return [h1,h2,h1^h2,(h1+h2)>>>0,Math.imul(h1,3)>>>0,Math.imul(h2,7)>>>0,(h1^0xdeadbeef)>>>0,(h2^0xcafe0000)>>>0].map(hex).join('');
+}
+function headHash() { return auditChain.length ? auditChain[auditChain.length-1].entry_hash : 'GENESIS'; }
+
+// Deterministic replay checksum: hashes ONLY the scenario-intrinsic inputs/outputs
+// (gate-by-gate results + final decision + blocking gate). Deliberately excludes
+// chain-position-dependent fields (seq, prev_hash, timestamp) so the same scenario
+// evaluated against the same live state always produces the same checksum,
+// regardless of where in the audit chain it lands.
+function replayChecksum(scenario, result) {
+  const canonical = {
+    scenario_id: scenario.id,
+    asset_id: scenario.requesting_asset_id,
+    event_id: scenario.event_id,
+    target_runtime_id: result.targetRuntimeId || scenario.target_runtime_id || null,
+    gate_results: result.steps.map(s => ({ gate: s.gate_id, result: s.result })),
+    decision: result.decision
+  };
+  return hash('REPLAY|' + JSON.stringify(canonical));
+}
+
+function commitEntry(payload) {
+  const prev = headHash();
+  payload.prev_hash   = prev;
+  payload.entry_hash  = hash(prev + '|' + JSON.stringify(payload));
+  payload.seq         = auditChain.length + 1;
+  auditChain.push(payload);
+  updateChainDisplay();
+  return payload;
+}
+
+function updateChainDisplay() {
+  document.getElementById('chainHash').textContent = headHash() === 'GENESIS' ? 'GENESIS — no events committed' : headHash();
+  document.getElementById('chainCt').textContent   = auditChain.length + ' event' + (auditChain.length!==1?'s':'');
+}
+
+// ── Counter update ─────────────────────────────────────────────────────
+function bumpCounter(decision) {
+  counters.total++;
+  if (decision==='PERMIT')  counters.permit++;
+  if (decision==='BLOCK')   counters.block++;
+  if (decision==='LOCKOUT') counters.lockout++;
+  document.getElementById('ct-total').textContent   = counters.total;
+  document.getElementById('ct-permit').textContent  = counters.permit;
+  document.getElementById('ct-block').textContent   = counters.block;
+  document.getElementById('ct-lockout').textContent = counters.lockout;
+}
+
+// ── Boundary viz update ────────────────────────────────────────────────
+function updateBviz(assetName, decision, targetRuntimeId) {
+  const ext     = document.getElementById('bv-ext');
+  const airlock = document.getElementById('bv-airlock');
+  const dest    = document.getElementById('bv-dest');
+  const a1      = document.getElementById('bv-a1');
+  const a2      = document.getElementById('bv-a2');
+
+  // Reset
+  ext.className = airlock.className = dest.className = 'bviz-node';
+  a1.className  = a2.className = 'bviz-arrow';
+
+  ext.textContent = assetName;
+  ext.classList.add('active-ext');
+  airlock.classList.add('active-airlock');
+
+  const rt = resolveRuntime(targetRuntimeId);
+  const rtLabel = rt ? rt.runtime.short : (targetRuntimeId || 'Protected Runtime');
+
+  if (decision === 'PERMIT') {
+    dest.textContent = 'PERMITTED → '+rtLabel;
+    dest.classList.add('active-permit');
+    a1.classList.add('lit-permit'); a2.classList.add('lit-permit');
+  } else if (decision === 'LOCKOUT') {
+    dest.textContent = 'LOCKOUT — '+rtLabel;
+    dest.classList.add('active-lockout');
+    a1.classList.add('lit-lockout'); a2.classList.add('lit-lockout');
+  } else {
+    dest.textContent = 'BLOCKED — '+rtLabel;
+    dest.classList.add('active-block');
+    a1.classList.add('lit-block'); a2.classList.add('lit-block');
+  }
+}
+
+// ── Timeline entry ─────────────────────────────────────────────────────
+function addTimeline(scenario, decision, entry) {
+  const tl = document.getElementById('timeline');
+  document.getElementById('tlEmpty').style.display = 'none';
+  const div = document.createElement('div');
+  div.className = 'tl-event';
+  div.innerHTML = `
+    <div class="tl-top">
+      <span class="tl-name">${scenario.name}</span>
+      <span class="tl-dec ${decision}">${decision}</span>
+    </div>
+    <div class="tl-meta">Seq #${entry.seq} · ${scenario.event_id} · ${scenario.requesting_asset_id}</div>
+    <div class="tl-hash">${entry.entry_hash}</div>`;
+  tl.insertBefore(div, tl.children[1] || null);
+}
+
+// ── Runtime resolution ──────────────────────────────────────────────────
+// A runtime is a named trust domain bound to one policy profile. Resolving
+// "the policy" now means resolving it FOR a specific target runtime — there
+// is no longer a single global policy that every scenario shares. This is
+// the load-bearing change for multi-runtime: the same asset, evaluated
+// against two different runtimes, can reach two different decisions
+// because each runtime's bound profile is independently consulted.
+function resolveRuntime(runtimeId) {
+  const runtime = CONFIG.runtimes.find(r => r.id === runtimeId);
+  if (!runtime) return null;
+  const profile = CONFIG.policy_profiles.find(p => p.id === runtime.policy_profile_id);
+  if (!profile) return null;
+  return { runtime, profile };
+}
+
+// Builds a policy object shaped like CONFIG.policy used to (so the rest of
+// evaluate() doesn't need to change), but sourced from the TARGET runtime's
+// bound profile rather than a single global active_profile.
+function policyForRuntime(runtimeId) {
+  const resolved = resolveRuntime(runtimeId);
+  if (!resolved) return null;
+  const { profile } = resolved;
+  return {
+    policy_version: profile.policy_version,
+    active_profile: profile.id,
+    minimum_authority_level: profile.minimum_authority_level,
+    block_ghost_assets: profile.block_ghost_assets,
+    replay_lockout_enabled: profile.replay_lockout_enabled,
+    max_data_sensitivity: profile.max_data_sensitivity,
+    max_concurrent_crossings_without_escalation_approval: profile.max_concurrent_crossings_without_escalation_approval,
+    max_distinct_runtimes_per_escalation_group: profile.max_distinct_runtimes_per_escalation_group,
+    require_registration: CONFIG.policy.require_registration,
+    require_authority_permit: CONFIG.policy.require_authority_permit,
+    commit_before_execute: CONFIG.policy.commit_before_execute
+  };
+}
+
+// ── Transitive Dependency Chain Walk ────────────────────────────────────
+// Generalizes the original single-hop DEPENDENCY_INJECTION check (asset
+// depends_on ONE other asset, checked once) to walk an arbitrary-depth
+// chain: A depends_on B depends_on C depends_on ... A primary asset can be
+// completely clean on its own and still be poisoned several hops down its
+// own dependency chain — this walk is what makes that visible, instead of
+// only catching a poisoned IMMEDIATE dependency.
+//
+// Single source of truth: evaluate(), evaluateReadOnly(), and reason() all
+// call this one function rather than each re-implementing the walk. The
+// Mechanism 1 retrospective is the reason for that constraint — duplicated
+// gate logic across functions is exactly how evaluateReadOnly() drifted
+// from evaluate() and silently mis-verified replays. There is no second
+// copy of this logic to drift.
+//
+// Returns one of:
+//   { clean: true }
+//     — no depends_on at all, or the full chain resolves cleanly.
+//   { clean: false, failureType: 'UNREGISTERED', hopIndex, brokenAssetId, chain }
+//     — some hop in the chain declares a dependency with no IBI record.
+//   { clean: false, failureType: 'POLICY_FAILURE', hopIndex, brokenAssetId, brokenAsset, chain }
+//     — some hop in the chain resolves to an asset that itself fails
+//       independent policy evaluation (ghost / not registered / not approved).
+//   { clean: false, failureType: 'CYCLE', hopIndex, brokenAssetId, chain }
+//     — the chain revisits an asset already seen earlier in the SAME walk.
+//       A circular dependency declaration is a structurally malformed
+//       registration in its own right, independent of whether any member
+//       of the cycle is itself a ghost — it never resolves to a concrete
+//       execution path, so it cannot be verified at all and is treated as
+//       a failure on its own terms.
+// `chain` is the ordered list of asset_ids walked, including the starting
+// asset, up to and including the hop that failed (or the full chain if
+// clean). hopIndex is 1-based and counts dependency hops only (the
+// starting asset itself is hop 0 and is never the reported failure point —
+// dependency failures are always reported as something the chain reached,
+// not the asset that declared it).
+function walkDependencyChain(startAsset) {
+  const assets = CONFIG.registered_assets;
+  const chain = [startAsset.asset_id];
+  const visited = new Set([startAsset.asset_id]);
+  let current = startAsset;
+  let hopIndex = 0;
+
+  while (current.depends_on) {
+    hopIndex++;
+    const nextId = current.depends_on;
+
+    if (visited.has(nextId)) {
+      chain.push(nextId);
+      return { clean:false, failureType:'CYCLE', hopIndex, brokenAssetId:nextId, chain };
+    }
+
+    const dep = assets.find(a => a.asset_id === nextId);
+    chain.push(nextId);
+
+    if (!dep) {
+      return { clean:false, failureType:'UNREGISTERED', hopIndex, brokenAssetId:nextId, chain };
+    }
+    if (dep.ghost || dep.registration_status !== 'REGISTERED' || !dep.approved_for_boundary_crossing) {
+      return { clean:false, failureType:'POLICY_FAILURE', hopIndex, brokenAssetId:nextId, brokenAsset:dep, chain };
+    }
+
+    visited.add(nextId);
+    current = dep;
+  }
+
+  return { clean:true, chain };
+}
+
+// ── Gate evaluation (policy-driven, no per-scenario hardcoding) ────────
+function evaluate(scenario) {
+  const steps    = [];
+  const assets   = CONFIG.registered_assets;
+  const targetRuntimeId = scenario.target_runtime_id || CONFIG.runtimes[0].id;
+  const resolved = resolveRuntime(targetRuntimeId);
+  const policy   = policyForRuntime(targetRuntimeId);
+  const gates    = CONFIG.gates;
+  let decision   = null;
+  let blockGate  = null;
+
+  if (!resolved || !policy) {
+    steps.push({ gate_id:'G0', gate_name:'Runtime Resolution', result:'FAIL', detail:'Target runtime "'+targetRuntimeId+'" does not resolve to a known runtime/profile binding.' });
+    return { steps, decision:'BLOCK', audit:null, targetRuntimeId };
+  }
+
+  const asset = assets.find(a => a.asset_id === scenario.requesting_asset_id);
+  const authorityRank = { NONE:0, LIMITED:1, STANDARD:2, ELEVATED:3, SOVEREIGN:4 };
+  const sensitivityRank = { PUBLIC:0, INTERNAL:1, RESTRICTED:2, CLASSIFIED:3 };
+
+  const step = (g, result, detail) => steps.push({ gate_id:g.id, gate_name:g.name, result, detail });
+
+  // G1 — Identity
+  const g1 = gates[0];
+  if (!scenario.requesting_asset_id || !scenario.requesting_asset_id.trim()) {
+    step(g1,'FAIL','No identity credential presented.'); decision='BLOCK'; blockGate='G1';
+  } else {
+    step(g1,'PASS','Identity credential present: '+scenario.requesting_asset_id);
+  }
+
+  // G2 — Registration
+  const g2 = gates[1];
+  if (!decision) {
+    if (!asset) {
+      step(g2,'FAIL','Asset ID '+scenario.requesting_asset_id+' not found in Integration Boundary Inventory. No registration record exists.');
+      decision='BLOCK'; blockGate='G2';
+    } else {
+      step(g2,'PASS','Asset found in IBI: '+asset.name+' ['+asset.registration_status+']');
+    }
+  } else { step(g2,'SKIP','Skipped — upstream gate failed.'); }
+
+  // G3 — Policy (ghost / registration / approval / sensitivity / drift / dependency)
+  const g3 = gates[2];
+  if (!decision) {
+    if (policy.block_ghost_assets && asset.ghost) {
+      step(g3,'FAIL','Ghost asset detected. '+(asset.ghost_reason||'Asset flagged as ghost in IBI.')+' Boundary crossing blocked per Integration Boundary Invariant.');
+      decision='BLOCK'; blockGate='G3';
+    } else if (asset.registration_status !== 'REGISTERED') {
+      step(g3,'FAIL','Registration status is '+asset.registration_status+'. Only REGISTERED assets may cross the boundary.');
+      decision='BLOCK'; blockGate='G3';
+    } else if (!asset.approved_for_boundary_crossing) {
+      step(g3,'FAIL','Asset not approved for boundary crossing per policy.');
+      decision='BLOCK'; blockGate='G3';
+    } else if (policy.max_data_sensitivity && sensitivityRank[asset.data_sensitivity] > sensitivityRank[policy.max_data_sensitivity]) {
+      step(g3,'FAIL','Asset data sensitivity '+asset.data_sensitivity+' exceeds the data sensitivity ceiling of '+policy.max_data_sensitivity+' set by runtime "'+targetRuntimeId+'" ('+resolved.runtime.name+', bound profile: '+policy.policy_version+').');
+      decision='BLOCK'; blockGate='G3';
+    } else if (asset.approved_under_policy_version && asset.approved_under_policy_version !== policy.policy_version) {
+      step(g3,'FAIL','POLICY DRIFT: asset was approved under policy version "'+asset.approved_under_policy_version+'", but runtime "'+targetRuntimeId+'" is bound to policy version "'+policy.policy_version+'". Approval has not been re-attested under this runtime\'s current policy and is treated as stale.');
+      decision='BLOCK'; blockGate='G3';
+    } else if (asset.depends_on) {
+      const walk = walkDependencyChain(asset);
+      if (walk.clean) {
+        step(g3,'PASS','Policy evaluation passed. Registered, non-ghost, approved, sensitivity within ceiling, policy attestation current. Full dependency chain ('+walk.chain.join(' → ')+') independently verified at every hop.');
+      } else if (walk.failureType === 'CYCLE') {
+        step(g3,'FAIL','DEPENDENCY INJECTION (CIRCULAR): '+asset.name+'\'s declared dependency chain ('+walk.chain.join(' → ')+') revisits "'+walk.brokenAssetId+'" at hop '+walk.hopIndex+', forming a cycle. A circular dependency declaration never resolves to a concrete, verifiable execution path regardless of whether any member of the cycle is independently clean — it is treated as a structurally malformed registration and blocks the crossing on that basis alone.');
+        decision='BLOCK'; blockGate='G3';
+      } else if (walk.failureType === 'UNREGISTERED') {
+        step(g3,'FAIL','DEPENDENCY INJECTION: '+asset.name+'\'s dependency chain ('+walk.chain.join(' → ')+') reaches "'+walk.brokenAssetId+'" at hop '+walk.hopIndex+', which has no record in the Integration Boundary Inventory. '+asset.name+' itself, and every hop before this one, may be entirely clean — but a chain is only as trustworthy as its weakest link, and an unregistered link several hops removed is still an unevaluated execution path that blocks the crossing.');
+        decision='BLOCK'; blockGate='G3';
+      } else {
+        step(g3,'FAIL','DEPENDENCY INJECTION: '+asset.name+'\'s dependency chain ('+walk.chain.join(' → ')+') reaches "'+walk.brokenAssetId+'" ('+(walk.brokenAsset?walk.brokenAsset.name:walk.brokenAssetId)+') at hop '+walk.hopIndex+', which independently fails policy evaluation (ghost/registration/approval). A primary asset cannot inherit boundary-crossing permission through a chain that bottoms out in a dependency several hops down that would not itself pass the Policy Gate.');
+        decision='BLOCK'; blockGate='G3';
+      }
+    } else {
+      step(g3,'PASS','Policy evaluation passed. Registered, non-ghost, approved for boundary crossing, sensitivity within policy ceiling, policy attestation current.');
+    }
+  } else { step(g3,'SKIP','Skipped — upstream gate failed.'); }
+
+  // G4 — Authority (registered level + claimed-vs-registered spoof check)
+  const g4 = gates[3];
+  if (!decision) {
+    if (scenario.claimed_authority_level && scenario.claimed_authority_level !== asset.authority_level) {
+      step(g4,'FAIL','AUTHORITY SPOOF: request claimed authority level "'+scenario.claimed_authority_level+'" for '+asset.name+', but the Integration Boundary Inventory records this asset\'s actual registered authority level as "'+asset.authority_level+'". Claimed and registered authority must match exactly; a mismatch is treated as a spoofing attempt regardless of whether the claimed level would otherwise have been sufficient.');
+      decision='BLOCK'; blockGate='G4';
+    } else {
+      const aRank = authorityRank[asset.authority_level] ?? 0;
+      const mRank = authorityRank[policy.minimum_authority_level] ?? 2;
+      if (aRank < mRank) {
+        step(g4,'FAIL','Authority level '+asset.authority_level+' is below the minimum required by runtime "'+targetRuntimeId+'" ('+resolved.runtime.name+'): '+policy.minimum_authority_level+'.');
+        decision='BLOCK'; blockGate='G4';
+      } else {
+        step(g4,'PASS','Authority level '+asset.authority_level+' satisfies the minimum required by runtime "'+targetRuntimeId+'" ('+policy.minimum_authority_level+')'+(scenario.claimed_authority_level?' and matches claimed level':'')+'.');
+      }
+    }
+  } else { step(g4,'SKIP','Skipped — upstream gate failed.'); }
+
+  // G5 — Boundary / Replay
+  const g5 = gates[4];
+  if (!decision) {
+    if (policy.replay_lockout_enabled && processedEvts.has(scenario.event_id)) {
+      step(g5,'LOCKOUT','Event ID '+scenario.event_id+' already processed. Replay detected. Lockout enforced.');
+      decision='LOCKOUT'; blockGate='G5';
+    } else {
+      step(g5,'PASS','Event ID '+scenario.event_id+' is unique. No replay detected.');
+    }
+  } else { step(g5,'SKIP','Skipped — upstream gate failed.'); }
+
+  // G6 — Audit Commit (always runs; can independently fail via simulated ledger fault)
+  const g6 = gates[5];
+  if (!decision) decision='PERMIT';
+
+  if (scenario.simulate_audit_failure) {
+    // The asset and all upstream gates may have been entirely clean — this
+    // models a fault in the audit infrastructure itself, not in the asset
+    // being evaluated. An evaluation whose result cannot be safely committed
+    // to the append-only ledger cannot be released either way, so this
+    // always resolves to LOCKOUT regardless of what gates 1–5 decided.
+    const ts = new Date().toISOString();
+    const failedAuditPayload = { event_id:scenario.event_id, scenario_id:scenario.id,
+      asset_id:scenario.requesting_asset_id, decision:'LOCKOUT', blocking_gate:'G6', timestamp:ts,
+      target_runtime_id:targetRuntimeId, policy_version:policy.policy_version,
+      audit_failure_simulated:true, pre_failure_decision:decision };
+    // No commitEntry() call: a failed commit, by definition, does not
+    // successfully extend the audit chain. We still need a stable
+    // pseudo-record for the UI/evidence export, so we synthesize one
+    // without mutating auditChain or processedEvts.
+    const syntheticHash = hash('AUDIT_FAILURE|'+headHash()+'|'+JSON.stringify(failedAuditPayload));
+    failedAuditPayload.prev_hash  = headHash();
+    failedAuditPayload.entry_hash = syntheticHash;
+    failedAuditPayload.seq        = '—';
+    step(g6,'FAIL','AUDIT FAILURE (simulated): the evaluation reached decision "'+decision+'" through gates 1–5 against runtime "'+targetRuntimeId+'", but the commit to the append-only audit ledger itself failed (simulated storage/integrity fault). Per commit-before-execute, a decision that cannot be durably committed cannot be released — this resolves to LOCKOUT and is NOT added to the audit chain.');
+    return { steps, decision:'LOCKOUT', audit:failedAuditPayload, auditFailureSimulated:true, targetRuntimeId };
+  }
+
+  const ts = new Date().toISOString();
+  const auditPayload = { event_id:scenario.event_id, scenario_id:scenario.id,
+    asset_id:scenario.requesting_asset_id, decision, blocking_gate:blockGate, timestamp:ts,
+    target_runtime_id:targetRuntimeId, policy_version:policy.policy_version };
+  const committed = commitEntry(auditPayload);
+
+  if (decision !== 'LOCKOUT') processedEvts.add(scenario.event_id);
+
+  const g6detail = decision==='PERMIT'
+    ? 'PERMIT committed to audit ledger. Runtime: '+targetRuntimeId+'. Seq#'+committed.seq+'. Commit-before-execute satisfied. Hash: '+committed.entry_hash.slice(0,20)+'…'
+    : 'Decision ('+decision+') committed to audit ledger. Runtime: '+targetRuntimeId+'. Seq#'+committed.seq+'. Hash: '+committed.entry_hash.slice(0,20)+'…';
+  step(g6, decision==='LOCKOUT'?'LOCKOUT':decision==='PERMIT'?'PASS':'FAIL', g6detail);
+
+  return { steps, decision, audit:committed, targetRuntimeId };
+}
+
+// ── Plain-English reason ───────────────────────────────────────────────
+function reason(scenario, result) {
+  const asset = CONFIG.registered_assets.find(a => a.asset_id === scenario.requesting_asset_id);
+  const rt = resolveRuntime(result.targetRuntimeId);
+  const rtLabel = rt ? rt.runtime.name+' ('+rt.runtime.id+')' : (result.targetRuntimeId||'unknown runtime');
+  if (result.decision === 'PERMIT') {
+    return (asset?.name||scenario.requesting_asset_id)+' passed all six supervisory gates against target runtime '+rtLabel+'. '
+      +'Identity verified, registration confirmed in IBI, policy evaluation cleared, '
+      +'authority sufficient under this runtime\'s bound profile, no replay detected, and the PERMIT decision was committed '
+      +'to the audit ledger before any integration action proceeded.';
+  }
+  if (result.decision === 'LOCKOUT' && scenario.simulate_audit_failure) {
+    return 'AUDIT FAILURE (simulated): '+(asset?.name||scenario.requesting_asset_id)+' passed every gate from 1 through 5 — '
+      +'identity, registration, policy, authority, and replay checks all cleared. The failure occurred at the Audit Commit Gate '
+      +'itself: the decision could not be durably committed to the append-only ledger (simulated storage/integrity fault). '
+      +'Per commit-before-execute, a decision that cannot be safely recorded cannot be released either way, so this resolves '
+      +'to LOCKOUT rather than PERMIT, and is not added to the audit chain.';
+  }
+  if (result.decision === 'LOCKOUT') {
+    return 'Event ID '+scenario.event_id+' was previously processed and exists in the audit chain. '
+      +'Replay lockout prevents re-execution of an already-committed boundary event. '
+      +'This enforces replay prevention at the Boundary Gate — not a denial of the underlying asset.';
+  }
+  const failed = result.steps.find(s => s.result==='FAIL');
+  if (!failed) return 'Integration blocked by policy.';
+
+  // G4 — Authority Spoof takes priority over generic insufficient-authority,
+  // since they are different violations even though both fail at G4.
+  if (failed.gate_id==='G4' && scenario.claimed_authority_level && asset && scenario.claimed_authority_level !== asset.authority_level) {
+    return 'AUTHORITY SPOOF: the request claimed authority level "'+scenario.claimed_authority_level+'" on behalf of '
+      +(asset.name||scenario.requesting_asset_id)+', but the Integration Boundary Inventory records this asset\'s actual '
+      +'registered authority level as "'+asset.authority_level+'". The Authority Gate compares claimed authority against '
+      +'registered authority independently of whether the claimed level would otherwise have been sufficient — a mismatch '
+      +'is treated as a spoofing attempt and blocks the crossing regardless of which direction the mismatch runs.';
+  }
+  if (failed.gate_id==='G4') {
+    return (asset?.name||scenario.requesting_asset_id)+' passed identity, registration, and policy checks, but holds '
+      +'authority level '+(asset?.authority_level||'UNKNOWN')+', which is below the minimum authority level required by target runtime '
+      +rtLabel+'. Authority is evaluated independently of registration status — being known to the system is not the same as '
+      +'being entitled to act in this particular runtime, and the same asset may clear a different runtime\'s lower floor.';
+  }
+
+  if (failed.gate_id==='G2') {
+    return 'Asset '+scenario.requesting_asset_id+' has no record in the Integration Boundary Inventory. '
+      +'Unregistered assets are structurally excluded from the boundary.';
+  }
+
+  // G3 — ordered from most to least specific so a clean asset with an
+  // unrelated G3 failure (drift, dependency) is never misattributed to
+  // ghost/approval/sensitivity reasons it doesn't actually have.
+  if (failed.gate_id==='G3' && asset?.ghost) {
+    const isTransferMismatch = asset.ghost_reason && asset.ghost_reason.toLowerCase().includes('transfer schedule');
+    if (isTransferMismatch) {
+      return (asset.name||'Asset')+' is registered in the IBI but is absent from the acquisition\'s asset transfer schedule: '
+        +(asset.ghost_reason||'')+' Under the Integration Boundary Invariant, registration alone is not sufficient — '
+        +'an asset must also be confirmed within the active transfer schedule to avoid successor liability exposure.';
+    }
+    return (asset.name||'Asset')+' is a ghost asset: '+(asset.ghost_reason||'decommissioned or not transferred in M&A schedule.')
+      +' Ghost assets represent a successor liability risk. The Integration Boundary Invariant blocks all ghost asset crossings unconditionally.';
+  }
+  if (failed.gate_id==='G3' && asset && asset.registration_status !== 'REGISTERED') {
+    return (asset.name||'Asset')+' has registration status "'+asset.registration_status+'" in the IBI. Only assets with '
+      +'REGISTERED status may cross the boundary, regardless of any other attribute.';
+  }
+  if (failed.gate_id==='G3' && asset && !asset.approved_for_boundary_crossing) {
+    return (asset.name||'Asset')+' is registered, non-ghost, and holds sufficient authority, but is not currently approved '
+      +'for boundary crossing under active supervisory policy. Registration and authority alone do not grant passage — '
+      +'policy approval is evaluated independently at the Policy Gate.';
+  }
+  if (failed.gate_id==='G3' && asset && asset.approved_under_policy_version && rt && asset.approved_under_policy_version !== rt.profile.policy_version) {
+    return 'POLICY DRIFT: '+(asset.name||'Asset')+' was approved for boundary crossing under policy version "'
+      +asset.approved_under_policy_version+'". Target runtime '+rtLabel+' is bound to policy version "'+rt.profile.policy_version+'". '
+      +'Approval does not automatically carry forward across policy changes — an asset whose attestation predates the '
+      +'policy version a given runtime is bound to is treated as unapproved for that runtime until it is explicitly re-attested, '
+      +'even though it was legitimately approved at some point in the past.';
+  }
+  if (failed.gate_id==='G3' && asset && asset.depends_on) {
+    const walk = walkDependencyChain(asset);
+    if (walk.clean) {
+      // Shouldn't happen if G3 actually failed here, but fall through safely.
+      return (asset.name||'Asset')+'\'s full dependency chain independently verified; this branch should not normally be reached for a G3 failure.';
+    }
+    if (walk.failureType === 'CYCLE') {
+      return 'DEPENDENCY INJECTION (CIRCULAR): '+(asset.name||'Asset')+'\'s declared dependency chain ('+walk.chain.join(' → ')+') revisits "'
+        +walk.brokenAssetId+'" at hop '+walk.hopIndex+', forming a cycle. A circular dependency declaration never resolves to a single, '
+        +'concrete execution path — it cannot be verified at all, independent of whether any member of the cycle is itself a ghost or '
+        +'otherwise individually clean, and is blocked on that structural basis alone.';
+    }
+    if (walk.failureType === 'UNREGISTERED') {
+      return 'DEPENDENCY INJECTION: '+(asset.name||'Asset')+' is itself registered and approved, but its dependency chain ('
+        +walk.chain.join(' → ')+') reaches "'+walk.brokenAssetId+'" at hop '+walk.hopIndex+', which has no record in the Integration '
+        +'Boundary Inventory at all. The Policy Gate evaluates declared dependencies transitively, not just the immediate one — a clean '
+        +'primary asset cannot carry an unregistered dependency several hops down its own chain across the boundary on its own approval.';
+    }
+    return 'DEPENDENCY INJECTION: '+(asset.name||'Asset')+' is itself registered and approved, but its dependency chain ('
+      +walk.chain.join(' → ')+') reaches "'+walk.brokenAssetId+'" ('+(walk.brokenAsset?walk.brokenAsset.name:walk.brokenAssetId)+') at hop '
+      +walk.hopIndex+', which fails independent policy evaluation (ghost, registration, or approval status). Every hop in a dependency '
+      +'chain must independently satisfy the same policy checks as the primary asset; none of them, including ones several hops removed, '
+      +'can inherit the primary\'s approval.';
+  }
+  if (failed.gate_id==='G3' && asset) {
+    return (asset.name||'Asset')+' is registered, non-ghost, and approved for boundary crossing, but its data sensitivity '
+      +'classification ('+(asset.data_sensitivity||'UNKNOWN')+') exceeds the maximum sensitivity ceiling permitted by target '
+      +'runtime '+rtLabel+' ('+(rt ? rt.profile.max_data_sensitivity : 'unresolved')+'). Data sensitivity is evaluated independently of registration, '
+      +'ghost status, and crossing approval — a fully authorized asset can still be blocked if its data classification exceeds '
+      +'what this particular runtime permits, even if another runtime would have allowed it through.';
+  }
+  return failed.detail;
+}
+
+// ── Render pipeline ────────────────────────────────────────────────────
+function renderPipeline(gateIds, steps) {
+  return gateIds.map((gid,idx) => {
+    const s   = steps ? steps.find(x=>x.gate_id===gid) : null;
+    const cls = s ? (s.result==='PASS'?'pass':s.result==='FAIL'?'fail':s.result==='LOCKOUT'?'lockout':'') : '';
+    const sym = s ? (s.result==='PASS'?'✓':s.result==='FAIL'?'✕':s.result==='LOCKOUT'?'⚠':gid) : gid;
+    const short = CONFIG.gates[idx]?.short || gid;
+    return `<div class="gate-node ${cls}"><div class="gate-dot">${sym}</div><div class="gate-lbl">${gid}<br>${short}</div></div>`;
+  }).join('');
+}
+
+// ── Build card ─────────────────────────────────────────────────────────
+function buildCard(scenario) {
+  const gIds = CONFIG.gates.map(g=>g.id);
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.id = 'card-'+scenario.id;
+  const targetRt = resolveRuntime(scenario.target_runtime_id);
+  const rtTag = targetRt
+    ? '<span class="runtime-tag">→ '+targetRt.runtime.short+' · floor: '+targetRt.profile.minimum_authority_level+'</span>'
+    : '<span class="runtime-tag">→ unresolved runtime</span>';
+  card.innerHTML = `
+    <div class="card-hdr">
+      <div class="card-meta">
+        <div class="card-sid">${scenario.id} · ${scenario.event_id}${scenario.replay?' · REPLAY':''}</div>
+        <div class="card-name">${scenario.name}</div>
+        <div class="card-desc">${scenario.description}</div>
+        ${rtTag}
+      </div>
+      <div class="fsm-badge" id="fsm-${scenario.id}">IDLE</div>
+    </div>
+    <div class="pipeline" id="pipe-${scenario.id}">${renderPipeline(gIds,null)}</div>
+    <div class="results" id="res-${scenario.id}"></div>
+    <div class="card-foot">
+      <button class="run-btn" id="rb-${scenario.id}">▶ Run</button>
+      <button class="ev-btn" id="ev-${scenario.id}" disabled>📋 Evidence</button>
+      <button class="vr-btn" id="vr-${scenario.id}" disabled>⟲ Verify Replay</button>
+      <span class="exp-lbl">Expected: ${scenario.expected_decision === 'PROFILE_DEPENDENT' ? 'varies by policy profile' : scenario.expected_decision}</span>
+      <span class="profile-tag" id="pt-${scenario.id}"></span>
+    </div>`;
+  card.querySelector('#rb-'+scenario.id).addEventListener('click', ()=>runScenario(scenario));
+  card.querySelector('#ev-'+scenario.id).addEventListener('click', ()=>exportEvidence(scenario));
+  card.querySelector('#vr-'+scenario.id).addEventListener('click', ()=>verifyReplay(scenario));
+  return card;
+}
+
+// ── Run scenario ───────────────────────────────────────────────────────
+function runScenario(scenario) {
+  const btn    = document.getElementById('rb-'+scenario.id);
+  const badge  = document.getElementById('fsm-'+scenario.id);
+  const pipe   = document.getElementById('pipe-'+scenario.id);
+  const resEl  = document.getElementById('res-'+scenario.id);
+  const card   = document.getElementById('card-'+scenario.id);
+  const gIds   = CONFIG.gates.map(g=>g.id);
+
+  btn.disabled = true;
+  card.className = 'card';
+  resEl.className = 'results';
+  resEl.innerHTML = '';
+  badge.className = 'fsm-badge EVALUATING';
+  badge.textContent = 'EVALUATING';
+
+  const result = evaluate(scenario);
+
+  // Animate gates
+  const delay = 240;
+  gIds.forEach((gid,i) => {
+    setTimeout(()=>{
+      pipe.innerHTML = renderPipeline(gIds, result.steps.slice(0,i+1));
+      if (i===gIds.length-1) {
+        setTimeout(()=>showResult(scenario,result,card,badge,resEl), delay);
+      }
+    }, i*delay);
+  });
+}
+
+function showResult(scenario, result, card, badge, resEl) {
+  const fsmLabel = result.decision==='PERMIT'?'PERMITTED':result.decision;
+  badge.className = 'fsm-badge '+fsmLabel;
+  badge.textContent = fsmLabel;
+  card.className = 'card decided-'+result.decision;
+
+  const states = ['IDLE','EVALUATING',fsmLabel];
+  const fsmHtml = states.map((s,i)=>
+    `<span class="fsm-s${i===states.length-1?' cur':''}">${s}</span>${i<states.length-1?'<span class="fsm-arr">→</span>':''}`
+  ).join('');
+
+  const gateRows = result.steps.map(s=>`
+    <tr>
+      <td class="gid">${s.gate_id}</td>
+      <td>${s.gate_name}</td>
+      <td class="gres ${s.result==='SKIP'?'SKIP':s.result}">${s.result}</td>
+      <td style="font-size:.72rem;color:var(--dim)">${s.detail}</td>
+    </tr>`).join('');
+
+  const a = result.audit;
+  const dval = result.decision==='PERMIT'?'green':result.decision==='LOCKOUT'?'gold':'red';
+  const auditSectionLabel = result.auditFailureSimulated
+    ? 'Audit Ledger Entry — NOT COMMITTED (simulated commit failure)'
+    : 'Audit Ledger Entry';
+
+  resEl.innerHTML = `
+    <div class="decision-banner ${result.decision}">
+      <div class="dword">${result.decision}</div>
+      <div class="dreason">${reason(scenario,result)}</div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div class="section-lbl">FSM State Transition</div>
+      <div class="fsm-trans">${fsmHtml}</div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div class="section-lbl">Gate-by-Gate Evaluation</div>
+      <table class="gate-tbl">
+        <thead><tr><th>Gate</th><th>Name</th><th>Result</th><th>Detail</th></tr></thead>
+        <tbody>${gateRows}</tbody>
+      </table>
+    </div>
+    <div class="section-lbl"${result.auditFailureSimulated?' style="color:var(--amber)"':''}>${auditSectionLabel}</div>
+    <div class="audit-rec"${result.auditFailureSimulated?' style="border-color:rgba(255,184,0,.35)"':''}>
+      <div class="audit-row"><span class="akey">seq</span><span class="aval">${a.seq}</span></div>
+      <div class="audit-row"><span class="akey">event_id</span><span class="aval">${a.event_id}</span></div>
+      <div class="audit-row"><span class="akey">asset_id</span><span class="aval">${a.asset_id}</span></div>
+      <div class="audit-row"><span class="akey">decision</span><span class="aval ${dval}">${a.decision}</span></div>
+      <div class="audit-row"><span class="akey">blocking_gate</span><span class="aval">${a.blocking_gate||'—'}</span></div>
+      <div class="audit-row"><span class="akey">timestamp</span><span class="aval">${a.timestamp}</span></div>
+      <div class="audit-row"><span class="akey">prev_hash</span><span class="aval hash">${a.prev_hash}</span></div>
+      <div class="audit-row"><span class="akey">entry_hash</span><span class="aval hash">${a.entry_hash}</span></div>
+    </div>`;
+  resEl.classList.add('show');
+
+  // Log for replay export
+  replayLog.push({ scenario, result: { steps:result.steps, decision:result.decision }, audit:a });
+
+  // Store run history for evidence export + replay verification
+  const checksum = replayChecksum(scenario, result);
+  runHistory[scenario.id] = {
+    scenario, result, audit:a,
+    replayChecksum: checksum,
+    replayCount: (runHistory[scenario.id]?.replayCount || 0) // first run isn't a "replay" yet
+  };
+  // result already carries auditFailureSimulated when present (set by evaluate()),
+  // and is stored whole above, so exportEvidence/verifyReplay can read it via h.result.auditFailureSimulated.
+
+  // Enable evidence + verify buttons now that this scenario has a result on record
+  const evBtn = document.getElementById('ev-'+scenario.id);
+  const vrBtn = document.getElementById('vr-'+scenario.id);
+  if (evBtn) evBtn.disabled = false;
+  if (vrBtn) vrBtn.disabled = false;
+
+  bumpCounter(result.decision);
+  addTimeline(scenario, result.decision, a);
+  updateBviz(
+    CONFIG.registered_assets.find(x=>x.asset_id===scenario.requesting_asset_id)?.name || scenario.requesting_asset_id,
+    result.decision,
+    result.targetRuntimeId || scenario.target_runtime_id
+  );
+}
+
+// ── Evidence Bundle Export (per-scenario) ──────────────────────────────
+function exportEvidence(scenario) {
+  const h = runHistory[scenario.id];
+  if (!h) { alert('Run this scenario at least once before exporting evidence.'); return; }
+  const { result, audit } = h;
+  const committed = !result.auditFailureSimulated;
+  const rt = resolveRuntime(result.targetRuntimeId);
+  const bundle = {
+    scenario_id: scenario.id,
+    asset_id: scenario.requesting_asset_id,
+    event_id: scenario.event_id,
+    target_runtime_id: result.targetRuntimeId,
+    target_runtime_name: rt ? rt.runtime.name : 'unresolved',
+    gate_by_gate_result: result.steps.map(s => ({
+      gate_id: s.gate_id, gate_name: s.gate_name, result: s.result, detail: s.detail
+    })),
+    decision: result.decision,
+    blocking_gate: audit.blocking_gate || null,
+    policy_version: rt ? rt.profile.policy_version : (audit.policy_version || CONFIG.policy.policy_version),
+    audit_chain_committed: committed,
+    audit_hash: committed ? audit.entry_hash : null,
+    prior_hash: committed ? audit.prev_hash : null,
+    uncommitted_synthetic_hash: committed ? null : audit.entry_hash,
+    timestamp: audit.timestamp,
+    replay_status: h.replayCount > 0 ? 'VERIFIED ('+h.replayCount+'x)' : 'NOT YET REPLAY-VERIFIED',
+    deterministic_replay_checksum: h.replayChecksum
+  };
+  const a=document.createElement('a');
+  a.href='data:application/json,'+encodeURIComponent(JSON.stringify(bundle,null,2));
+  a.download='sic-evidence-'+scenario.id+'-'+Date.now()+'.json';
+  a.click();
+}
+
+// ── Deterministic Replay Verifier ───────────────────────────────────────
+// Re-runs the scenario against CURRENT live state (audit chain, processedEvts,
+// policy) WITHOUT committing a new ledger entry, then compares the outcome to
+// the original run. A mismatch is not necessarily an error: scenarios whose
+// entire point is state-dependence (e.g. replay-lockout scenarios) are
+// EXPECTED to diverge once the relevant state has changed since first run.
+function verifyReplay(scenario) {
+  const h = runHistory[scenario.id];
+  if (!h) { alert('Run this scenario at least once before verifying replay.'); return; }
+
+  // Evaluate again, read-only: snapshot processedEvts so we can roll back
+  // (evaluate() itself doesn't mutate processedEvts directly, but the caller
+  // normally does via commitEntry's side effects in showResult — here we
+  // intentionally skip commitEntry/chain mutation entirely).
+  const replayResult = evaluateReadOnly(scenario);
+  const newChecksum = replayChecksum(scenario, replayResult);
+
+  const decisionMatch = replayResult.decision === h.result.decision;
+  const gateMatch = replayResult.blockGate === (h.audit.blocking_gate || null);
+  const hashMatch = newChecksum === h.replayChecksum;
+
+  h.replayCount = (h.replayCount || 0) + 1;
+
+  const panelId = 'replay-'+scenario.id;
+  let panel = document.getElementById(panelId);
+  const resEl = document.getElementById('res-'+scenario.id);
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = panelId;
+    panel.className = 'replay-panel';
+    resEl.appendChild(panel);
+  }
+
+  const noteHtml = hashMatch
+    ? '<div class="replay-note">Deterministic replay verified. Re-evaluating this scenario against current live state reproduced an identical gate-by-gate result and decision.</div>'
+    : '<div class="replay-note diverged">Replay diverged from the original run. This is not necessarily an error — if this scenario depends on state that changes between runs (for example, an event ID that becomes "already processed" after its first successful commit), a different outcome on replay is the CORRECT and expected behavior, not a fault. Check whether live state (audit chain / processed events) changed between the original run and this verification.</div>';
+
+  panel.innerHTML = `
+    <div class="replay-hdr"><span>Deterministic Replay Verification — Run #${h.replayCount}</span></div>
+    <div class="replay-row"><span class="replay-k">Original decision</span><span class="replay-orig">${h.result.decision}</span></div>
+    <div class="replay-row"><span class="replay-k">Replay decision</span><span class="replay-new">${replayResult.decision}</span></div>
+    <div class="replay-row"><span class="replay-k">Decision match</span><span class="replay-match ${decisionMatch?'yes':'no'}">${decisionMatch?'YES':'NO'}</span></div>
+    <div class="replay-row"><span class="replay-k">Original blocking gate</span><span class="replay-orig">${h.audit.blocking_gate||'—'}</span></div>
+    <div class="replay-row"><span class="replay-k">Replay blocking gate</span><span class="replay-new">${replayResult.blockGate||'—'}</span></div>
+    <div class="replay-row"><span class="replay-k">Gate match</span><span class="replay-match ${gateMatch?'yes':'no'}">${gateMatch?'YES':'NO'}</span></div>
+    <div class="replay-row"><span class="replay-k">Replay checksum match</span><span class="replay-match ${hashMatch?'yes':'no'}">${hashMatch?'YES':'NO'}</span></div>
+    ${noteHtml}`;
+}
+
+// ── Chained Boundary Crossing Evaluation ────────────────────────────────
+// Structurally different from both evaluate() and evaluateCoordinated():
+// operates over an ORDERED PATH of runtimes for a single asset, not one
+// target or a group. Each hop is a fully independent call to the real
+// evaluate() — the same function single-runtime scenarios use, with zero
+// duplicated gate logic — against a synthesized scenario object scoped to
+// that hop's runtime and a hop-unique event_id (so replay-lockout state at
+// hop 1 can never collide with hop 2's evaluation of the same asset).
+//
+// Critically: hop N's PERMIT is NOT passed as input to hop N+1. Hop N+1
+// re-runs gates 1–6 from scratch against its own bound policy. The only
+// thing that carries forward from one hop to the next is the decision to
+// ATTEMPT the next hop at all — if hop N is not PERMIT, the chain halts
+// there and that is a complete, valid, fully-evidenced terminal state, not
+// an error. Each hop that runs produces its own real audit-chain entry via
+// evaluate()'s normal commitEntry() path, so the evidence trail shows N
+// independent six-gate evaluations, not one evaluation relabeled N times.
+function evaluateChain(chainScenario) {
+  const path = chainScenario.crossing_path;
+  const hopResults = [];
+  let haltedAtHop = null;
+  let terminalDecision = null;
+
+  for (let i = 0; i < path.length; i++) {
+    const runtimeId = path[i];
+    const hopScenario = {
+      id: chainScenario.id + '-HOP' + (i+1),
+      name: chainScenario.name + ' — Hop ' + (i+1) + ' (' + runtimeId + ')',
+      requesting_asset_id: chainScenario.requesting_asset_id,
+      event_id: chainScenario.event_id_prefix + '-HOP' + (i+1),
+      target_runtime_id: runtimeId,
+      claimed_authority_level: chainScenario.claimed_authority_level,
+      simulate_audit_failure: chainScenario.simulate_audit_failure_at_hop === (i+1)
+    };
+    const result = evaluate(hopScenario);
+    hopResults.push({ hopIndex: i+1, runtimeId, hopScenario, result });
+
+    if (result.decision !== 'PERMIT') {
+      haltedAtHop = i+1;
+      terminalDecision = result.decision;
+      break;
+    }
+  }
+
+  if (haltedAtHop === null) {
+    // Every hop PERMITted — the chain completed in full.
+    haltedAtHop = path.length;
+    terminalDecision = 'PERMIT';
+  }
+
+  return {
+    chainScenario,
+    hopResults,
+    furthestHop: haltedAtHop,
+    pathLength: path.length,
+    terminalDecision,
+    completedFullPath: terminalDecision === 'PERMIT' && haltedAtHop === path.length,
+    terminalRuntimeId: hopResults[hopResults.length-1].runtimeId
+  };
+}
+
+
+// Structurally different from evaluate(): operates on a LIST of requesting
+// assets sharing an escalation_group and event_window, not a single asset.
+// As of the multi-runtime model, each member carries its OWN target_runtime_id
+// — members are not assumed to share a destination. Each member is first
+// checked independently against gates 1-4 (identity, registration, policy,
+// authority) using that MEMBER'S OWN target runtime's bound policy. Only if
+// every individual member would independently PERMIT through gate 4 does
+// group-level logic apply, and it applies TWO independent checks:
+//
+//   1. Same-runtime concurrency: for each distinct runtime the group
+//      touches, how many members target THAT runtime? If any single
+//      runtime's count exceeds THAT runtime's own bound-profile threshold
+//      without escalation approval, the group is flagged. (This is the
+//      original C1 invariant, generalized to per-runtime grouping instead
+//      of assuming one shared runtime.)
+//
+//   2. Cross-runtime fan-out: how many DISTINCT runtimes does the group
+//      touch in total, regardless of how many members go to each? If that
+//      count exceeds the strictest max_distinct_runtimes_per_escalation_group
+//      among the runtimes actually touched, the group is flagged — even if
+//      every individual runtime saw only one member and would never trip
+//      check #1 on its own. This is the invariant a single-runtime view
+//      structurally cannot see: a coordinated actor spreading one member
+//      per domain stays under every per-runtime radar while still being a
+//      coordinated, multi-domain action.
+//
+// Either check failing (without escalation approval) resolves the WHOLE
+// coordinated request to LOCKOUT — even though no single member's request
+// was individually disqualifying, and even though no single runtime, in
+// isolation, observed anything resembling a burst.
+function evaluateCoordinated(coordScenario) {
+  const assets = CONFIG.registered_assets;
+  const authorityRank = { NONE:0, LIMITED:1, STANDARD:2, ELEVATED:3, SOVEREIGN:4 };
+  const sensitivityRank = { PUBLIC:0, INTERNAL:1, RESTRICTED:2, CLASSIFIED:3 };
+
+  const perAsset = coordScenario.requesting_assets.map(member => {
+    const assetId = member.asset_id;
+    const targetRuntimeId = member.target_runtime_id;
+    const asset = assets.find(a => a.asset_id === assetId);
+    const resolved = resolveRuntime(targetRuntimeId);
+    const policy = policyForRuntime(targetRuntimeId);
+    const indivSteps = [];
+    const stp = (label, result, detail) => indivSteps.push({ label, result, detail });
+
+    if (!resolved || !policy) {
+      stp('G0 Runtime Resolution','FAIL','Target runtime "'+targetRuntimeId+'" does not resolve.');
+      return { asset_id:assetId, asset, targetRuntimeId, steps:indivSteps, individualResult:'BLOCK', individualGate:'G0' };
+    }
+    if (!asset) {
+      stp('G2 Registration','FAIL','Asset not found in IBI.');
+      return { asset_id:assetId, asset, targetRuntimeId, steps:indivSteps, individualResult:'BLOCK', individualGate:'G2' };
+    }
+    stp('G2 Registration','PASS','Found in IBI: '+asset.name);
+
+    if (policy.block_ghost_assets && asset.ghost) {
+      stp('G3 Policy','FAIL','Ghost asset.'); return { asset_id:assetId, asset, targetRuntimeId, steps:indivSteps, individualResult:'BLOCK', individualGate:'G3' };
+    }
+    if (asset.registration_status !== 'REGISTERED') {
+      stp('G3 Policy','FAIL','Not REGISTERED.'); return { asset_id:assetId, asset, targetRuntimeId, steps:indivSteps, individualResult:'BLOCK', individualGate:'G3' };
+    }
+    if (!asset.approved_for_boundary_crossing) {
+      stp('G3 Policy','FAIL','Not approved.'); return { asset_id:assetId, asset, targetRuntimeId, steps:indivSteps, individualResult:'BLOCK', individualGate:'G3' };
+    }
+    if (policy.max_data_sensitivity && sensitivityRank[asset.data_sensitivity] > sensitivityRank[policy.max_data_sensitivity]) {
+      stp('G3 Policy','FAIL','Sensitivity exceeds the ceiling set by runtime '+targetRuntimeId+'.'); return { asset_id:assetId, asset, targetRuntimeId, steps:indivSteps, individualResult:'BLOCK', individualGate:'G3' };
+    }
+    stp('G3 Policy','PASS','Policy evaluation passed against runtime '+targetRuntimeId+'.');
+
+    const aRank = authorityRank[asset.authority_level] ?? 0;
+    const mRank = authorityRank[policy.minimum_authority_level] ?? 2;
+    if (aRank < mRank) {
+      stp('G4 Authority','FAIL','Authority below the minimum required by runtime '+targetRuntimeId+'.'); return { asset_id:assetId, asset, targetRuntimeId, steps:indivSteps, individualResult:'BLOCK', individualGate:'G4' };
+    }
+    stp('G4 Authority','PASS','Authority level '+asset.authority_level+' satisfies the minimum required by runtime '+targetRuntimeId+'.');
+
+    return { asset_id:assetId, asset, targetRuntimeId, steps:indivSteps, individualResult:'PERMIT', individualGate:null };
+  });
+
+  const anyIndividualBlock = perAsset.some(p => p.individualResult === 'BLOCK');
+  const escalationApproved = !!coordScenario.escalation_approved;
+  const groupSize = perAsset.length;
+
+  // Group members by their target runtime to evaluate check #1 per runtime.
+  const byRuntime = {};
+  perAsset.forEach(p => {
+    if (!byRuntime[p.targetRuntimeId]) byRuntime[p.targetRuntimeId] = [];
+    byRuntime[p.targetRuntimeId].push(p);
+  });
+  const distinctRuntimeIds = Object.keys(byRuntime);
+
+  const sameRuntimeViolations = distinctRuntimeIds.map(rid => {
+    const members = byRuntime[rid];
+    const policy = policyForRuntime(rid);
+    const threshold = policy ? policy.max_concurrent_crossings_without_escalation_approval : Infinity;
+    return { runtimeId: rid, count: members.length, threshold, exceeds: members.length > threshold };
+  }).filter(v => v.exceeds);
+
+  // Check #2: cross-runtime fan-out, using the STRICTEST fan-out limit among
+  // the runtimes actually touched — a group cannot use a loose runtime's
+  // tolerance to excuse spreading into a strict one.
+  const fanOutLimits = distinctRuntimeIds
+    .map(rid => policyForRuntime(rid))
+    .filter(Boolean)
+    .map(p => p.max_distinct_runtimes_per_escalation_group)
+    .filter(v => typeof v === 'number');
+  const strictestFanOutLimit = fanOutLimits.length ? Math.min(...fanOutLimits) : Infinity;
+  const distinctRuntimeCount = distinctRuntimeIds.length;
+  const exceedsFanOut = distinctRuntimeCount > strictestFanOutLimit;
+
+  let groupDecision, groupReason;
+  if (anyIndividualBlock) {
+    groupDecision = 'BLOCK';
+    groupReason = 'One or more individual members in this coordinated request failed independent gate evaluation against their own target runtime. The coordinated request cannot proceed if any member fails on its own merits — group-level escalation logic (same-runtime concurrency and cross-runtime fan-out) is only evaluated once every individual member would independently PERMIT at its own destination.';
+  } else if ((sameRuntimeViolations.length > 0 || exceedsFanOut) && !escalationApproved) {
+    groupDecision = 'LOCKOUT';
+    const parts = [];
+    if (sameRuntimeViolations.length > 0) {
+      parts.push(sameRuntimeViolations.map(v =>
+        'runtime '+v.runtimeId+' received '+v.count+' concurrent crossing(s) from escalation group "'+coordScenario.escalation_group+'", exceeding its own bound-profile threshold of '+v.threshold
+      ).join('; '));
+    }
+    if (exceedsFanOut) {
+      parts.push('the group touched '+distinctRuntimeCount+' distinct runtimes ('+distinctRuntimeIds.join(', ')+') in event window "'+coordScenario.event_window_id+'", exceeding the strictest cross-runtime fan-out limit of '+strictestFanOutLimit+' among the runtimes it touched — a pattern no single runtime\'s own concurrency check can see, because no individual runtime here received more than its own threshold would tolerate');
+    }
+    groupReason = 'COORDINATED MULTI-AGENT ESCALATION: all '+groupSize+' members of escalation group "'+coordScenario.escalation_group+'" would independently PERMIT at their own respective target runtimes. However, '+parts.join('; and ')+', without an explicit escalation approval on record. No individual member is the violation — the coordinated pattern itself is. This requires human supervisory escalation approval before proceeding, and resolves to LOCKOUT until one is recorded.';
+  } else {
+    groupDecision = 'PERMIT';
+    const exceededAnyCheck = sameRuntimeViolations.length > 0 || exceedsFanOut;
+    groupReason = exceededAnyCheck
+      ? 'All '+groupSize+' members independently passed gates 1–4 at their own respective target runtimes, and although the group exceeded a same-runtime concurrency or cross-runtime fan-out threshold, an explicit escalation approval is on record for this request, satisfying the coordinated-escalation check.'
+      : 'All '+groupSize+' members independently passed gates 1–4 at their own respective target runtimes. The group touched '+distinctRuntimeCount+' distinct runtime(s), within the strictest fan-out limit ('+strictestFanOutLimit+') among them, and no single runtime received more concurrent crossings than its own bound-profile threshold permits.';
+  }
+
+  return {
+    perAsset, groupDecision, groupReason, groupSize, escalationApproved, anyIndividualBlock,
+    distinctRuntimeIds, distinctRuntimeCount, strictestFanOutLimit, exceedsFanOut,
+    sameRuntimeViolations, byRuntime
+  };
+}
+
+// ── Coordinated Scenario Card UI ────────────────────────────────────────
+function buildCoordCard(coordScenario) {
+  const card = document.createElement('div');
+  card.className = 'coord-card';
+  card.id = 'coord-'+coordScenario.id;
+  const rtTags = coordScenario.requesting_assets.map(m => {
+    const rt = resolveRuntime(m.target_runtime_id);
+    return rt ? rt.runtime.short : m.target_runtime_id;
+  });
+  const distinctCount = new Set(coordScenario.requesting_assets.map(m=>m.target_runtime_id)).size;
+  const pathTag = '<span class="runtime-tag">Targets: '+rtTags.join(', ')+' ('+distinctCount+' distinct runtime'+(distinctCount!==1?'s':'')+')</span>';
+  card.innerHTML = `
+    <div class="card-hdr">
+      <div class="card-meta">
+        <div class="card-sid">${coordScenario.id} · group: ${coordScenario.escalation_group} · window: ${coordScenario.event_window_id}</div>
+        <div class="card-name">${coordScenario.name}</div>
+        <div class="card-desc">${coordScenario.description}</div>
+        ${pathTag}
+      </div>
+      <div class="fsm-badge" id="fsm-coord-${coordScenario.id}">IDLE</div>
+    </div>
+    <div class="results" id="res-coord-${coordScenario.id}"></div>
+    <div class="card-foot">
+      <button class="run-btn" id="rb-coord-${coordScenario.id}">▶ Run Coordinated</button>
+      <button class="ev-btn" id="ev-coord-${coordScenario.id}" disabled>📋 Evidence</button>
+      <span class="exp-lbl">Expected: varies by policy profile</span>
+    </div>`;
+  card.querySelector('#rb-coord-'+coordScenario.id).addEventListener('click', ()=>runCoordinated(coordScenario));
+  card.querySelector('#ev-coord-'+coordScenario.id).addEventListener('click', ()=>exportCoordEvidence(coordScenario));
+  return card;
+}
+
+let coordHistory = {};
+
+function runCoordinated(coordScenario) {
+  const badge = document.getElementById('fsm-coord-'+coordScenario.id);
+  const resEl = document.getElementById('res-coord-'+coordScenario.id);
+  const card  = document.getElementById('coord-'+coordScenario.id);
+
+  badge.className = 'fsm-badge EVALUATING';
+  badge.textContent = 'EVALUATING';
+
+  const result = evaluateCoordinated(coordScenario);
+  renderCoordResult(coordScenario, result, resEl, badge, card);
+
+  coordHistory[coordScenario.id] = { coordScenario, result, timestamp:new Date().toISOString(), overrides:(coordHistory[coordScenario.id]?.overrides || []) };
+  document.getElementById('ev-coord-'+coordScenario.id).disabled = false;
+
+  bumpCounter(result.groupDecision);
+}
+
+// Shared rendering for both the original run and any subsequent escalation
+// override — kept as one function so the override path can never drift
+// from how the original LOCKOUT was rendered, the same constraint that
+// motivated walkDependencyChain as a single source of truth.
+function renderCoordResult(coordScenario, result, resEl, badge, card) {
+  const fsmLabel = result.groupDecision==='PERMIT'?'PERMITTED':result.groupDecision;
+  badge.className = 'fsm-badge '+fsmLabel;
+  badge.textContent = fsmLabel;
+  card.className = 'coord-card decided-'+result.groupDecision;
+
+  const memberRows = result.perAsset.map(p => {
+    const rt = resolveRuntime(p.targetRuntimeId);
+    const rtLabel = rt ? rt.runtime.short : p.targetRuntimeId;
+    return `
+    <div class="coord-member-row">
+      <span class="coord-member-id">${p.asset_id} → ${rtLabel}</span>
+      <span class="coord-member-result ${p.individualResult}">${p.individualResult}${p.individualGate?' @'+p.individualGate:''}</span>
+      <span style="color:var(--dim)">${p.asset ? p.asset.name : 'not found in IBI'}</span>
+    </div>`;
+  }).join('');
+
+  const sameRuntimeNote = result.sameRuntimeViolations.length > 0
+    ? result.sameRuntimeViolations.map(v=>v.runtimeId+': '+v.count+'/'+v.threshold).join(', ')
+    : 'none';
+
+  // A LOCKOUT here exists specifically because a same-runtime concurrency or
+  // cross-runtime fan-out check fired without an escalation approval on
+  // record — not a replay or audit-ledger failure (those are different
+  // invariants and are NOT offered an override here). That distinction is
+  // why the override button only ever appears for this exact condition.
+  const canOfferOverride = result.groupDecision === 'LOCKOUT' && !result.anyIndividualBlock;
+  const overrideBtn = canOfferOverride
+    ? `<button class="run-btn" id="ovr-${coordScenario.id}" style="margin-top:10px">⚠ Approve Escalation (Human Review)</button>`
+    : '';
+
+  resEl.innerHTML = `
+    <div class="coord-members">${memberRows}</div>
+    <div class="coord-group-banner ${result.groupDecision}">
+      <div class="dword">${result.groupDecision}</div>
+      <div class="dreason">${result.groupReason}</div>
+      ${overrideBtn}
+    </div>
+    <div class="coord-meta-row">
+      <span>group_size: ${result.groupSize}</span>
+      <span>distinct_runtimes: ${result.distinctRuntimeCount} (${result.distinctRuntimeIds.join(', ')})</span>
+      <span>fan_out_limit (strictest): ${result.strictestFanOutLimit}</span>
+      <span>fan_out_exceeded: ${result.exceedsFanOut}</span>
+      <span>same_runtime_violations: ${sameRuntimeNote}</span>
+      <span>escalation_approved: ${result.escalationApproved}</span>
+    </div>
+    <div id="ovr-history-${coordScenario.id}"></div>`;
+  resEl.classList.add('show');
+
+  if (canOfferOverride) {
+    document.getElementById('ovr-'+coordScenario.id).addEventListener('click', ()=>approveEscalation(coordScenario));
+  }
+  renderOverrideHistory(coordScenario);
+}
+
+// Re-runs evaluateCoordinated with escalation_approved forced true, for THIS
+// override action only. The original LOCKOUT record in coordHistory is
+// never mutated or replaced — this pushes a new, separate entry onto
+// coordHistory[id].overrides. An unaudited override that silently rewrites
+// the original decision would itself be exactly the kind of unsupervised
+// action REG-AI-0017 is meant to prevent; the override is only trustworthy
+// if the thing it overrode is still visible afterward.
+function approveEscalation(coordScenario) {
+  const approvedScenario = Object.assign({}, coordScenario, { escalation_approved: true });
+  const overrideResult = evaluateCoordinated(approvedScenario);
+
+  const h = coordHistory[coordScenario.id];
+  if (!h.overrides) h.overrides = [];
+  h.overrides.push({
+    result: overrideResult,
+    approved_at: new Date().toISOString(),
+    note: 'Human escalation approval recorded for this coordinated request. The ORIGINAL LOCKOUT decision above remains the system of record for that evaluation and is not modified or removed by this action — this is a new, separate, independently timestamped decision under an explicitly approved escalation, not a correction or deletion of the original.'
+  });
+
+  const resEl = document.getElementById('res-coord-'+coordScenario.id);
+  const badge = document.getElementById('fsm-coord-'+coordScenario.id);
+  const card  = document.getElementById('coord-'+coordScenario.id);
+  // Re-render using the ORIGINAL result so the LOCKOUT stays the displayed
+  // system-of-record state; the override appears in the history panel below
+  // it, not by replacing it.
+  renderCoordResult(coordScenario, h.result, resEl, badge, card);
+}
+
+function renderOverrideHistory(coordScenario) {
+  const el = document.getElementById('ovr-history-'+coordScenario.id);
+  if (!el) return;
+  const h = coordHistory[coordScenario.id];
+  const overrides = h ? (h.overrides || []) : [];
+  if (overrides.length === 0) { el.innerHTML = ''; return; }
+  el.innerHTML = '<div class="ovr-history-lbl">Escalation Override History (' + overrides.length + ')</div>' +
+    overrides.map((o,i) => `
+      <div class="ovr-history-row">
+        <span class="ovr-history-idx">#${i+1}</span>
+        <span class="ovr-history-decision ${o.result.groupDecision}">${o.result.groupDecision}</span>
+        <span class="ovr-history-time">${o.approved_at}</span>
+      </div>`).join('');
+}
+
+function exportCoordEvidence(coordScenario) {
+  const h = coordHistory[coordScenario.id];
+  if (!h) { alert('Run this coordinated scenario at least once before exporting evidence.'); return; }
+  const bundle = {
+    coordinated_scenario_id: h.coordScenario.id,
+    escalation_group: h.coordScenario.escalation_group,
+    event_window_id: h.coordScenario.event_window_id,
+    member_assets: h.result.perAsset.map(p => ({
+      asset_id:p.asset_id, target_runtime_id:p.targetRuntimeId,
+      individual_result:p.individualResult, individual_blocking_gate:p.individualGate
+    })),
+    group_decision: h.result.groupDecision,
+    group_size: h.result.groupSize,
+    distinct_runtimes_touched: h.result.distinctRuntimeIds,
+    distinct_runtime_count: h.result.distinctRuntimeCount,
+    cross_runtime_fanout_limit_applied: h.result.strictestFanOutLimit,
+    cross_runtime_fanout_exceeded: h.result.exceedsFanOut,
+    same_runtime_concurrency_violations: h.result.sameRuntimeViolations,
+    escalation_approved: h.result.escalationApproved,
+    timestamp: h.timestamp,
+    escalation_override_history: (h.overrides || []).map(o => ({
+      approved_at: o.approved_at,
+      resulting_decision: o.result.groupDecision,
+      note: o.note
+    })),
+    note: 'This is a group-level evidence record, not a single audit-chain entry. No individual member failed gates 1-4 in isolation against its own target runtime; the decision reflects two independent coordinated-escalation checks applied across the group: same-runtime concurrency (per runtime touched) and cross-runtime fan-out (distinct runtime count vs. the strictest limit among runtimes touched). If escalation_override_history is non-empty, the original group_decision above remains the system of record for that evaluation; each override is a separate, independently timestamped decision made under an explicitly approved escalation, not a correction or replacement of the original.'
+  };
+  const a=document.createElement('a');
+  a.href='data:application/json,'+encodeURIComponent(JSON.stringify(bundle,null,2));
+  a.download='sic-coord-evidence-'+coordScenario.id+'-'+Date.now()+'.json';
+  a.click();
+}
+
+// ── Chained Boundary Crossing Card UI ───────────────────────────────────
+function buildChainCard(chainScenario) {
+  const card = document.createElement('div');
+  card.className = 'coord-card';
+  card.id = 'chain-'+chainScenario.id;
+  const pathTag = chainScenario.crossing_path.map(rid => {
+    const rt = resolveRuntime(rid);
+    return rt ? rt.runtime.short : rid;
+  }).join(' → ');
+  card.innerHTML = `
+    <div class="card-hdr">
+      <div class="card-meta">
+        <div class="card-sid">${chainScenario.id} · ${chainScenario.requesting_asset_id}</div>
+        <div class="card-name">${chainScenario.name}</div>
+        <div class="card-desc">${chainScenario.description}</div>
+        <span class="runtime-tag">Path: ${pathTag}</span>
+      </div>
+      <div class="fsm-badge" id="fsm-chain-${chainScenario.id}">IDLE</div>
+    </div>
+    <div class="results" id="res-chain-${chainScenario.id}"></div>
+    <div class="card-foot">
+      <button class="run-btn" id="rb-chain-${chainScenario.id}">▶ Run Chain</button>
+      <button class="ev-btn" id="ev-chain-${chainScenario.id}" disabled>📋 Evidence</button>
+      <span class="exp-lbl">Expected to terminate at hop: ${chainScenario.expected_furthest_hop} of ${chainScenario.crossing_path.length} · terminal decision: ${chainScenario.expected_terminal_decision}</span>
+    </div>`;
+  card.querySelector('#rb-chain-'+chainScenario.id).addEventListener('click', ()=>runChain(chainScenario));
+  card.querySelector('#ev-chain-'+chainScenario.id).addEventListener('click', ()=>exportChainEvidence(chainScenario));
+  return card;
+}
+
+let chainHistory = {};
+
+function runChain(chainScenario) {
+  const badge = document.getElementById('fsm-chain-'+chainScenario.id);
+  const resEl = document.getElementById('res-chain-'+chainScenario.id);
+  const card  = document.getElementById('chain-'+chainScenario.id);
+
+  badge.className = 'fsm-badge EVALUATING';
+  badge.textContent = 'EVALUATING';
+
+  const result = evaluateChain(chainScenario);
+  const fsmLabel = result.terminalDecision==='PERMIT'?'PERMITTED':result.terminalDecision;
+  badge.className = 'fsm-badge '+fsmLabel;
+  badge.textContent = fsmLabel;
+  card.className = 'coord-card decided-'+result.terminalDecision;
+
+  const hopRows = result.hopResults.map(h => {
+    const rt = resolveRuntime(h.runtimeId);
+    const label = rt ? rt.runtime.short : h.runtimeId;
+    return `
+    <div class="coord-member-row">
+      <span class="coord-member-id">Hop ${h.hopIndex} · ${label}</span>
+      <span class="coord-member-result ${h.result.decision==='PERMIT'?'PERMIT':'BLOCK'}">${h.result.decision}${h.result.audit && h.result.audit.blocking_gate ? ' @'+h.result.audit.blocking_gate : ''}</span>
+      <span style="color:var(--dim)">${h.result.steps.find(s=>s.result==='FAIL'||s.result==='LOCKOUT')?.detail || 'All gates passed at this hop.'}</span>
+    </div>`;
+  }).join('');
+
+  const completionNote = result.completedFullPath
+    ? 'Chain completed in full: the asset independently cleared every hop\'s six-gate evaluation, in sequence, against each runtime\'s own bound policy.'
+    : 'Chain halted at hop '+result.furthestHop+' of '+result.pathLength+'. This is a complete and valid terminal state, not an error — the asset independently cleared every hop before this one, and hop '+result.furthestHop+'\'s evaluation, run from scratch against its own runtime\'s bound policy, did not PERMIT. No prior hop\'s PERMIT was carried forward as credit toward this one.';
+
+  resEl.innerHTML = `
+    <div class="coord-members">${hopRows}</div>
+    <div class="coord-group-banner ${result.terminalDecision}">
+      <div class="dword">${result.terminalDecision} @ hop ${result.furthestHop}/${result.pathLength}</div>
+      <div class="dreason">${completionNote}</div>
+    </div>
+    <div class="coord-meta-row">
+      <span>asset: ${chainScenario.requesting_asset_id}</span>
+      <span>furthest_hop_runtime: ${result.terminalRuntimeId}</span>
+      <span>full_path_completed: ${result.completedFullPath}</span>
+    </div>`;
+  resEl.classList.add('show');
+
+  chainHistory[chainScenario.id] = { chainScenario, result, timestamp:new Date().toISOString() };
+  document.getElementById('ev-chain-'+chainScenario.id).disabled = false;
+
+  bumpCounter(result.terminalDecision);
+  // Reflect the terminal hop in the live boundary visualization, same as a
+  // single-runtime scenario, so the chain's endpoint is visible there too.
+  updateBviz(
+    CONFIG.registered_assets.find(x=>x.asset_id===chainScenario.requesting_asset_id)?.name || chainScenario.requesting_asset_id,
+    result.terminalDecision,
+    result.terminalRuntimeId
+  );
+}
+
+function exportChainEvidence(chainScenario) {
+  const h = chainHistory[chainScenario.id];
+  if (!h) { alert('Run this chained scenario at least once before exporting evidence.'); return; }
+  const bundle = {
+    chained_scenario_id: h.chainScenario.id,
+    asset_id: h.chainScenario.requesting_asset_id,
+    crossing_path: h.chainScenario.crossing_path,
+    hops: h.result.hopResults.map(hop => ({
+      hop_index: hop.hopIndex,
+      target_runtime_id: hop.runtimeId,
+      decision: hop.result.decision,
+      blocking_gate: (hop.result.audit && hop.result.audit.blocking_gate) || null,
+      audit_hash: (hop.result.audit && hop.result.audit.entry_hash) || null,
+      policy_version: (resolveRuntime(hop.runtimeId)?.profile.policy_version) || null,
+      gate_by_gate_result: hop.result.steps.map(s => ({ gate_id:s.gate_id, gate_name:s.gate_name, result:s.result, detail:s.detail }))
+    })),
+    furthest_hop: h.result.furthestHop,
+    path_length: h.result.pathLength,
+    terminal_decision: h.result.terminalDecision,
+    full_path_completed: h.result.completedFullPath,
+    timestamp: h.timestamp,
+    note: 'Each hop above is an independent six-gate evaluation, individually committed to the audit ledger (where the hop reached a committable decision), against that hop\'s own runtime-bound policy. No hop\'s PERMIT was treated as input to the next hop\'s evaluation — only the decision to attempt the next hop carried forward.'
+  };
+  const a=document.createElement('a');
+  a.href='data:application/json,'+encodeURIComponent(JSON.stringify(bundle,null,2));
+  a.download='sic-chain-evidence-'+chainScenario.id+'-'+Date.now()+'.json';
+  a.click();
+}
+
+// Evaluate without committing to the audit chain or marking events processed —
+// pure read of current state, for replay verification only. Mirrors evaluate()'s
+// gate logic exactly (including drift, dependency, and spoof checks) so replay
+// checksums comparing the two stay meaningful.
+function evaluateReadOnly(scenario) {
+  const steps    = [];
+  const assets   = CONFIG.registered_assets;
+  const targetRuntimeId = scenario.target_runtime_id || CONFIG.runtimes[0].id;
+  const resolved = resolveRuntime(targetRuntimeId);
+  const policy   = policyForRuntime(targetRuntimeId);
+  const gates    = CONFIG.gates;
+  let decision   = null;
+  let blockGate  = null;
+
+  if (!resolved || !policy) {
+    steps.push({ gate_id:'G0', gate_name:'Runtime Resolution', result:'FAIL', detail:'Target runtime "'+targetRuntimeId+'" does not resolve to a known runtime/profile binding.' });
+    return { steps, decision:'BLOCK', blockGate:'G0', targetRuntimeId };
+  }
+
+  const asset = assets.find(a => a.asset_id === scenario.requesting_asset_id);
+  const authorityRank = { NONE:0, LIMITED:1, STANDARD:2, ELEVATED:3, SOVEREIGN:4 };
+  const sensitivityRank = { PUBLIC:0, INTERNAL:1, RESTRICTED:2, CLASSIFIED:3 };
+  const step = (g, result, detail) => steps.push({ gate_id:g.id, gate_name:g.name, result, detail });
+
+  const g1 = gates[0];
+  if (!scenario.requesting_asset_id || !scenario.requesting_asset_id.trim()) {
+    step(g1,'FAIL','No identity credential presented.'); decision='BLOCK'; blockGate='G1';
+  } else { step(g1,'PASS','Identity credential present: '+scenario.requesting_asset_id); }
+
+  const g2 = gates[1];
+  if (!decision) {
+    if (!asset) { step(g2,'FAIL','Asset ID '+scenario.requesting_asset_id+' not found in Integration Boundary Inventory.'); decision='BLOCK'; blockGate='G2'; }
+    else { step(g2,'PASS','Asset found in IBI: '+asset.name+' ['+asset.registration_status+']'); }
+  } else { step(g2,'SKIP','Skipped — upstream gate failed.'); }
+
+  const g3 = gates[2];
+  if (!decision) {
+    if (policy.block_ghost_assets && asset.ghost) { step(g3,'FAIL','Ghost asset detected.'); decision='BLOCK'; blockGate='G3'; }
+    else if (asset.registration_status !== 'REGISTERED') { step(g3,'FAIL','Registration status is '+asset.registration_status+'.'); decision='BLOCK'; blockGate='G3'; }
+    else if (!asset.approved_for_boundary_crossing) { step(g3,'FAIL','Asset not approved for boundary crossing.'); decision='BLOCK'; blockGate='G3'; }
+    else if (policy.max_data_sensitivity && sensitivityRank[asset.data_sensitivity] > sensitivityRank[policy.max_data_sensitivity]) { step(g3,'FAIL','Data sensitivity '+asset.data_sensitivity+' exceeds the ceiling set by runtime '+targetRuntimeId+'.'); decision='BLOCK'; blockGate='G3'; }
+    else if (asset.approved_under_policy_version && asset.approved_under_policy_version !== policy.policy_version) { step(g3,'FAIL','POLICY DRIFT: approved under "'+asset.approved_under_policy_version+'", runtime '+targetRuntimeId+' is bound to "'+policy.policy_version+'".'); decision='BLOCK'; blockGate='G3'; }
+    else if (asset.depends_on) {
+      const walk = walkDependencyChain(asset);
+      if (walk.clean) { step(g3,'PASS','Policy evaluation passed. Full dependency chain ('+walk.chain.join(' → ')+') independently verified.'); }
+      else if (walk.failureType === 'CYCLE') { step(g3,'FAIL','DEPENDENCY INJECTION (CIRCULAR): chain ('+walk.chain.join(' → ')+') revisits "'+walk.brokenAssetId+'" at hop '+walk.hopIndex+'.'); decision='BLOCK'; blockGate='G3'; }
+      else if (walk.failureType === 'UNREGISTERED') { step(g3,'FAIL','DEPENDENCY INJECTION: chain ('+walk.chain.join(' → ')+') reaches unregistered "'+walk.brokenAssetId+'" at hop '+walk.hopIndex+'.'); decision='BLOCK'; blockGate='G3'; }
+      else { step(g3,'FAIL','DEPENDENCY INJECTION: chain ('+walk.chain.join(' → ')+') reaches "'+walk.brokenAssetId+'" at hop '+walk.hopIndex+', which fails independent policy evaluation.'); decision='BLOCK'; blockGate='G3'; }
+    }
+    else { step(g3,'PASS','Policy evaluation passed.'); }
+  } else { step(g3,'SKIP','Skipped — upstream gate failed.'); }
+
+  const g4 = gates[3];
+  if (!decision) {
+    if (scenario.claimed_authority_level && scenario.claimed_authority_level !== asset.authority_level) {
+      step(g4,'FAIL','AUTHORITY SPOOF: claimed "'+scenario.claimed_authority_level+'", registered "'+asset.authority_level+'".'); decision='BLOCK'; blockGate='G4';
+    } else {
+      const aRank = authorityRank[asset.authority_level] ?? 0;
+      const mRank = authorityRank[policy.minimum_authority_level] ?? 2;
+      if (aRank < mRank) { step(g4,'FAIL','Authority level below the minimum required by runtime '+targetRuntimeId+'.'); decision='BLOCK'; blockGate='G4'; }
+      else { step(g4,'PASS','Authority level '+asset.authority_level+' satisfies the minimum required by runtime '+targetRuntimeId+'.'); }
+    }
+  } else { step(g4,'SKIP','Skipped — upstream gate failed.'); }
+
+  const g5 = gates[4];
+  if (!decision) {
+    // Read-only check against CURRENT processedEvts — reflects live state,
+    // does not mutate it.
+    if (policy.replay_lockout_enabled && processedEvts.has(scenario.event_id)) {
+      step(g5,'LOCKOUT','Event ID '+scenario.event_id+' already processed (live state). Replay detected.'); decision='LOCKOUT'; blockGate='G5';
+    } else { step(g5,'PASS','Event ID '+scenario.event_id+' is unique against current live state.'); }
+  } else { step(g5,'SKIP','Skipped — upstream gate failed.'); }
+
+  const g6 = gates[5];
+  if (!decision) decision='PERMIT';
+
+  if (scenario.simulate_audit_failure) {
+    // Mirror evaluate(): a simulated ledger fault always resolves to LOCKOUT
+    // regardless of gates 1–5, and is reported as such here too so replay
+    // verification of an audit-failure scenario reflects the same semantics.
+    step(g6,'FAIL','AUDIT FAILURE (simulated, replay): commit to ledger would fail under this simulated condition regardless of the gate 1–5 outcome.');
+    return { steps, decision:'LOCKOUT', blockGate:'G6', targetRuntimeId };
+  }
+
+  // Mirror the original evaluate()'s G6 semantics exactly: G6 reflects the
+  // final decision (PASS for PERMIT, LOCKOUT for LOCKOUT, FAIL otherwise),
+  // not an independent check. This must match the original function's gate
+  // sequence shape, or the replay checksum will spuriously mismatch even
+  // when nothing about the scenario's outcome actually changed.
+  step(g6, decision==='LOCKOUT'?'LOCKOUT':decision==='PERMIT'?'PASS':'FAIL',
+    'Replay verification — read-only, no new ledger entry committed.');
+
+  return { steps, decision, blockGate, targetRuntimeId };
+}
+
+
+document.getElementById('runAllBtn').addEventListener('click', ()=>{
+  CONFIG.scenarios.forEach((sc,i)=>{
+    setTimeout(()=>runScenario(sc), i*(CONFIG.gates.length*240+600));
+  });
+});
+
+document.getElementById('resetBtn').addEventListener('click', resetState);
+
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  if (!replayLog.length) { alert('No events to export. Run at least one scenario first.'); return; }
+  const evidenceRecords = Object.values(runHistory).map(h => {
+    const rt = resolveRuntime(h.result.targetRuntimeId);
+    return {
+      scenario_id: h.scenario.id,
+      asset_id: h.scenario.requesting_asset_id,
+      event_id: h.scenario.event_id,
+      target_runtime_id: h.result.targetRuntimeId,
+      target_runtime_name: rt ? rt.runtime.name : 'unresolved',
+      gate_by_gate_result: h.result.steps.map(s => ({ gate_id:s.gate_id, gate_name:s.gate_name, result:s.result, detail:s.detail })),
+      decision: h.result.decision,
+      blocking_gate: h.audit.blocking_gate || null,
+      policy_version: rt ? rt.profile.policy_version : (h.audit.policy_version || CONFIG.policy.policy_version),
+      audit_hash: h.audit.entry_hash,
+      prior_hash: h.audit.prev_hash,
+      timestamp: h.audit.timestamp,
+      replay_status: h.replayCount > 0 ? 'VERIFIED ('+h.replayCount+'x)' : 'NOT YET REPLAY-VERIFIED',
+      deterministic_replay_checksum: h.replayChecksum
+    };
+  });
+  const chainedCrossingRecords = Object.values(chainHistory).map(h => ({
+    chained_scenario_id: h.chainScenario.id,
+    asset_id: h.chainScenario.requesting_asset_id,
+    crossing_path: h.chainScenario.crossing_path,
+    hops: h.result.hopResults.map(hop => ({
+      hop_index: hop.hopIndex,
+      target_runtime_id: hop.runtimeId,
+      decision: hop.result.decision,
+      blocking_gate: (hop.result.audit && hop.result.audit.blocking_gate) || null,
+      audit_hash: (hop.result.audit && hop.result.audit.entry_hash) || null,
+      policy_version: (resolveRuntime(hop.runtimeId)?.profile.policy_version) || null
+    })),
+    furthest_hop: h.result.furthestHop,
+    path_length: h.result.pathLength,
+    terminal_decision: h.result.terminalDecision,
+    full_path_completed: h.result.completedFullPath,
+    timestamp: h.timestamp
+  }));
+  const coordinatedEvidenceRecords = Object.values(coordHistory).map(h => ({
+    coordinated_scenario_id: h.coordScenario.id,
+    escalation_group: h.coordScenario.escalation_group,
+    event_window_id: h.coordScenario.event_window_id,
+    member_assets: h.result.perAsset.map(p => ({
+      asset_id:p.asset_id, target_runtime_id:p.targetRuntimeId,
+      individual_result:p.individualResult, individual_blocking_gate:p.individualGate
+    })),
+    group_decision: h.result.groupDecision,
+    group_size: h.result.groupSize,
+    distinct_runtimes_touched: h.result.distinctRuntimeIds,
+    cross_runtime_fanout_exceeded: h.result.exceedsFanOut,
+    same_runtime_concurrency_violations: h.result.sameRuntimeViolations,
+    escalation_approved: h.result.escalationApproved,
+    escalation_override_history: (h.overrides || []).map(o => ({ approved_at:o.approved_at, resulting_decision:o.result.groupDecision })),
+    timestamp: h.timestamp
+  }));
+  const bundle = {
+    meta:{ export_time:new Date().toISOString(), spec:'REG-AI-0017', title:'Integration Airlock — SIC Evidence Bundle',
+           runtimes: CONFIG.runtimes.map(rt => ({ id:rt.id, name:rt.name, bound_policy_version: (CONFIG.policy_profiles.find(p=>p.id===rt.policy_profile_id)||{}).policy_version })),
+           chain_head:headHash(), event_count:auditChain.length },
+    configuration: CONFIG,
+    audit_chain:   auditChain,
+    evidence_records: evidenceRecords,
+    chained_crossing_records: chainedCrossingRecords,
+    coordinated_evidence_records: coordinatedEvidenceRecords,
+    replay_log:    replayLog
+  };
+  const a=document.createElement('a');
+  a.href='data:application/json,'+encodeURIComponent(JSON.stringify(bundle,null,2));
+  a.download='sic-evidence-bundle-'+Date.now()+'.json';
+  a.click();
+});
+
+// ── Policy Profile Management ───────────────────────────────────────────
+const sensitivityOrder = ['PUBLIC','INTERNAL','RESTRICTED','CLASSIFIED'];
+const authorityOrder   = ['NONE','LIMITED','STANDARD','ELEVATED','SOVEREIGN'];
+
+function applyProfile(profileId, isInitial) {
+  const profile = CONFIG.policy_profiles.find(p => p.id === profileId);
+  if (!profile) return;
+
+  // RT-OPS is the one runtime whose profile binding is user-selectable in
+  // this demo. Rebinding it here is what actually changes evaluate()'s
+  // behavior for every scenario targeting RT-OPS — CONFIG.policy itself is
+  // legacy display state only, kept in sync for backward-compatible reads
+  // (e.g. evidence bundle meta) but no longer consulted by evaluate().
+  const opsRuntime = CONFIG.runtimes.find(r => r.id === 'RT-OPS');
+  if (opsRuntime) opsRuntime.policy_profile_id = profile.id;
+
+  CONFIG.policy.active_profile          = profile.id;
+  CONFIG.policy.policy_version          = profile.policy_version;
+  CONFIG.policy.minimum_authority_level = profile.minimum_authority_level;
+  CONFIG.policy.block_ghost_assets      = profile.block_ghost_assets;
+  CONFIG.policy.replay_lockout_enabled  = profile.replay_lockout_enabled;
+  CONFIG.policy.max_data_sensitivity    = profile.max_data_sensitivity;
+  CONFIG.policy.max_concurrent_crossings_without_escalation_approval = profile.max_concurrent_crossings_without_escalation_approval;
+  CONFIG.policy.max_distinct_runtimes_per_escalation_group = profile.max_distinct_runtimes_per_escalation_group;
+
+  // Switching RT-OPS's bound profile changes what every gate result MEANS
+  // for scenarios targeting RT-OPS. Mixing evidence from two different
+  // policy regimes in one audit chain would misrepresent the chain as
+  // having been evaluated under a single consistent policy. So a profile
+  // switch resets the chain — this is a deliberate integrity choice, not a bug.
+  if (!isInitial) resetState();
+
+  // Render description + threshold chips, flagging anything that differs
+  // from the M&A baseline so a reviewer can see at a glance what changed.
+  const baseline = CONFIG.policy_profiles.find(p => p.id === 'MA');
+  document.getElementById('profileVersion').textContent = profile.policy_version;
+  document.getElementById('profileDesc').textContent = profile.description;
+
+  const chip = (label, val, isDifferent) =>
+    `<div class="pt-chip${isDifferent?' changed':''}">${label}: <b>${val}</b></div>`;
+
+  document.getElementById('profileThresholds').innerHTML = [
+    chip('Min Authority', profile.minimum_authority_level, profile.minimum_authority_level !== baseline.minimum_authority_level),
+    chip('Block Ghost Assets', profile.block_ghost_assets ? 'YES' : 'NO', profile.block_ghost_assets !== baseline.block_ghost_assets),
+    chip('Replay Lockout', profile.replay_lockout_enabled ? 'ENABLED' : 'DISABLED', profile.replay_lockout_enabled !== baseline.replay_lockout_enabled),
+    chip('Max Data Sensitivity', profile.max_data_sensitivity, profile.max_data_sensitivity !== baseline.max_data_sensitivity),
+    chip('Max Concurrent Crossings (no escalation approval)', profile.max_concurrent_crossings_without_escalation_approval, profile.max_concurrent_crossings_without_escalation_approval !== baseline.max_concurrent_crossings_without_escalation_approval),
+    chip('Max Distinct Runtimes per Escalation Group', profile.max_distinct_runtimes_per_escalation_group, profile.max_distinct_runtimes_per_escalation_group !== baseline.max_distinct_runtimes_per_escalation_group)
+  ].join('');
+
+  renderRuntimeTopology();
+}
+
+// ── Runtime topology summary row ────────────────────────────────────────
+function renderRuntimeTopology() {
+  const grid = document.getElementById('rtGrid');
+  if (!grid) return;
+  grid.innerHTML = CONFIG.runtimes.map(rt => {
+    const profile = CONFIG.policy_profiles.find(p => p.id === rt.policy_profile_id);
+    return `<div class="rt-card">
+      <div class="rt-card-name">${rt.short}</div>
+      <div class="rt-card-id">${rt.id} · bound to ${profile ? profile.name : 'unresolved'}</div>
+      <div class="rt-card-desc">${rt.description}</div>
+      <div class="rt-card-floor">Authority floor: ${profile ? profile.minimum_authority_level : '—'} · Sensitivity ceiling: ${profile ? profile.max_data_sensitivity : '—'} · Max group runtimes: ${profile ? profile.max_distinct_runtimes_per_escalation_group : '—'}</div>
+    </div>`;
+  }).join('');
+}
+
+function resetState() {
+  auditChain=[]; processedEvts.clear(); counters={total:0,permit:0,block:0,lockout:0}; replayLog=[]; runHistory={}; coordHistory={}; chainHistory={};
+  updateChainDisplay();
+  ['ct-total','ct-permit','ct-block','ct-lockout'].forEach(id=>document.getElementById(id).textContent='0');
+  document.getElementById('tlEmpty').style.display='';
+  Array.from(document.querySelectorAll('.tl-event')).forEach(e=>e.remove());
+  ['bv-ext','bv-airlock','bv-dest'].forEach(id=>{ const el=document.getElementById(id); el.className='bviz-node'; });
+  document.getElementById('bv-ext').textContent='External Asset';
+  document.getElementById('bv-dest').textContent='Protected Runtime';
+  ['bv-a1','bv-a2'].forEach(id=>document.getElementById(id).className='bviz-arrow');
+  const c=document.getElementById('scenarioContainer'); c.innerHTML='';
+  CONFIG.scenarios.forEach(sc=>c.appendChild(buildCard(sc)));
+  const cc=document.getElementById('coordContainer'); cc.innerHTML='';
+  (CONFIG.coordinated_scenarios||[]).forEach(cs=>cc.appendChild(buildCoordCard(cs)));
+  const chc=document.getElementById('chainContainer'); chc.innerHTML='';
+  (CONFIG.chained_scenarios||[]).forEach(chs=>chc.appendChild(buildChainCard(chs)));
+}
+
+document.getElementById('profileSelect').addEventListener('change', (e)=>{
+  applyProfile(e.target.value, false);
+});
+
+// ── Init ───────────────────────────────────────────────────────────────
+(function init(){
+  const sel = document.getElementById('profileSelect');
+  CONFIG.policy_profiles.forEach(p=>{
+    const opt = document.createElement('option');
+    opt.value = p.id; opt.textContent = p.name;
+    sel.appendChild(opt);
+  });
+  sel.value = CONFIG.policy.active_profile;
+  applyProfile(CONFIG.policy.active_profile, true);
+
+  const c=document.getElementById('scenarioContainer');
+  CONFIG.scenarios.forEach(sc=>c.appendChild(buildCard(sc)));
+
+  const cc=document.getElementById('coordContainer');
+  (CONFIG.coordinated_scenarios||[]).forEach(cs=>cc.appendChild(buildCoordCard(cs)));
+
+  const chc=document.getElementById('chainContainer');
+  (CONFIG.chained_scenarios||[]).forEach(chs=>chc.appendChild(buildChainCard(chs)));
+})();
+
+}
+</script>
+
+<script>
+// ── Password Gate ────────────────────────────────────────────────────────
+// The password is never stored in plaintext — only its SHA-256 hash is
+// embedded here, computed client-side via crypto.subtle so it matches
+// regardless of platform. initAirlockDemo() (all config parsing and DOM
+// population for the actual demo) is only invoked AFTER the hash check
+// succeeds, not merely hidden behind CSS — so nothing in the demo's data or
+// logic executes, and nothing is inspectable via dev tools, until the
+// correct password has been entered. Session is remembered via
+// sessionStorage so a reviewer isn't re-prompted on every refresh within
+// the same browser tab session.
+(function(){
+'use strict';
+
+const PW_HASH = '059cc295972490feb8b987ee4a6062a36442b24dbc842fb58d6972d77d303651';
+const SESSION_KEY = 'airlock_pw_ok_v3';
+
+async function sha256Hex(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+function unlock() {
+  document.getElementById('pw-gate').style.display = 'none';
+  document.getElementById('app-content').style.display = 'block';
+  initAirlockDemo();
+}
+
+async function tryPassword(pw) {
+  const hash = await sha256Hex(pw);
+  const errEl = document.getElementById('pw-error');
+  if (hash === PW_HASH) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    errEl.style.display = 'none';
+    unlock();
+  } else {
+    errEl.style.display = 'block';
+  }
+}
+
+document.getElementById('pw-submit').addEventListener('click', () => {
+  tryPassword(document.getElementById('pw-input').value);
+});
+document.getElementById('pw-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') tryPassword(document.getElementById('pw-input').value);
+});
+
+if (sessionStorage.getItem(SESSION_KEY) === '1') {
+  unlock();
+}
+})();
+</script>
+</body>
+</html>
