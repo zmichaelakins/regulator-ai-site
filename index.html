@@ -141,6 +141,54 @@
     50% { opacity: 0.4; transform: scale(0.6); }
   }
 
+  /* ── Airlock Feature (video-led intro, above hero) ── */
+  .airlock-feature {
+    padding: 7rem 4rem 3rem;
+    text-align: center;
+  }
+  .airlock-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.4rem;
+  }
+  .airlock-heading {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.25;
+    max-width: 820px;
+    margin: 0 auto 2.6rem;
+  }
+  .airlock-heading .accent { color: var(--gold); font-style: italic; }
+  .video-embed-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto;
+    padding-top: 56.25%; /* 16:9 */
+    background: var(--navy-light);
+    border: 1px solid var(--rule);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+  }
+  .video-embed-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .airlock-caption {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    max-width: 920px;
+    margin: 1.4rem auto 0;
+  }
+
   /* ── Hero ── */
   .hero {
     min-height: 100vh;
@@ -792,35 +840,44 @@
   </div>
 </nav>
 
+<!-- Airlock Feature -->
+<section class="airlock-feature">
+  <p class="airlock-eyebrow">Patent No. 17 of 35 — Integration Airlock</p>
+  <h2 class="airlock-heading">
+    Thirty-five provisional patents. <span class="accent">Here is one of them, running.</span>
+  </h2>
+  <div class="video-embed-wrap">
+    <iframe src="https://drive.google.com/file/d/1N11Vz1p_g5BmgudeRXOxPZ1I6CqymP0Q/preview" allow="autoplay" allowfullscreen></iframe>
+  </div>
+  <p class="airlock-caption">Integration Airlock — live escalation approval and transitive dependency chain walking, demonstrated end to end.</p>
+</section>
+
 <!-- Hero -->
 <section class="hero">
-  <p class="hero-eyebrow">AI Governance · Hallucination Containment · Enterprise Risk</p>
+  <p class="hero-eyebrow">AI Governance · Deterministic Containment · Enterprise Risk</p>
   <h1 class="hero-headline">
-    AI hallucinations are no longer a curiosity.<br/>
-    They are a systemic risk.<br/>
-    <span class="accent">Regulator AI Global owns the foundational<br/>
-    architecture to solve this.</span><br/>
+    Thirty-five patents.<br/>
+    <span class="accent">This is what one of them does.</span><br/>
     The electrical code for AI.
   </h1>
   <p class="hero-subhead">
-    A single hallucinated valuation, misinterpreted regulatory signal, or runaway process
-    in interconnected systems can cascade into collapsed M&amp;A deals, uninsurable
-    liabilities, compliance failures, and safety incidents.
-    <strong>Regulator AI Global owns the electrical code for AI</strong> — a deterministic
-    governance layer that enforces human supervisory control at the protocol level, before
-    any action executes.
+    Regulator AI Global owns a foundational portfolio of deterministic AI governance
+    architecture — protocol-level human supervisory control that holds across
+    interconnected enterprise systems, regulated industries, and high-consequence
+    autonomous operations. <strong>Integration Airlock</strong>, shown above, is one
+    embodiment of that architecture in motion.
   </p>
   <div class="hero-actions">
     <a href="#nda-inquiry" class="btn-primary">Submit Inquiry</a>
     <a href="#raise" class="btn-ghost">Series A — $10M</a>
   </div>
-  <p class="hero-note">⬡ &nbsp;34 provisional patents filed. Full technical disclosure under executed NDA only.</p>
+  <p class="hero-note">⬡ &nbsp;35 provisional patents filed. Full technical disclosure under executed NDA only.</p>
 </section>
 
 <!-- Stat bar -->
 <div class="stat-bar">
   <div class="stat-item">
-    <div class="stat-number">34</div>
+    <div class="stat-number">35</div>
     <div class="stat-label">Provisional Patents Filed</div>
   </div>
   <div class="stat-item">
@@ -843,10 +900,10 @@
 <section class="section" id="risk">
   <p class="section-label reveal">The Exposure</p>
   <h2 class="section-heading reveal">
-    AI hallucinations are a systemic risk —<br/>and most boards don't have a solution yet.
+    Autonomous AI systems are operating beyond human-speed oversight —<br/>and most boards don't have a solution yet.
   </h2>
   <p class="section-body reveal">
-    In interconnected enterprise systems, a single hallucinated valuation, a misclassified
+    In interconnected enterprise systems, an unverified output, a misclassified
     regulatory signal, or an autonomous process operating outside its intended bounds doesn't
     stay local. It cascades — collapsing M&amp;A transactions, triggering uninsurable liability,
     and creating safety incidents that no audit can walk back. The failure doesn't disappear.
@@ -854,9 +911,9 @@
   </p>
   <div class="risk-grid" style="margin-top:3.5rem;">
     <div class="risk-card reveal">
-      <p class="risk-number">01 &nbsp;/&nbsp; HALLUCINATION CASCADE</p>
-      <h3 class="risk-title">One hallucinated input can collapse an entire transaction</h3>
-      <p class="risk-desc">Financial firms now use AI for valuations, portfolio analysis, and M&amp;A strategy. A single hallucinated figure — undetected — propagates through every downstream model it touches. By the time it surfaces, the damage is structural, not correctable.</p>
+      <p class="risk-number">01 &nbsp;/&nbsp; UNVERIFIED OUTPUT CASCADE</p>
+      <h3 class="risk-title">One bad input can collapse an entire transaction</h3>
+      <p class="risk-desc">Financial firms now use AI for valuations, portfolio analysis, and M&amp;A strategy. A single erroneous figure — undetected — propagates through every downstream model it touches. By the time it surfaces, the damage is structural, not correctable.</p>
     </div>
     <div class="risk-card reveal">
       <p class="risk-number">02 &nbsp;/&nbsp; GHOST ASSET LIABILITY</p>
@@ -871,7 +928,7 @@
     <div class="risk-card reveal">
       <p class="risk-number">04 &nbsp;/&nbsp; SAFETY &amp; ENTERPRISE IMPACT</p>
       <h3 class="risk-title">From autonomous operations to critical infrastructure — the absence of real-time containment turns innovation into unacceptable risk</h3>
-      <p class="risk-desc">Satellite constellations, autonomous aerospace systems, AI-managed energy grids, and industrial robotics all operate at machine speed. Without deterministic governance, a single mistaken or hallucinated command has no human-speed circuit breaker. The exposure is structural, not theoretical.</p>
+      <p class="risk-desc">Satellite constellations, autonomous aerospace systems, AI-managed energy grids, and industrial robotics all operate at machine speed. Without deterministic governance, a single mistaken command has no human-speed circuit breaker. The exposure is structural, not theoretical.</p>
     </div>
   </div>
 </section>
@@ -894,7 +951,7 @@
         bounds, and explicitly authorized.
       </p>
       <p class="section-body reveal" style="margin-top:1.2rem;">
-        The full technical architecture, 34-patent claims structure, and integration roadmap
+        The full technical architecture, 35-patent claims structure, and integration roadmap
         are available exclusively under executed NDA to qualified counterparties.
       </p>
       <a href="#nda-inquiry" class="btn-primary reveal" style="margin-top:2.5rem; display:inline-block;">
@@ -1023,7 +1080,7 @@
   <div class="val-grid reveal" style="margin-top:3.5rem; grid-template-columns: repeat(3,1fr);">
     <div class="val-card">
       <p class="val-method">Foundation · Complete</p>
-      <div class="val-amount" style="font-size:1.6rem;">34 Patents</div>
+      <div class="val-amount" style="font-size:1.6rem;">35 Patents</div>
       <p class="val-desc">Provisional filings March 6 – June 14, 2026. Priority-of-invention irrevocably established. 36+ documented embodiments across six high-stakes sectors.</p>
     </div>
     <div class="val-card">
@@ -1055,7 +1112,7 @@
   <div class="timeline reveal">
     <div class="timeline-item">
       <p class="timeline-date">March 6 – June 14, 2026</p>
-      <p class="timeline-event">34 Provisional Patents Filed</p>
+      <p class="timeline-event">35 Provisional Patents Filed</p>
       <p class="timeline-desc">Priority-of-invention irrevocably established across AI cognition, supervisory containment, and physical energy governance.</p>
     </div>
     <div class="timeline-item">
@@ -1065,8 +1122,8 @@
     </div>
     <div class="timeline-item">
       <p class="timeline-date">March 6, 2027</p>
-      <p class="timeline-event">Non-Provisional Consolidation — 5–7 NPs from 34 Provisionals</p>
-      <p class="timeline-desc">All 34 provisional patents will be consolidated into 5–7 strategically structured non-provisional applications under a master claims mapping plan. Each NP is fully mapped to its constituent provisionals — maximizing claim breadth, eliminating redundancy, and presenting the portfolio as a unified enforcement architecture to the USPTO and any future licensee or acquirer.</p>
+      <p class="timeline-event">Non-Provisional Consolidation — 5–7 NPs from 35 Provisionals</p>
+      <p class="timeline-desc">All 35 provisional patents will be consolidated into 5–7 strategically structured non-provisional applications under a master claims mapping plan. Each NP is fully mapped to its constituent provisionals — maximizing claim breadth, eliminating redundancy, and presenting the portfolio as a unified enforcement architecture to the USPTO and any future licensee or acquirer.</p>
     </div>
     <div class="timeline-item">
       <p class="timeline-date">2028 – 2032</p>
@@ -1085,13 +1142,13 @@
       <p class="pdf-fac-eyebrow">Regulator AI Global</p>
       <h2 class="pdf-fac-title">The Electrical Code<br>for AI</h2>
       <p class="pdf-fac-subtitle">AI Governance Infrastructure from Cognition to Action<br>
-      The governance operating system for AI and power infrastructure, built on a portfolio of 34 Provisional Patents, filed March 6 – June 14, 2026.</p>
+      The governance operating system for AI and power infrastructure, built on a portfolio of 35 Provisional Patents, filed March 6 – June 14, 2026.</p>
       <div class="pdf-fac-rule"></div>
       <div class="pdf-fac-body">
         <p><strong>A New Power Needs a New Code</strong></p>
         <p>Whenever mankind has dealt with new power, there has been a stage of imposing governance and control upon it. The time of governing and controlling AI is upon us.</p>
         <p>While AI brings immense power, it is prone to hallucination and mistakes. These can cause loss of life, damage to property, and financial or operational disasters. But we can have an electrical code for AI — one that harnesses its power while keeping its operation within safe, provable boundaries.</p>
-        <p>Regulator AI Global owns the electrical code for AI. In a portfolio of 34 provisional patents filed between March 6th and June 14th, 2026, we have irrevocably established our priority-of-invention.</p>
+        <p>Regulator AI Global owns the electrical code for AI. In a portfolio of 35 provisional patents filed between March 6th and June 14th, 2026, we have irrevocably established our priority-of-invention.</p>
       </div>
       <div class="pdf-fac-authors">
         Zachary Michael Akins, Founder &amp; CEO<br>
@@ -1106,7 +1163,7 @@
         "The Electrical Code for AI" — co-authored with legendary open-source pioneer Bruce Perens.
       </h2>
       <p class="section-body reveal">
-        The full paper covers the case for AI governance as mandatory infrastructure, six high-stakes application sectors, competitive differentiation, the architectural principles behind the 34-patent portfolio, and why value exists before revenue — without disclosing the valuation details reserved for NDA counterparties.
+        The full paper covers the case for AI governance as mandatory infrastructure, six high-stakes application sectors, competitive differentiation, the architectural principles behind the 35-patent portfolio, and why value exists before revenue — without disclosing the valuation details reserved for NDA counterparties.
       </p>
       <p class="section-body reveal" style="margin-top:1rem;">
         Available as a free download. Complete patent portfolio, technical architecture, and financial analysis available exclusively under executed NDA.
