@@ -141,13 +141,33 @@
     50% { opacity: 0.4; transform: scale(0.6); }
   }
 
+  /* ── Launch Banner ── */
+  .launch-banner {
+    margin-top: 4.6rem;
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--rule);
+    text-align: center;
+    padding: 0.7rem 1rem;
+  }
+  .launch-banner a {
+    color: var(--gold);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+  }
+  @media (max-width: 900px) {
+    .launch-banner { margin-top: 6rem; padding: 0.6rem 1rem; }
+    .launch-banner a { font-size: 0.68rem; line-height: 1.5; }
+  }
+
   /* ── Hero ── */
   .hero {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 10rem 4rem 6rem;
+    padding: 3rem 4rem 6rem;
     position: relative;
     overflow: hidden;
   }
@@ -738,7 +758,7 @@
   /* ── Responsive ── */
   @media (max-width: 900px) {
     nav { padding: 1.2rem 2rem; }
-    .hero { padding: 8rem 2rem 5rem; }
+    .hero { padding: 1.5rem 2rem 5rem; }
     .section { padding: 5rem 2rem; }
     .solution-wrap, .pdf-wrap { padding: 5rem 2rem; }
     .solution-inner, .pdf-inner, .nda-section { grid-template-columns: 1fr; gap: 3rem; }
@@ -772,10 +792,8 @@
 </nav>
 
 <!-- Launch Banner -->
-<div style="background:var(--navy-mid); border-bottom:1px solid var(--rule); text-align:center; padding:0.75rem 1rem;">
-  <a href="#paper" style="color:var(--gold); font-family:'IBM Plex Mono', monospace; font-size:0.8rem; letter-spacing:0.03em; text-decoration:none;">
-    ⬡ &nbsp;NEW — "Moonshot," co-authored with Bruce Perens: the architecture for governed AI. Read the paper →
-  </a>
+<div class="launch-banner">
+  <a href="#paper">NEW — "Moonshot" with Bruce Perens: the architecture for governed AI. Read the paper →</a>
 </div>
 
 <!-- Hero -->
